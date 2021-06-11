@@ -3,15 +3,15 @@ import {connect} from 'react-redux';
 import axios from "axios";
 
 function ArticleAdd (props) {
-    let [form, setForm] = useState({
+    const formDefault = {
         name: '',
-        fullName: '',
+        full_name: '',
         inn: '',
         kpp: '',
         ogrn: '',
-        paymentAccount: '', //расчетный счет
+        payment_account: '', //расчетный счет
 
-        postCode: '', //почтовый индекс
+        post_code: '', //почтовый индекс
         country: '', //страна
         region: '', //область
         district: '', //район
@@ -21,17 +21,11 @@ function ArticleAdd (props) {
         corps: '', //корпус
         structure: '', //строение
         flat: '', //квартира
-
-    })
-    let [fileIds, setFileIds] = useState('')
-
-    const ArFileIds = (arIds) => {
-        setFileIds(arIds)
     }
 
-    //отслеживаем изменение props
+    let [form, setForm] = useState(formDefault)
+
     useEffect(async () => {
-        //await GetAlbums()
     }, [])
 
     const onChangeText = (e) => {
@@ -43,61 +37,41 @@ function ArticleAdd (props) {
         }))
     }
 
-    const FormResult = (err) => {
-        setForm(prev => ({
-            inputTitle: '',
-            inputText: '',
-            add: true,
-            err: err
-        }))
+    const Default = (err) => {
+        setForm(prev => (formDefault))
     }
 
     const onFormSubmit = async (e) => {
         e.preventDefault() // Stop form submit
 
-        const url = '/api/topic/add';
+        const url = '/api/org/add';
 
-        let arFields = {
-            title: form.inputTitle,
-            text: form.inputText,
-            file_ids: fileIds,
-        }
-
-        //комуто на стену
-        if ((props.owner_id) && (props.owner_id < 0))
-            arFields.group_id = -props.owner_id
-
-        let result = await axios.post(url, arFields);
+        let result = await axios.post(url, form);
 
         result = result.data;
-
-        //ошибка, не продолжаем обработку
-        if (result.err) {
-            FormResult (result.msg)
-        } else {
-            FormResult (false)
-        }
 
     }
 
     const Form = () => {
-        return <div className="card m-3">
-            <div className="card-body">
-                <form onSubmit={onFormSubmit} className="p-3">
+        return <form onSubmit={onFormSubmit} className="p-3">
+            <div className="card m-3">
 
-                    <h4>Наименование</h4>
+                <div className="card-header">Новая организация</div>
+                <div className="card-body">
+                    <h6 className="card-title text-center">Наименование</h6>
+                    <br/>
                     <div className="mb-3 row">
                         <label htmlFor="name" className="col-sm-2 col-form-label">Наименование</label>
                         <div className="col-sm-10"><input type="text" className="form-control" id="name" value={form.name} onChange={onChangeText}/></div>
                     </div>
 
                     <div className="mb-3 row">
-                        <label htmlFor="fullName" className="col-sm-2 col-form-label">Полное наименование</label>
-                        <div className="col-sm-10"><input type="text" className="form-control" id="name" value={form.fullName} onChange={onChangeText}/></div>
+                        <label htmlFor="full_name" className="col-sm-2 col-form-label">Полное наименование</label>
+                        <div className="col-sm-10"><input type="text" className="form-control" id="full_name" value={form.full_name} onChange={onChangeText}/></div>
                     </div>
 
-                    <hr/>
-                    <h4>Реквизиты</h4>
+                    <h6 className="card-title text-center">Реквизиты</h6>
+                    <br/>
                     <div className="mb-3 row">
                         <label htmlFor="inn" className="col-sm-2 col-form-label">ИНН</label>
                         <div className="col-sm-10"><input type="text" className="form-control" id="inn" value={form.inn} onChange={onChangeText}/></div>
@@ -114,15 +88,15 @@ function ArticleAdd (props) {
                     </div>
 
                     <div className="mb-3 row">
-                        <label htmlFor="paymentAccount" className="col-sm-2 col-form-label">Расчетный счет</label>
-                        <div className="col-sm-10"><input type="text" className="form-control" id="paymentAccount" value={form.paymentAccount} onChange={onChangeText}/></div>
+                        <label htmlFor="payment_account" className="col-sm-2 col-form-label">Расчетный счет</label>
+                        <div className="col-sm-10"><input type="text" className="form-control" id="payment_account" value={form.payment_account} onChange={onChangeText}/></div>
                     </div>
 
-                    <hr/>
-                    <h4>Адрес</h4>
+                    <h6 className="card-title text-center">Адрес</h6>
+                    <br/>
                     <div className="mb-3 row">
-                        <label htmlFor="postCode" className="col-sm-2 col-form-label">Почтовый индекс</label>
-                        <div className="col-sm-10"><input type="text" className="form-control" id="postCode" value={form.postCode} onChange={onChangeText}/></div>
+                        <label htmlFor="post_code" className="col-sm-2 col-form-label">Почтовый индекс</label>
+                        <div className="col-sm-10"><input type="text" className="form-control" id="post_code" value={form.post_code} onChange={onChangeText}/></div>
                     </div>
 
                     <div className="mb-3 row">
@@ -172,9 +146,9 @@ function ArticleAdd (props) {
 
                     <button type="submit" className="btn btn-primary">Добавить</button>
 
-                </form>
+                </div>
             </div>
-        </div>
+        </form>
 
     }
 
