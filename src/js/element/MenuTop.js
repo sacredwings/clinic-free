@@ -14,8 +14,8 @@ function MenuTop(props) {
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav">
                         <Link className="nav-link active" aria-current="page" to="/">Главная</Link>
-                        <Link className="nav-link active" aria-current="page" to="/organization">Организации</Link>
-                        <Link className="nav-link active" aria-current="page" to="/organization/add">Добавить организацию</Link>
+                        <Link className="nav-link active" aria-current="page" to="/org">Организации</Link>
+                        <Link className="nav-link active" aria-current="page" to="/org/add">Добавить организацию</Link>
                     </div>
                 </div>
             </div>

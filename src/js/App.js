@@ -1,7 +1,12 @@
 import React, {} from 'react';
 import {connect} from "react-redux";
 import {BrowserRouter as Router, Route, Redirect, Switch, Link} from 'react-router-dom';
-import OrganizationAdd from "./organization/Add";
+import OrgAdd from "./org/Add";
+import OrgGet from "./org/Get";
+import OrgContractGet from "./orgContract/Get";
+import OrgContractAdd from "./orgContract/Add";
+import ClientAdd from "./user/addClient";
+
 import MenuTop from "./element/MenuTop";
 import Footer from "./element/Footer";
 
@@ -26,11 +31,20 @@ function App(props) {
     const pageNoAuth = () => {
         //массив
         let pages = [
-            {path: '/organization/add', component: OrganizationAdd},
+            //организации
+            {path: '/org/add', component: OrgAdd},
+            {path: '/org', component: OrgGet},
+
+            //договора
+            {path: '/org-contract/org-:id', component: OrgContractGet},
+            {path: '/org-contract/org-:id/add', component: OrgContractAdd},
+
+            //клиенты организации
+            {path: '/contract/:id', component: ClientAdd},
         ];
         //формирование
         pages = pages.map(function (page, i) {
-            return <Route key={i} path={page.path} component={page.component} />
+            return <Route exact key={i} path={page.path} component={page.component} />
         });
         //вывод
         return pages

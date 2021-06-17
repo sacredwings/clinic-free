@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import axios from "axios";
 
-function ArticleAdd (props) {
+function Add (props) {
     const formDefault = {
         name: '',
         full_name: '',
@@ -164,5 +164,5 @@ export default connect (
     dispatch => ({
 
     })
-)(ArticleAdd);
+)(Add);
 
