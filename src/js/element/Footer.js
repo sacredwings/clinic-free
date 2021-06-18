@@ -7,7 +7,7 @@ function Footer (props) {
             <div className="container">
                 <div className="row">
                     <div className="col-md-auto col-sm-12">
-                        Клиника
+                        @ClinicFree 2021
                     </div>
                 </div>
             </div>

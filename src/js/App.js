@@ -5,7 +5,7 @@ import OrgAdd from "./org/Add";
 import OrgGet from "./org/Get";
 import OrgContractGet from "./orgContract/Get";
 import OrgContractAdd from "./orgContract/Add";
-import ClientAdd from "./user/addClient";
+import WorkerAdd from "./user/WorkerAdd";
 
 import MenuTop from "./element/MenuTop";
 import Footer from "./element/Footer";
@@ -40,7 +40,7 @@ function App(props) {
             {path: '/org-contract/org-:id/add', component: OrgContractAdd},
 
             //клиенты организации
-            {path: '/contract/:id', component: ClientAdd},
+            {path: '/contract/:id', component: WorkerAdd},
         ];
         //формирование
         pages = pages.map(function (page, i) {
