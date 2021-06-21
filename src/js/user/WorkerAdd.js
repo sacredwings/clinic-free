@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import axios from "axios";
 
-function AddWorker (props) {
+function WorkerAdd (props) {
     const formDefault = {
         code: '',
         name: '',
@@ -65,8 +65,8 @@ function AddWorker (props) {
                     </div>
                     <div className="row g-3 align-items-center">
                         <div className="col-3">
-                            <label htmlFor="last_name" className="col-form-label">Пол</label>
-                            <select className="form-select" aria-label="">
+                            <label htmlFor="man" className="col-form-label">Пол</label>
+                            <select className="form-select" id="man" aria-label="">
                                 <option selected value="1">Мужской</option>
                                 <option value="0">Женский</option>
                             </select>
@@ -113,8 +113,8 @@ function AddWorker (props) {
                             <input type="text" className="form-control" id="housing" value={form.housing} onChange={onChangeText}/>
                         </div>
                         <div className="col-1">
-                            <label htmlFor="квартира" className="col-form-label">Квартира</label>
-                            <input type="text" className="form-control" id="квартира" value={form.квартира} onChange={onChangeText}/>
+                            <label htmlFor="apt" className="col-form-label">Квартира</label>
+                            <input type="text" className="form-control" id="apt" value={form.apt} onChange={onChangeText}/>
                         </div>
                         <div className="col-1">
                             <label htmlFor="building" className="col-form-label">Строение</label>
@@ -154,11 +154,11 @@ function AddWorker (props) {
 
                     <div className="row g-3 align-items-center">
                         <div className="col-6">
-                            <label htmlFor="passport_issued_by" className="col-form-label">Кем выдан</label>
-                            <input type="text" className="form-control" id="passport_issued_by" value={form.phone} onChange={onChangeText}/>
+                            <label htmlFor="phone" className="col-form-label">Телефон</label>
+                            <input type="text" className="form-control" id="phone" value={form.phone} onChange={onChangeText}/>
                         </div>
                         <div className="col-6">
-                            <label htmlFor="phone_additional" className="col-form-label">Кем выдан</label>
+                            <label htmlFor="phone_additional" className="col-form-label">Дополнительный телефон</label>
                             <input type="text" className="form-control" id="phone_additional" value={form.phone_additional} onChange={onChangeText}/>
                         </div>
                     </div>
@@ -179,6 +179,16 @@ function AddWorker (props) {
                         <div className="col-4">
                             <label htmlFor="employment_date" className="col-form-label">Дата приема на работу</label>
                             <input type="date" className="form-control" id="employment_date" value={form.employment_date} onChange={onChangeText}/>
+                        </div>
+                    </div>
+                    <div className="row g-3 align-items-center">
+                        <div className="col-4">
+                            <label htmlFor="work_place" className="col-form-label">Место службы (работы)</label>
+                            <input type="text" className="form-control" id="work_place" value={form.work_place} onChange={onChangeText}/>
+                        </div>
+                        <div className="col-4">
+                            <label htmlFor="work_experience" className="col-form-label">Стаж (лет)</label>
+                            <input type="text" className="form-control" id="work_experience" value={form.work_experience} onChange={onChangeText}/>
                         </div>
                     </div>
                     <br/>
@@ -203,5 +213,5 @@ export default connect (
     dispatch => ({
 
     })
-)(AddWorker);
+)(WorkerAdd);
 
