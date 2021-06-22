@@ -4,10 +4,41 @@ import axios from "axios";
 
 function WorkerAdd (props) {
     const formDefault = {
-        code: '',
-        name: '',
-        date_from: '',
-        date_to: ''
+        hf: '1.1',
+
+        first_name: '',
+        last_name: '',
+        patronymic_name: '',
+
+        man: 1,
+
+        date_birth: null,
+
+        oms_policy_number: null,
+        snils: null,
+
+        region: null,
+        city: null,
+        street: null,
+        house: null,
+        housing: null,
+        apt: null,
+        building: null,
+
+        passport_serial: null,
+        passport_number: null,
+        passport_date: null,
+
+        passport_issued_by: null,
+        phone: null,
+        phone_additional: null,
+
+        subdivision: null,
+        profession: null,
+        employment_date: null,
+
+        work_place: null,
+        work_experience: null,
     }
 
     let [form, setForm] = useState(formDefault)
@@ -31,10 +62,10 @@ function WorkerAdd (props) {
     const onFormSubmit = async (e) => {
         e.preventDefault() // Stop form submit
 
-        const url = '/api/org-contract/add';
+        const url = '/api/worker/add';
 
         let fields = form
-        fields.org_id = props.match.params.id
+        fields.org_contract_id = props.match.params.id
 
         let result = await axios.post(url, form);
 
@@ -67,7 +98,7 @@ function WorkerAdd (props) {
                         <div className="col-3">
                             <label htmlFor="man" className="col-form-label">Пол</label>
                             <select className="form-select" id="man" aria-label="">
-                                <option selected value="1">Мужской</option>
+                                <option defaultValue="1">Мужской</option>
                                 <option value="0">Женский</option>
                             </select>
                         </div>
@@ -84,16 +115,22 @@ function WorkerAdd (props) {
                             <input type="text" className="form-control" id="snils" value={form.snils} onChange={onChangeText}/>
                         </div>
                     </div>
+                    <div className="row g-3 align-items-center">
+                        <div className="col-12">
+                            <label htmlFor="hf" className="col-form-label">Вредные факторы</label>
+                            <input type="text" className="form-control" id="hf" value={form.hf} onChange={onChangeText}/>
+                        </div>
+                    </div>
                     <br/>
                     <h6 className="card-title text-center">Адрес</h6>
                     <br/>
 
                     <div className="row g-3 align-items-center">
-                        <div className="col-4">
+                        <div className="col-6">
                             <label htmlFor="region" className="col-form-label">Область</label>
                             <input type="text" className="form-control" id="region" value={form.region} onChange={onChangeText}/>
                         </div>
-                        <div className="col-4">
+                        <div className="col-6">
                             <label htmlFor="city" className="col-form-label">Нас. пункт</label>
                             <input type="text" className="form-control" id="city" value={form.city} onChange={onChangeText}/>
                         </div>
@@ -164,7 +201,7 @@ function WorkerAdd (props) {
                     </div>
 
                     <br/>
-                    <h6 className="card-title text-center">Паспорт сотрудника</h6>
+                    <h6 className="card-title text-center">Работа (служба)</h6>
                     <br/>
 
                     <div className="row g-3 align-items-center">

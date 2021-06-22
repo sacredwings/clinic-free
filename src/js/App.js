@@ -9,6 +9,7 @@ import WorkerAdd from "./user/WorkerAdd";
 
 import MenuTop from "./element/MenuTop";
 import Footer from "./element/Footer";
+import Landing from "./element/Landing";
 
 function App(props) {
 
@@ -31,6 +32,8 @@ function App(props) {
     const pageNoAuth = () => {
         //массив
         let pages = [
+            {path: '/', component: Landing},
+
             //организации
             {path: '/org/add', component: OrgAdd},
             {path: '/org', component: OrgGet},

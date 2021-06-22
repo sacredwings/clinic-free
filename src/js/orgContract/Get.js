@@ -7,9 +7,11 @@ function Get (props) {
 
     let [list, setList] = useState([])
     let [request, setRequest] = useState([])
+    let [org, setOrg] = useState(null)
 
     useEffect(async () => {
         await Get()
+        await OrgGetById()
 
         console.log(props)
     }, [])
@@ -31,6 +33,22 @@ function Get (props) {
         console.log(result)
     }
 
+    const OrgGetById = async () => {
+        console.log(props)
+        const url = '/api/org/getById';
+
+        let fields = {
+            params: {
+                id: props.match.params.id
+            }
+        }
+        let result = await axios.get(url, fields);
+
+        result = result.data;
+
+        setOrg(result.response)
+    }
+
     const List = (arList) => {
         return <div className="list-group">
             {arList.map((list, i) => {
@@ -42,8 +60,8 @@ function Get (props) {
 
     return (
         <>
-            <a className="btn btn-primary" href={`/org-contract/org-${props.match.params.id}/add`} role="button">+ Контракт</a>
-            <br/>
+            <h1>Договора</h1>
+            <p><a className="btn btn-success btn-sm" href={`/org-contract/org-${props.match.params.id}/add`} role="button">+</a> "{(org) ? org.name : null}"</p>
             {(list.length) ? List(list) : null}
         </>
 

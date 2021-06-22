@@ -33,8 +33,11 @@ function Get (props) {
     }
 
     return (
+        <div>
+            <h1>Организации</h1>
+            {(list.length) ? List(list) : null}
+        </div>
 
-        (list.length) ? List(list) : null
     )
 }
 
