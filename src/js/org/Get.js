@@ -26,7 +26,7 @@ function Get (props) {
     const List = (arList) => {
         return <div className="list-group">
             {arList.map((list, i) => {
-                let href = `/org-contract/org-${list._id}`
+                let href = `/org-${list._id}/contract`
                 return <Link to={href} key={i} className="list-group-item list-group-item-action">{list.name}</Link>
             })}
         </div>

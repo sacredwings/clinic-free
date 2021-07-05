@@ -39,11 +39,12 @@ function App(props) {
             {path: '/org', component: OrgGet},
 
             //договора
-            {path: '/org-contract/org-:id', component: OrgContractGet},
-            {path: '/org-contract/org-:id/add', component: OrgContractAdd},
+            {path: '/org-:id/contract', component: OrgContractGet},
+            {path: '/org-:id/contract/add', component: OrgContractAdd},
 
             //клиенты организации
-            {path: '/contract/:id', component: WorkerAdd},
+            {path: '/contract-:id/user', component: WorkerAdd},
+            {path: '/contract-:id/user/add', component: WorkerAdd},
         ];
         //формирование
         pages = pages.map(function (page, i) {

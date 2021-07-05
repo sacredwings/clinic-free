@@ -52,7 +52,7 @@ function Get (props) {
     const List = (arList) => {
         return <div className="list-group">
             {arList.map((list, i) => {
-                let href = `/contract/${list._id}`
+                let href = `/contract-${list._id}/user`
                 return <Link to={href} key={i} className="list-group-item list-group-item-action">{list.name}</Link>
             })}
         </div>
@@ -61,7 +61,7 @@ function Get (props) {
     return (
         <>
             <h1>Договора</h1>
-            <p><a className="btn btn-success btn-sm" href={`/org-contract/org-${props.match.params.id}/add`} role="button">+</a> "{(org) ? org.name : null}"</p>
+            <p><a className="btn btn-success btn-sm" href={`/org-${props.match.params.id}/contract/add`} role="button">+</a> "{(org) ? org.name : null}"</p>
             {(list.length) ? List(list) : null}
         </>
 

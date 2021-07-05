@@ -62,7 +62,7 @@ function WorkerAdd (props) {
     const onFormSubmit = async (e) => {
         e.preventDefault() // Stop form submit
 
-        const url = '/api/worker/add';
+        const url = '/api/hf-user/add';
 
         let fields = form
         fields.org_contract_id = props.match.params.id
