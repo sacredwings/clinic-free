@@ -1,11 +1,12 @@
 import React, {} from 'react';
 import {connect} from "react-redux";
 import {BrowserRouter as Router, Route, Redirect, Switch, Link} from 'react-router-dom';
-import OrgAdd from "./org/Add";
-import OrgGet from "./org/Get";
-import OrgContractGet from "./orgContract/Get";
-import OrgContractAdd from "./orgContract/Add";
-import WorkerAdd from "./user/WorkerAdd";
+import OrgAdd from "./hfOrg/Add";
+import OrgGet from "./hfOrg/Get";
+import OrgContractGet from "./hfContract/Get";
+import OrgContractAdd from "./hfContract/Add";
+import HfUserAdd from "./hfUser/Add";
+import HfUserGet from "./hfUser/Get";
 
 import MenuTop from "./element/MenuTop";
 import Footer from "./element/Footer";
@@ -43,8 +44,8 @@ function App(props) {
             {path: '/org-:id/contract/add', component: OrgContractAdd},
 
             //клиенты организации
-            {path: '/contract-:id/user', component: WorkerAdd},
-            {path: '/contract-:id/user/add', component: WorkerAdd},
+            {path: '/contract-:id/user', component: HfUserGet},
+            {path: '/contract-:id/user/add', component: HfUserAdd},
         ];
         //формирование
         pages = pages.map(function (page, i) {

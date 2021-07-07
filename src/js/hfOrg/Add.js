@@ -44,7 +44,7 @@ function Add (props) {
     const onFormSubmit = async (e) => {
         e.preventDefault() // Stop form submit
 
-        const url = '/api/org/add';
+        const url = '/api/hf-org/add';
 
         let result = await axios.post(url, form);
 

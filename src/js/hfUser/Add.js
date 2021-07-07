@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import axios from "axios";
 
-function WorkerAdd (props) {
+function HfUserAdd (props) {
     const formDefault = {
         hf: '1.1',
 
@@ -65,7 +65,7 @@ function WorkerAdd (props) {
         const url = '/api/hf-user/add';
 
         let fields = form
-        fields.org_contract_id = props.match.params.id
+        fields.contract_id = props.match.params.id
 
         let result = await axios.post(url, form);
 
@@ -250,5 +250,5 @@ export default connect (
     dispatch => ({
 
     })
-)(WorkerAdd);
+)(HfUserAdd);
 

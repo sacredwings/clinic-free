@@ -16,9 +16,10 @@ function Get (props) {
         console.log(props)
     }, [])
 
+    //список договоров
     const Get = async () => {
         console.log(props)
-        const url = '/api/org-contract/get';
+        const url = '/api/hf-contract/get';
 
         let fields = {
             params: {
@@ -33,9 +34,10 @@ function Get (props) {
         console.log(result)
     }
 
+    //название организации
     const OrgGetById = async () => {
         console.log(props)
-        const url = '/api/org/getById';
+        const url = '/api/hf-org/getById';
 
         let fields = {
             params: {
@@ -61,7 +63,7 @@ function Get (props) {
     return (
         <>
             <h1>Договора</h1>
-            <p><a className="btn btn-success btn-sm" href={`/org-${props.match.params.id}/contract/add`} role="button">+</a> "{(org) ? org.name : null}"</p>
+            <p><Link className="btn btn-success btn-sm" to={`/org-${props.match.params.id}/contract/add`} role="button">+</Link> "{(org) ? org.name : null}"</p>
             {(list.length) ? List(list) : null}
         </>
 

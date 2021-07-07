@@ -13,7 +13,7 @@ function Get (props) {
     }, [])
 
     const Get = async () => {
-        const url = '/api/org/get';
+        const url = '/api/hf-org/get';
 
         let result = await axios.get(url, {});
 
@@ -35,6 +35,7 @@ function Get (props) {
     return (
         <div>
             <h1>Организации</h1>
+            <p><Link className="btn btn-success btn-sm" to={`/org/add`} role="button">+</Link></p>
             {(list.length) ? List(list) : null}
         </div>
 

@@ -31,7 +31,7 @@ function Add (props) {
     const onFormSubmit = async (e) => {
         e.preventDefault() // Stop form submit
 
-        const url = '/api/org-contract/add';
+        const url = '/api/hf-contract/add';
 
         let fields = form
         fields.org_id = props.match.params.id
