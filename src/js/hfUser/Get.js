@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import axios from "axios";
+import Statistic from "../hfContract/Statistic";
 
 function HfUserGet (props) {
 
@@ -29,7 +30,7 @@ function HfUserGet (props) {
 
         result = result.data;
 
-        //setList(prev => ([...prev, ...result.response.items]))
+        setList(prev => ([...prev, ...result.response.items]))
         console.log(result)
     }
 
@@ -53,15 +54,18 @@ function HfUserGet (props) {
         return <div className="list-group">
             {arList.map((list, i) => {
                 let href = `/contract-${list._id}/user`
-                return <Link to={href} key={i} className="list-group-item list-group-item-action">{list.name}</Link>
+                return <Link to={href} key={i} className="list-group-item list-group-item-action">{list.user[0].last_name} {list.user[0].first_name} {list.user[0].patronymic_name}</Link>
             })}
         </div>
     }
 
     return (
         <>
-            <h1>Договора</h1>
+            <h1>Сотрудники организации</h1>
             <p><Link className="btn btn-success btn-sm" to={`/contract-${props.match.params.id}/user/add`} role="button">+</Link> "{(org) ? org.name : null}"</p>
+
+            <Statistic contract_id={props.match.params.id}/>
+            <hr/>
             {(list.length) ? List(list) : null}
         </>
 

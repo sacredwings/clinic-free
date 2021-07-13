@@ -8,6 +8,8 @@ import OrgContractAdd from "./hfContract/Add";
 import HfUserAdd from "./hfUser/Add";
 import HfUserGet from "./hfUser/Get";
 
+import Admin from "./admin/init";
+
 import MenuTop from "./element/MenuTop";
 import Footer from "./element/Footer";
 import Landing from "./element/Landing";
@@ -46,6 +48,8 @@ function App(props) {
             //клиенты организации
             {path: '/contract-:id/user', component: HfUserGet},
             {path: '/contract-:id/user/add', component: HfUserAdd},
+
+            {path: '/admin', component: Admin},
         ];
         //формирование
         pages = pages.map(function (page, i) {
