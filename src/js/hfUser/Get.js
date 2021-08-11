@@ -53,7 +53,7 @@ function HfUserGet (props) {
     const List = (arList) => {
         return <div className="list-group">
             {arList.map((list, i) => {
-                let href = `/contract-${list._id}/user`
+                let href = `/contract-${props.match.params.id}/user-${list.user_id}`
                 return <Link to={href} key={i} className="list-group-item list-group-item-action">{list.user[0].last_name} {list.user[0].first_name} {list.user[0].patronymic_name}</Link>
             })}
         </div>
