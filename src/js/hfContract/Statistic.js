@@ -4,13 +4,14 @@ import {Link} from 'react-router-dom';
 import axios from "axios";
 
 function HfContractStatistic (props) {
-    let [list, setList] = useState([])
+    let [list, setList] = useState({})
 
     useEffect(async () => {
         await Get()
     }, [])
 
     const Get = async () => {
+
         console.log(props)
         const url = '/api/hf-contract/statistic';
 
@@ -23,6 +24,7 @@ function HfContractStatistic (props) {
 
         result = result.data;
 
+
         setList(prev => (result.response))
     }
 
@@ -30,7 +32,10 @@ function HfContractStatistic (props) {
         const style = {
             fontSize: '12px'
         }
-        return list.map((item)=>{
+
+        if ((!list) || (!list.research)) return null
+
+        return list.research.map((item)=>{
             return <p style={style}>
                 {item.name}
                 <span className="badge bg-secondary">{item.count}</span>
@@ -41,7 +46,10 @@ function HfContractStatistic (props) {
         const style = {
             fontSize: '12px'
         }
-        return list.map((item)=>{
+
+        if ((!list) || (!list.specialty)) return null
+
+        return list.specialty.map((item)=>{
             return <p style={style}>
                 {item.name}
                 <span className="badge bg-secondary">{item.count}</span>
@@ -52,10 +60,10 @@ function HfContractStatistic (props) {
     return (
         <>
             <h3>Иследования</h3>
-            {Research(list.research)}
+            {Research(list)}
 
             <h3>Специалисты</h3>
-            {Specialty(list.specialty)}
+            {Specialty(list)}
         </>
 
     )
