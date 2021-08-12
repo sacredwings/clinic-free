@@ -9,6 +9,9 @@ import HfUserAdd from "./hfUser/Add";
 import HfUserGet from "./hfUser/Get";
 import HfUserGetById from "./hfUser/GetById";
 
+import OrgPrice from "./hfOrg/Price";
+import OrgPriceTotal from "./hfOrg/PriceTotal";
+
 import Admin from "./admin/init";
 
 import MenuTop from "./element/MenuTop";
@@ -45,6 +48,8 @@ function App(props) {
             //договора
             {path: '/org-:id/contract', component: OrgContractGet},
             {path: '/org-:id/contract/add', component: OrgContractAdd},
+            {path: '/org/price', component: OrgPrice},
+
 
             //клиенты организации
             {path: '/contract-:id/user', component: HfUserGet},
