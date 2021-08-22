@@ -62,8 +62,8 @@ function Get (props) {
 
     return (
         <>
-            <h1>Договора</h1>
-            <p><Link className="btn btn-success btn-sm" to={`/org-${props.match.params.id}/contract/add`} role="button">+</Link> "{(org) ? org.name : null}"</p>
+            <h1>{(org) ? org.name : null}</h1>
+            <p><Link className="btn btn-success btn-sm" to={`/org-${props.match.params.id}/contract/add`} role="button">+</Link> Договор</p>
             {(list.length) ? List(list) : null}
         </>
 
