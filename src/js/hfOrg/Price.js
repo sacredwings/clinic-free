@@ -11,26 +11,36 @@ function Price (props) {
     let [tableName, setTableName] = useState('research')
 
     let [listOrg, setListOrg] = useState([])
-    let [listOrgSelectValue, setListOrgSelectValue] = useState('')
+    let [listContract, setListContract] = useState([])
 
-    let [request, setRequest] = useState([])
+    let [listOrgSelectValue, setListOrgSelectValue] = useState('')
+    let [listContractSelectValue, setListContractSelectValue] = useState('')
+
+    //let [request, setRequest] = useState([])
 
     useEffect(async () => {
-        await Get()
+        //загрузка организаций
         await GetOrg()
+
+        //прайс без организаций
+        await GetPrice()
     }, [])
 
-    const Get = async (value) => {
+    //запрос должен быть с контрактом, поэтому его отслеживаем
+    useEffect(async () => {
+        await GetPrice(listOrgSelectValue, listContractSelectValue)
+    }, [listContractSelectValue])
+
+    const GetPrice = async (org_id, contract_id) => {
         const url = '/api/hf-org/priceGet';
 
         let fields = {
             params: {
-                org_id: value
+                org_id: org_id,
+                contract_id: contract_id
             }
         }
-        //if (!Number (listOrgSelectValue)) fields={}
 
-        console.log(fields)
         let result = await axios.get(url, fields);
 
         result = result.data;
@@ -43,25 +53,68 @@ function Price (props) {
     const GetOrg = async () => {
         const url = '/api/hf-org/get';
 
-        let result = await axios.get(url, {});
+        let fields = {
+            params: {
+                contract: 1
+            }
+        }
+        let result = await axios.get(url, fields);
 
         result = result.data;
 
         setListOrg(prev => (result.response.items))
-        console.log(result)
+
+        /*
+        //организаций не существует
+        if (!result.response.items.length) return
+
+        if setListContractSelectValue
+        console.log(result)*/
     }
 
-    const HandleChange = async (e) => {
-        setListOrgSelectValue(e.target.value)
-        await Get(e.target.value)
+    const onChangeOrg = async (e) => {
+        let OrgId = e.target.value //id выбранной организации из массива
+        let arContract = [] //по умолчанию у организации нет контрактов
+        setListOrgSelectValue(OrgId) //сохраням в статус
+
+        //перебор организаций, ищем ту, что выбранна
+        listOrg.forEach(function(item, i, arr) {
+            //сходиться
+            if (item._id === OrgId) {
+                //вытаскиваем массив контрактов
+                arContract = item.contract
+
+                //сохраняем id первого контракта
+                if (item.contract.length)
+                    setListContractSelectValue(item.contract[0]._id)
+
+                return false
+            }
+        });
+
+        setListContract(arContract)
     }
+    const onChangeContract = async (e) => {
+        setListContractSelectValue(e.target.value)
+    }
+
     const ListOrg = () => {
-        return <select value={listOrgSelectValue} onChange={HandleChange} className="form-select" aria-label="Default select example">
+        return <select value={listOrgSelectValue} onChange={onChangeOrg} className="form-select" aria-label="Default select example">
             <option value="">Невыбрано</option>
             {listOrg.map((item, i)=>{
                 return <option key={i} value={item._id}>{item.name}</option>
             })}
         </select>
+    }
+    const ListContract = () => {
+        if (listContract.length)
+            return <select value={listContractSelectValue} onChange={onChangeContract} className="form-select" aria-label="Default select example">
+                {listContract.map((item, i)=>{
+                    return <option key={i} value={item._id}>{item.name}</option>
+                })}
+            </select>
+
+        return null
     }
 
     const List = () => {
@@ -107,6 +160,7 @@ function Price (props) {
         <div>
             <h1>Прайс</h1>
             {ListOrg()}
+            {ListContract()}
             <br/>
             <div className="row">
                 <div className="col-lg-4">
