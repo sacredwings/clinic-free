@@ -16,6 +16,8 @@ function Price (props) {
     let [listOrgSelectValue, setListOrgSelectValue] = useState('')
     let [listContractSelectValue, setListContractSelectValue] = useState('')
 
+    let [editPriceId, setEditPriceId] = useState(null)
+
     //let [request, setRequest] = useState([])
 
     useEffect(async () => {
@@ -117,6 +119,38 @@ function Price (props) {
         return null
     }
 
+    const EditPrice = (id, price) => {
+        return <div className="input-group">
+                <input type="text" className="form-control" placeholder={price}
+                       aria-label="Recipient's username" aria-describedby="button-addon2"/>
+                    <button className="btn btn-success" type="button" id="button-addon2" onClick={()=>{
+                        setEditPriceId(null)
+                        SavePrice(id)
+                    }}>ок</button>
+            </div>
+    }
+    const NoEditPrice = (id, price) => {
+        return <>
+            {price}
+            <button type="button" className="btn btn-outline-dark" onClick={()=>{setEditPriceId(id)}}>...</button>
+        </>
+    }
+
+    const SavePrice = (id) => {
+        const url = '/api/hf-org/priceEdit';
+
+        let fields = {
+            object_id: id,
+            contract_id: listContractSelectValue,
+            price: 100
+        }
+        let result = axios.post(url, fields);
+
+        result = result.data;
+
+        console.log(result)
+    }
+
     const List = () => {
         let arr = []
         switch (tableName) {
@@ -149,7 +183,9 @@ function Price (props) {
                 return <tr key={i}>
                     <th scope="row">{i+1}</th>
                     <td>{list.name}</td>
-                    <td>{price}</td>
+                    <td>
+                        {((editPriceId) && (list._id === editPriceId)) ? EditPrice(list._id, price) : NoEditPrice(list._id, price)}
+                    </td>
                 </tr>
             })}
             </tbody>
