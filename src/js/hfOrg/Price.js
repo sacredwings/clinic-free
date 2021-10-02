@@ -16,7 +16,9 @@ function Price (props) {
     let [listOrgSelectValue, setListOrgSelectValue] = useState('')
     let [listContractSelectValue, setListContractSelectValue] = useState('')
 
-    let [editPriceId, setEditPriceId] = useState(null)
+    let [editPriceId, setEditPriceId] = useState(null) /* чтобы понимать на какой строке показывать форму */
+    let [savePrice, setSavePrice] = useState('') /* временное хранение цены */
+
 
     //let [request, setRequest] = useState([])
 
@@ -74,6 +76,44 @@ function Price (props) {
         console.log(result)*/
     }
 
+    const onChangePrice = async (e, id) => {
+        setSavePrice(e.target.value)
+        /*
+        console.log(e.target.value)
+        console.log(id)
+        //setSavePrice(e.target.value)
+
+        let value = e.target.value
+        let arr = []
+        let func = ()=>{}
+
+        switch (tableName) {
+            case 'research':
+                arr = research
+                func = setResearch
+                break
+            case 'analysis':
+                arr = analysis
+                func = setAnalysis
+                break;
+            case 'specialty':
+                arr = specialty
+                func = setSpecialty
+                break;
+        }
+
+        arr.forEach(function(item, i, arr) {
+            if (id === item._id) {
+                console.log('есть такой', i)
+
+                arr[i] = {...arr[i], price: value}
+                console.log(arr)
+                func(arr)
+            }
+
+        });*/
+    }
+
     const onChangeOrg = async (e) => {
         let OrgId = e.target.value //id выбранной организации из массива
         let arContract = [] //по умолчанию у организации нет контрактов
@@ -95,11 +135,21 @@ function Price (props) {
         });
 
         setListContract(arContract)
+
+        if ((!arContract.length) && (OrgId.length)) {
+            setResearch(prev => ([]))
+            setAnalysis(prev => ([]))
+            setSpecialty(prev => ([]))
+        }
+
     }
+
+    //изменение контракта
     const onChangeContract = async (e) => {
         setListContractSelectValue(e.target.value)
     }
 
+    //списки
     const ListOrg = () => {
         return <select value={listOrgSelectValue} onChange={onChangeOrg} className="form-select" aria-label="Default select example">
             <option value="">Невыбрано</option>
@@ -119,30 +169,54 @@ function Price (props) {
         return null
     }
 
+    //форма сохранения цены
     const EditPrice = (id, price) => {
+        let placeholder = ' ? '
+        if (price)
+            placeholder = price
+
         return <div className="input-group">
-                <input type="text" className="form-control" placeholder={price}
-                       aria-label="Recipient's username" aria-describedby="button-addon2"/>
-                    <button className="btn btn-success" type="button" id="button-addon2" onClick={()=>{
-                        setEditPriceId(null)
-                        SavePrice(id)
-                    }}>ок</button>
-            </div>
+            <input type="text" className="form-control" placeholder={placeholder}
+                   aria-label="Recipient's username with two button addons" value={savePrice} onChange={
+                       (e)=>onChangePrice(e, id)
+                   }/>
+
+                <button className="btn btn-success" type="button" onClick={()=>{
+                    //форму не показывать
+                    setEditPriceId(null)
+
+                    //сохранение цены на сервер и во в таблице (не работает)
+                    SavePrice(id)
+                }}>ОК</button>
+        </div>
     }
+    //отображение цены
     const NoEditPrice = (id, price) => {
+        if (!price)
+            price = ' ? '
+
         return <>
+            {/* цена */}
             {price}
-            <button type="button" className="btn btn-outline-dark" onClick={()=>{setEditPriceId(id)}}>...</button>
+            <button type="button" className="btn btn-outline-dark" onClick={()=>{
+                //форму показать на нужной строке
+                setEditPriceId(id)
+
+                //обнулить цену в форме ввода
+                setSavePrice('')
+            }}>...</button>
         </>
     }
 
+    //сохранение суммы
     const SavePrice = (id) => {
         const url = '/api/hf-org/priceEdit';
 
         let fields = {
             object_id: id,
+            org_id: listOrgSelectValue,
             contract_id: listContractSelectValue,
-            price: 100
+            price: savePrice
         }
         let result = axios.post(url, fields);
 
@@ -151,6 +225,7 @@ function Price (props) {
         console.log(result)
     }
 
+    //загрузка таблицы
     const List = () => {
         let arr = []
         switch (tableName) {
@@ -176,7 +251,7 @@ function Price (props) {
             <tbody>
             {arr.map((list, i) => {
                 let href = `#`
-                let price = " ? "
+                let price = null
                 if ((list.price[0]) && (list.price[0].price))
                     price = list.price[0].price
 
