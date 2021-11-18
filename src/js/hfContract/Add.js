@@ -9,6 +9,8 @@ function Add (props) {
         date_to: ''
     }
 
+    let [err, setErr] = useState(null)
+
     let [form, setForm] = useState(formDefault)
     let [listTypeSelectValue, setListTypeSelectValue] = useState('')
 
@@ -40,6 +42,9 @@ function Add (props) {
         let result = await axios.post(url, fields);
 
         result = result.data;
+
+        if (result.error)
+            setErr(true)
 
     }
 
@@ -83,6 +88,7 @@ function Add (props) {
                         <div className="col-sm-10"><input type="date" className="form-control" id="date_to" value={form.date_to} onChange={onChangeText}/></div>
                     </div>
 
+                    {/*
                     <div className="mb-3 row">
                         <label htmlFor="type" className="col-sm-2 col-form-label">Тип расчета</label>
                         <div className="col-sm-10">
@@ -94,6 +100,7 @@ function Add (props) {
                         <label htmlFor="price" className="col-sm-2 col-form-label">Цена за человека</label>
                         <div className="col-sm-10"><input type="text" className="form-control" id="price" value={form.price} onChange={onChangeText}/></div>
                     </div>
+                    */}
 
                     <button type="submit" className="btn btn-primary">Добавить</button>
 

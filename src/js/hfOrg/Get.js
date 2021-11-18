@@ -34,8 +34,7 @@ function Get (props) {
 
     return (
         <div>
-            <h1>Организации</h1>
-            <p><Link className="btn btn-success btn-sm" to={`/org/add`} role="button">+</Link></p>
+            <h1>Организации <Link className="btn btn-success btn-sm" to={`/org/add`} role="button">+</Link></h1>
             {(list.length) ? List(list) : null}
         </div>
 
