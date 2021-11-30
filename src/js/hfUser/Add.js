@@ -65,7 +65,10 @@ function HfUserAdd (props) {
         const url = '/api/hf-user/add';
 
         let fields = form
-        fields.contract_id = props.match.params.id
+
+        //если договор есть, привязываем к организации
+        if (props.match.params.id)
+            fields.contract_id = props.match.params.id
 
         let result = await axios.post(url, form);
 

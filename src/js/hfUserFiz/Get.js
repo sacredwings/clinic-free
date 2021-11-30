@@ -12,7 +12,6 @@ function HfUserGet (props) {
 
     useEffect(async () => {
         await Get()
-        await DogovorGetById()
 
         console.log(props)
     }, [])
@@ -37,22 +36,6 @@ function HfUserGet (props) {
         console.log(result)
     }
 
-    const DogovorGetById = async () => {
-        console.log(props)
-        const url = '/api/hf-contract/getById';
-
-        let fields = {
-            params: {
-                id: props.match.params.id
-            }
-        }
-        let result = await axios.get(url, fields);
-
-        result = result.data;
-
-        setOrg(result.response)
-    }
-
     const List = (arList) => {
         return <div className="list-group">
             {arList.map((list, i) => {
@@ -64,10 +47,8 @@ function HfUserGet (props) {
 
     return (
         <>
-            <h1>Сотрудники организации</h1>
-            <p><Link className="btn btn-success btn-sm" to={`/contract-${props.match.params.id}/user/add`} role="button">+</Link> "{(org) ? org.name : null}"</p>
-
-            <Statistic contract_id={props.match.params.id}/>
+            <h1>Проф. физ. лица</h1>
+            <p><Link className="btn btn-success btn-sm" to={`/prof-fiz/user/add`} role="button">+</Link></p>
             <hr/>
             {(list.length) ? List(list) : null}
         </>

@@ -1,22 +1,28 @@
-import React, {} from 'react';
-import {connect} from "react-redux";
-import {BrowserRouter as Router, Route, Redirect, Switch, Link} from 'react-router-dom';
-import OrgAdd from "./hfOrg/Add";
-import OrgGet from "./hfOrg/Get";
-import OrgContractGet from "./hfContract/Get";
-import OrgContractAdd from "./hfContract/Add";
-import HfUserAdd from "./hfUser/Add";
-import HfUserGet from "./hfUser/Get";
-import HfUserGetById from "./hfUser/GetById";
+import React, {} from 'react'
+import {connect} from "react-redux"
+import {BrowserRouter as Router, Route, Redirect, Switch, Link} from 'react-router-dom'
 
-import OrgPrice from "./hfOrg/Price";
-import OrgPriceTotal from "./hfOrg/PriceTotal";
+import OrgAdd from "./hfOrg/Add"
+import OrgGet from "./hfOrg/Get"
 
-import Admin from "./admin/init";
+import OrgContractGet from "./hfContract/Get"
+import OrgContractAdd from "./hfContract/Add"
 
-import MenuTop from "./element/MenuTop";
-import Footer from "./element/Footer";
-import Landing from "./element/Landing";
+import HfUserAdd from "./hfUser/Add"
+import HfUserGet from "./hfUser/Get"
+import HfUserGetById from "./hfUser/GetById"
+
+import HfUserFizGet from "./hfUserFiz/Get"
+import HfUserFizPrice from "./hfUserFiz/Price"
+
+import OrgPrice from "./hfOrg/Price"
+import OrgPriceTotal from "./hfOrg/PriceTotal"
+
+import Admin from "./admin/init"
+
+import MenuTop from "./element/MenuTop"
+import Footer from "./element/Footer"
+import Landing from "./element/Landing"
 
 function App(props) {
 
@@ -50,10 +56,14 @@ function App(props) {
             {path: '/org-:id/contract/add', component: OrgContractAdd},
             {path: '/org/price', component: OrgPrice},
 
-
             //клиенты организации
             {path: '/contract-:id/user', component: HfUserGet},
             {path: '/contract-:id/user/add', component: HfUserAdd},
+
+            //клиенты
+            {path: '/prof-fiz/user/add', component: HfUserAdd},
+            {path: '/prof-fiz/user/get', component: HfUserFizGet},
+            {path: '/prof-fiz/price', component: HfUserFizPrice},
 
             //1 клиент организации
             {path: '/contract-:contract_id/user-:user_id', component: HfUserGetById},

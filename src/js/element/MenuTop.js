@@ -15,9 +15,11 @@ function MenuTop(props) {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+
                             <li className="nav-item">
                                 <a className="nav-link" aria-current="page" href="#">Главная</a>
                             </li>
+
                             <li className="nav-item dropdown">
                                 <Link className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                    data-bs-toggle="dropdown" aria-expanded="false">
@@ -32,6 +34,22 @@ function MenuTop(props) {
                                     <li><Link className="dropdown-item" to="/org/price">Прайсы</Link></li>
                                 </ul>
                             </li>
+
+                            <li className="nav-item dropdown">
+                                <Link className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                      data-bs-toggle="dropdown" aria-expanded="false">
+                                    Проф. физ. лица
+                                </Link>
+                                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><Link className="dropdown-item" to="/prof-fiz/user/add">Добавить</Link></li>
+                                    <li><Link className="dropdown-item" to="/prof-fiz/user/get">Список</Link></li>
+                                    <li>
+                                        <hr className="dropdown-divider"/>
+                                    </li>
+                                    <li><Link className="dropdown-item" to="/prof-fiz/price">Прайсы</Link></li>
+                                </ul>
+                            </li>
+
                         </ul>
                     </div>
                 </div>
