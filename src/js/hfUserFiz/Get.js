@@ -40,9 +40,22 @@ function HfUserGet (props) {
         return <div className="list-group">
             {arList.map((list, i) => {
                 let href = `/contract-${props.match.params.id}/user-${list.user_id}`
-                return <Link to={href} key={i} className="list-group-item list-group-item-action">{list.user[0].last_name} {list.user[0].first_name} {list.user[0].patronymic_name}</Link>
+                return <Link to={href} key={i} className="list-group-item list-group-item-action">
+                    {list.user[0].last_name} {list.user[0].first_name} {list.user[0].patronymic_name}
+                    <br/>
+                    {Hf(list.hf)}
+                </Link>
             })}
         </div>
+    }
+
+    const Hf = (arHf) => {
+        return <>
+            {arHf.map((list, i) => {
+                return <span style={{marginLeft: 5}} className="badge bg-primary">{list}</span>
+            })}
+            &nbsp;
+        </>
     }
 
     return (
