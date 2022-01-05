@@ -1,6 +1,6 @@
-import React, {} from 'react'
-import {connect} from "react-redux"
-import {BrowserRouter as Router, Route, Redirect, Switch, Link} from 'react-router-dom'
+import React, {useEffect} from 'react'
+import {connect, useStore} from "react-redux"
+import { BrowserRouter, Routes, Route} from 'react-router-dom';
 
 import OrgAdd from "./hfOrg/Add"
 import OrgGet from "./hfOrg/Get"
@@ -26,16 +26,19 @@ import Landing from "./element/Landing"
 
 function App(props) {
 
+    useEffect(async () => {
+    }, [props])
+
     //страницы с авторизацией
     const pageAuth = () => {
         //массив
         let pages = [
-            //{path: '/organization', component: Organization},
+            //{path: '/organization', element: Organization},
 
         ];
         //формирование
         pages = pages.map(function (page, i) {
-            return <Route exact key={i} path={page.path} component={page.component} />
+            return <Route exact key={i} path={page.path} element={page.element} />
         });
         //вывод
         return pages
@@ -45,66 +48,59 @@ function App(props) {
     const pageNoAuth = () => {
         //массив
         let pages = [
-            {path: '/', component: Landing},
+            {path: '/', element: <Landing />},
 
             //организации
-            {path: '/org/add', component: OrgAdd},
-            {path: '/org', component: OrgGet},
+            {path: '/org/add', element: <OrgAdd/>},
+            {path: '/org', element: <OrgGet/>},
 
             //договора
-            {path: '/org-:id/contract', component: OrgContractGet},
-            {path: '/org-:id/contract/add', component: OrgContractAdd},
-            {path: '/org/price', component: OrgPrice},
+            {path: '/org-:id/contract', element: <OrgContractGet/>},
+            {path: '/org-:id/contract/add', element: <OrgContractAdd/>},
+            {path: '/org/price', element: <OrgPrice/>},
 
             //клиенты организации
-            {path: '/contract-:id/user', component: HfUserGet},
-            {path: '/contract-:id/user/add', component: HfUserAdd},
+            {path: '/contract-:id/user', element: <HfUserGet/>},
+            {path: '/contract-:id/user/add', element: <HfUserAdd/>},
 
             //клиенты
-            {path: '/prof-fiz/user/add', component: HfUserAdd},
-            {path: '/prof-fiz/user/get', component: HfUserFizGet},
-            {path: '/prof-fiz/price', component: HfUserFizPrice},
+            {path: '/prof-fiz/user/add', element: <HfUserAdd/>},
+            {path: '/prof-fiz/user/get', element: <HfUserFizGet/>},
+            {path: '/prof-fiz/price', element: <HfUserFizPrice/>},
 
             //1 клиент организации
-            {path: '/contract-:contract_id/user-:user_id', component: HfUserGetById},
+            {path: '/contract-:contract_id/user-:user_id', element: <HfUserGetById/>},
 
-            {path: '/admin', component: Admin},
+            {path: '/admin', element: <Admin/>},
         ];
         //формирование
         pages = pages.map(function (page, i) {
-            return <Route exact key={i} path={page.path} component={page.component} />
+            return <Route exact key={i} path={page.path} element={page.element} />
         });
         //вывод
         return pages
     }
 
     return (
-        <Router>
+        <BrowserRouter>
             <MenuTop/>
 
             <div className="container">
                 <div className="row">
                     <div className="col-lg-12">
-                        <Switch>
+                        <Routes>
 
-                            {(props.myUser.auth) ? pageAuth() : pageNoAuth()}
+                            {pageNoAuth()}
 
-                        </ Switch >
+                        </Routes >
                     </div>
 
                 </div>
             </div>
 
             <Footer/>
-        </Router>
+        </BrowserRouter>
     )
 }
 
-export default connect (
-    state => ({
-        myUser: state.myUser,
-    }),
-    dispatch => ({
-
-    })
-)(App);
+export default App

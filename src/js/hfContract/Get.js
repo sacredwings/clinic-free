@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import axios from "axios";
 
 function Get (props) {
@@ -8,6 +8,8 @@ function Get (props) {
     let [list, setList] = useState([])
     let [request, setRequest] = useState([])
     let [org, setOrg] = useState(null)
+
+    const { id } = useParams()
 
     useEffect(async () => {
         await Get()
@@ -23,12 +25,13 @@ function Get (props) {
 
         let fields = {
             params: {
-                org_id: props.match.params.id
+                org_id: id
             }
         }
         let result = await axios.get(url, fields);
 
         result = result.data;
+        console.log(result)
 
         setList(prev => ([...prev, ...result.response.items]))
         console.log(result)
@@ -36,12 +39,11 @@ function Get (props) {
 
     //название организации
     const OrgGetById = async () => {
-        console.log(props)
         const url = '/api/hf-org/getById';
 
         let fields = {
             params: {
-                id: props.match.params.id
+                id: id
             }
         }
         let result = await axios.get(url, fields);
@@ -63,7 +65,7 @@ function Get (props) {
     return (
         <>
             <h1>{(org) ? org.name : null}</h1>
-            <p><Link className="btn btn-success btn-sm" to={`/org-${props.match.params.id}/contract/add`} role="button">Добавить договор</Link></p>
+            <p><Link className="btn btn-success btn-sm" to={`/org-${id}/contract/add`} role="button">Добавить договор</Link></p>
             <p>Договора организаци: </p>
             {(list.length) ? List(list) : null}
         </>
@@ -71,12 +73,5 @@ function Get (props) {
     )
 }
 
-export default connect (
-    state => ({
-        myUser: state.myUser,
-    }),
-    dispatch => ({
-
-    })
-)(Get);
+export default Get
 

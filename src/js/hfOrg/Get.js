@@ -41,12 +41,5 @@ function Get (props) {
     )
 }
 
-export default connect (
-    state => ({
-        myUser: state.myUser,
-    }),
-    dispatch => ({
-
-    })
-)(Get);
+export default Get
 

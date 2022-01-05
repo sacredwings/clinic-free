@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import axios from "axios";
+import {useParams} from "react-router-dom";
 
 function HfUserAdd (props) {
     const formDefault = {
@@ -42,6 +43,7 @@ function HfUserAdd (props) {
     }
 
     let [form, setForm] = useState(formDefault)
+    const { id } = useParams()
 
     useEffect(async () => {
     }, [])
@@ -67,8 +69,8 @@ function HfUserAdd (props) {
         let fields = form
 
         //если договор есть, привязываем к организации
-        if (props.match.params.id)
-            fields.contract_id = props.match.params.id
+        if (id)
+            fields.contract_id = id
 
         let result = await axios.post(url, form);
 
@@ -246,12 +248,5 @@ function HfUserAdd (props) {
     )
 }
 
-export default connect (
-    state => ({
-        myUser: state.myUser,
-    }),
-    dispatch => ({
-
-    })
-)(HfUserAdd);
+export default HfUserAdd
 

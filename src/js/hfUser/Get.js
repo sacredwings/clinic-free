@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import axios from "axios";
 import Statistic from "../hfContract/Statistic";
 
@@ -10,6 +10,8 @@ function HfUserGet (props) {
     let [request, setRequest] = useState([])
     let [org, setOrg] = useState(null)
 
+    const { id } = useParams()
+
     useEffect(async () => {
         await Get()
         await DogovorGetById()
@@ -18,7 +20,6 @@ function HfUserGet (props) {
     }, [])
 
     const Get = async () => {
-        console.log(props)
         const url = '/api/hf-user/get';
 
         let fields = {
@@ -26,15 +27,14 @@ function HfUserGet (props) {
         }
 
         //если договор есть, привязываем к организации
-        if (props.match.params.id)
-            fields.params.contract_id = props.match.params.id
+        if (id)
+            fields.params.contract_id = id
 
         let result = await axios.get(url, fields);
 
         result = result.data;
 
         setList(prev => ([...prev, ...result.response.items]))
-        console.log(result)
     }
 
     const DogovorGetById = async () => {
@@ -43,7 +43,7 @@ function HfUserGet (props) {
 
         let fields = {
             params: {
-                id: props.match.params.id
+                id: id
             }
         }
         let result = await axios.get(url, fields);
@@ -56,7 +56,7 @@ function HfUserGet (props) {
     const List = (arList) => {
         return <div className="list-group">
             {arList.map((list, i) => {
-                let href = `/contract-${props.match.params.id}/user-${list.user_id}`
+                let href = `/contract-${id}/user-${list.user_id}`
                 return <Link to={href} key={i} className="list-group-item list-group-item-action">{list.user[0].last_name} {list.user[0].first_name} {list.user[0].patronymic_name}</Link>
             })}
         </div>
@@ -65,9 +65,9 @@ function HfUserGet (props) {
     return (
         <>
             <h1>Сотрудники организации</h1>
-            <p><Link className="btn btn-success btn-sm" to={`/contract-${props.match.params.id}/user/add`} role="button">+</Link> "{(org) ? org.name : null}"</p>
+            <p><Link className="btn btn-success btn-sm" to={`/contract-${id}/user/add`} role="button">+</Link> "{(org) ? org.name : null}"</p>
 
-            <Statistic contract_id={props.match.params.id}/>
+            <Statistic contract_id={id}/>
             <hr/>
             {(list.length) ? List(list) : null}
         </>
@@ -75,12 +75,5 @@ function HfUserGet (props) {
     )
 }
 
-export default connect (
-    state => ({
-        myUser: state.myUser,
-    }),
-    dispatch => ({
-
-    })
-)(HfUserGet);
+export default HfUserGet
 

@@ -1,6 +1,6 @@
 import React, {} from 'react';
 import {connect} from "react-redux";
-import {BrowserRouter as Router, Route, Redirect, Switch, Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 function MenuTop(props) {
     return (
@@ -21,7 +21,7 @@ function MenuTop(props) {
                             </li>
 
                             <li className="nav-item dropdown">
-                                <Link className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                <Link className="nav-link dropdown-toggle" to="#" id="navbarDropdown" role="button"
                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     Организации
                                 </Link>
@@ -36,7 +36,7 @@ function MenuTop(props) {
                             </li>
 
                             <li className="nav-item dropdown">
-                                <Link className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                <Link className="nav-link dropdown-toggle" to="#" id="navbarDropdown" role="button"
                                       data-bs-toggle="dropdown" aria-expanded="false">
                                     Проф. физ. лица
                                 </Link>
@@ -58,11 +58,4 @@ function MenuTop(props) {
     )
 }
 
-export default connect (
-    state => ({
-        myUser: state.myUser,
-    }),
-    dispatch => ({
-
-    })
-)(MenuTop);
+export default MenuTop

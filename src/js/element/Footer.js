@@ -15,12 +15,5 @@ function Footer (props) {
     )
 }
 
-export default connect (
-    state => ({
-        myUser: state.myUser,
-    }),
-    dispatch => ({
-
-    })
-)(Footer);
+export default Footer
 

@@ -297,12 +297,5 @@ function Price (props) {
     )
 }
 
-export default connect (
-    state => ({
-        myUser: state.myUser,
-    }),
-    dispatch => ({
-
-    })
-)(Price);
+export default Price
 

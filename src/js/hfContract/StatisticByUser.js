@@ -83,12 +83,5 @@ function HfContractStatisticByUser (props) {
     )
 }
 
-export default connect (
-    state => ({
-        myUser: state.myUser,
-    }),
-    dispatch => ({
-
-    })
-)(HfContractStatisticByUser);
+export default HfContractStatisticByUser
 

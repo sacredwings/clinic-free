@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import axios from "axios";
+import {useParams} from "react-router-dom";
 
 function Add (props) {
     const formDefault = {
@@ -13,6 +14,8 @@ function Add (props) {
 
     let [form, setForm] = useState(formDefault)
     let [listTypeSelectValue, setListTypeSelectValue] = useState('')
+
+    const { id } = useParams()
 
     useEffect(async () => {
     }, [])
@@ -36,7 +39,7 @@ function Add (props) {
         const url = '/api/hf-contract/add';
 
         let fields = form
-        fields.org_id = props.match.params.id
+        fields.org_id = id
         fields.price = listTypeSelectValue
 
         let result = await axios.post(url, fields);
@@ -115,12 +118,5 @@ function Add (props) {
     )
 }
 
-export default connect (
-    state => ({
-        myUser: state.myUser,
-    }),
-    dispatch => ({
-
-    })
-)(Add);
+export default Add
 

@@ -157,12 +157,5 @@ function Add (props) {
     )
 }
 
-export default connect (
-    state => ({
-        myUser: state.myUser,
-    }),
-    dispatch => ({
-
-    })
-)(Add);
+export default Add
 

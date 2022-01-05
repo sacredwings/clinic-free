@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import axios from "axios";
 import Statistic from "../hfContract/Statistic";
 
@@ -9,6 +9,8 @@ function HfUserGet (props) {
     let [list, setList] = useState([])
     let [request, setRequest] = useState([])
     let [org, setOrg] = useState(null)
+
+    const { id } = useParams()
 
     useEffect(async () => {
         await Get()
@@ -25,8 +27,8 @@ function HfUserGet (props) {
         }
 
         //если договор есть, привязываем к организации
-        if (props.match.params.id)
-            fields.params.contract_id = props.match.params.id
+        if (id)
+            fields.params.contract_id = id
 
         let result = await axios.get(url, fields);
 
@@ -39,7 +41,7 @@ function HfUserGet (props) {
     const List = (arList) => {
         return <div className="list-group">
             {arList.map((list, i) => {
-                let href = `/contract-${props.match.params.id}/user-${list.user_id}`
+                let href = `/contract-${id}/user-${list.user_id}`
                 return <Link to={href} key={i} className="list-group-item list-group-item-action">
                     {list.user[0].last_name} {list.user[0].first_name} {list.user[0].patronymic_name}
                     <br/>
@@ -69,12 +71,5 @@ function HfUserGet (props) {
     )
 }
 
-export default connect (
-    state => ({
-        myUser: state.myUser,
-    }),
-    dispatch => ({
-
-    })
-)(HfUserGet);
+export default HfUserGet
 

@@ -10,11 +10,4 @@ function Landing(props) {
     )
 }
 
-export default connect (
-    state => ({
-        myUser: state.myUser,
-    }),
-    dispatch => ({
-
-    })
-)(Landing);
+export default Landing
