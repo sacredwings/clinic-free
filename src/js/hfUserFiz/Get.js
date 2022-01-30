@@ -13,13 +13,10 @@ function HfUserGet (props) {
     const { id } = useParams()
 
     useEffect(async () => {
-        await Get()
-
-        console.log(props)
+        await Get(true)
     }, [])
 
-    const Get = async () => {
-        console.log(props)
+    const Get = async (start) => {
         const url = '/api/hf-user/get';
 
         let fields = {
@@ -34,27 +31,54 @@ function HfUserGet (props) {
 
         result = result.data;
 
-        setList(prev => ([...prev, ...result.response.items]))
+        //setList(prev => ([...prev, ...result.response.items]))
+        setList(result.response.items)
         console.log(result)
     }
 
+    const Pdf = async (type) => {
+        const url = 'http://localhost:3041/api/hf-org/pdfUser'
+
+        let fields = {
+            params: {
+                type: type
+            }
+        }
+
+        let result = await axios.get(url, fields)
+
+        result = result.data
+
+        document.location.href = `http://localhost:3041/${result.response}`
+        //setList(prev => ([...prev, ...result.response.items]))
+        //console.log(result)
+
+    }
+
     const List = (arList) => {
-        return <div className="list-group">
+        return <ul className="list-group">
             {arList.map((list, i) => {
                 let href = `/contract-${id}/user-${list.user_id}`
-                return <Link to={href} key={i} className="list-group-item list-group-item-action">
+                return <li to={href} key={i} className="list-group-item">
                     {list.user[0].last_name} {list.user[0].first_name} {list.user[0].patronymic_name}
                     <br/>
                     {Hf(list.hf)}
-                </Link>
+                    <br/>
+                    <br/>
+                    <div className="btn-group btn-group-sm" role="group" aria-label="Basic outlined example">
+                        <button type="button" className="btn btn-outline-primary" onClick={()=>{Pdf('karta')}}>Карта</button>
+                        <button type="button" className="btn btn-outline-primary" onClick={()=>{Pdf('vipiska')}}>Выписка</button>
+                        <button type="button" className="btn btn-outline-primary" onClick={()=>{Pdf('3')}}>3</button>
+                    </div>
+                </li>
             })}
-        </div>
+        </ul>
     }
 
     const Hf = (arHf) => {
         return <>
             {arHf.map((list, i) => {
-                return <span style={{marginLeft: 5}} className="badge bg-primary">{list}</span>
+                return <span key={i} style={{marginLeft: 5}} className="badge bg-primary">{list}</span>
             })}
             &nbsp;
         </>
