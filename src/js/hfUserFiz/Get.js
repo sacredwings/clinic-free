@@ -33,7 +33,6 @@ function HfUserGet (props) {
 
         //setList(prev => ([...prev, ...result.response.items]))
         setList(result.response.items)
-        console.log(result)
     }
 
     const Pdf = async (type) => {

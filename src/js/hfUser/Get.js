@@ -16,7 +16,6 @@ function HfUserGet (props) {
         await Get()
         await DogovorGetById()
 
-        console.log(props)
     }, [])
 
     const Get = async () => {
@@ -34,7 +33,8 @@ function HfUserGet (props) {
 
         result = result.data;
 
-        setList(prev => ([...prev, ...result.response.items]))
+        //setList(prev => ([...prev, ...result.response.items]))
+        setList(result.response.items)
     }
 
     const DogovorGetById = async () => {
@@ -57,9 +57,22 @@ function HfUserGet (props) {
         return <div className="list-group">
             {arList.map((list, i) => {
                 let href = `/contract-${id}/user-${list.user_id}`
-                return <Link to={href} key={i} className="list-group-item list-group-item-action">{list.user[0].last_name} {list.user[0].first_name} {list.user[0].patronymic_name}</Link>
+                return <Link to={href} key={i} className="list-group-item list-group-item-action">
+                    {list.user[0].last_name} {list.user[0].first_name} {list.user[0].patronymic_name}
+                    <br/>
+                    {Hf(list.hf)}
+                </Link>
             })}
         </div>
+    }
+
+    const Hf = (arHf) => {
+        return <>
+            {arHf.map((list, i) => {
+                return <span key={i} style={{marginLeft: 5}} className="badge bg-primary">{list}</span>
+            })}
+            &nbsp;
+        </>
     }
 
     return (
@@ -67,7 +80,7 @@ function HfUserGet (props) {
             <h1>Сотрудники организации</h1>
             <p><Link className="btn btn-success btn-sm" to={`/contract-${id}/user/add`} role="button">+</Link> "{(org) ? org.name : null}"</p>
 
-            <Statistic contract_id={id}/>
+            {/*<Statistic contract_id={id}/>*/}
             <hr/>
             {(list.length) ? List(list) : null}
         </>
