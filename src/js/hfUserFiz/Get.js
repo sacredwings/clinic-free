@@ -68,7 +68,6 @@ function HfUserGet (props) {
                     <div className="btn-group btn-group-sm" role="group" aria-label="Basic outlined example">
                         <button type="button" className="btn btn-outline-primary" onClick={()=>{Pdf('karta')}}>Карта</button>
                         <button type="button" className="btn btn-outline-primary" onClick={()=>{Pdf('vipiska')}}>Выписка</button>
-                        <button type="button" className="btn btn-outline-primary" onClick={()=>{Pdf('3')}}>3</button>
                     </div>
                 </li>
             })}

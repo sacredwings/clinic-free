@@ -43,6 +43,7 @@ function HfUserAdd (props) {
     }
 
     let [form, setForm] = useState(formDefault)
+    let [formResult, setFormResult] = useState(null)
     const { id } = useParams()
 
     useEffect(async () => {
@@ -76,6 +77,10 @@ function HfUserAdd (props) {
 
         result = result.data;
 
+        if (result.err)
+            setFormResult(false)
+        else
+            setFormResult(true)
     }
 
     const Form = () => {
@@ -84,7 +89,7 @@ function HfUserAdd (props) {
 
                 <div className="card-header">Новый сотрудник</div>
                 <div className="card-body">
-
+                    {(formResult === false) ? AddErr() : null}
                     <div className="row g-3 align-items-center">
                         <div className="col-4">
                             <label htmlFor="last_name" className="col-form-label">Фамилия</label>
@@ -243,9 +248,18 @@ function HfUserAdd (props) {
 
     }
 
-    return (
-        Form()
-    )
+    const AddErr = () => {
+        return <div className="alert alert-danger">
+            Не удалось добавить
+        </div>
+    }
+    const AddNoErr = () => {
+        return <div className="alert alert-success">
+            Добавлено
+        </div>
+    }
+
+    return formResult ? AddNoErr() : Form()
 }
 
 export default HfUserAdd

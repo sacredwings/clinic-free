@@ -24,9 +24,11 @@ function Add (props) {
     }
 
     let [form, setForm] = useState(formDefault)
+    let [formResult, setFormResult] = useState(null)
 
     useEffect(async () => {
-    }, [])
+        console.log(formResult)
+    }, [formResult])
 
     const onChangeText = (e) => {
         let name = e.target.id;
@@ -44,20 +46,25 @@ function Add (props) {
     const onFormSubmit = async (e) => {
         e.preventDefault() // Stop form submit
 
-        const url = '/api/hf-org/add';
+        const url = '/api/hf-org/add'
 
-        let result = await axios.post(url, form);
+        let result = await axios.post(url, form)
 
-        result = result.data;
+        result = result.data
+
+        if (result.err)
+            setFormResult(false)
+        else
+            setFormResult(true)
 
     }
 
     const Form = () => {
         return <form onSubmit={onFormSubmit} className="p-3">
             <div className="card m-3">
-
                 <div className="card-header">Новая организация</div>
                 <div className="card-body">
+                    {(formResult === false) ? AddErr() : null}
                     <h6 className="card-title text-center">Наименование</h6>
                     <br/>
                     <div className="mb-3 row">
@@ -152,9 +159,20 @@ function Add (props) {
 
     }
 
-    return (
-        Form()
-    )
+    const AddErr = () => {
+        return <div className="alert alert-danger">
+            Не удалось добавить
+        </div>
+    }
+    const AddNoErr = () => {
+        return <div className="alert alert-success">
+            Добавлено
+        </div>
+    }
+
+    return formResult ? AddNoErr() : Form()
+
+
 }
 
 export default Add

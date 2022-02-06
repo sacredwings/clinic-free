@@ -10,10 +10,10 @@ function Add (props) {
         date_to: ''
     }
 
-    let [err, setErr] = useState(null)
-
     let [form, setForm] = useState(formDefault)
     let [listTypeSelectValue, setListTypeSelectValue] = useState('')
+
+    let [formResult, setFormResult] = useState(null)
 
     const { id } = useParams()
 
@@ -29,10 +29,6 @@ function Add (props) {
         }))
     }
 
-    const Default = (err) => {
-        setForm(prev => (formDefault))
-    }
-
     const onFormSubmit = async (e) => {
         e.preventDefault() // Stop form submit
 
@@ -46,8 +42,10 @@ function Add (props) {
 
         result = result.data;
 
-        if (result.error)
-            setErr(true)
+        if (result.err)
+            setFormResult(false)
+        else
+            setFormResult(true)
 
     }
 
@@ -70,7 +68,7 @@ function Add (props) {
 
                 <div className="card-header">Новый договор</div>
                 <div className="card-body">
-
+                    {(formResult === false) ? AddErr() : null}
                     {/* <div className="mb-3 row">
                         <label htmlFor="code" className="col-sm-2 col-form-label">Код</label>
                         <div className="col-sm-10"><input type="text" className="form-control" id="code" value={form.code} onChange={onChangeText}/></div>
@@ -113,9 +111,18 @@ function Add (props) {
 
     }
 
-    return (
-        Form()
-    )
+    const AddErr = () => {
+        return <div className="alert alert-danger">
+            Не удалось добавить
+        </div>
+    }
+    const AddNoErr = () => {
+        return <div className="alert alert-success">
+            Добавлено
+        </div>
+    }
+
+    return formResult ? AddNoErr() : Form()
 }
 
 export default Add
