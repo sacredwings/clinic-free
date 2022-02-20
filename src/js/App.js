@@ -15,6 +15,8 @@ import HfUserGetById from "./hfUser/GetById"
 import HfUserFizGet from "./hfUserFiz/Get"
 import HfUserFizPrice from "./hfUserFiz/Price"
 
+import Hf from "./hf/Index"
+
 import OrgPrice from "./hfOrg/Price"
 import OrgPriceTotal from "./hfOrg/PriceTotal"
 
@@ -49,6 +51,8 @@ function App(props) {
         //массив
         let pages = [
             {path: '/', element: <Landing />},
+
+            {path: '/hf', element: <Hf />},
 
             //организации
             {path: '/org/add', element: <OrgAdd/>},
