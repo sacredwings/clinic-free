@@ -50,6 +50,21 @@ function MenuTop(props) {
                                 </ul>
                             </li>
 
+                            <li className="nav-item dropdown">
+                                <Link className="nav-link dropdown-toggle" to="#" id="navbarDropdown" role="button"
+                                      data-bs-toggle="dropdown" aria-expanded="false">
+                                    Вредный фактор
+                                </Link>
+                                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><Link className="dropdown-item" to="/hf">Конструктор</Link></li>
+                                    <li>
+                                        <hr className="dropdown-divider"/>
+                                    </li>
+                                    <li><Link className="dropdown-item" to="/hf/update">Вредный фактор</Link></li>
+                                    <li><Link className="dropdown-item" to="/hf/update-research">Иследования</Link></li>
+                                    <li><Link className="dropdown-item" to="/hf/update-specialist">Специалисты</Link></li>
+                                </ul>
+                            </li>
                         </ul>
                     </div>
                 </div>

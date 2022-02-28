@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
-import Hf from './Get'
-import SpecialistGet from './SpecialistGet'
-import ResearchGet from './ResearchGet'
+import Hf from './harmfulFactor/Get'
+import SpecialistGet from './specialist/Get'
+import ResearchGet from './research/Get'
 
 function Get (props) {
 

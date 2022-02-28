@@ -16,6 +16,9 @@ import HfUserFizGet from "./hfUserFiz/Get"
 import HfUserFizPrice from "./hfUserFiz/Price"
 
 import Hf from "./hf/Index"
+import HfUpdate from "./hf/harmfulFactor/Update"
+import HfUpdateResearch from "./hf/research/Update"
+import HfUpdateSpecialist from "./hf/specialist/Update"
 
 import OrgPrice from "./hfOrg/Price"
 import OrgPriceTotal from "./hfOrg/PriceTotal"
@@ -53,6 +56,9 @@ function App(props) {
             {path: '/', element: <Landing />},
 
             {path: '/hf', element: <Hf />},
+            {path: '/hf/update', element: <HfUpdate />},
+            {path: '/hf/update-research', element: <HfUpdateResearch />},
+            {path: '/hf/update-specialist', element: <HfUpdateSpecialist />},
 
             //организации
             {path: '/org/add', element: <OrgAdd/>},
