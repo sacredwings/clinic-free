@@ -2,10 +2,12 @@ import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Link, useParams} from 'react-router-dom';
 import axios from "axios";
+import Update from "../research/Update";
 
 function Get (props) {
 
     let [list, setList] = useState([])
+    let [newName, setNewName] = useState('')
 
     useEffect(async () => {
         await Get()
@@ -19,18 +21,128 @@ function Get (props) {
         setList(result.response.items)
     }
 
-    //отображение списка
-    const List = (arList) => {
-        return <div className="list-group">
-            {arList.map((list, i) => {
-                return <button type="button" className="list-group-item list-group-item-action" key={i} onClick={()=>{props.SelectHf(list)}}>{list.name}</button>
-            })}
-        </div>
+    const OnSave = async (element) => {
+        const url = '/api/hf-research/update'
+        let arFields = {
+            _id: element._id,
+            name: element.name
+        }
+        let result = await axios.post(url, arFields)
+        await OnChecked(false, element)
+    }
+    const OnDelete = async (id) => {
+        const url = '/api/hf-research/delete'
+        let arFields = {
+            _id: id
+        }
+        let result = await axios.post(url, arFields)
+
+        let newList = []
+        list.forEach(function(item, i, arr) {
+            if (item._id !== id)
+                newList.push(item)
+        })
+        setList(newList)
     }
 
+    const OnChecked = async (checked, element) => {
+        let newList = list.map(function(item, i, arr) {
+            if (item._id === element._id) {
+                item.name = element.name
+                item.checked = checked
+            }
+
+            return item
+        })
+        setList(newList)
+    }
+    const OnChange = async (e, id) => {
+        let newList = list.map(function(item, i, arr) {
+            if (item._id === id) {
+                item.name = e.target.value
+            }
+
+            return item
+        })
+        setList(newList)
+    }
+
+    //отображение списка
+    const List = (arList) => {
+        return arList.map((list, i) => {
+            if (!list.checked)
+                return Element(i, list)
+            else
+                return Form(i, list)
+        })
+    }
+
+    const Element = (i, element) => {
+        return <tr key={i}>
+            <th scope="row">{i}</th>
+            <td>{element.name}</td>
+            <td>
+                <div className="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" className="btn btn-primary" onClick={()=>OnChecked(true, element)}>Изменить</button>
+                    <button type="button" className="btn btn-primary" onClick={()=>{OnDelete(element._id)}}>Удалить</button>
+                </div>
+            </td>
+        </tr>
+    }
+    const Form = (i, element) => {
+        return <tr key={i}>
+            <th scope="row">{i}</th>
+            <td>
+                <input type="text" className="form-control" id="name" onChange={(e)=>{OnChange(e, element._id)}} value={element.name}/>
+            </td>
+            <td>
+                <div className="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" className="btn btn-primary" onClick={()=>OnChecked(false, element)}>Отмена</button>
+                    <button type="button" className="btn btn-primary" onClick={()=>OnSave(element)}>Сохранить</button>
+                </div>
+            </td>
+        </tr>
+    }
+    const OnAdd = async (e) => {
+        e.preventDefault() // Stop form submit
+
+        const url = '/api/hf-research/add'
+        let arFields = {
+            name: newName
+        }
+        let result = await axios.post(url, arFields)
+        if (!result.data.response) return false
+
+        setList(prevState => [...prevState, ...[result.data.response]])
+    }
     return (
         <>
-            {(list.length) ? List(list) : null}
+            <form onSubmit={OnAdd}>
+                <div className="input-group mb-3">
+                    <input type="text" className="form-control" placeholder="Название" aria-label="Название" aria-describedby="button" value={newName} onChange={(e)=>{setNewName(e.target.value)}}/>
+                    <button className="btn btn-outline-secondary" type="submit" id="button-addon2">Добавить</button>
+                </div>
+            </form>
+
+            <table className="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Название</th>
+                    <th scope="col">Действия</th>
+                </tr>
+                </thead>
+                <tbody>
+                {(list.length) ? List(list) : null}
+                </tbody>
+            </table>
+
+            <form onSubmit={OnAdd}>
+                <div className="input-group mb-3">
+                    <input type="text" className="form-control" placeholder="Название" aria-label="Название" aria-describedby="button" value={newName} onChange={(e)=>{setNewName(e.target.value)}}/>
+                    <button className="btn btn-outline-secondary" type="submit" id="button-addon2">Добавить</button>
+                </div>
+            </form>
         </>
 
     )
