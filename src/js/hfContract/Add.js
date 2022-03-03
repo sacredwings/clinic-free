@@ -36,7 +36,7 @@ function Add (props) {
 
         let fields = form
         fields.org_id = id
-        fields.price = listTypeSelectValue
+        fields.type = listTypeSelectValue
 
         let result = await axios.post(url, fields);
 
@@ -56,9 +56,9 @@ function Add (props) {
 
     const ListType = () => {
         return <select value={listTypeSelectValue} onChange={onChangeType} className="form-select" aria-label="Default select example">
-            <option value="0">Общий</option>
-            <option value="1">Индивидуальный</option>
-            <option value="2">Фиксируемый</option>
+            <option value="global">Общий</option>
+            <option value="many">У каждого разная цена</option>
+            <option value="one">Одна цена для каждого</option>
         </select>
     }
 
@@ -89,7 +89,7 @@ function Add (props) {
                         <div className="col-sm-10"><input type="date" className="form-control" id="date_to" value={form.date_to} onChange={onChangeText}/></div>
                     </div>
 
-                    {/*
+
                     <div className="mb-3 row">
                         <label htmlFor="type" className="col-sm-2 col-form-label">Тип расчета</label>
                         <div className="col-sm-10">
@@ -101,7 +101,7 @@ function Add (props) {
                         <label htmlFor="price" className="col-sm-2 col-form-label">Цена за человека</label>
                         <div className="col-sm-10"><input type="text" className="form-control" id="price" value={form.price} onChange={onChangeText}/></div>
                     </div>
-                    */}
+
 
                     <button type="submit" className="btn btn-primary">Добавить</button>
 
