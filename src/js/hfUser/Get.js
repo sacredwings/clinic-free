@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Link, useParams} from 'react-router-dom';
 import axios from "axios";
-import Statistic from "../hfContract/Statistic";
 
 function HfUserGet (props) {
 
@@ -19,7 +18,7 @@ function HfUserGet (props) {
     }, [])
 
     const Get = async () => {
-        const url = '/api/hf-user/get';
+        const url = '/api/hf-user/get'
 
         let fields = {
             params: {}
