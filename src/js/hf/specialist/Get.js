@@ -61,7 +61,7 @@ function Get (props) {
 
     //список договоров
     const Update = (id) => {
-        const url = '/api/hf-specialist/update';
+        const url = '/api/hf-specialist/update-hf';
 
         let arFields = {
             hf_id: selectHfId,

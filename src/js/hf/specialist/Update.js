@@ -24,7 +24,7 @@ function Get (props) {
     const OnSave = async (element) => {
         const url = '/api/hf-specialist/update'
         let arFields = {
-            _id: element._id,
+            id: element._id,
             name: element.name
         }
         let result = await axios.post(url, arFields)
@@ -33,7 +33,7 @@ function Get (props) {
     const OnDelete = async (id) => {
         const url = '/api/hf-specialist/delete'
         let arFields = {
-            _id: id
+            id: id
         }
         let result = await axios.post(url, arFields)
 
