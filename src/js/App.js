@@ -7,6 +7,7 @@ import OrgGet from "./hfOrg/Get"
 
 import OrgContractGet from "./hfContract/Get"
 import OrgContractAdd from "./hfContract/Add"
+import OrgContractResearch from "./hfContract/Research"
 
 import HfUserAdd from "./hfUser/Add"
 import HfUserGet from "./hfUser/Get"
@@ -15,7 +16,7 @@ import HfUserGetById from "./hfUser/GetById"
 import HfUserFizGet from "./hfUserFiz/Get"
 import HfUserFizPrice from "./hfUserFiz/Price"
 
-import Hf from "./hf/Index"
+import HfConstructor from "./hf/Constructor"
 import HfUpdate from "./hf/harmfulFactor/Update"
 import HfUpdateResearch from "./hf/research/Update"
 import HfUpdateSpecialist from "./hf/specialist/Update"
@@ -55,7 +56,7 @@ function App(props) {
         let pages = [
             {path: '/', element: <Landing />},
 
-            {path: '/hf', element: <Hf />},
+            {path: '/hf', element: <HfConstructor />},
             {path: '/hf/update', element: <HfUpdate />},
             {path: '/hf/update-research', element: <HfUpdateResearch />},
             {path: '/hf/update-specialist', element: <HfUpdateSpecialist />},
@@ -72,6 +73,7 @@ function App(props) {
             //клиенты организации
             {path: '/contract-:id/user', element: <HfUserGet/>},
             {path: '/contract-:id/user/add', element: <HfUserAdd/>},
+            {path: '/contract-:id/research', element: <OrgContractResearch/>},
 
             //клиенты
             {path: '/prof-fiz/user/add', element: <HfUserAdd/>},

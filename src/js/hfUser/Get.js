@@ -37,7 +37,6 @@ function HfUserGet (props) {
     }
 
     const DogovorGetById = async () => {
-        console.log(props)
         const url = '/api/hf-contract/getById';
 
         let fields = {
@@ -77,9 +76,9 @@ function HfUserGet (props) {
     return (
         <>
             <h1>Сотрудники организации</h1>
-            <p><Link className="btn btn-success btn-sm" to={`/contract-${id}/user/add`} role="button">+</Link> "{(org) ? org.name : null}"</p>
+            <h4><Link className="btn btn-success btn-sm" to={`/contract-${id}/user/add`} role="button">+</Link> {(org) ? org.name : null} <span className="badge bg-secondary">{(org) ? `${org.price} руб.` : null}</span></h4>
 
-            {/*<Statistic contract_id={id}/>*/}
+            <p><Link to={`/contract-${id}/research`}>Основные иследования</Link></p>
             <hr/>
             {(list.length) ? List(list) : null}
         </>
