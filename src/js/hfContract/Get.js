@@ -53,11 +53,15 @@ function Get (props) {
         setOrg(result.response)
     }
 
+
     const List = (arList) => {
         return <div className="list-group">
             {arList.map((list, i) => {
                 let href = `/contract-${list._id}/user`
-                return <Link to={href} key={i} className="list-group-item list-group-item-action">{list.name}</Link>
+                return <Link to={href} key={i} className="list-group-item list-group-item-action">
+                    {list.name}
+
+                </Link>
             })}
         </div>
     }

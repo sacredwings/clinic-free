@@ -57,10 +57,33 @@ function HfUserGetById (props) {
         </>
     }
 
+    const Pdf = async (type) => {
+        const url = 'http://localhost:3041/api/hf-org/pdfUser'
+
+        let fields = {
+            params: {
+                type: type
+            }
+        }
+
+        let result = await axios.get(url, fields)
+
+        result = result.data
+
+        document.location.href = `http://localhost:3041/${result.response}`
+        //setList(prev => ([...prev, ...result.response.items]))
+        //console.log(result)
+
+    }
+
     return (
         <>
             <h1>Сотрудник организации</h1>
             <User/>
+            <div className="btn-group btn-group-sm" role="group" aria-label="Basic outlined example">
+                <button type="button" className="btn btn-outline-primary" onClick={()=>{Pdf('karta')}}>Карта</button>
+                <button type="button" className="btn btn-outline-primary" onClick={()=>{Pdf('vipiska')}}>Выписка</button>
+            </div>
             <br/>
             <Research/>
             <br/>

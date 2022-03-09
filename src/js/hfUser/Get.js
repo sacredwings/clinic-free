@@ -51,12 +51,15 @@ function HfUserGet (props) {
         setOrg(result.response)
     }
 
+
+
     const List = (arList) => {
         return <div className="list-group">
             {arList.map((list, i) => {
                 let href = `/contract-${id}/user-${list.user_id}`
                 return <Link to={href} key={i} className="list-group-item list-group-item-action">
                     {list.user[0].last_name} {list.user[0].first_name} {list.user[0].patronymic_name}
+
                     <br/>
                     {Hf(list.hf)}
                 </Link>
