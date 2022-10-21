@@ -7,7 +7,7 @@ export default function () {
     return <></>
 }
 
-const Page = () => {
+const Page = (worker) => {
     let stylePage1 = {
         position: 'absolute',
         width: '100%'
@@ -128,17 +128,14 @@ const Page = () => {
                     <br/>
                     <p style={styleText3}>предварительного \ периодического медицинского осмотра»</p>
                     <br/>
-                    <p style={styleText3}>Фамилия ______________________________________________________</p>
-                    <p style={styleText3}>Имя __________________________________________________________</p>
-                    <p style={styleText3}>Отчество ______________________________________________________</p>
-                    <p style={styleText3}>Дата рождения _________________________________________________</p>
-                    <p style={styleText3}>Место работы__________________________________________________</p>
-                    <p style={styleText3}>Структурное подразделение _____________________________________</p>
-                    <p style={styleText3}>Должность ____________________________________________________</p>
-                    <p style={styleText3}>Вредные производственные факторы: _____________________________</p>
-                    <p style={styleText3}>______________________________________________________________</p>
-                    <p style={styleText3}>______________________________________________________________</p>
-                    <p style={styleText3}>______________________________________________________________</p>
+                    <p style={styleText3}>Фамилия: <b>{worker._user_id.last_name}</b></p>
+                    <p style={styleText3}>Имя: <b>{worker._user_id.first_name}</b></p>
+                    <p style={styleText3}>Отчество: <b>{worker._user_id.patronymic_name}</b></p>
+                    <p style={styleText3}>Дата рождения: <b>{new Date(worker._user_id.date_birth).toLocaleDateString()}</b></p>
+                    <p style={styleText3}>Место работы: <b>{worker._contract_id._org_id.name}</b></p>
+                    <p style={styleText3}>Структурное подразделение: <b>{worker.subdivision}</b></p>
+                    <p style={styleText3}>Должность: <b>{worker.profession}</b></p>
+                    <p style={styleText3}>Вредные производственные факторы: <b>{worker.hf_code ? worker.hf_code.join(', ') : ''}</b></p>
                 </div>
             </div>
         </div>
