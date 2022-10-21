@@ -7,7 +7,7 @@ export default function () {
     return <></>
 }
 
-const Page = () => {
+const Page = (worker) => {
     let stylePage1 = {
         position: 'absolute',
         width: '100%'
@@ -153,12 +153,12 @@ const Page = () => {
                     <br/>
                     <br/>
 
-                    <p style={styleText2}>1. Фамилия Имя Отчество _______________________________________</p>
-                    <p style={styleText2}>2. Пол:	М	Ж	3. Дата рождения __________________________________</p>
+                    <p style={styleText2}>1. Фамилия Имя Отчество: <b>{worker._user_id.last_name} {worker._user_id.first_name} {worker._user_id.patronymic_name}</b></p>
+                    <p style={styleText2}>2. Пол: <b>{worker._user_id.man ? 'Мужской' : 'Женский'}</b> 3. Дата рождения: <b>{new Date(worker._user_id.date_birth).toLocaleDateString()}</b></p>
                     <p style={styleText2}>4. Адрес регистрации по месту жительства _________________________</p>
                     <p style={styleText2}>______________________________________________________________</p>
-                    <p style={styleText2}>5. Наименование работодателя ___________________________________</p>
-                    <p style={styleText2}>6. Профессия __________________________________________________</p>
+                    <p style={styleText2}>5. Наименование работодателя: <b>{worker._contract_id._org_id.name}</b></p>
+                    <p style={styleText2}>6. Профессия: <b>{worker.profession}</b></p>
                 </div>
             </div>
         </div>
