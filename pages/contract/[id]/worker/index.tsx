@@ -46,9 +46,12 @@ export default function ({id}) {
     }
 
     const ListCode = (arList) => {
-        return arList.map((list, i) => {
-            return <span className="badge text-bg-primary" key={i}>{list}</span>
-        })
+        if (arList)
+            return arList.map((list, i) => {
+                return <span className="badge text-bg-primary" key={i}>{list}</span>
+            })
+        else
+            return ''
     }
     const ListPrint = (worker_id) => {
         return <div className="btn-group-vertical" role="group" aria-label="Vertical button group">

@@ -12,8 +12,9 @@ export default async (req, res) => {
     let value
     try {
         try {
-            req.body.hf_code = req.body.hf_code.replace(/ /gi, '') //удаление пробелов
-            req.body.hf_code = req.body.hf_code.split(',') //в массив
+            if (req.body.hf_code) req.body.hf_code = req.body.hf_code.replace(/ /gi, '') //удаление пробелов
+            if (req.body.hf_code) req.body.hf_code = req.body.hf_code.split(',') //в массив
+
             //схема
             const schema = Joi.object({
                 contract_id: Joi.string().min(24).max(24).allow(null).empty('').default(null),
@@ -75,6 +76,7 @@ export default async (req, res) => {
 
             let hfContract = null
 
+
             //ВЫБОР ТИПОВ ДОГОВОРОВ ИЗ ДОГОВОРА
             if (value.contract_id) {
                 //загрузка договора
@@ -114,28 +116,30 @@ export default async (req, res) => {
 
             //ЗДЕСЬ ВЫТАСКИВАЕМ ИЗ ВРЕДНЫХ ФАКТОРОВ
             //загрузка кодов
-            let arHf = await CHf.GetByCode (value.hf_code)
+            if (value.hf_code) {
+                let arHf = await CHf.GetByCode (value.hf_code)
 
-            //сохраняем каждый из массива вредных факторов
-            for (let hf of arHf) {
-                arResearch = [...arResearch, ...hf.research_ids]
-                arSpecialist = [...arSpecialist, ...hf.specialist_ids]
-            }
+                //сохраняем каждый из массива вредных факторов
+                for (let hf of arHf) {
+                    arResearch = [...arResearch, ...hf.research_ids]
+                    arSpecialist = [...arSpecialist, ...hf.specialist_ids]
+                }
 
-            //Оставляем уникальные с прайсами
-            arResearch = await CResearch.GetByIdPrice (arResearch)
-            arSpecialist = await CSpecialist.GetByIdPrice (arSpecialist)
+                //Оставляем уникальные с прайсами
+                arResearch = await CResearch.GetByIdPrice (arResearch)
+                arSpecialist = await CSpecialist.GetByIdPrice (arSpecialist)
 
-            //console.log(arResearch)
-            //console.log(arSpecialist)
+                //console.log(arResearch)
+                //console.log(arSpecialist)
 
-            for (let item of arResearch) {
-                if ((item._price) && (item._price[0]))
-                    price += item._price[0].price
-            }
-            for (let item of arSpecialist) {
-                if ((item._price) && (item._price[0]))
-                    price += item._price[0].price
+                for (let item of arResearch) {
+                    if ((item._price) && (item._price[0]))
+                        price += item._price[0].price
+                }
+                for (let item of arSpecialist) {
+                    if ((item._price) && (item._price[0]))
+                        price += item._price[0].price
+                }
             }
 
             //поиск пользователя среди существующих

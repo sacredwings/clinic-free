@@ -34,10 +34,38 @@ export default class {
                             foreignField: '_id',
                             as: '_user_id'
                         }
+                },{ $lookup:
+                        {
+                            from: 'contract',
+                            localField: 'contract_id',
+                            foreignField: '_id',
+                            as: '_contract_id',
+                            pipeline: [{
+                                $lookup:
+                                    {
+                                        from: 'org',
+                                        localField: 'org_id',
+                                        foreignField: '_id',
+                                        as: '_org_id'
+                                    }
+                            },{
+                                $unwind:
+                                    {
+                                        path: '$_org_id',
+                                        preserveNullAndEmptyArrays: true
+                                    }
+                            }]
+                        }
                 },{
                     $unwind:
                         {
                             path: '$_user_id',
+                            preserveNullAndEmptyArrays: true
+                        }
+                },{
+                    $unwind:
+                        {
+                            path: '$_contract_id',
                             preserveNullAndEmptyArrays: true
                         }
                 }

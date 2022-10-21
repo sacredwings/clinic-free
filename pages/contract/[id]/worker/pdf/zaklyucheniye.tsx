@@ -34,7 +34,8 @@ const Page = (worker) => {
     }
 
     let date = new Date()
-    let dateText = `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`
+    //let dateText = `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`
+    let dateText = date.toLocaleDateString()
 
     return <>
         <p style={styleHeader}>Министерство здравоохранения и</p>
@@ -45,7 +46,7 @@ const Page = (worker) => {
         <p style={styleHeader}>НСО  обл. г. Искитим ул. Комсомольская д.44 оф.1</p>
         <p style={styleHeader}>_________________________________________</p>
         <p style={styleHeader}>(адрес)</p>
-        <p style={styleHeader}>Код ОГРН: 1    1	0	5	4	7	2	0	0	0	7	8	7</p>
+        <p style={styleHeader}>Код ОГРН: 1 1 0 5 4 7 2 0 0 0 7 8 7</p>
 
         <br/>
         <br/>
@@ -58,14 +59,13 @@ const Page = (worker) => {
         <br/>
         <br/>
 
-
         <p style={styleText}>1. Даты выдачи заключения <b>{dateText}</b></p>
         <p style={styleText}>2. Фамилия, имя, отчество (при наличии) <b>{worker._user_id.last_name} {worker._user_id.first_name} {worker._user_id.patronymic_name}</b></p>
-        <p style={styleText}>3. Дата рождения ________________ 4. Пол _______________</p>
-        <p style={styleText}>5. Наименование работодателя</p>
-        <p style={styleText}>6. Наименование структурного подразделения работодателя (при наличии)</p>
-        <p style={styleText}>7. Должность (профессия) или вид работ</p>
-        <p style={styleText}>8. Наименование вредного производственного фактора ( -ов) и (или) вида работ:</p>
+        <p style={styleText}>3. Дата рождения <b>{new Date(worker._user_id.date_birth).toLocaleDateString()}</b> 4. Пол <b>{worker._user_id.man ? 'Мужской' : 'Женский'}</b></p>
+        <p style={styleText}>5. Наименование работодателя <b>{worker._contract_id._org_id.name}</b></p>
+        <p style={styleText}>6. Наименование структурного подразделения работодателя (при наличии): <b>{worker.subdivision}</b></p>
+        <p style={styleText}>7. Должность (профессия) или вид работ: <b>{worker.profession}</b></p>
+        <p style={styleText}>8. Наименование вредного производственного фактора ( -ов) и (или) вида работ: <b>{worker.hf_code ? worker.hf_code.join(', ') : ''}</b></p>
         <p style={styleText}>9. Результаты периодического осмотра:</p>
         <br/>
         <p style={styleText}>Медицинские противопоказания к работе не выявлены:</p>
