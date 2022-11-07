@@ -38,6 +38,15 @@ const Page = (worker) => {
         border: '1px solid black',
         fontSize: '16px'
     }
+    let styleTableTd9 = {
+        border: '1px solid black',
+        fontSize: '13px'
+    }
+    let styleTableTd9Norma = {
+        border: '1px solid black',
+        fontSize: '16px',
+        width: '15%'
+    }
 
     let styleHeader = {
         margin: 0,
@@ -267,202 +276,202 @@ const Page = (worker) => {
 
                     <table style={styleTable}>
                         <tr>
-                            <td style={styleTableTd}>Наименование показателя</td>
-                            <td style={styleTableTd}>Дата</td>
-                            <td style={styleTableTd}>Значение</td>
-                            <td style={styleTableTd}>Норма</td>
+                            <td style={styleTableTd9}>Наименование показателя</td>
+                            <td style={styleTableTd9}>Дата</td>
+                            <td style={styleTableTd9}>Значение</td>
+                            <td style={styleTableTd9Norma}>Норма</td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>Клинический анализ крови</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
+                            <td style={styleTableTd9}>Клинический анализ крови</td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>-гемоглобин</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}>120-160</td>
+                            <td style={styleTableTd9}>-гемоглобин</td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}>120-160</td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>лейкоциты</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}>4.0-9.0</td>
+                            <td style={styleTableTd9}>лейкоциты</td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}>4.0-9.0</td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>-тромбоциты</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}>150-450</td>
+                            <td style={styleTableTd9}>-тромбоциты</td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}>150-450</td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>-СОЭ</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}>15</td>
+                            <td style={styleTableTd9}>-СОЭ</td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}>15</td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>-эритроциты</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}>3.5-5.5</td>
+                            <td style={styleTableTd9}>-эритроциты</td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}>3.5-5.5</td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>-ретикулоциты</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
+                            <td style={styleTableTd9}>-ретикулоциты</td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>Биохимический анализ крови</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
+                            <td style={styleTableTd9}>Биохимический анализ крови</td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>-сахар крови</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}>3.9-6.0</td>
+                            <td style={styleTableTd9}>-сахар крови</td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}>3.9-6.0</td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>-холестерин</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}>&#60; 6.2</td>
+                            <td style={styleTableTd9}>-холестерин</td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}>&#60; 6.2</td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>-билирубин</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}>&#60; 20.5</td>
+                            <td style={styleTableTd9}>-билирубин</td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}>&#60; 20.5</td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>-АЛТ</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}>&#60; 18</td>
+                            <td style={styleTableTd9}>-АЛТ</td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}>&#60; 18</td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>-АСТ</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}>&#60; 22</td>
+                            <td style={styleTableTd9}>-АСТ</td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}>&#60; 22</td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>-карбоксигемоглобин</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}>&#60; 10</td>
+                            <td style={styleTableTd9}>-карбоксигемоглобин</td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}>&#60; 10</td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>-Гепатит В, С</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}>отриц</td>
+                            <td style={styleTableTd9}>-Гепатит В, С</td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}>отриц</td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>-ВИЧ</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}>отриц</td>
+                            <td style={styleTableTd9}>-ВИЧ</td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}>отриц</td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>-РНГА</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}>отриц</td>
+                            <td style={styleTableTd9}>-РНГА</td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}>отриц</td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>-сифилис</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}>отриц</td>
+                            <td style={styleTableTd9}>-сифилис</td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}>отриц</td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>Клинический анализ мочи</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
+                            <td style={styleTableTd9}>Клинический анализ мочи</td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>-удельный вес</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
+                            <td style={styleTableTd9}>-удельный вес</td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>-белок</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}>до 0/033</td>
+                            <td style={styleTableTd9}>-белок</td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}>до 0/033</td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>-сахар</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}>отриц</td>
+                            <td style={styleTableTd9}>-сахар</td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}>отриц</td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>-лейкоциты</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}>0-5</td>
+                            <td style={styleTableTd9}>-лейкоциты</td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}>0-5</td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>-эритроциты</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}>0-3</td>
+                            <td style={styleTableTd9}>-эритроциты</td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}>0-3</td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>Мазок на стафилококк</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}>отриц</td>
+                            <td style={styleTableTd9}>Мазок на стафилококк</td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}>отриц</td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>Мазок на дизгруппу</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}>отриц</td>
+                            <td style={styleTableTd9}>Мазок на дизгруппу</td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}>отриц</td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>Кал на гельминты</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}>отриц</td>
+                            <td style={styleTableTd9}>Кал на гельминты</td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}>отриц</td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>Мазок на онкоцитологию</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
+                            <td style={styleTableTd9}>Мазок на онкоцитологию</td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>Мазок на микрофлору</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
+                            <td style={styleTableTd9}>Мазок на микрофлору</td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>-лейкоциты</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
+                            <td style={styleTableTd9}>-лейкоциты</td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>-лейкоциты</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}>3.9-6.0</td>
+                            <td style={styleTableTd9}>-лейкоциты</td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}>3.9-6.0</td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>Химико-токсилокологическое исследование (ХТИ)</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}>&#60; 6.2</td>
+                            <td style={styleTableTd9}>Химико-токсилокологическое исследование (ХТИ)</td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}></td>
+                            <td style={styleTableTd9}>&#60; 6.2</td>
                         </tr>
                     </table>
 
