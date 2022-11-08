@@ -438,7 +438,11 @@ export default function ({contract_id, worker_id}) {
                     </div>
                     <br/>
 
-                    <button type="submit" className="btn btn-primary">Добавить</button>
+                    {worker_id ?
+                        <button type="submit" className="btn btn-warning">Изменить</button>
+                        :
+                        <button type="submit" className="btn btn-primary">Добавить</button>
+                    }
 
                 </div>
             </div>
