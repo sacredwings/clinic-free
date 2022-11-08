@@ -72,7 +72,7 @@ export default function ({}) {
                         </Link>
                     </div>
                     <Link href={`/worker/${list._id}/edit`}>
-                        <a type="button" className="btn btn-outline-primary btn-sm">
+                        <a type="button" className="btn btn-outline-warning btn-sm">
                             <i className="fa-solid fa-edit"></i>
                         </a>
                     </Link>

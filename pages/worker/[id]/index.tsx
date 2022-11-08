@@ -56,12 +56,26 @@ export default function ({worker}) {
         <hr/>
 
         <Link href={`/worker/${worker._id}/edit`}>
-            <a type="button" className="btn btn-outline-primary btn-sm">
+            <a type="button" className="btn btn-outline-warning btn-sm">
                 <i className="fa-solid fa-edit"></i>
             </a>
         </Link>
 
         {ListPrint(worker._id)}
+
+        {
+            worker.contract_id ?
+                <Link href={`/contract/${worker.contract_id}/worker`}>
+                    <a type="button" className="btn btn-outline-primary btn-sm">
+                        К договору
+                    </a>
+                </Link> :
+                <Link href={`/proffiz`}>
+                    <a type="button" className="btn btn-outline-primary btn-sm">
+                        К списку физ. лиц
+                    </a>
+                </Link>
+        }
 
         <hr/>
         <h3>Иследования</h3>
