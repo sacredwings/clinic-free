@@ -230,7 +230,9 @@ export default async (req, res) => {
 
             res.status(200).json({
                 code: 0,
-                response: true//result
+                response: {
+                    _id: value.id
+                }
             })
         } catch (err) {
             throw ({...{code: 10000000, msg: 'Ошибка формирования результата'}, ...err})

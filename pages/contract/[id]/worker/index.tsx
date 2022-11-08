@@ -48,7 +48,7 @@ export default function ({id}) {
     const ListCode = (arList) => {
         if (arList)
             return arList.map((list, i) => {
-                return <span className="badge text-bg-primary" key={i}>{list}</span>
+                return <span className="badge text-bg-primary" style={{margin:'2px'}} key={i}>{list}</span>
             })
         else
             return ''

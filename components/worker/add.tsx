@@ -1,7 +1,10 @@
+import { useRouter } from 'next/router' //переход по url
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
 
 export default function ({contract_id, worker_id}) {
+    const router = useRouter() //для перехода к пользователю
+
     const formDefault = {
         hf_code: '1.1,2.1',
 
@@ -48,7 +51,6 @@ export default function ({contract_id, worker_id}) {
     let [formContractType, setFormContractType] = useState([]) //для формы
     let [contractTypeList, setContractTypeList] = useState([])
     let [formResult, setFormResult] = useState(null)
-
     //const { paramsId } = useParams()
 
     useEffect(() => {
@@ -104,6 +106,8 @@ export default function ({contract_id, worker_id}) {
         const formEdit = {
             hf_code: result.hf_code ? result.hf_code.join(",") : "",
 
+            contract_id: result.contract_id,
+
             first_name: result._user_id.first_name,
             last_name: result._user_id.last_name,
             patronymic_name: result._user_id.patronymic_name,
@@ -156,10 +160,10 @@ export default function ({contract_id, worker_id}) {
 
         if (worker_id) {
             fields.id = worker_id //для понимания,что нужно редактировать
-
+            delete fields.contract_id
             url = `${url}/edit`
         } else {
-            fields.contract_id = contract_id //организация или физ лицо
+            fields.contract_id = contract_id //организация
 
             url = `${url}/add`
         }
@@ -169,7 +173,9 @@ export default function ({contract_id, worker_id}) {
         if (result.data.code)
             setFormResult(false)
         else
-            setFormResult(true)
+            await router.push(`/worker/${result.data.response._id}`)
+
+        //setFormResult(true)
 
     }
 
@@ -322,7 +328,7 @@ export default function ({contract_id, worker_id}) {
                     <br/>
                     {FormCheckContract()}
 
-                    {!contract_id ? FormCheckContractType() : null}
+                    {!contract_id && !form.contract_id ? FormCheckContractType() : null}
 
                     <br/>
                     <h6 className="card-title text-center">Адрес</h6>

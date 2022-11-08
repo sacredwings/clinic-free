@@ -102,6 +102,12 @@ export default class {
                             path: '$_user_id',
                             preserveNullAndEmptyArrays: true
                         }
+                },{
+                    $sort:
+                        {
+                            "_user_id.last_name": 1
+                            //_id: -1
+                        }
                 }
             ]).limit(fields.count).skip(fields.offset).toArray();
 
