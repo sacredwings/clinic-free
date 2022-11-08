@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
-import {componentToPDFBuffer} from '../../../../../components/pdf'
+import {componentToPDFBuffer} from '../../../../components/pdf'
 import axios from "axios"
-import Config from "../../../../../config.json";
+import Config from "../../../../config.json"
 
 export default function () {
     return <></>
@@ -92,12 +92,13 @@ const GetById = async (id) => {
 
 export async function getServerSideProps ({query, req, res}) {
 
+    console.log(query)
     let worker = await GetById(query.id)
     let buffer = await componentToPDFBuffer({
         component: Page(worker.items[0]),
         orientation: 'portrait'
 
-})
+    })
 
     // with this header, your browser will prompt you to download the file
     // without this header, your browse will open the pdf directly

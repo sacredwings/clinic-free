@@ -5,6 +5,6 @@ import WorkerAdd from "../../components/worker/add"
 
 export default function () {
     return <TemplatesMain title={'Главная страница'}>
-        <WorkerAdd contract_id={null}/>
+        <WorkerAdd contract_id={null} worker_id={null}/>
     </TemplatesMain>
 }

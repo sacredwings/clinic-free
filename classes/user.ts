@@ -53,4 +53,23 @@ export default class {
             throw ({...{err: 7001000, msg: 'CUser Get'}, ...err})
         }
     }
+
+    static async Edit(id, fields) {
+        try {
+            id = new DB().ObjectID(id)
+
+            let collection = DB.Client.collection('user')
+
+            let arFields = {
+                _id: id
+            }
+
+            let result = await collection.updateOne(arFields, {$set: fields})
+            console.log(arFields)
+            return result
+        } catch (err) {
+            console.log(err)
+            throw ({code: 8001000, msg: 'CUser Edit'})
+        }
+    }
 }

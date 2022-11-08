@@ -61,15 +61,15 @@ export default function ({id}) {
                 </button>
                 <ul className="dropdown-menu">
                     <li>
-                        <a href={`/contract/${worker_id}/worker/pdf/zaklyucheniye`} className="dropdown-item" target="_blank">Закл. мед. осмотра</a>
-                        <a href={`/contract/${worker_id}/worker/pdf/card`} className="dropdown-item" target="_blank">Карта</a>
-                        <a href={`/contract/${worker_id}/worker/pdf/vypiska`} className="dropdown-item" target="_blank">Выписка</a>
+                        <a href={`/worker/${worker_id}/pdf/zaklyucheniye-pred`} className="dropdown-item" target="_blank">Закл. предварительного осмотра</a>
+                        <a href={`/worker/${worker_id}/pdf/zaklyucheniye`} className="dropdown-item" target="_blank">Закл. периодического осмотра</a>
+                        <a href={`/worker/${worker_id}/pdf/card`} className="dropdown-item" target="_blank">Карта</a>
+                        <a href={`/worker/${worker_id}/pdf/vypiska`} className="dropdown-item" target="_blank">Выписка</a>
                     </li>
                 </ul>
             </div>
 
         </div>
-
     }
 
     const List = (arList) => {
@@ -85,6 +85,12 @@ export default function ({id}) {
                             <a>Подробно...</a>
                         </Link>
                     </div>
+                    <Link href={`/worker/${list._id}/edit`}>
+                        <a type="button" className="btn btn-outline-primary btn-sm">
+                            <i className="fa-solid fa-edit"></i>
+                        </a>
+                    </Link>
+
                     {ListPrint(list._id)}
                 </li>
             })}

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
-import {componentToPDFBuffer} from '../../../../../components/pdf'
+import {componentToPDFBuffer} from '../../../../components/pdf'
 import axios from "axios"
-import Config from "../../../../../config.json";
+import Config from "../../../../config.json";
 
 export default function () {
     return <></>

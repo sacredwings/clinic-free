@@ -66,6 +66,11 @@ export default function ({}) {
                             <a>Подробно...</a>
                         </Link>
                     </div>
+                    <Link href={`/worker/${list._id}/edit`}>
+                        <a type="button" className="btn btn-outline-primary btn-sm">
+                            <i className="fa-solid fa-edit"></i>
+                        </a>
+                    </Link>
                     {ListPrint(list._id)}
                 </li>
             })}

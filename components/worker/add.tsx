@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
 
-export default function ({contract_id}) {
+export default function ({contract_id, worker_id}) {
     const formDefault = {
         hf_code: '1.1,2.1',
 
@@ -54,6 +54,9 @@ export default function ({contract_id}) {
     useEffect(() => {
         (async () => {
             await GetTypeContract()
+
+            //загружаем работника
+            if (worker_id) await GetWorker(worker_id)
         })()
     }, [])
 
@@ -76,19 +79,92 @@ export default function ({contract_id}) {
         setForm(prev => (formDefault))
     }
 
+    const GetWorker = async (id) => {
+        const url = '/api/worker/getById'
+
+        let fields = {
+            params: {
+                ids: id,
+            }
+        }
+        let result = await axios.get(url, fields)
+        //return result.data.response
+
+        result = result.data.response.items[0]
+
+        /*
+        if ((result.contract_type_ids) && (result.contract_type_ids.length > 0)) {
+            result.contract_type_ids.forEach((item)=>{
+                console.log(item)
+                OnChangeCheck(item)
+            })
+        }
+*/
+
+        const formEdit = {
+            hf_code: result.hf_code ? result.hf_code.join(",") : "",
+
+            first_name: result._user_id.first_name,
+            last_name: result._user_id.last_name,
+            patronymic_name: result._user_id.patronymic_name,
+
+            man: `${result._user_id.man}`,
+
+            date_birth: formDate(result._user_id.date_birth),
+
+            price_ultrasound: result.price_ultrasound ? true : false,
+            price_mammography: result.price_mammography ? true : false,
+            price_xray: result.price_xray ? true : false,
+
+            oms_policy_number: result._user_id.oms_policy_number,
+            snils: result._user_id.snils,
+
+            region: result._user_id.region,
+            city: result._user_id.city,
+            street: result._user_id.street,
+            house: result._user_id.house,
+            housing: result._user_id.housing,
+            apt: result._user_id.apt,
+            building: result._user_id.building,
+
+            passport_serial: result._user_id.passport_serial,
+            passport_number: result._user_id.passport_number,
+            passport_date: formDate(result._user_id.passport_date),
+
+            passport_issued_by: result._user_id.passport_issued_by,
+            phone: result._user_id.phone,
+            phone_additional: result._user_id.phone_additional,
+
+            subdivision: result.subdivision,
+            profession: result.profession,
+            employment_date: formDate(result.employment_date),
+
+            work_place: result.work_place,
+            work_experience: result.work_experience
+        }
+
+        setForm(formEdit)
+    }
+
     const onFormSubmit = async (e) => {
         e.preventDefault() // Stop form submit
 
-        const url = '/api/worker/add'
-
-        //добавляем поля
+        const url = '/api/worker'
         let fields = form
         if (formContractType) fields.contract_type_ids = formContractType
-        fields.contract_id = contract_id
+
+
+        if (worker_id) {
+            fields.id = worker_id //для понимания,что нужно редактировать
+
+            url = `${url}/edit`
+        } else {
+            fields.contract_id = contract_id //организация или физ лицо
+
+            url = `${url}/add`
+        }
 
         let result = await axios.post(url, fields)
-        console.log(result.data)
-
 
         if (result.data.code)
             setFormResult(false)
@@ -139,7 +215,7 @@ export default function ({contract_id}) {
         return age
     }
 
-    const FormCheck = () => {
+    const FormCheckContractType = () => {
         return <>
             <br/>
             <h6 className="card-title text-center">Типы договоров</h6>
@@ -192,7 +268,7 @@ export default function ({contract_id}) {
         return <form onSubmit={onFormSubmit} className="p-3">
             <div className="card m-3">
 
-                <div className="card-header">Новый человек</div>
+                <div className="card-header">{worker_id ? 'Редактирование работкика' : 'Новый работник'}</div>
                 <div className="card-body">
                     {(formResult === false) ? AddErr() : null}
 
@@ -246,7 +322,7 @@ export default function ({contract_id}) {
                     <br/>
                     {FormCheckContract()}
 
-                    {!contract_id ? FormCheck() : null}
+                    {!contract_id ? FormCheckContractType() : null}
 
                     <br/>
                     <h6 className="card-title text-center">Адрес</h6>
@@ -301,9 +377,8 @@ export default function ({contract_id}) {
                         </div>
                         <div className="col-4">
                             <label htmlFor="passport_date" className="col-form-label">Дата выдачи</label>
-                            <input type="text" className="form-control" id="passport_date" value={form.passport_date ? form.passport_date : ''} onChange={onChangeText}/>
+                            <input type="date" className="form-control" id="passport_date" value={form.passport_date ? form.passport_date : ''} onChange={onChangeText}/>
                         </div>
-
                     </div>
                     <div className="row g-3 align-items-center">
                         <div className="col-12">
@@ -377,7 +452,18 @@ export default function ({contract_id}) {
     }
 
     return <>
-        <h1>Новый человек</h1>
+        <h1>{worker_id ? 'Редактирование работкика' : 'Новый работник'}</h1>
         {formResult ? AddNoErr() : Form()}
     </>
+}
+
+function formDate (oldDate) {
+    if (!oldDate) return null
+
+    let date = new Date(oldDate)
+    let month=new Array("01","02","03","04","05","06","07","08","09","10","11","12")
+    let day=`${date.getDate()}`
+    if (date.getDate()<10)
+        day=`0${date.getDate()}`
+    return (date.getFullYear()+"-"+month[date.getMonth()]+"-"+day)
 }
