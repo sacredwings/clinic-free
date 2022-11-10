@@ -8,6 +8,8 @@ export default function () {
 }
 
 const Page = (worker) => {
+    let dateMini = new Date().toLocaleDateString().slice(0, 5)
+
     let stylePage1 = {
         position: 'absolute',
         width: '100%'
@@ -42,11 +44,6 @@ const Page = (worker) => {
         border: '1px solid black',
         fontSize: '13px'
     }
-    let styleTableTd9Norma = {
-        border: '1px solid black',
-        fontSize: '16px',
-        width: '15%'
-    }
 
     let styleHeader = {
         margin: 0,
@@ -78,8 +75,8 @@ const Page = (worker) => {
                 <div style={styleColLeft}>
                     <table style={styleTable}>
                         <tr>
-                            <td style={styleTableTd}>Наименование</td>
-                            <td style={styleTableTd}>Дата</td>
+                            <td style={{...styleTableTd, width: '50%'}}>Наименование</td>
+                            <td style={{...styleTableTd, width: '10%'}}>Дата</td>
                             <td style={styleTableTd}>Заключение</td>
                         </tr>
                         <tr>
@@ -179,7 +176,7 @@ const Page = (worker) => {
                     <table style={styleTable}>
                         <tr>
                             <td style={styleTableTd}>Рост</td>
-                            <td style={styleTableTd}></td>
+                            <td style={{...styleTableTd, width: '60%'}}></td>
                         </tr>
                         <tr>
                             <td style={styleTableTd}>Вес</td>
@@ -204,10 +201,10 @@ const Page = (worker) => {
 
                     <table style={styleTable}>
                         <tr>
-                            <td style={styleTableTd}>Врач</td>
-                            <td style={styleTableTd}>Дата осмотра</td>
+                            <td style={{...styleTableTd, width:'15%'}}>Врач</td>
+                            <td style={{...styleTableTd, width:'15%'}}>Дата осмотра</td>
                             <td style={styleTableTd}>Заключение</td>
-                            <td style={styleTableTd}>Подпись</td>
+                            <td style={{...styleTableTd, width:'15%'}}>Подпись</td>
                         </tr>
                         <tr>
                             <td style={styleTableTd}>Терапевт<br/><br/></td>
@@ -276,13 +273,13 @@ const Page = (worker) => {
 
                     <table style={styleTable}>
                         <tr>
-                            <td style={styleTableTd9}>Наименование показателя</td>
-                            <td style={styleTableTd9}>Дата</td>
+                            <td style={{...styleTableTd9, width: '40%'}}>Наименование показателя</td>
+                            <td style={{...styleTableTd9, width: '10%'}}>Дата</td>
                             <td style={styleTableTd9}>Значение</td>
-                            <td style={styleTableTd9Norma}>Норма</td>
+                            <td style={{...styleTableTd9, width: '12%'}}>Норма</td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd9}>Клинический анализ крови</td>
+                            <td style={styleTableTd9}><b>Клинический анализ крови</b></td>
                             <td style={styleTableTd9}></td>
                             <td style={styleTableTd9}></td>
                             <td style={styleTableTd9}></td>
@@ -324,7 +321,7 @@ const Page = (worker) => {
                             <td style={styleTableTd9}></td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd9}>Биохимический анализ крови</td>
+                            <td style={styleTableTd9}><b>Биохимический анализ крови</b></td>
                             <td style={styleTableTd9}></td>
                             <td style={styleTableTd9}></td>
                             <td style={styleTableTd9}></td>
@@ -384,7 +381,7 @@ const Page = (worker) => {
                             <td style={styleTableTd9}>отриц</td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd9}>-сифилис</td>
+                            <td style={styleTableTd9}><b>-сифилис</b></td>
                             <td style={styleTableTd9}></td>
                             <td style={styleTableTd9}></td>
                             <td style={styleTableTd9}>отриц</td>
@@ -438,7 +435,7 @@ const Page = (worker) => {
                             <td style={styleTableTd9}>отриц</td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd9}>Кал на гельминты</td>
+                            <td style={styleTableTd9}><b>Кал на гельминты</b></td>
                             <td style={styleTableTd9}></td>
                             <td style={styleTableTd9}></td>
                             <td style={styleTableTd9}>отриц</td>
