@@ -11,7 +11,7 @@ export default async function handler(req, res) {
                 contract_id: Joi.string().min(24).max(24).allow(null).empty('').default(null),
 
                 offset: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(0),
-                count: Joi.number().integer().min(0).max(200).allow(null).empty('').default(20)
+                count: Joi.number().integer().min(0).max(10000).allow(null).empty('').default(20)
             });
 
             value = await schema.validateAsync(req.query)

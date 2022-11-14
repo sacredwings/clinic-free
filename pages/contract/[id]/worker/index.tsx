@@ -7,7 +7,7 @@ export default function ({id}) {
     let [list, setList] = useState([])
     let [request, setRequest] = useState({
         items: [],
-        step: 200,
+        step: 10000,
     })
     let [org, setOrg] = useState(null)
 
