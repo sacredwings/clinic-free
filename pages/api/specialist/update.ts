@@ -35,7 +35,8 @@ export default async (req, res) => {
                 if ((!specialistPrice) || (!specialistPrice[0]) || (!specialistPrice[0]._price) || (specialistPrice[0]._price.price !== value.price)) {
                     let arFields = {
                         object_id: value.id,
-                        price: value.price
+                        price: value.price,
+                        create_date: new Date()
                     }
                     result = await CPrice.Add ( arFields )
                 }
