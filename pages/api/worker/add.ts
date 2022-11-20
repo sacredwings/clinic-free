@@ -79,16 +79,18 @@ export default async (req, res) => {
 
             //ВЫБОР ТИПОВ ДОГОВОРОВ ИЗ ДОГОВОРА
             if (value.contract_id) {
+
                 //загрузка договора
                 hfContract = await CContract.GetById ([value.contract_id])
                 if (!hfContract.length) throw ({code: 30100000, msg: 'Договор не найден'})
                 hfContract = hfContract[0]
 
-
                 //ЗДЕСЬ ВЫТАСКИВАЕМ ИЗ ОБЩИХ указанных в контракте
                 //если типы добавлены в контракт
                 if (hfContract.contract_type_ids) {
-                    let arType = await CContractType.GetById(hfContract.contract_type_ids) //загрузка типов
+
+                    //загрузка типов
+                    let arType = await CContractType.GetById(hfContract.contract_type_ids)
 
                     //добавляем в общему массиву
                     for (let contract_type of arType) {
@@ -97,7 +99,6 @@ export default async (req, res) => {
                     }
                 }
             }
-
 
             //ВЫБОР ТИПОВ ДОГОВОРОВ ИЗ ПОЛЬЗОВАТЕЛЯ
             if (value.contract_type_ids) {
@@ -111,9 +112,6 @@ export default async (req, res) => {
                 }
             }
 
-            //console.log(arResearch)
-            //console.log(arSpecialist)
-
             //ЗДЕСЬ ВЫТАСКИВАЕМ ИЗ ВРЕДНЫХ ФАКТОРОВ
             //загрузка кодов
             if (value.hf_code) {
@@ -124,22 +122,30 @@ export default async (req, res) => {
                     arResearch = [...arResearch, ...hf.research_ids]
                     arSpecialist = [...arSpecialist, ...hf.specialist_ids]
                 }
+            }
 
-                //Оставляем уникальные с прайсами
-                arResearch = await CResearch.GetByIdPrice (arResearch)
-                arSpecialist = await CSpecialist.GetByIdPrice (arSpecialist)
+            //ОБРАБОТКА ПОЛУЧЕННЫХ ИСЛЕДОВАНИЙ И СПЕЦИАЛИСТОВ
+            //Оставляем уникальные
+            arResearch = await CResearch.GetByIdPrice (arResearch)
+            arSpecialist = await CSpecialist.GetByIdPrice (arSpecialist)
 
-                //console.log(arResearch)
-                //console.log(arSpecialist)
+            console.log(arResearch)
+            console.log(arSpecialist)
 
+            //фиксированный прайс не указан
+            if ((!hfContract.price) || (hfContract.price===0)) {
+                //считае
                 for (let item of arResearch) {
-                    if ((item._price) && (item._price[0]))
-                        price += item._price[0].price
+                    if ((item._price) && (item._price))
+                        price += item._price.price
                 }
                 for (let item of arSpecialist) {
-                    if ((item._price) && (item._price[0]))
-                        price += item._price[0].price
+                    if ((item._price) && (item._price))
+                        price += item._price.price
                 }
+            } else {
+                //указана фиксированная цена
+                price = hfContract.price
             }
 
             //поиск пользователя среди существующих
@@ -151,6 +157,7 @@ export default async (req, res) => {
             }
             let searchUser = await CUser.GetByFields(arFields)
 
+            //создание пользователя
             if (!searchUser) {
                 arFields = {
                     first_name: value.first_name,
@@ -183,6 +190,7 @@ export default async (req, res) => {
                 await CUser.Add ( arFields )
             }
 
+            //СОЗДАНИЕ РАБОТНИКА
             arFields = {
                 user_id: searchUser ? searchUser._id : arFields._id,
 
