@@ -1,6 +1,6 @@
 import { DB } from "social-framework"
 
-export class CAdmin {
+export default class {
 
     //Индексация базы
     static async DdIndex() {

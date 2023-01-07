@@ -1,5 +1,5 @@
 import Joi from "joi"
-import { CAdmin } from "../../../classes/admin"
+import CAdmin from "../../../classes/admin"
 import DbConnect from "../../../util/DbConnect";
 
 export default async function handler(req, res) {

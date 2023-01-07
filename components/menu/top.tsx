@@ -1,6 +1,48 @@
+import React, {Component, useState, useEffect, useRef} from 'react'
 import Link from 'next/link'
 
-export default function () {
+
+
+export default function ({Logout, user}) {
+    let [q, setQ] = useState('') //поисковая фраза
+    const [showNotify, setShowNotify] = useState(false)
+
+    const UserButton = () => {
+        return <form className="d-flex">
+            <ul className="navbar-nav">
+                <li className="nav-item dropdown">
+                    <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                       role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {user.login}
+                    </a>
+                    <ul className="dropdown-menu dropdown-menu-right" style={{left: 'auto', right: 0}}
+                        aria-labelledby="navbarDropdownMenuLink">
+                        <li><Link href={`/user/${user._id}`}><a className="dropdown-item" >Моя страница</a></Link></li>
+                        <li><Link href="/setting"><a className="dropdown-item" >Настройки</a></Link></li>
+                        <div className="dropdown-divider"/>
+                        <li><Link href="/"><a className="dropdown-item"  onClick={Logout}>Выход</a></Link></li>
+                    </ul>
+                </li>
+            </ul>
+        </form>
+    }
+
+    const AuthRegButton = () => {
+        return <form className="d-flex">
+            <ul className="navbar-nav">
+
+                <li className="nav-item">
+                    <Link href="/auth"><a className="nav-link">Вход</a></Link>
+                </li>
+
+                <li className="nav-item">
+                    <Link href="/reg"><a className="nav-link">Регистрация</a></Link>
+                </li>
+
+            </ul>
+        </form>
+    }
+
     return <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid">
             <Link href="/"><a className="navbar-brand" >ООО "Пульсар"</a></Link>
@@ -55,6 +97,8 @@ export default function () {
                         </ul>
                     </li>
                 </ul>
+
+                {user.auth ? UserButton() : AuthRegButton()}
             </div>
         </div>
     </nav>

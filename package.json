@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.1",
     "axios": "^0.27.2",
     "bootstrap": "^5.2.0",
     "ejs": "^3.1.8",
@@ -19,6 +20,8 @@
     "next-connect": "^1.0.0-next.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-redux": "^8.0.5",
+    "redux": "^4.2.0",
     "social-framework": "^0.0.38"
   },
   "devDependencies": {
