@@ -46,12 +46,23 @@ export default function ({id}) {
         setOrg(result.data.response[0])
     }
 
+    const Type = (arList) => {
+        if (!arList) return null
+        return <>
+            {arList.map((list, i) => {
+                return <span className="badge text-bg-primary">{list.name}</span>
+            })}
+        </>
+    }
+
     const List = (arList) => {
         return <div className="list-group">
             {arList.map((list, i) => {
                 let href = `/contract/${list._id}/worker`
                 return <Link href={href} key={i}><a className="list-group-item list-group-item-action">
                     {list.name}
+                    <br/>
+                    {Type(list._contract_type_ids)}
                 </a></Link>
             })}
         </div>

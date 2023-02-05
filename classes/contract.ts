@@ -50,11 +50,28 @@ export default class {
             fields.org_id = new DB().ObjectID(fields.org_id)
 
             let collection = DB.Client.collection('contract')
+            let arAggregate = [{
+                $match: {
+                    org_id: fields.org_id
+                }
+            },{
+                $lookup:
+                    {
+                        from: 'contract-type',
+                        localField: 'contract_type_ids',
+                        foreignField: '_id',
+                        as: '_contract_type_ids'
+                    }
+            }]
 
+            let result = await collection.aggregate(arAggregate).toArray()
+            /*
             let arFields = {
                 org_id: fields.org_id
             }
-            return await collection.find(arFields).limit(fields.count).skip(fields.offset).toArray()
+            return await collection.find(arFields).limit(fields.count).skip(fields.offset).toArray()*/
+
+            return result
         } catch (err) {
             console.log(err)
             throw ({...{err: 7001000, msg: 'CContract Get'}, ...err})
