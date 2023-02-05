@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router' //переход по url
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
+import {capitalizeFirstLetter} from "../../util/function"
 
 export default function ({contract_id, worker_id}) {
     const router = useRouter() //для перехода к пользователю
@@ -71,6 +72,8 @@ export default function ({contract_id, worker_id}) {
         let value = e.target.value
         if (value === '') value = null
         if ((name === 'hf_code') && (value)) value = value.replace(/\s/g, "");
+
+        if (typeof value === 'string') value=capitalizeFirstLetter(value)
 
         setForm(prev => ({
             ...prev, [name]: value
