@@ -1,4 +1,5 @@
 import {DB} from "social-framework"
+import {capitalizeFirstLetter} from "../util/function"
 
 export default class {
 
@@ -30,6 +31,10 @@ export default class {
 
     static async GetByFields ( fields ) {
         try {
+            fields.first_name = capitalizeFirstLetter(fields.first_name)
+            fields.last_name = capitalizeFirstLetter(fields.last_name)
+            fields.patronymic_name = capitalizeFirstLetter(fields.patronymic_name)
+
             let collection = DB.Client.collection('user')
             let result = await collection.findOne(fields)
             return result
