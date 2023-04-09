@@ -15,8 +15,6 @@ export default async function handler(req, res) {
                 response: false
             })
 
-            console.log('1111111111111')
-            console.log(auth)
             let user = await CManager.GetById( [auth] )
             console.log(user)
             res.status(200).json({

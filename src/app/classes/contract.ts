@@ -77,4 +77,18 @@ export default class {
             throw ({...{err: 7001000, msg: 'CContract Get'}, ...err})
         }
     }
+
+    static async Update ( id, fields ) {
+        try {
+            let collection = DB.Client.collection('contract');
+            id = new DB().ObjectID(id)
+
+            let result = collection.updateOne({_id: id}, {$set: fields})
+            return result
+
+        } catch (err) {
+            console.log(err)
+            throw ({...{err: 7001000, msg: 'CContract Update'}, ...err})
+        }
+    }
 }
