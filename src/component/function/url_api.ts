@@ -17,7 +17,7 @@ async function request (type, url, data, config) {
 
 //АККАУНТ
 export async function ServerAccountGet ({cookies=null}) {
-    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3030`
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
     let arFields = {
         headers: {
@@ -31,7 +31,7 @@ export async function ServerAccountGet ({cookies=null}) {
     return res.data.response
 }
 export async function ServerOwnerGetById ({owner=null, ids=null}, {cookies=null}) {
-    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3030`
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
     let arFields = {
         params: {
@@ -57,7 +57,7 @@ export async function ServerGroupGet ({
 }, {
     cookies=null
 }) {
-    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3030`
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
     let arFields = {
         params: {
@@ -87,7 +87,7 @@ export async function ServerUserGet ({
 }, {
     cookies=null
 }) {
-    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3030`
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
     let arFields = {
         params: {
@@ -122,7 +122,7 @@ export async function ServerVideoGet ({
     cookies=null
 }) {
 
-    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3030`
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
     let arFields = {
         params: {
@@ -147,7 +147,7 @@ export async function ServerVideoGet ({
 }
 
 export async function ServerVideoGetById ({ids}, {cookies=null}) {
-    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3030`
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
     let arFields = {
         params: {
@@ -178,7 +178,7 @@ export async function ServerTopicGet ({
 },{
     cookies=null
 }) {
-    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3030`
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
     let arFields = {
         params: {
