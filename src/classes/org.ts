@@ -1,10 +1,11 @@
-import {DB} from "social-framework"
+import { DB, Store } from "../../../social-framework"
 
 export default class {
 
     static async Add ( fields ) {
         try {
-            let collection = DB.Client.collection('org')
+            const mongoClient = Store.GetMongoClient()
+            let collection = mongoClient.collection('org')
             await collection.insertOne(fields)
             return fields
 
@@ -16,9 +17,10 @@ export default class {
 
     static async GetById ( ids ) {
         try {
-            ids = new DB().arObjectID(ids)
+            ids = new DB().ObjectID(ids)
 
-            let collection = DB.Client.collection('org')
+            const mongoClient = Store.GetMongoClient()
+            let collection = mongoClient.collection('org')
             let result = await collection.find({_id: { $in: ids}}).toArray()
             return result
 
@@ -30,9 +32,10 @@ export default class {
 
     static async Get ( fields ) {
         try {
-            let collection = DB.Client.collection('org')
-
-            return await collection.find().limit(fields.count+fields.offset).skip(fields.offset).toArray()
+            const mongoClient = Store.GetMongoClient()
+            let collection = mongoClient.collection('org')
+            let result = await collection.find().toArray()
+            return result
 
         } catch (err) {
             console.log(err)
@@ -40,11 +43,12 @@ export default class {
         }
     }
 
-    static async Update ( id, fields ) {
+    static async Edit ( id, fields ) {
         try {
-            let collection = DB.Client.collection('org');
             id = new DB().ObjectID(id)
 
+            const mongoClient = Store.GetMongoClient()
+            let collection = mongoClient.collection('org')
             let result = collection.updateOne({_id: id}, {$set: fields})
             return result
 

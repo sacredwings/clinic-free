@@ -1,11 +1,11 @@
-import {DB} from "social-framework"
+import { DB, Store } from "../../../social-framework"
 
 export default class {
 
     static async Add ( fields ) {
         try {
             fields.contract_id = new DB().ObjectID(fields.contract_id)
-            fields.contract_type_ids = new DB().arObjectID(fields.contract_type_ids)
+            fields.contract_type_ids = new DB().ObjectID(fields.contract_type_ids)
 
             let collection = DB.Client.collection('worker')
             await collection.insertOne(fields)

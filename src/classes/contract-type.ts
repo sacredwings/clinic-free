@@ -1,11 +1,14 @@
-import {DB} from "social-framework"
+import { DB, Store } from "../../../social-framework"
 
 export default class {
 
     static async Add ( fields ) {
         try {
+            fields.specialist_ids = new DB().ObjectID(fields.specialist_ids)
+            fields.research_ids = new DB().ObjectID(fields.research_ids)
 
-            let collection = DB.Client.collection('contract-type')
+            const mongoClient = Store.GetMongoClient()
+            let collection = mongoClient.collection('contract-type')
             await collection.insertOne(fields)
             return fields
 
@@ -17,10 +20,36 @@ export default class {
 
     static async GetById ( ids ) {
         try {
-            ids = new DB().arObjectID(ids)
+            ids = new DB().ObjectID(ids)
 
-            let collection = DB.Client.collection('contract-type')
-            let result = await collection.find({_id: { $in: ids}}).toArray()
+            let arAggregate = []
+            arAggregate.push({
+                $match: {
+                    _id: {$in: ids}
+                }
+            })
+            arAggregate.push({
+                $lookup:
+                    {
+                        from: 'specialist',
+                        localField: 'specialist_ids',
+                        foreignField: '_id',
+                        as: '_specialist_ids'
+                    }
+            })
+            arAggregate.push({
+                $lookup:
+                    {
+                        from: 'research',
+                        localField: 'research_ids',
+                        foreignField: '_id',
+                        as: '_research_ids'
+                    }
+            })
+
+            const mongoClient = Store.GetMongoClient()
+            let collection = mongoClient.collection('contract-type')
+            let result = await collection.aggregate(arAggregate).toArray()
             return result
 
         } catch (err) {
@@ -29,15 +58,35 @@ export default class {
         }
     }
 
-    static async Get ( fields, params ) {
+    static async Get ( fields ) {
         try {
-            let collection = DB.Client.collection('contract-type')
+            let arAggregate = []
+            arAggregate.push({
+                $match: {}
+            })
+            arAggregate.push({
+                $lookup:
+                    {
+                        from: 'specialist',
+                        localField: 'specialist_ids',
+                        foreignField: '_id',
+                        as: '_specialist_ids'
+                    }
+            })
+            arAggregate.push({
+                $lookup:
+                    {
+                        from: 'research',
+                        localField: 'research_ids',
+                        foreignField: '_id',
+                        as: '_research_ids'
+                    }
+            })
 
-            //if (!fields.contract)
-                //return await collection.find({}).limit(params.count).skip(params.offset).toArray()
-
-            //console.log(collection)
-            return await collection.find().toArray();
+            const mongoClient = Store.GetMongoClient()
+            let collection = mongoClient.collection('contract-type')
+            let result = await collection.aggregate(arAggregate).toArray()
+            return result
 
         } catch (err) {
             console.log(err)
@@ -45,20 +94,24 @@ export default class {
         }
     }
 
-    static async Update ( id, fields ) {
+    static async Edit ( id, fields ) {
         try {
-            let collection = DB.Client.collection('contract-type');
             id = new DB().ObjectID(id)
+            fields.specialist_ids = new DB().ObjectID(fields.specialist_ids)
+            fields.research_ids = new DB().ObjectID(fields.research_ids)
 
+            const mongoClient = Store.GetMongoClient()
+            let collection = mongoClient.collection('contract-type')
             let result = collection.updateOne({_id: id}, {$set: fields})
             return result
 
         } catch (err) {
             console.log(err)
-            throw ({...{err: 7001000, msg: 'CContractType Update'}, ...err})
+            throw ({...{err: 7001000, msg: 'CContractType Edit'}, ...err})
         }
     }
 
+    /*
     static async Delete ( id ) {
         try {
             let collection = DB.Client.collection('contract-type');
@@ -71,5 +124,5 @@ export default class {
             console.log(err)
             throw ({...{err: 7001000, msg: 'CContractType Delete'}, ...err})
         }
-    }
+    }*/
 }
