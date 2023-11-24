@@ -6,6 +6,8 @@ export default class {
         try {
             fields.object_id = new DB().ObjectID(fields.object_id)
 
+            fields.create_date = new Date()
+
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('price')
             await collection.insertOne(fields)

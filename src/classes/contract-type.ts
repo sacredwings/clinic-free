@@ -7,6 +7,8 @@ export default class {
             fields.specialist_ids = new DB().ObjectID(fields.specialist_ids)
             fields.research_ids = new DB().ObjectID(fields.research_ids)
 
+            fields.create_date = new Date()
+
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('contract-type')
             await collection.insertOne(fields)

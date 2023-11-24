@@ -4,6 +4,8 @@ export default class {
 
     static async Add ( fields ) {
         try {
+            fields.create_date = new Date()
+
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('org')
             await collection.insertOne(fields)
