@@ -4,10 +4,7 @@ export default class {
 
     static async Add ( fields ) {
         try {
-            fields.user_id = new DB().ObjectID(fields.user_id)
-
-            fields.contract_id = new DB().ObjectID(fields.contract_id)
-            fields.contract_type_ids = new DB().ObjectID(fields.contract_type_ids)
+            fields.worker_id = new DB().ObjectID(fields.worker_id)
 
             fields.specialist_ids = new DB().ObjectID(fields.specialist_ids)
             fields.research_ids = new DB().ObjectID(fields.research_ids)
@@ -15,7 +12,7 @@ export default class {
             fields.create_date = new Date()
 
             const mongoClient = Store.GetMongoClient()
-            let collection = mongoClient.collection('worker')
+            let collection = mongoClient.collection(`checkup_${fields.module}`)
             await collection.insertOne(fields)
             return fields
 
@@ -24,7 +21,7 @@ export default class {
             throw ({...{err: 7001000, msg: 'CWorker Add'}, ...err})
         }
     }
-
+/*
     static async GetById ( ids ) {
         try {
             ids = new DB().ObjectID(ids)
@@ -136,16 +133,6 @@ export default class {
         try {
             id = new DB().ObjectID(id)
 
-            /*
-            fields.user_id = new DB().ObjectID(fields.user_id)
-
-            fields.contract_id = new DB().ObjectID(fields.contract_id)
-            fields.contract_type_ids = new DB().ObjectID(fields.contract_type_ids)
-
-            fields.specialist_ids = new DB().ObjectID(fields.specialist_ids)
-            fields.research_ids = new DB().ObjectID(fields.research_ids)
-            */
-
             //нельзя менять
             delete fields.user_id
             delete fields.contract_id
@@ -166,5 +153,5 @@ export default class {
             console.log(err)
             throw ({code: 8001000, msg: 'CWorker Edit'})
         }
-    }
+    }*/
 }
