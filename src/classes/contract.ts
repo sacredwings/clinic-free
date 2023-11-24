@@ -29,13 +29,12 @@ export default class {
                 }
             })
             arAggregate.push({
-                $lookup:
-                    {
-                        from: 'contract-type',
-                        localField: 'contract_type_ids',
-                        foreignField: '_id',
-                        as: '_contract_type_ids'
-                    }
+                $lookup: {
+                    from: 'contract-type',
+                    localField: 'contract_type_ids',
+                    foreignField: '_id',
+                    as: '_contract_type_ids'
+                }
             })
 
             const mongoClient = Store.GetMongoClient()
@@ -60,18 +59,17 @@ export default class {
                 }
             })
             arAggregate.push({
-                $lookup:
-                    {
-                        from: 'contract-type',
-                        localField: 'contract_type_ids',
-                        foreignField: '_id',
-                        as: '_contract_type_ids'
-                    }
+                $lookup: {
+                    from: 'contract-type',
+                    localField: 'contract_type_ids',
+                    foreignField: '_id',
+                    as: '_contract_type_ids'
+                }
             })
 
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('contract')
-            let result = await collection.aggregate(arAggregate).toArray()
+            let result = await collection.aggregate(arAggregate).skip(fields.offset).limit(fields.count).toArray()
             return result
 
         } catch (err) {

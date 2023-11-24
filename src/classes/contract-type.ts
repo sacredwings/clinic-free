@@ -29,22 +29,20 @@ export default class {
                 }
             })
             arAggregate.push({
-                $lookup:
-                    {
-                        from: 'specialist',
-                        localField: 'specialist_ids',
-                        foreignField: '_id',
-                        as: '_specialist_ids'
-                    }
+                $lookup: {
+                    from: 'specialist',
+                    localField: 'specialist_ids',
+                    foreignField: '_id',
+                    as: '_specialist_ids'
+                }
             })
             arAggregate.push({
-                $lookup:
-                    {
-                        from: 'research',
-                        localField: 'research_ids',
-                        foreignField: '_id',
-                        as: '_research_ids'
-                    }
+                $lookup: {
+                    from: 'research',
+                    localField: 'research_ids',
+                    foreignField: '_id',
+                    as: '_research_ids'
+                }
             })
 
             const mongoClient = Store.GetMongoClient()
@@ -65,27 +63,25 @@ export default class {
                 $match: {}
             })
             arAggregate.push({
-                $lookup:
-                    {
-                        from: 'specialist',
-                        localField: 'specialist_ids',
-                        foreignField: '_id',
-                        as: '_specialist_ids'
-                    }
+                $lookup: {
+                    from: 'specialist',
+                    localField: 'specialist_ids',
+                    foreignField: '_id',
+                    as: '_specialist_ids'
+                }
             })
             arAggregate.push({
-                $lookup:
-                    {
-                        from: 'research',
-                        localField: 'research_ids',
-                        foreignField: '_id',
-                        as: '_research_ids'
-                    }
+                $lookup: {
+                    from: 'research',
+                    localField: 'research_ids',
+                    foreignField: '_id',
+                    as: '_research_ids'
+                }
             })
 
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('contract-type')
-            let result = await collection.aggregate(arAggregate).toArray()
+            let result = await collection.aggregate(arAggregate).skip(fields.offset).limit(fields.count).toArray()
             return result
 
         } catch (err) {

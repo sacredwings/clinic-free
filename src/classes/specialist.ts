@@ -88,7 +88,7 @@ export default class {
 
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('specialist')
-            let result = await collection.aggregate(arAggregate).toArray()
+            let result = await collection.aggregate(arAggregate).skip(fields.offset).limit(fields.count).toArray()
             return result
 
         } catch (err) {

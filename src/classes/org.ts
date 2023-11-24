@@ -34,7 +34,7 @@ export default class {
         try {
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('org')
-            let result = await collection.find().toArray()
+            let result = await collection.find().skip(fields.offset).limit(fields.count).toArray()
             return result
 
         } catch (err) {
