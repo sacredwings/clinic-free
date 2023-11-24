@@ -4,10 +4,16 @@ export default class {
 
     static async Add ( fields ) {
         try {
+            fields.user_id = new DB().ObjectID(fields.user_id)
+
             fields.contract_id = new DB().ObjectID(fields.contract_id)
             fields.contract_type_ids = new DB().ObjectID(fields.contract_type_ids)
 
-            let collection = DB.Client.collection('worker')
+            fields.specialist_ids = new DB().ObjectID(fields.specialist_ids)
+            fields.research_ids = new DB().ObjectID(fields.research_ids)
+
+            const mongoClient = Store.GetMongoClient()
+            let collection = mongoClient.collection('worker')
             await collection.insertOne(fields)
             return fields
 
@@ -19,57 +25,61 @@ export default class {
 
     static async GetById ( ids ) {
         try {
-            ids = new DB().arObjectID(ids)
+            ids = new DB().ObjectID(ids)
 
-            let collection = DB.Client.collection('worker')
-            let result = await collection.aggregate([
-                { $match:
-                        {
-                            _id: { $in: ids }
-                        }
-                },{ $lookup:
-                        {
-                            from: 'user',
-                            localField: 'user_id',
-                            foreignField: '_id',
-                            as: '_user_id'
-                        }
-                },{ $lookup:
-                        {
-                            from: 'contract',
-                            localField: 'contract_id',
-                            foreignField: '_id',
-                            as: '_contract_id',
-                            pipeline: [{
-                                $lookup:
-                                    {
-                                        from: 'org',
-                                        localField: 'org_id',
-                                        foreignField: '_id',
-                                        as: '_org_id'
-                                    }
-                            },{
-                                $unwind:
-                                    {
-                                        path: '$_org_id',
-                                        preserveNullAndEmptyArrays: true
-                                    }
-                            }]
-                        }
-                },{
-                    $unwind:
-                        {
-                            path: '$_user_id',
-                            preserveNullAndEmptyArrays: true
-                        }
-                },{
-                    $unwind:
-                        {
-                            path: '$_contract_id',
-                            preserveNullAndEmptyArrays: true
-                        }
+            let arAggregate = []
+            arAggregate.push({
+                $match: {
+                    _id: {$in: ids}
                 }
-            ]).toArray()
+            })
+            arAggregate.push({
+                $lookup: {
+                    from: 'user',
+                    localField: 'user_id',
+                    foreignField: '_id',
+                    as: '_user_id'
+                }
+            })
+            arAggregate.push({
+                $lookup: {
+                    from: 'contract',
+                    localField: 'contract_id',
+                    foreignField: '_id',
+                    as: '_contract_id',
+                    pipeline: [{
+                        $lookup:
+                            {
+                                from: 'org',
+                                localField: 'org_id',
+                                foreignField: '_id',
+                                as: '_org_id'
+                            }
+                    },{
+                        $unwind:
+                            {
+                                path: '$_org_id',
+                                preserveNullAndEmptyArrays: true
+                            }
+                    }]
+                }
+            })
+            arAggregate.push({
+                $unwind: {
+                    path: '$_user_id',
+                    preserveNullAndEmptyArrays: true
+                }
+            })
+            arAggregate.push({
+                $unwind: {
+                    path: '$_contract_id',
+                    preserveNullAndEmptyArrays: true
+                }
+            })
+
+            const mongoClient = Store.GetMongoClient()
+            let collection = mongoClient.collection('worker')
+            let result = await collection.aggregate(arAggregate).toArray()
             return result
 
         } catch (err) {
@@ -82,35 +92,36 @@ export default class {
         try {
             fields.contract_id = new DB().ObjectID(fields.contract_id)
 
-            let collection = DB.Client.collection('worker')
-
-            let result = await collection.aggregate([
-                { $match:
-                        {
-                            contract_id: fields.contract_id
-                        }
-                },{ $lookup:
-                        {
-                            from: 'user',
-                            localField: 'user_id',
-                            foreignField: '_id',
-                            as: '_user_id'
-                        }
-                },{
-                    $unwind:
-                        {
-                            path: '$_user_id',
-                            preserveNullAndEmptyArrays: true
-                        }
-                },{
-                    $sort:
-                        {
-                            "_user_id.last_name": 1
-                            //_id: -1
-                        }
+            let arAggregate = []
+            arAggregate.push({
+                $match: {
+                    contract_id: fields.contract_id
                 }
-            ]).limit(fields.count).skip(fields.offset).toArray();
+            })
+            arAggregate.push({
+                $lookup: {
+                    from: 'user',
+                    localField: 'user_id',
+                    foreignField: '_id',
+                    as: '_user_id'
+                }
+            })
+            arAggregate.push({
+                $unwind: {
+                    path: '$_user_id',
+                    preserveNullAndEmptyArrays: true
+                }
+            })
+            arAggregate.push({
+                $sort: {
+                    "_user_id.last_name": 1
+                    //_id: -1
+                }
+            })
 
+            const mongoClient = Store.GetMongoClient()
+            let collection = mongoClient.collection('worker')
+            let result = await collection.aggregate(arAggregate).skip(fields.offset).limit(fields.count).toArray()
             return result
 
         } catch (err) {
@@ -119,41 +130,36 @@ export default class {
         }
     }
 
-    static async Edit(id, fields) {
+    static async Edit ( id, fields ) {
         try {
             id = new DB().ObjectID(id)
 
-            fields.contract_id = new DB().ObjectID(fields.contract_id)
-            fields.contract_type_ids = new DB().arObjectID(fields.contract_type_ids)
-
-            let collection = DB.Client.collection('worker')
-
-            delete fields.user_id
-            delete fields.contract_id
-
             /*
+            fields.user_id = new DB().ObjectID(fields.user_id)
+
+            fields.contract_id = new DB().ObjectID(fields.contract_id)
+            fields.contract_type_ids = new DB().ObjectID(fields.contract_type_ids)
+
+            fields.specialist_ids = new DB().ObjectID(fields.specialist_ids)
+            fields.research_ids = new DB().ObjectID(fields.research_ids)
+            */
+
+            //нельзя менять
             delete fields.user_id
             delete fields.contract_id
             delete fields.contract_type_ids
-            delete fields.hf_code
-            delete fields.price
-            delete fields.price_ultrasound
-            delete fields.price_mammography
-            delete fields.price_xray
-            delete fields.research_ids
             delete fields.specialist_ids
-            delete fields.profession
-            delete fields.employment_date
-            delete fields.work_place
-            delete fields.work_experience
-            delete fields.subdivision*/
+            delete fields.research_ids
 
             let arFields = {
                 _id: id
             }
 
-            let result = await collection.updateOne(arFields, {$set: fields})
+            const mongoClient = Store.GetMongoClient()
+            let collection = mongoClient.collection('worker')
+            let result = collection.updateOne({_id: id}, {$set: fields})
             return result
+
         } catch (err) {
             console.log(err)
             throw ({code: 8001000, msg: 'CWorker Edit'})
