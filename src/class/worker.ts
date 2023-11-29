@@ -68,27 +68,18 @@ export default class {
             })
             arAggregate.push({
                 $lookup: {
-                    from: 'checkup_specialist',
-                    localField: 'specialist_ids',
-                    foreignField: '_id',
-                    as: '_checkup_specialist_ids',
-                    pipeline: [{
-                        $match: {
-                            _id: 'worker._id'
-                        }
-                    },{
-                        $lookup: {
-                            from: 'org',
-                            localField: 'org_id',
-                            foreignField: '_id',
-                            as: '_org_id'
-                        }
-                    },{
-                        $unwind: {
-                            path: '$_org_id',
-                            preserveNullAndEmptyArrays: true
-                        }
-                    }]
+                    from: 'specialist_visit',
+                    localField: '_id',
+                    foreignField: 'worker_id',
+                    as: '_specialist_visit_ids'
+                }
+            })
+            arAggregate.push({
+                $lookup: {
+                    from: 'research_visit',
+                    localField: '_id',
+                    foreignField: 'worker_id',
+                    as: '_research_visit_ids'
                 }
             })
             arAggregate.push({

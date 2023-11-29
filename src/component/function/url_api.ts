@@ -106,6 +106,28 @@ export async function ServerUserGet ({
     let res = await axios.get(url, arFields);
     return res.data.response
 }
+//ПОЛЬЗОВАТЕЛЬ
+export async function ServerUserGetById ({
+    ids
+}, {
+    cookies=null
+}) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        params: {
+            ids
+        },
+        headers: {
+            Cookie: cookies
+        }
+    } as AxiosRequestConfig
+
+    let url = `/api/user/getById`
+    console.log(url)
+    let res = await axios.get(url, arFields);
+    return res.data.response
+}
 
 //---------------------------------------------------------------------------------
 //ВИДЕО

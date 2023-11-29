@@ -1,12 +1,16 @@
+import { NextResponse } from 'next/server'
+import { mongo, minio } from "@/utility/connect"
 import Joi from "joi"
-import DbConnect from "../../../app/util/DbConnect"
-import CContract from "../../../app/classes/contract"
+import { CAuth, Store }  from "../../../../../../social-framework"
+import {headers} from "next/headers";
+import CContract from "@/class/contract"
 
-export default async function handler(req, res) {
+export async function POST (request: Request) {
     let value
     try {
         try {
-            //схема
+            let rsRequest = await request.json()
+
             const schema = Joi.object({
                 id: Joi.string().min(24).max(24).required(),
 
@@ -24,14 +28,14 @@ export default async function handler(req, res) {
                 //date_to: Joi.date().allow(null).empty('').default(null),
             })
 
-            value = await schema.validateAsync(req.body)
+            value = await schema.validateAsync(rsRequest)
 
         } catch (err) {
             console.log(err)
             throw ({code: 412, msg: 'Неверные параметры'})
         }
         try {
-            await DbConnect()
+            await mongo()
 
             let arFields = {
                 name: value.name,
@@ -47,24 +51,17 @@ export default async function handler(req, res) {
                 //date_from: value.date_from,
                 //date_to: value.date_to,
             }
-            let result = await CContract.Update ( value.id, arFields )
+            let result = await CContract.Edit ( value.id, arFields )
 
-            res.status(200).json({
-                code: 0,
+            return NextResponse.json({
+                err: 0,
                 response: result
             })
+
         } catch (err) {
             throw ({...{code: 10000000, msg: 'Ошибка формирования результата'}, ...err})
         }
     } catch (err) {
-        res.status(200).json({...{code: 10000000, msg: 'ROrg Add'}, ...err})
+        return NextResponse.json({...{code: 10000000, msg: 'ROrg Add'}, ...err})
     }
-}
-
-export const config = {
-    api: {
-        bodyParser: {
-            sizeLimit: '1mb',
-        },
-    },
 }

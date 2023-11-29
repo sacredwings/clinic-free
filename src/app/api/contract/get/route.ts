@@ -1,12 +1,22 @@
-import Joi from "joi"
-import DbConnect from "../../../app/util/DbConnect"
-import CContract from "../../../app/classes/contract"
+import { NextResponse } from 'next/server'
+import { cookies } from 'next/headers'
+import { mongo, minio } from "@/utility/connect"
+import Config from "../../../../../config.json";
+import { Store, DB, CUser }  from "../../../../../../social-framework"
+import Joi  from "joi"
+import CContract from "@/class/contract"
 
-export default async function handler(req, res) {
+export async function GET(request: Request) {
     let value
     try {
         try {
-            //схема
+            const { searchParams } = new URL(request.url)
+            let url = {
+                org_id: searchParams.get('org_id'),
+                offset: searchParams.get('offset'),
+                count: searchParams.get('count')
+            }
+
             const schema = Joi.object({
                 org_id: Joi.string().min(24).max(24).required(),
 
@@ -14,14 +24,14 @@ export default async function handler(req, res) {
                 count: Joi.number().integer().min(0).max(200).allow(null).empty('').default(20)
             });
 
-            value = await schema.validateAsync(req.query)
+            value = await schema.validateAsync(url)
 
         } catch (err) {
             console.log(err)
             throw ({code: 412, msg: 'Неверные параметры'})
         }
         try {
-            await DbConnect()
+            await mongo()
 
             let arFields = {
                 org_id: value.org_id,
@@ -30,7 +40,7 @@ export default async function handler(req, res) {
             }
             let result = await CContract.Get (arFields)
 
-            res.status(200).json({
+            return NextResponse.json({
                 code: 0,
                 response: {
                     items: result
@@ -40,14 +50,6 @@ export default async function handler(req, res) {
             throw ({...{code: 10000000, msg: 'Ошибка формирования результата'}, ...err})
         }
     } catch (err) {
-        res.status(200).json({...{code: 10000000, msg: 'RContract Add'}, ...err})
+        return NextResponse.json({...{code: 10000000, msg: 'RContract Add'}, ...err})
     }
-}
-
-export const config = {
-    api: {
-        bodyParser: {
-            sizeLimit: '1mb',
-        },
-    },
 }

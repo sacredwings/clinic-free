@@ -11,30 +11,36 @@ export async function POST (request: Request) {
         try {
             let rsRequest = await request.json()
 
+            //схема
             const schema = Joi.object({
-                code: Joi.string().min(1).max(255).required(),
-                name: Joi.string().min(3).max(255).required(),
-            })
+                id: Joi.string().min(24).max(24).required(),
+                name: Joi.string().min(1).max(255).required(),
+            });
 
             value = await schema.validateAsync(rsRequest)
 
         } catch (err) {
             console.log(err)
-            throw ({err: 412, msg: 'Неверные параметры'})
+            throw ({...{err: 412, msg: 'Неверные параметры'}, ...err})
         }
         try {
+
             await mongo()
 
-            let result = await CHf.Add ( value )
+            let arFields = {
+                name: value.name
+            }
+            let result = await CHf.Edit ( value.id, arFields )
 
             return NextResponse.json({
                 err: 0,
-                response: true
+                response: result
             })
+
         } catch (err) {
             throw ({...{err: 10000000, msg: 'Ошибка формирования результата'}, ...err})
         }
     } catch (err) {
-        return NextResponse.json({...{code: 10000000, msg: 'RHf Add'}, ...err})
+        return NextResponse.json({...{code: 10000000, msg: 'RHf Edit'}, ...err})
     }
 }

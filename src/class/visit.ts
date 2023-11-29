@@ -2,25 +2,102 @@ import { DB, Store } from "../../../social-framework"
 
 export default class {
 
-    static async Add ( fields ) {
+    static async Edit ( {module, ...fields} ) {
         try {
+            const mongoClient = Store.GetMongoClient()
+            let collection = mongoClient.collection(`${module}_visit`)
+
+            //ищем уже такой же
+            let resultDouble = await this.GetDouble({
+                module: module,
+                worker_id: fields.worker_id,
+                specialist_id: fields.specialist_id,
+                research_ids: fields.research_ids,
+            })
+            //существует
+            if (resultDouble) {
+                //обновляем
+
+                let arFields = {
+                    status: fields.status
+                }
+                let result = collection.updateOne({_id: resultDouble._id}, {$set: arFields})
+
+                return true
+            }
+
             fields.worker_id = new DB().ObjectID(fields.worker_id)
 
-            fields.specialist_ids = new DB().ObjectID(fields.specialist_ids)
+            fields.specialist_id = new DB().ObjectID(fields.specialist_id)
             fields.research_ids = new DB().ObjectID(fields.research_ids)
 
+            fields.user_id = new DB().ObjectID(fields.user_id)
             fields.create_date = new Date()
 
-            const mongoClient = Store.GetMongoClient()
-            let collection = mongoClient.collection(`checkup_${fields.module}`)
             await collection.insertOne(fields)
             return fields
 
         } catch (err) {
             console.log(err)
-            throw ({...{err: 7001000, msg: 'CWorker Add'}, ...err})
+            throw ({...{err: 7001000, msg: 'CVisit Add'}, ...err})
         }
     }
+
+    static async GetDouble ( {module, ...fields} ) {
+        try {
+            let arFields = {
+                worker_id: new DB().ObjectID(fields.worker_id)
+            }
+
+            if (fields.specialist_id)
+                arFields.specialist_id = new DB().ObjectID(fields.specialist_id)
+            if (fields.research_ids)
+                arFields.research_ids = new DB().ObjectID(fields.research_ids)
+
+            const mongoClient = Store.GetMongoClient()
+            let collection = mongoClient.collection(`${module}_visit`)
+            await collection.findOne(fields)
+            return fields
+
+        } catch (err) {
+            console.log(err)
+            throw ({...{err: 7001000, msg: 'CVisit Add'}, ...err})
+        }
+    }
+
+    /*
+    static async Add ( {module, ...fields} ) {
+        try {
+            //ищем уже такой же
+            let resultDouble = await this.GetDouble({
+                module: module,
+                worker_id: fields.worker_id,
+                specialist_id: fields.specialist_id,
+                research_ids: fields.research_ids,
+            })
+            //найден, тогда больше не создаем
+            if (resultDouble) return resultDouble
+
+            fields.worker_id = new DB().ObjectID(fields.worker_id)
+
+            fields.specialist_id = new DB().ObjectID(fields.specialist_id)
+            fields.research_ids = new DB().ObjectID(fields.research_ids)
+
+            fields.user_id = new DB().ObjectID(fields.user_id)
+            fields.create_date = new Date()
+
+            const mongoClient = Store.GetMongoClient()
+            let collection = mongoClient.collection(`${module}_visit`)
+            await collection.insertOne(fields)
+            return fields
+
+        } catch (err) {
+            console.log(err)
+            throw ({...{err: 7001000, msg: 'CVisit Add'}, ...err})
+        }
+    }*/
+
+
 /*
     static async GetById ( ids ) {
         try {

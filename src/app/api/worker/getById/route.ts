@@ -1,47 +1,45 @@
 import Joi from "joi"
-import DbConnect from "../../../app/util/DbConnect"
-import CWorker from "../../../app/classes/worker"
+import { NextResponse } from 'next/server'
+import { mongo, minio } from "@/utility/connect"
+import CWorker from "@/class/worker"
 
-export default async function handler(req, res) {
+export async function GET(request: Request) {
+    const { searchParams } = new URL(request.url)
+    let url = {
+        ids: searchParams.get('ids[]')
+    }
+    if (url.ids) url.ids = url.ids.split(',')
+
+
     let value
     try {
         try {
-            req.query.ids = req.query.ids.split(',')
-
             //схема
             const schema = Joi.object({
                 ids: Joi.array().min(1).max(50).items(Joi.string().min(24).max(24)).required()
             })
-
-            value = await schema.validateAsync(req.query)
+            value = await schema.validateAsync(url)
 
         } catch (err) {
             console.log(err)
             throw ({err: 412, msg: 'Неверные параметры'})
         }
         try {
-            await DbConnect()
+            await mongo()
 
             let result = await CWorker.GetById ( value.ids )
 
-            res.status(200).json({
-                err: 0,
-                response: {
-                    items: result
-                }
+            return NextResponse.json({
+                code: 0,
+                response: result
             })
+
         } catch (err) {
             throw ({...{err: 10000000, msg: 'Ошибка формирования результата'}, ...err})
         }
     } catch (err) {
-        res.status(200).json({...{err: 10000000, msg: 'RWorker Get'}, ...err})
-    }
-}
+        console.log(err)
+        return NextResponse.json(err)
 
-export const config = {
-    api: {
-        bodyParser: {
-            sizeLimit: '1mb',
-        },
-    },
+    }
 }

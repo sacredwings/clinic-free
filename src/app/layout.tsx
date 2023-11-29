@@ -7,8 +7,8 @@ import Provider from '@/store/provider'
 import ReactYandexMetrika from '@/component/metrika/react-yandex-metrika'
 
 export const metadata: Metadata = {
-  title: 'Сайт для Военных',
-  description: 'Сайт, форум, приложение для Военных',
+  title: 'Клиника здоровья',
+  description: '',
 }
 
 export default function RootLayout({
