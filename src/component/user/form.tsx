@@ -1,24 +1,32 @@
 'use client'
-import { useRouter } from 'next/router' //переход по url
+//import { useRouter } from 'next/router' //переход по url
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
 import {interfaceUserAccess} from "@/component/function/url_api_type";
 import {ServerUserEditAccess} from "@/component/function/url_api";
 
-export default function ({user, specialist, research}) {
-    const router = useRouter() //для перехода к пользователю
+export default function UserForm ({user, specialist, research}) {
+    //const router = useRouter() //для перехода к пользователю
 
-    const OnCheck = (list, formList) => {
-        let checkSpecialist = list.map((element, i) => {
+    const OnCheckInit = (list, formList) => {
+        if (!list) return []
+
+        let newList = list.map((element, i) => {
             element.checked = false
+
+            if (!formList) return element
+
             for (let formElement of formList) {
-                if (element._id === formElement._id) element.checked = true
+                if (element._id === formElement) element.checked = true
             }
 
             return element
         })
+
+        return newList
     }
 
+    /*
     const formDefault = {
         first_name: '',
         last_name: '',
@@ -30,17 +38,18 @@ export default function ({user, specialist, research}) {
 
         specialist_ids: null,
         research_ids: null
-    }
+    }*/
 
-    let [form, setForm] = useState(formDefault)
-    let [checkSpecialist, setCheckSpecialist] = useState(OnCheck(specialist, user.specialist_ids))
-    let [checkResearch, setCheckResearch] = useState(OnCheck(research, user.research_ids))
+    let [form, setForm] = useState(user)
+    let [checkSpecialist, setCheckSpecialist] = useState(()=>OnCheckInit(specialist, user.specialist_ids))
+    let [checkResearch, setCheckResearch] = useState(()=>OnCheckInit(research, user.research_ids))
+
 
     useEffect(() => {
         (async () => {
-
+            console.log(form)
         })()
-    }, [])
+    }, [form])
 
     const onChangeText = (e) => {
         let name = e.target.id
@@ -51,15 +60,17 @@ export default function ({user, specialist, research}) {
         }))
     }
 
+    /*
     const Default = () => {
         setForm(prev => (formDefault))
-    }
+    }*/
 
     const onSaveAccess = async (e) => {
         e.preventDefault() // Stop form submit
 
         let url = '/user/editAccess'
 
+        console.log(form)
         let arFields = {
             id: form._id,
             specialist_ids: form.specialist_ids,
@@ -69,16 +80,39 @@ export default function ({user, specialist, research}) {
         let result = await ServerUserEditAccess(arFields)
     }
 
-    const OnChangeCheck = (id, list, Set) => {
-        let newCheckList = contractTypeList.map((element, i) => {
+    const OnChangeCheckSpecialist = (id) => {
+        let newIds = []
+        let newCheckList = checkSpecialist.map((element, i) => {
             if (element._id === id)
                 element.checked = !element.checked
 
-            if (element.checked) list.push(element._id)
+            //заполнение чеками
+            if (element.checked) newIds.push(element._id)
+
             return element
         })
 
-        //Set(newListCheck)
+        setForm(prev => ({
+            ...prev, specialist_ids: (newIds.length) ? newIds : null
+        }))
+        setCheckSpecialist(newCheckList)
+    }
+    const OnChangeCheckResearch = (id) => {
+        let newIds = []
+        let newCheckList = checkResearch.map((element, i) => {
+            if (element._id === id)
+                element.checked = !element.checked
+
+            //заполнение чеками
+            if (element.checked) newIds.push(element._id)
+
+            return element
+        })
+
+        setForm(prev => ({
+            ...prev, research_ids: (newIds.length) ? newIds : null
+        }))
+        setCheckResearch(newCheckList)
     }
 
     const OnChangeCheckOne = (e) => {
@@ -94,24 +128,110 @@ export default function ({user, specialist, research}) {
         return <>
             <div className="mb-3 form-check">
                 <div>
-                    {user.specialist_ids.map((item, i)=>{
+                    {checkSpecialist.map((item, i)=>{
                         return <div className="form-check" key={i}>
-                            <input className="form-check-input" type="checkbox" checked={(item.checked) ? true : false} onChange={()=>{OnChangeCheck(item._id)}}/>
+                            <input className="form-check-input" type="checkbox" checked={(item.checked) ? true : false} onChange={()=>{OnChangeCheckSpecialist(item._id)}}/>
                             <label className="form-check-label" htmlFor="flexCheckDefault">
                                 {item.name}
                             </label>
                         </div>
                     })}
-
                 </div>
             </div>
         </>
     }
-
+    const FormCheckResearch = () => {
+        return <>
+            <div className="mb-3 form-check">
+                <div>
+                    {checkResearch.map((item, i)=>{
+                        return <div className="form-check" key={i}>
+                            <input className="form-check-input" type="checkbox" checked={(item.checked) ? true : false} onChange={()=>{OnChangeCheckResearch(item._id)}}/>
+                            <label className="form-check-label" htmlFor="flexCheckDefault">
+                                {item.name}
+                            </label>
+                        </div>
+                    })}
+                </div>
+            </div>
+        </>
+    }
     const Form = () => {
-        return <form onSubmit={onSaveAccess} className="p-3">
-            {FormCheckSpecialist()}
-        </form>
+        return <>
+
+            <div className="card">
+                <div className="card-body">
+                    <form onSubmit={onSaveAccess}>
+                        <div className="mb-0">
+                            <legend>Основное</legend>
+                            <hr/>
+                        </div>
+                        <div className="mb-3 row">
+                            <div className="col-4">
+                                <label htmlFor="last_name" className="col-form-label">Фамилия</label>
+                                <input type="text" className="form-control" id="last_name" value={form.last_name ? form.last_name : ''} onChange={onChangeText}/>
+                            </div>
+                            <div className="col-4">
+                                <label htmlFor="first_name" className="col-form-label">Имя</label>
+                                <input type="text" className="form-control" id="first_name" value={form.first_name ? form.first_name : ''} onChange={onChangeText}/>
+                            </div>
+                            <div className="col-4">
+                                <label htmlFor="patronymic_name" className="col-form-label">Отчество</label>
+                                <input type="text" className="form-control" id="patronymic_name" value={form.patronymic_name ? form.patronymic_name : ''} onChange={onChangeText}/>
+                            </div>
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="man" className="col-form-label">Пол</label>
+                            <select className="form-select" id="man" aria-label="" value={form.man} onChange={onChangeText}>
+                                <option value="1" defaultValue="1">Мужской</option>
+                                <option value="0">Женский</option>
+                            </select>
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="date_birth" className="col-form-label">Дата рождения</label>
+                            <input type="date" className="form-control" id="date_birth" value={form.date_birth ? new Date(form.date_birth).toISOString().substring(0, 10) : ''} onChange={onChangeText}/>
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="phone" className="col-form-label">Телефон</label>
+                            <input type="text" className="form-control" id="phone" value={form.phone ? form.phone : ''} onChange={onChangeText}/>
+                        </div>
+
+                        <div className="mb-3" style={{float: 'right'}}>
+                            <button type="submit" className="btn btn-success">Сохранить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div className="card" style={{marginTop: '20px'}}>
+                <div className="card-body">
+
+
+                    <form onSubmit={onSaveAccess}>
+                        <div className="mb-0">
+                            <legend>Доступ к проф. осмотру</legend>
+                            <hr/>
+                        </div>
+                        <div className="mb-3">
+                            <p className={'text-center'}>Специалисты</p>
+                            {FormCheckSpecialist()}
+                        </div>
+                        <div className="mb-3">
+                            <p className={'text-center'}>Исследования</p>
+                            {FormCheckResearch()}
+                        </div>
+                        <div className="mb-3" style={{float: 'right'}}>
+                            <button type="submit" className="btn btn-success">Сохранить</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+
+        </>
+
+
 
     }
 

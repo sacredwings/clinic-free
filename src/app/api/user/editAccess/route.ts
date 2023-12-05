@@ -7,7 +7,7 @@ import {mongo} from "@/utility/connect";
 
 export async function POST(request: Request) {
 
-    const res = await request.json()
+    const rsRequest = await request.json()
 
     let value
     try {
@@ -19,7 +19,7 @@ export async function POST(request: Request) {
                 specialist_ids: Joi.array().min(1).max(50).items(Joi.string().min(24).max(24)).empty(null).default(null),
                 research_ids: Joi.array().min(1).max(50).items(Joi.string().min(24).max(24)).empty(null).default(null),
             })
-            value = await schema.validateAsync(res)
+            value = await schema.validateAsync(rsRequest)
 
         } catch (err) {
             console.log(err)
@@ -30,14 +30,14 @@ export async function POST(request: Request) {
             await mongo()
 
             let userId = await Authentication(request)
-            if (!userId) throw ({code: 30100000, msg: 'Требуется авторизация'})
+            //if (!userId) throw ({code: 30100000, msg: 'Требуется авторизация'})
 
             let arFields = {
                 specialist_ids: value.specialist_ids,
                 research_ids: value.research_ids,
             }
 
-            let res = await CUser.Edit(userId, arFields)
+            let res = await CUser.Edit(value.id, arFields)
 
             return NextResponse.json({ res })
         } catch (err) {

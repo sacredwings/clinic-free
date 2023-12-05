@@ -1,12 +1,34 @@
 import Joi from 'joi'
-import CSpecialist from "../../../app/classes/specialist"
-import DbConnect from "../../../app/util/DbConnect";
+import { NextResponse } from 'next/server'
+import { cookies } from 'next/headers'
+import { mongo, minio } from "@/utility/connect"
+import Config from "../../../../../config.json";
+import { Store, DB, CUser }  from "../../../../../../social-framework"
+import CSpecialist from "@/class/specialist"
 
-export  default async (req, res) => {
+export async function GET(request: Request) {
     let value
     try {
         try {
-            await DbConnect()
+            const { searchParams } = new URL(request.url)
+            let url = {
+                offset: searchParams.get('offset'),
+                count: searchParams.get('count')
+            }
+
+            const schema = Joi.object({
+                offset: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(0),
+                count: Joi.number().integer().min(0).max(200).allow(null).empty('').default(20)
+            });
+
+            value = await schema.validateAsync(url)
+
+        } catch (err) {
+            console.log(err)
+            throw ({code: 412, msg: 'Неверные параметры'})
+        }
+        try {
+            await mongo()
 
             let arFields = {
                 count: 1000,
@@ -14,8 +36,8 @@ export  default async (req, res) => {
             }
             let result = await CSpecialist.Get (arFields, {})
 
-            res.status(200).json({
-                err: 0,
+            return NextResponse.json({
+                code: 0,
                 response: {
                     items: result
                 }
@@ -24,14 +46,6 @@ export  default async (req, res) => {
             throw ({...{err: 10000000, msg: 'Ошибка формирования результата'}, ...err})
         }
     } catch (err) {
-        res.status(200).json({...{err: 10000000, msg: 'RSpecialist Get'}, ...err})
+        return NextResponse.json({...{code: 10000000, msg: 'RResearch Get'}, ...err})
     }
-}
-
-export const config = {
-    api: {
-        bodyParser: {
-            sizeLimit: '1mb',
-        },
-    },
 }

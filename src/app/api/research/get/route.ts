@@ -28,6 +28,7 @@ export async function GET(request: Request) {
             throw ({code: 412, msg: 'Неверные параметры'})
         }
         try {
+            await mongo()
 
             let arFields = {
                 count: 1000,

@@ -51,7 +51,7 @@ export async function ServerUserGetById ({ids}: interfaceUserGetById, {cookies=n
     let url = `/api/user/getById`
     console.log(url)
     let res = await axios.get(url, arFields)
-    return res.data.response[0]
+    return res.data.response
 }
 export async function ServerUserEdit ({
     id,
