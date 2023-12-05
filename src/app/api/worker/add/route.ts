@@ -1,19 +1,22 @@
+import { NextResponse } from 'next/server'
+import { mongo, minio } from "@/utility/connect"
 import Joi from "joi"
-import CWorker from "../../../app/classes/worker"
-import CContract from "../../../app/classes/contract"
-import CContractType from "../../../app/classes/contract-type"
-import CHf from "../../../app/classes/hf"
-import CResearch from "../../../app/classes/research"
-import CSpecialist from "../../../app/classes/specialist"
-import CUser from "../../../app/classes/user"
-import DbConnect from "../../../app/util/DbConnect";
+import CWorker from "@/class/worker"
+import CContract from "@/class/contract"
+import CContractType from "@/class/contract-type"
+import CHf from "@/class/hf"
+import CResearch from "@/class/research"
+import CSpecialist from "@/class/specialist"
+//import CUser from "@/class/"
 
-export default async (req, res) => {
+export async function POST (request: Request) {
     let value
     try {
         try {
-            if (req.body.hf_code) req.body.hf_code = req.body.hf_code.replace(/ /gi, '') //удаление пробелов
-            if (req.body.hf_code) req.body.hf_code = req.body.hf_code.split(',') //в массив
+            let rsRequest = await request.json()
+
+            if (rsRequest.hf_code) rsRequest.hf_code = rsRequest.hf_code.replace(/ /gi, '') //удаление пробелов
+            if (rsRequest.hf_code) rsRequest.hf_code = rsRequest.hf_code.split(',') //в массив
 
             //схема
             const schema = Joi.object({
@@ -61,14 +64,14 @@ export default async (req, res) => {
                 work_experience: Joi.number().integer().min(0).max(100).allow(null).empty('').default(null),
             })
 
-            value = await schema.validateAsync(req.body)
+            value = await schema.validateAsync(rsRequest)
 
         } catch (err) {
             console.log(err)
             throw ({code: 412, msg: 'Неверные параметры'})
         }
         try {
-            await DbConnect()
+            await mongo()
 
             let price = 0
             let arResearch = []

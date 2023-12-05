@@ -1,4 +1,10 @@
-import {interfaceVideoGet, interfaceAlbumGet} from './url_api_type'
+import {
+    interfaceResearchEdit,
+    interfaceSpecialistAdd, interfaceSpecialistDelete,
+    interfaceSpecialistEdit,
+    interfaceSpecialistGet, interfaceSpecialistUpdateHf, interfaceUserAccess, interfaceUserEdit,
+    interfaceUserGetById
+} from './url_api_type'
 import axios, {AxiosRequestConfig} from "axios"
 import {ToastSystemAdd} from "@/component/toast/function";
 import config from "../../../config.json";
@@ -30,52 +36,179 @@ export async function ServerAccountGet ({cookies=null}) {
     let res = await axios.get(url, arFields)
     return res.data.response
 }
-export async function ServerOwnerGetById ({owner=null, ids=null}, {cookies=null}) {
+export async function ServerUserGetById ({ids}: interfaceUserGetById, {cookies=null}) {
     if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
     let arFields = {
         params: {
             ids
-        },
+        } as interfaceUserGetById,
         headers: {
             Cookie: cookies
         }
     } as AxiosRequestConfig
 
-    let url = `/api/${owner}/getById`
+    let url = `/api/user/getById`
     console.log(url)
     let res = await axios.get(url, arFields)
     return res.data.response[0]
 }
-//---------------------------------------------------------------------------------
-//ГРУППА
-export async function ServerGroupGet ({
-    q=null,
+export async function ServerUserEdit ({
+    id,
+    first_name,
+    last_name,
+    second_name,
 
+    man,
+    date_birth,
+    phone
+}: interfaceUserEdit) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        first_name,
+        last_name,
+        second_name,
+
+        man,
+        date_birth,
+        phone
+    } as interfaceUserEdit
+
+    let url = `/api/user/edit`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    return res.data.response
+}
+export async function ServerUserEditAccess ({
+    id,
+    specialist_ids,
+    research_ids
+}: interfaceUserAccess) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        id,
+        specialist_ids,
+        research_ids
+    } as interfaceUserAccess
+
+    let url = `/api/user/editAccess`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    return res.data.response
+}
+//---------------------------------------------------------------------------------
+//Specialist
+export async function ServerSpecialistGet ({
     offset=0,
     count=20
-}, {
+}: interfaceSpecialistGet, {
     cookies=null
 }) {
     if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
     let arFields = {
         params: {
-            q,
-
             offset,
             count
-        } as interfaceVideoGet,
+        } as interfaceSpecialistGet,
         headers: {
             Cookie: cookies
         }
     } as AxiosRequestConfig
 
-    let url = `/api/group/get`
+    let url = `/api/specialist/get`
     console.log(url)
     let res = await axios.get(url, arFields);
     return res.data.response
 }
+export async function ServerSpecialistEdit ({
+    id,
+    name
+}: interfaceSpecialistEdit) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        id,
+        name
+    } as interfaceSpecialistEdit
+
+    let url = `/api/specialist/edit`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    return res.data.response
+}
+export async function ServerSpecialistDelete ({
+    id,
+}: interfaceSpecialistDelete) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        id
+    } as interfaceSpecialistDelete
+
+    let url = `/api/specialist/delete`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    return res.data.response
+}
+//---------------------------------------------------------------------------------
+//Research
+export async function ServerResearchGet ({
+    offset=0,
+    count=20
+}: interfaceSpecialistGet, {
+    cookies=null
+}) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        params: {
+            offset,
+            count
+        } as interfaceSpecialistGet,
+        headers: {
+            Cookie: cookies
+        }
+    } as AxiosRequestConfig
+
+    let url = `/api/research/get`
+    console.log(url)
+    let res = await axios.get(url, arFields);
+    return res.data.response
+}
+export async function ServerResearchEdit ({
+    id,
+    name
+}: interfaceSpecialistEdit) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        id,
+        name
+    } as interfaceSpecialistEdit
+
+    let url = `/api/research/edit`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    return res.data.response
+}
+export async function ServerResearchDelete ({
+    id,
+}: interfaceSpecialistDelete) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        id
+    } as interfaceSpecialistDelete
+
+    let url = `/api/research/delete`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    return res.data.response
+}
+
 
 //---------------------------------------------------------------------------------
 //ПОЛЬЗОВАТЕЛЬ
@@ -107,27 +240,7 @@ export async function ServerUserGet ({
     return res.data.response
 }
 //ПОЛЬЗОВАТЕЛЬ
-export async function ServerUserGetById ({
-    ids
-}, {
-    cookies=null
-}) {
-    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
-    let arFields = {
-        params: {
-            ids
-        },
-        headers: {
-            Cookie: cookies
-        }
-    } as AxiosRequestConfig
-
-    let url = `/api/user/getById`
-    console.log(url)
-    let res = await axios.get(url, arFields);
-    return res.data.response
-}
 
 //---------------------------------------------------------------------------------
 //ВИДЕО

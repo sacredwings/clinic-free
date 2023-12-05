@@ -1,8 +1,11 @@
-import Joi from 'joi'
-import CSpecialist from "../../../app/classes/specialist"
-import DbConnect from "../../../app/util/DbConnect"
+import { NextResponse } from 'next/server'
+import { mongo, minio } from "@/utility/connect"
+import Joi from "joi"
+import { CAuth, Store }  from "../../../../../../social-framework"
+import {headers} from "next/headers";
+import CSpecialist from "@/class/specialist"
 
-export default async (req, res) => {
+export async function POST (request: Request) {
     let value
     try {
         try {
@@ -20,11 +23,11 @@ export default async (req, res) => {
             throw ({...{err: 412, msg: 'Неверные параметры'}, ...err})
         }
         try {
-            await DbConnect()
+            await mongo()
 
             let result = await CSpecialist.UpdateHf ( value )
 
-            res.status(200).json({
+            return NextResponse.json({
                 err: 0,
                 response: result
             })
@@ -32,14 +35,6 @@ export default async (req, res) => {
             throw ({...{err: 10000000, msg: 'Ошибка формирования результата'}, ...err})
         }
     } catch (err) {
-        res.status(200).json({...{err: 10000000, msg: 'CSpecialist UpdateHf'}, ...err})
+        return NextResponse.json({...{code: 10000000, msg: 'CResearch UpdateHf'}, ...err})
     }
-}
-
-export const config = {
-    api: {
-        bodyParser: {
-            sizeLimit: '1mb',
-        },
-    },
 }

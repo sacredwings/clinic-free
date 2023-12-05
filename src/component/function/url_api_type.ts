@@ -1,35 +1,58 @@
-export interface interfaceVideoGet {
-    offset: number
-    count: number
-    user_id?: string
-    group_id?: string
-    album_id?: string
-    q?: string
+export interface interfaceUserGetById {
+    ids: string[]
 }
-export interface interfaceAlbumGet {
-    module: 'video' | 'article' | 'topic'
+export interface interfaceUserEdit {
+    id: string
+
+    first_name: string
+    last_name: string
+    second_name: string
+
+    man: '1' | '0'
+
+    date_birth: Date,
+
+    phone: number
+}
+export interface interfaceUserAccess {
+    id: string
+
+    specialist_ids: string[]
+    research_ids: string[]
+}
+export interface interfaceSpecialistAdd {
+    ids: string[]
+}
+export interface interfaceSpecialistEdit {
+    id: string
+    name: string
+}
+export interface interfaceSpecialistDelete {
+    id: string
+}
+export interface interfaceSpecialistGet {
     offset: number
     count: number
-    user_id?: string
-    group_id?: string
-    album_id?: string
-    q?: string
+}
+export interface interfaceSpecialistUpdateHf {
+    module: 'hf' | 'ct'
+    hf_id: string
+    id: string
 }
 
-export interface interfaceArticleGet {
-    offset: number
-    count: number
-    user_id?: string
-    group_id?: string
-    album_id?: string
-    q?: string
+export interface interfaceResearchEdit {
+    id: string
+    name: string
 }
-
-export interface interfaceTopicGet {
+export interface interfaceResearchDelete {
+    id: string
+}
+export interface interfaceResearchGet {
     offset: number
     count: number
-    user_id?: string
-    group_id?: string
-    album_id?: string
-    q?: string
+}
+export interface interfaceResearchUpdateHf {
+    module: 'hf' | 'ct'
+    hf_id: string
+    id: string
 }
