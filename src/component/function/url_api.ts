@@ -3,7 +3,7 @@ import {
     interfaceSpecialistAdd, interfaceSpecialistDelete,
     interfaceSpecialistEdit,
     interfaceSpecialistGet, interfaceSpecialistUpdateHf, interfaceUserAccess, interfaceUserEdit,
-    interfaceUserGetById
+    interfaceUserGetById, interfaceWorkerGetById
 } from './url_api_type'
 import axios, {AxiosRequestConfig} from "axios"
 import {ToastSystemAdd} from "@/component/toast/function";
@@ -98,6 +98,27 @@ export async function ServerUserEditAccess ({
     let res = await axios.post(url, arFields);
     return res.data.response
 }
+
+//---------------------------------------------------------------------------------
+//Worker
+export async function ServerWorkerGetById ({ids}: interfaceWorkerGetById, {cookies=null}) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        params: {
+            ids
+        } as interfaceWorkerGetById,
+        headers: {
+            Cookie: cookies
+        }
+    } as AxiosRequestConfig
+
+    let url = `/api/worker/getById`
+    console.log(url)
+    let res = await axios.get(url, arFields)
+    return res.data.response
+}
+
 //---------------------------------------------------------------------------------
 //Specialist
 export async function ServerSpecialistGet ({

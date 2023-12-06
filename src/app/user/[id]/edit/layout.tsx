@@ -17,7 +17,7 @@ export default function RootLayout({
     children: React.ReactNode
 }) {
     return (
-        <main className={'container'} style={{maxWidth: '720px'}}>
+        <main className={'container'} style={{maxWidth: '992px'}}>
             {children}
         </main>
     )

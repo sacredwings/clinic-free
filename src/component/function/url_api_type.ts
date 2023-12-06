@@ -20,6 +20,9 @@ export interface interfaceUserAccess {
     specialist_ids: string[]
     research_ids: string[]
 }
+export interface interfaceWorkerGetById {
+    ids: string[]
+}
 export interface interfaceSpecialistAdd {
     ids: string[]
 }
