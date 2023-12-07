@@ -1,4 +1,7 @@
 import {
+    interfaceContractAdd, interfaceContractEdit,
+    interfaceContractGet, interfaceContractGetById,
+    interfaceOrgAdd, interfaceOrgEdit, interfaceOrgGet, interfaceOrgGetById,
     interfaceResearchEdit,
     interfaceSpecialistAdd, interfaceSpecialistDelete,
     interfaceSpecialistEdit,
@@ -229,7 +232,152 @@ export async function ServerResearchDelete ({
     let res = await axios.post(url, arFields);
     return res.data.response
 }
+//---------------------------------------------------------------------------------
+//ORG
+export async function ServerOrgGet ({
+    offset=0,
+    count=20
+}: interfaceOrgGet, {
+    cookies=null
+}) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
+    let arFields = {
+        params: {
+            offset,
+            count
+        } as interfaceOrgGet,
+        headers: {
+            Cookie: cookies
+        }
+    } as AxiosRequestConfig
+
+    let url = `/api/org/get`
+    console.log(url)
+    let res = await axios.get(url, arFields);
+    return res.data.response
+}
+export async function ServerOrgGetById ({ids}: interfaceOrgGetById, {cookies=null}) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        params: {
+            ids
+        } as interfaceOrgGetById,
+        headers: {
+            Cookie: cookies
+        }
+    } as AxiosRequestConfig
+
+    let url = `/api/org/getById`
+    console.log(url)
+    let res = await axios.get(url, arFields)
+    return res.data.response
+}
+export async function ServerOrgAdd ({
+    name
+}: interfaceOrgAdd) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        name
+    } as interfaceOrgAdd
+
+    let url = `/api/org/add`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    return res.data.response
+}
+export async function ServerOrgEdit ({
+    id,
+    name
+}: interfaceOrgEdit) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        id,
+        name
+    } as interfaceOrgEdit
+
+    let url = `/api/org/edit`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    return res.data.response
+}
+//---------------------------------------------------------------------------------
+//CONTRACT
+export async function ServerContractGet ({
+    org_id,
+    offset=0,
+    count=20
+}: interfaceContractGet, {
+    cookies=null
+}) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        params: {
+            org_id,
+            offset,
+            count
+        } as interfaceContractGet,
+        headers: {
+            Cookie: cookies
+        }
+    } as AxiosRequestConfig
+
+    let url = `/api/contract/get`
+    console.log(url)
+    let res = await axios.get(url, arFields);
+    return res.data.response
+}
+export async function ServerContractGetById ({ids}: interfaceContractGetById, {cookies=null}) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        params: {
+            ids
+        } as interfaceContractGetById,
+        headers: {
+            Cookie: cookies
+        }
+    } as AxiosRequestConfig
+
+    let url = `/api/contract/getById`
+    console.log(url)
+    let res = await axios.get(url, arFields)
+    return res.data.response
+}
+export async function ServerContractAdd ({
+    name
+}: interfaceContractAdd) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        name
+    } as interfaceContractAdd
+
+    let url = `/api/contract/add`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    return res.data.response
+}
+export async function ServerContractEdit ({
+    id,
+    name
+}: interfaceContractEdit) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        id,
+        name
+    } as interfaceContractEdit
+
+    let url = `/api/contract/edit`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    return res.data.response
+}
 
 //---------------------------------------------------------------------------------
 //ПОЛЬЗОВАТЕЛЬ

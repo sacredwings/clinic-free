@@ -1,3 +1,5 @@
+import {ServerOrgEdit, ServerOrgGet} from "@/component/function/url_api";
+
 export interface interfaceUserGetById {
     ids: string[]
 }
@@ -58,4 +60,37 @@ export interface interfaceResearchUpdateHf {
     module: 'hf' | 'ct'
     hf_id: string
     id: string
+}
+//---------------------------------------------------------------------------------
+//ORG
+export interface interfaceOrgAdd {
+    name: string
+}
+export interface interfaceOrgEdit {
+    id: string
+    name: string
+}
+export interface interfaceOrgGet {
+    offset: number
+    count: number
+}
+export interface interfaceOrgGetById {
+    ids: string[]
+}
+//---------------------------------------------------------------------------------
+//CONTRACT
+export interface interfaceContractAdd {
+    name: string
+}
+export interface interfaceContractEdit {
+    id: string
+    name: string
+}
+export interface interfaceContractGet {
+    org_id: string
+    offset: number
+    count: number
+}
+export interface interfaceContractGetById {
+    ids: string[]
 }
