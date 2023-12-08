@@ -5,6 +5,7 @@ import axios from "axios"
 import {interfaceUserAccess} from "@/component/function/url_api_type";
 import {ServerUserEditAccess} from "@/component/function/url_api";
 import FormSpecialistRadio from "@/component/worker/formSpecialistRadio";
+import FormResearchRadio from "@/component/worker/formResearchRadio";
 
 export default function UserForm ({worker, account}) {
     //const router = useRouter() //для перехода к пользователю
@@ -41,91 +42,28 @@ export default function UserForm ({worker, account}) {
         let result = await ServerUserEditAccess(arFields)
     }
 
-    const OnChangeCheckSpecialist = (id) => {
-        let newIds = []
-        let newCheckList = checkSpecialist.map((element, i) => {
-            if (element._id === id)
-                element.checked = !element.checked
-
-            //заполнение чеками
-            if (element.checked) newIds.push(element._id)
-
-            return element
-        })
-
-        setForm(prev => ({
-            ...prev, specialist_ids: (newIds.length) ? newIds : null
-        }))
-        setCheckSpecialist(newCheckList)
-    }
-    const OnChangeCheckResearch = (id) => {
-        let newIds = []
-        let newCheckList = checkResearch.map((element, i) => {
-            if (element._id === id)
-                element.checked = !element.checked
-
-            //заполнение чеками
-            if (element.checked) newIds.push(element._id)
-
-            return element
-        })
-
-        setForm(prev => ({
-            ...prev, research_ids: (newIds.length) ? newIds : null
-        }))
-        setCheckResearch(newCheckList)
+    const Visit = (id, arr) => {
+        for (let item of arr) {
+            if (id === item.specialist_id) return item
+        }
+        return null
     }
 
-    const OnChangeCheckOne = (e) => {
-        let name = e.target.id
-        let value = e.target.value
-
-        setForm(prev => ({
-            ...prev, [name]: !prev[name]
-        }))
-    }
-
-    const FormCheckSpecialist = (specialist) => {
-        return <>
-            <div className="mb-3 form-check">
-                <div>
-                    {specialist.map((item, i)=>{
-                        return <div className="card">
-                            <div className="card-body">
-                                This is some text within a card body.
-                            </div>
-                        </div>
-                    })}
-                </div>
-            </div>
-        </>
-    }
-    const FormCheckSpecialistasdasd = (specialist) => {
+    const FormCheckSpecialist = (specialist, specialistVisit) => {
         return specialist.map((item, i)=>{
+            return <FormSpecialistRadio key={i} workerId={worker._id} specialist={item} visit={Visit(item._id, specialistVisit)}/>
+        })
+    }
+
+    const FormCheckResearch = (research) => {
+        return research.map((item, i)=>{
             return <div key={i} className="card" style={{marginTop: '20px'}}>
                 <div className="card-body">
                     <h5 className="card-title">{item.name}</h5>
-                    <FormSpecialistRadio workerId={worker._id} specialistId={item._id}/>
+                    <FormResearchRadio workerId={worker._id} researchId={item._id}/>
                 </div>
             </div>
         })
-    }
-
-    const FormCheckResearch = () => {
-        return <>
-            <div className="mb-3 form-check">
-                <div>
-                    {checkResearch.map((item, i)=>{
-                        return <div className="form-check" key={i}>
-                            <input className="form-check-input" type="checkbox" checked={(item.checked) ? true : false} onChange={()=>{OnChangeCheckResearch(item._id)}}/>
-                            <label className="form-check-label" htmlFor="flexCheckDefault">
-                                {item.name}
-                            </label>
-                        </div>
-                    })}
-                </div>
-            </div>
-        </>
     }
     const Form = () => {
         return <>
@@ -213,7 +151,15 @@ export default function UserForm ({worker, account}) {
                 </div>
             </div>
 
-            {FormCheckSpecialistasdasd(form._specialist_ids)}
+            {FormCheckSpecialist (form._specialist_ids, form._specialist_visit_ids)}
+
+            <div className="card" style={{marginTop: '20px', textAlign: 'center'}}>
+                <div className="card-body">
+                    <legend><b>Исследования</b></legend>
+                </div>
+            </div>
+
+            {FormCheckResearch (form._research_ids)}
 
         </>
 
