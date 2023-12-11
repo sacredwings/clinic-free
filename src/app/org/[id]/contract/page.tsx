@@ -1,7 +1,14 @@
 import WorkerId from '@/component/worker/id'
-import {ServerContractGet, ServerOrgGet, ServerSpecialistGet, ServerWorkerGetById} from "@/component/function/url_api";
+import {
+    ServerContractGet,
+    ServerOrgGet,
+    ServerOrgGetById,
+    ServerSpecialistGet,
+    ServerWorkerGetById
+} from "@/component/function/url_api";
 import { cookies } from 'next/headers'
 import Link from 'next/link'
+import OrgId from '@/component/org/id'
 
 export default async function ContractGet ({
                                         params,
@@ -10,7 +17,8 @@ export default async function ContractGet ({
     params: { id: string },
     //searchParams: { page: number, q: string }
 }) {
-    let arOrg = await ServerContractGet({
+    let org = await ServerOrgGetById({ids: [params.id]}, {cookies:cookies()})
+    let arContract = await ServerContractGet({
         org_id: params.id,
         offset: 0,
         count: 100
@@ -19,7 +27,7 @@ export default async function ContractGet ({
     const List = (arList) => {
         return <div className="list-group">
             {arList.map((list, i) => {
-                let href = `/org/${list._id}/contract`
+                let href = `/contract/${list._id}/worker`
                 return <Link className="list-group-item list-group-item-action" href={href} key={i}>
                     {list.name}
                 </Link>
@@ -36,7 +44,8 @@ export default async function ContractGet ({
     return (
         <>
             <h1>Договора</h1>
-            {(arOrg.items.length) ? List(arOrg.items) : NoList()}
+            <OrgId org={org[0]}/>
+            {(arContract.items.length) ? List(arContract.items) : NoList()}
         </>
     )
 }

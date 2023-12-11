@@ -94,3 +94,20 @@ export interface interfaceContractGet {
 export interface interfaceContractGetById {
     ids: string[]
 }
+//---------------------------------------------------------------------------------
+//WORKER
+export interface interfaceWorkerAdd {
+    name: string
+}
+export interface interfaceWorkerEdit {
+    id: string
+    name: string
+}
+export interface interfaceWorkerGet {
+    contract_id: string
+    offset: number
+    count: number
+}
+export interface interfaceWorkerGetById {
+    ids: string[]
+}

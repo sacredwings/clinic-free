@@ -123,7 +123,6 @@ export default class {
     }
 
     static async Get ( fields ) {
-        console.log(fields)
         try {
             fields.contract_id = new DB().ObjectID(fields.contract_id)
 
@@ -152,7 +151,7 @@ export default class {
                 }
             })
 
-            if (fields.contract_id) arAggregate[0].$match.contract_id = {}
+            if (fields.contract_id) arAggregate[0].$match.contract_id = fields.contract_id
 
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('worker')

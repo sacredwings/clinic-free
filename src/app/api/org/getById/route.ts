@@ -4,7 +4,7 @@ import { mongo, minio } from "@/utility/connect"
 import Config from "../../../../../config.json";
 import { Store, DB, CUser }  from "../../../../../../social-framework"
 import Joi from "joi";
-import COrg from "@/classes/org"
+import COrg from "@/class/org"
 
 export async function GET(request: Request) {
     let value

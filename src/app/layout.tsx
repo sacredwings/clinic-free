@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import "fontawesome-free-v6/css/all.css"
 import '@/app/globals.sass'
 import Navbar from '@/component/menu/navbar/server'
 import Toast from '@/component/toast/list'

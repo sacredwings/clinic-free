@@ -27,6 +27,8 @@ export async function GET(request: Request) {
         try {
             await mongo()
 
+            console.log('111111111111111111')
+            console.log(value.ids)
             let result = await CWorker.GetById ( value.ids )
 
             return NextResponse.json({

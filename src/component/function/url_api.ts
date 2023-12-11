@@ -6,7 +6,7 @@ import {
     interfaceSpecialistAdd, interfaceSpecialistDelete,
     interfaceSpecialistEdit,
     interfaceSpecialistGet, interfaceSpecialistUpdateHf, interfaceUserAccess, interfaceUserEdit,
-    interfaceUserGetById, interfaceWorkerGetById
+    interfaceUserGetById, interfaceWorkerGet, interfaceWorkerGetById
 } from './url_api_type'
 import axios, {AxiosRequestConfig} from "axios"
 import {ToastSystemAdd} from "@/component/toast/function";
@@ -81,6 +81,7 @@ export async function ServerUserEdit ({
     let url = `/api/user/edit`
     console.log(url)
     let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
     return res.data.response
 }
 export async function ServerUserEditAccess ({
@@ -99,26 +100,7 @@ export async function ServerUserEditAccess ({
     let url = `/api/user/editAccess`
     console.log(url)
     let res = await axios.post(url, arFields);
-    return res.data.response
-}
-
-//---------------------------------------------------------------------------------
-//Worker
-export async function ServerWorkerGetById ({ids}: interfaceWorkerGetById, {cookies=null}) {
-    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
-
-    let arFields = {
-        params: {
-            ids
-        } as interfaceWorkerGetById,
-        headers: {
-            Cookie: cookies
-        }
-    } as AxiosRequestConfig
-
-    let url = `/api/worker/getById`
-    console.log(url)
-    let res = await axios.get(url, arFields)
+    await ToastSystemAdd(res.data)
     return res.data.response
 }
 
@@ -161,6 +143,7 @@ export async function ServerSpecialistEdit ({
     let url = `/api/specialist/edit`
     console.log(url)
     let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
     return res.data.response
 }
 export async function ServerSpecialistDelete ({
@@ -175,6 +158,7 @@ export async function ServerSpecialistDelete ({
     let url = `/api/specialist/delete`
     console.log(url)
     let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
     return res.data.response
 }
 //---------------------------------------------------------------------------------
@@ -216,6 +200,7 @@ export async function ServerResearchEdit ({
     let url = `/api/research/edit`
     console.log(url)
     let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
     return res.data.response
 }
 export async function ServerResearchDelete ({
@@ -230,6 +215,7 @@ export async function ServerResearchDelete ({
     let url = `/api/research/delete`
     console.log(url)
     let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
     return res.data.response
 }
 //---------------------------------------------------------------------------------
@@ -286,6 +272,7 @@ export async function ServerOrgAdd ({
     let url = `/api/org/add`
     console.log(url)
     let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
     return res.data.response
 }
 export async function ServerOrgEdit ({
@@ -302,6 +289,7 @@ export async function ServerOrgEdit ({
     let url = `/api/org/edit`
     console.log(url)
     let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
     return res.data.response
 }
 //---------------------------------------------------------------------------------
@@ -360,6 +348,7 @@ export async function ServerContractAdd ({
     let url = `/api/contract/add`
     console.log(url)
     let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
     return res.data.response
 }
 export async function ServerContractEdit ({
@@ -376,8 +365,87 @@ export async function ServerContractEdit ({
     let url = `/api/contract/edit`
     console.log(url)
     let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
     return res.data.response
 }
+//---------------------------------------------------------------------------------
+//Worker
+export async function ServerWorkerGet ({
+    contract_id,
+    offset=0,
+    count=20
+}: interfaceWorkerGet, {
+    cookies=null
+}) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        params: {
+            contract_id,
+            offset,
+            count
+        } as interfaceWorkerGet,
+        headers: {
+            Cookie: cookies
+        }
+    } as AxiosRequestConfig
+
+    let url = `/api/worker/get`
+    console.log(url)
+    let res = await axios.get(url, arFields);
+    return res.data.response
+}
+export async function ServerWorkerGetById ({ids}: interfaceWorkerGetById, {cookies=null}) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        params: {
+            ids
+        } as interfaceWorkerGetById,
+        headers: {
+            Cookie: cookies
+        }
+    } as AxiosRequestConfig
+
+    let url = `/api/worker/getById`
+    console.log(url)
+    let res = await axios.get(url, arFields)
+    return res.data.response
+}
+export async function ServerWorkerAdd ({
+                                             name
+                                         }: interfaceContractAdd) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        name
+    } as interfaceContractAdd
+
+    let url = `/api/worker/add`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}
+export async function ServerWorkerEdit ({
+                                              id,
+                                              name
+                                          }: interfaceContractEdit) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        id,
+        name
+    } as interfaceContractEdit
+
+    let url = `/api/worker/edit`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}
+
+
 
 //---------------------------------------------------------------------------------
 //ПОЛЬЗОВАТЕЛЬ
