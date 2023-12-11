@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import axios from "axios"
 import Add from './Add'
 
-function Get (props) {
+function List (props) {
 
     let [list, setList] = useState([])
     let [edit, setEdit] = useState(null)

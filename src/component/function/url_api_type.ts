@@ -62,6 +62,24 @@ export interface interfaceResearchUpdateHf {
     id: string
 }
 //---------------------------------------------------------------------------------
+//HF
+export interface interfaceHfAdd {
+    name: string
+    code: string
+}
+export interface interfaceHfEdit {
+    id: string
+    name: string
+    code: string
+}
+export interface interfaceHfGet {
+    offset: number
+    count: number
+}
+export interface interfaceHfGetById {
+    ids: string[]
+}
+//---------------------------------------------------------------------------------
 //ORG
 export interface interfaceOrgAdd {
     name: string

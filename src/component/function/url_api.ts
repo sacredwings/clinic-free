@@ -1,6 +1,6 @@
 import {
     interfaceContractAdd, interfaceContractEdit,
-    interfaceContractGet, interfaceContractGetById,
+    interfaceContractGet, interfaceContractGetById, interfaceHfAdd, interfaceHfEdit, interfaceHfGet, interfaceHfGetById,
     interfaceOrgAdd, interfaceOrgEdit, interfaceOrgGet, interfaceOrgGetById,
     interfaceResearchEdit,
     interfaceSpecialistAdd, interfaceSpecialistDelete,
@@ -363,6 +363,84 @@ export async function ServerContractEdit ({
     } as interfaceContractEdit
 
     let url = `/api/contract/edit`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}
+//---------------------------------------------------------------------------------
+//HF
+export async function ServerHfGet ({
+    offset=0,
+    count=1000
+}: interfaceHfGet, {
+    cookies=null
+}) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        params: {
+            offset,
+            count
+        } as interfaceHfGet,
+        headers: {
+            Cookie: cookies
+        }
+    } as AxiosRequestConfig
+
+    let url = `/api/hf/get`
+    console.log(url)
+    let res = await axios.get(url, arFields);
+    return res.data.response
+}
+export async function ServerHfGetById ({ids}: interfaceHfGetById, {cookies=null}) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        params: {
+            ids
+        } as interfaceHfGetById,
+        headers: {
+            Cookie: cookies
+        }
+    } as AxiosRequestConfig
+
+    let url = `/api/hf/getById`
+    console.log(url)
+    let res = await axios.get(url, arFields)
+    return res.data.response
+}
+export async function ServerHfAdd ({
+    name,
+    code
+}: interfaceHfAdd) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        name,
+        code
+    } as interfaceHfAdd
+
+    let url = `/api/hf/add`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}
+export async function ServerHfEdit ({
+    id,
+    name,
+    code
+}: interfaceHfEdit) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        id,
+        name,
+        code
+    } as interfaceHfEdit
+
+    let url = `/api/hf/edit`
     console.log(url)
     let res = await axios.post(url, arFields);
     await ToastSystemAdd(res.data)
