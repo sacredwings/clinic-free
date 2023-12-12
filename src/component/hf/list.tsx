@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
-import Add from './Add'
+import Add from './add'
 
-function List (props) {
+export default function List (props) {
 
     let [list, setList] = useState([])
     let [edit, setEdit] = useState(null)
@@ -151,6 +151,4 @@ function List (props) {
 
     )
 }
-
-export default Get
 

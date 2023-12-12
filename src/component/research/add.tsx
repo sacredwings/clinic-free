@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react'
 import axios from "axios"
-import Modal from '../Modal'
+import Modal from '@/component/modal'
 
 export default function Add () {
     const [modalShow, setModalShow] = useState(false) //модальное окно

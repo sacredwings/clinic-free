@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
-import Add from "./Add"
+import Add from "./add"
 
-function Get ({selectHf, module}) {
+export default function Get ({selectHf, module}) {
 
     let [list, setList] = useState([])
     let [edit, setEdit] = useState(null)
@@ -231,6 +231,3 @@ function Get ({selectHf, module}) {
 
     )
 }
-
-export default Get
-
