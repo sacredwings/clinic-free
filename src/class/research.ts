@@ -134,7 +134,7 @@ export default class {
 
             if (result)
                 //удаление
-                await collection.update(
+                await collection.updateMany(
                     { _id: fields.hf_id },
                     { $pull: { research_ids: fields.id} }
                 )

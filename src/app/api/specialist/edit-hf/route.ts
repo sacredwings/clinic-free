@@ -3,7 +3,7 @@ import { mongo, minio } from "@/utility/connect"
 import Joi from "joi"
 import { CAuth, Store }  from "../../../../../../social-framework"
 import {headers} from "next/headers";
-import CResearch from "@/class/research"
+import CSpecialist from "@/class/specialist"
 
 export async function POST (request: Request) {
     let value
@@ -26,7 +26,7 @@ export async function POST (request: Request) {
         try {
             await mongo()
 
-            let result = await CResearch.UpdateHf ( value )
+            let result = await CSpecialist.EditHf ( value )
 
             return NextResponse.json({
                 err: 0,

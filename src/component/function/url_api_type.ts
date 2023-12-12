@@ -25,8 +25,10 @@ export interface interfaceUserAccess {
 export interface interfaceWorkerGetById {
     ids: string[]
 }
+//---------------------------------------------------------------------------------
+//Specialist
 export interface interfaceSpecialistAdd {
-    ids: string[]
+    name: string
 }
 export interface interfaceSpecialistEdit {
     id: string
@@ -39,12 +41,16 @@ export interface interfaceSpecialistGet {
     offset: number
     count: number
 }
-export interface interfaceSpecialistUpdateHf {
+export interface interfaceSpecialistEditHf {
     module: 'hf' | 'ct'
     hf_id: string
     id: string
 }
-
+//---------------------------------------------------------------------------------
+//Research
+export interface interfaceResearchAdd {
+    name: string
+}
 export interface interfaceResearchEdit {
     id: string
     name: string
@@ -56,7 +62,7 @@ export interface interfaceResearchGet {
     offset: number
     count: number
 }
-export interface interfaceResearchUpdateHf {
+export interface interfaceResearchEditHf {
     module: 'hf' | 'ct'
     hf_id: string
     id: string
@@ -79,6 +85,7 @@ export interface interfaceHfGet {
 export interface interfaceHfGetById {
     ids: string[]
 }
+
 //---------------------------------------------------------------------------------
 //ORG
 export interface interfaceOrgAdd {

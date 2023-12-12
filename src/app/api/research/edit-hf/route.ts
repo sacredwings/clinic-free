@@ -3,20 +3,21 @@ import { mongo, minio } from "@/utility/connect"
 import Joi from "joi"
 import { CAuth, Store }  from "../../../../../../social-framework"
 import {headers} from "next/headers";
-import CSpecialist from "@/class/specialist"
+import CResearch from "@/class/research"
 
 export async function POST (request: Request) {
     let value
     try {
         try {
-            //схема
+            let rsRequest = await request.json()
+
             const schema = Joi.object({
                 hf_id: Joi.string().max(24).max(24).required(),
                 id: Joi.string().max(24).max(24).required(),
                 module: Joi.string().valid('hf', 'ct').required(),
             });
 
-            value = await schema.validateAsync(req.body)
+            value = await schema.validateAsync(rsRequest)
 
         } catch (err) {
             console.log(err)
@@ -25,7 +26,7 @@ export async function POST (request: Request) {
         try {
             await mongo()
 
-            let result = await CSpecialist.UpdateHf ( value )
+            let result = await CResearch.EditHf ( value )
 
             return NextResponse.json({
                 err: 0,

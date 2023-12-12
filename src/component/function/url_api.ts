@@ -1,12 +1,28 @@
 import {
-    interfaceContractAdd, interfaceContractEdit,
-    interfaceContractGet, interfaceContractGetById, interfaceHfAdd, interfaceHfEdit, interfaceHfGet, interfaceHfGetById,
-    interfaceOrgAdd, interfaceOrgEdit, interfaceOrgGet, interfaceOrgGetById,
-    interfaceResearchEdit,
-    interfaceSpecialistAdd, interfaceSpecialistDelete,
-    interfaceSpecialistEdit,
-    interfaceSpecialistGet, interfaceSpecialistUpdateHf, interfaceUserAccess, interfaceUserEdit,
-    interfaceUserGetById, interfaceWorkerGet, interfaceWorkerGetById
+    interfaceContractAdd,
+    interfaceContractEdit,
+    interfaceContractGet,
+    interfaceContractGetById,
+    interfaceHfAdd,
+    interfaceHfEdit,
+    interfaceHfGet,
+    interfaceHfGetById,
+    interfaceOrgAdd,
+    interfaceOrgEdit,
+    interfaceOrgGet,
+    interfaceOrgGetById,
+    interfaceResearchEdit, interfaceResearchEditHf,
+    interfaceSpecialistAdd,
+    interfaceSpecialistDelete,
+    interfaceSpecialistEdit, interfaceSpecialistEditHf,
+    interfaceSpecialistGet,
+    interfaceSpecialistHfUpdate,
+    interfaceSpecialistUpdateHf,
+    interfaceUserAccess,
+    interfaceUserEdit,
+    interfaceUserGetById,
+    interfaceWorkerGet,
+    interfaceWorkerGetById
 } from './url_api_type'
 import axios, {AxiosRequestConfig} from "axios"
 import {ToastSystemAdd} from "@/component/toast/function";
@@ -146,6 +162,25 @@ export async function ServerSpecialistEdit ({
     await ToastSystemAdd(res.data)
     return res.data.response
 }
+export async function ServerSpecialistEditHf ({
+    hf_id,
+    id,
+    module
+}: interfaceSpecialistEditHf) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        hf_id,
+        id,
+        module
+    } as interfaceSpecialistEditHf
+
+    let url = `/api/specialist/edit-hf`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}
 export async function ServerSpecialistDelete ({
     id,
 }: interfaceSpecialistDelete) {
@@ -184,6 +219,25 @@ export async function ServerResearchGet ({
     let url = `/api/research/get`
     console.log(url)
     let res = await axios.get(url, arFields);
+    return res.data.response
+}
+export async function ServerResearchEditHf ({
+    hf_id,
+    id,
+    module
+}: interfaceResearchEditHf) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        hf_id,
+        id,
+        module
+    } as interfaceResearchEditHf
+
+    let url = `/api/research/edit-hf`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
     return res.data.response
 }
 export async function ServerResearchEdit ({

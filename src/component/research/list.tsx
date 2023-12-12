@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
 import Add from "./add"
+import {ServerResearchEditHf, ServerResearchGet} from "@/component/function/url_api";
 
 export default function Get ({selectHf, module}) {
 
@@ -60,24 +61,20 @@ export default function Get ({selectHf, module}) {
 
     //список договоров
     const Get = async () => {
-        const url = '/api/research/get'
+        let result = await ServerResearchGet({}, {cookies: null})
 
-        let result = await axios.get(url)
-
-        setList(result.data.response.items)
+        setList(result.items)
     }
 
     //список договоров
-    const Update = (id) => {
-        const url = '/api/research/update-hf'
-
+    const Update = async (id) => {
         let arFields = {
             hf_id: selectHfId,
             id: id,
             module: module
         }
 
-        let result = axios.post(url, arFields)
+        let result = await ServerResearchEditHf(arFields)
     }
 
     //изменение чеков

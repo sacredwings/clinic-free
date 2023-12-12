@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
 import Add from "./add"
+import {ServerSpecialistEditHf, ServerSpecialistGet, ServerSpecialistHfUpdate} from "@/component/function/url_api";
+import {interfaceSpecialistHfUpdate} from "@/component/function/url_api_type";
 
 export default function Get ({selectHf, module}) {
 
@@ -60,23 +62,19 @@ export default function Get ({selectHf, module}) {
 
     //список договоров
     const Get = async () => {
-        const url = '/api/specialist/get'
+        let result = await ServerSpecialistGet({}, {cookies: null})
 
-        let result = await axios.get(url)
-
-        setList(result.data.response.items)
+        setList(result.items)
     }
 
     //обновление чеков
-    const Update = (id) => {
-        const url = '/api/specialist/update-hf'
-
+    const Update = async (id) => {
         let arFields = {
             hf_id: selectHfId,
             id: id,
             module: module
         }
-        let result = axios.post(url, arFields)
+        let result = await ServerSpecialistEditHf(arFields)
     }
 
     //изменение чеков
