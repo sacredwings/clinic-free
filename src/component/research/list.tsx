@@ -61,7 +61,11 @@ export default function Get ({selectHf, module}) {
 
     //список договоров
     const Get = async () => {
-        let result = await ServerResearchGet({}, {cookies: null})
+        let arFields = {
+            offset: 0,
+            count: 100
+        }
+        let result = await ServerResearchGet(arFields, {cookies: null})
 
         setList(result.items)
     }

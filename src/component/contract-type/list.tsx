@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
-import Add from "./Add";
+import Add from "./add";
+import {ServerContractTypeEdit, ServerContractTypeGet} from "@/component/function/url_api";
 
 function Get ({SelectHf}) {
 
@@ -16,11 +17,14 @@ function Get ({SelectHf}) {
 
     //список договоров
     const Get = async () => {
-        const url = '/api/contract-type/get'
+        let arFields = {
+            offset: 0,
+            count: 100
+        }
 
-        let result = await axios.get(url)
+        let result = await ServerContractTypeGet(arFields, {cookies: null})
 
-        setList(result.data.response.items)
+        setList(result.items)
     }
 
     //изменение полей ввода елемента
@@ -34,12 +38,12 @@ function Get ({SelectHf}) {
     //изменение элемента
     const OnSave = async () => {
         //сохранение в базе
-        const url = '/api/contract-type/update'
+
         let arFields = {
             id: edit.id,
             name: edit.name
         }
-        let result = await axios.post(url, arFields)
+        let result = await ServerContractTypeEdit(arFields)
 
         //изменение в форме
         let newList = list.map((element, i) => {

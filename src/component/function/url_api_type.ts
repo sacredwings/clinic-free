@@ -120,6 +120,22 @@ export interface interfaceContractGetById {
     ids: string[]
 }
 //---------------------------------------------------------------------------------
+//CONTRACT-TYPE
+export interface interfaceContractTypeAdd {
+    name: string
+}
+export interface interfaceContractTypeEdit {
+    id: string
+    name: string
+}
+export interface interfaceContractTypeGet {
+    offset: number
+    count: number
+}
+export interface interfaceContractTypeGetById {
+    ids: string[]
+}
+//---------------------------------------------------------------------------------
 //WORKER
 export interface interfaceWorkerAdd {
     name: string

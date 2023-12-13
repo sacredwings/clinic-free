@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
 import Add from './add'
-import {ServerHfEdit} from "@/component/function/url_api";
+import {ServerHfEdit, ServerHfGet} from "@/component/function/url_api";
 
 export default function List (props) {
 
@@ -17,9 +17,12 @@ export default function List (props) {
 
     //список договоров
     const Get = async () => {
-        const url = '/api/hf/get'
+        let arFields = {
+            offset: 0,
+            count: 100
+        }
 
-        let result = await axios.get(url)
+        let result = await ServerHfGet(arFields)
 
         setList(result.data.response.items)
     }

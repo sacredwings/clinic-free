@@ -87,16 +87,25 @@ export default function Navbar ({resAccount}) {
                 <div className="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            <Link className="nav-link dropdown-toggle" href={'#'} role="button" data-bs-toggle="dropdown"
                                aria-expanded="false">
                                 Навигация
-                            </a>
+                            </Link>
                             <ul className="dropdown-menu">
-                                <li><Link className="dropdown-item" href={'/user'}>Пользователи</Link></li>
-                                <li><Link className="dropdown-item" href={'/group'}>Группы</Link></li>
+                                <li><Link className="dropdown-item" href={'/org'}>Проф. осмотр</Link></li>
+                                <div className="dropdown-divider"/>
                             </ul>
                         </li>
-
+                        <li className="nav-item dropdown">
+                            <Link className="nav-link dropdown-toggle" href={'#'} role="button" data-bs-toggle="dropdown"
+                                  aria-expanded="false">
+                                Кострукторы
+                            </Link>
+                            <ul className="dropdown-menu">
+                                <li><Link className="dropdown-item" href={'/hf/constructor'}>Вред. факторы</Link></li>
+                                <li><Link className="dropdown-item" href={'/contract-type/constructor'}>Типы договоров</Link></li>
+                            </ul>
+                        </li>
                     </ul>
 
                     {user && user._id ? Auth() : NoAuth()}
