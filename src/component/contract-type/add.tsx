@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react'
 import axios from "axios"
 import Modal from '../Modal'
+import {ServerContractTypeAdd} from "@/component/function/url_api";
 
 export default function Add () {
     const [modalShow, setModalShow] = useState(false) //модальное окно
@@ -26,13 +27,8 @@ export default function Add () {
     const OnClickAdd = async (e) => {
         e.preventDefault()
 
-        const url = '/api/contract-type/add'
+        let result = await ServerContractTypeAdd(form);
 
-        let result = await axios.post(url, form);
-
-        result = result.data;
-
-        //setList(result.response.items)
         handleModalClose()
     }
 
