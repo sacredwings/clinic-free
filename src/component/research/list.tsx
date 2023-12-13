@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
 import Add from "./add"
-import {ServerResearchEditHf, ServerResearchGet} from "@/component/function/url_api";
+import {ServerResearchEdit, ServerResearchEditHf, ServerResearchGet} from "@/component/function/url_api";
 
 export default function Get ({selectHf, module}) {
 
@@ -156,14 +156,14 @@ export default function Get ({selectHf, module}) {
     //изменение элемента
     const OnSave = async () => {
         //сохранение в базе
-        const url = '/api/specialist/update'
+
         let arFields = {
             id: edit.id,
             name: edit.name
         }
         if (edit.price) arFields.price = edit.price
 
-        let result = await axios.post(url, arFields)
+        let result = await ServerResearchEdit(arFields)
 
         //изменение в форме
         let newListCheck = listCheck.map((element, i) => {

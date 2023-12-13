@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
 import Add from './add'
+import {ServerHfEdit} from "@/component/function/url_api";
 
 export default function List (props) {
 
@@ -34,13 +35,12 @@ export default function List (props) {
     //изменение элемента
     const OnSave = async () => {
         //сохранение в базе
-        const url = '/api/hf/update'
         let arFields = {
             id: edit.id,
             code: edit.code,
             name: edit.name
         }
-        let result = await axios.post(url, arFields)
+        let result = await ServerHfEdit(arFields)
 
         //изменение в форме
         let newList = list.map((element, i) => {

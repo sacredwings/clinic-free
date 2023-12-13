@@ -14,6 +14,7 @@ export async function POST (request: Request) {
             //схема
             const schema = Joi.object({
                 id: Joi.string().min(24).max(24).required(),
+                code: Joi.string().min(1).max(255).required(),
                 name: Joi.string().min(1).max(255).required(),
             });
 
@@ -28,6 +29,7 @@ export async function POST (request: Request) {
             await mongo()
 
             let arFields = {
+                code: value.code,
                 name: value.name
             }
             let result = await CHf.Edit ( value.id, arFields )
