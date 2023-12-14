@@ -12,16 +12,7 @@ export async function POST(request: Request) {
         let collectionWorker = mongoClient.collection('worker')
         let collectionUser = mongoClient.collection('user')
 
-        let result = await collectionWorker.find({}).toArray()
-
-        for (let item of result) {
-            let newFields = {
-                specialist_ids: arr(item.specialist_ids),
-                research_ids: arr(item.research_ids)
-            }
-
-            let result = await collectionWorker.updateOne({_id: item._id}, {$set: newFields})
-        }
+        await collectionUser.updateMany({}, { $rename :{"patronymic_name":"second_name"}}, false, true)
 
         return NextResponse.json({
             code: 0,
