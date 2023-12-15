@@ -24,7 +24,7 @@ export default async function Constructor ({
 
     return (
         <>
-            <h1>Вредные факторы</h1>
+            <h1>Типы договоров</h1>
             <CtConstructor hf={arHf} specialist={arSpecialist} research={arResearch}/>
         </>
     )

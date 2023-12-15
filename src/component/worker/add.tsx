@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router' //переход по url
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
-import {capitalizeFirstLetter} from "../../util/function"
+//import {capitalizeFirstLetter} from "../../util/function"
 
-export default function ({contract_id, worker_id}) {
+export default function WorkerAdd ({contract_id}) {
     const router = useRouter() //для перехода к пользователю
 
     const formDefault = {
@@ -11,41 +11,41 @@ export default function ({contract_id, worker_id}) {
 
         first_name: '',
         last_name: '',
-        patronymic_name: '',
+        second_name_name: '',
 
         man: '1',
 
-        date_birth: null,
+        date_birth: '',
 
         price_ultrasound: null,
         price_mammography: null,
         price_xray: null,
 
-        oms_policy_number: null,
-        snils: null,
+        //oms_policy_number: null,
+        //snils: null,
 
-        region: null,
-        city: null,
-        street: null,
-        house: null,
-        housing: null,
-        apt: null,
-        building: null,
+        //region: null,
+        //city: null,
+        //street: null,
+        //house: null,
+        //housing: null,
+        //apt: null,
+        //building: null,
 
-        passport_serial: null,
-        passport_number: null,
-        passport_date: null,
+        //passport_serial: null,
+        //passport_number: null,
+        //passport_date: null,
 
-        passport_issued_by: null,
+        //passport_issued_by: null,
         phone: null,
-        phone_additional: null,
+        //phone_additional: null,
 
         subdivision: null,
         profession: null,
-        employment_date: null,
+        //employment_date: null,
 
-        work_place: null,
-        work_experience: null,
+        //work_place: null,
+        //work_experience: null,
     }
 
     let [form, setForm] = useState(formDefault)

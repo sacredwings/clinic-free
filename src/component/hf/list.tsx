@@ -22,9 +22,9 @@ export default function List (props) {
             count: 100
         }
 
-        let result = await ServerHfGet(arFields)
+        let result = await ServerHfGet(arFields, {cookies: null})
 
-        setList(result.data.response.items)
+        setList(result.items)
     }
 
     //изменение полей ввода елемента

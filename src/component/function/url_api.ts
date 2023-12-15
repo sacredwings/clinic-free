@@ -22,8 +22,6 @@ import {
     interfaceSpecialistEdit,
     interfaceSpecialistEditHf,
     interfaceSpecialistGet,
-    interfaceSpecialistHfUpdate,
-    interfaceSpecialistUpdateHf,
     interfaceUserAccess,
     interfaceUserEdit,
     interfaceUserGetById,
