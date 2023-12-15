@@ -42,29 +42,25 @@ export default function UserForm ({worker, account}) {
         let result = await ServerUserEditAccess(arFields)
     }
 
-    const Visit = (id, arr) => {
+    const Visit = (id, arr, arName) => {
         for (let item of arr) {
-            if (id === item.specialist_id) return item
+            if (id === item[arName]) return item
         }
         return null
     }
 
     const FormCheckSpecialist = (specialist, specialistVisit) => {
         return specialist.map((item, i)=>{
-            return <FormSpecialistRadio key={i} workerId={worker._id} specialist={item} visit={Visit(item._id, specialistVisit)}/>
+            return <FormSpecialistRadio key={i} workerId={worker._id} specialist={item} visit={Visit(item._id, specialistVisit, 'specialist_id')}/>
         })
     }
 
-    const FormCheckResearch = (research) => {
+    const FormCheckResearch = (research, researchVisit) => {
         return research.map((item, i)=>{
-            return <div key={i} className="card" style={{marginTop: '20px'}}>
-                <div className="card-body">
-                    <h5 className="card-title">{item.name}</h5>
-                    <FormResearchRadio workerId={worker._id} researchId={item._id}/>
-                </div>
-            </div>
+            return <FormResearchRadio key={i} workerId={worker._id} research={item} visit={Visit(item._id, researchVisit, 'research_id')}/>
         })
     }
+
     const Form = () => {
         return <>
 
@@ -159,7 +155,7 @@ export default function UserForm ({worker, account}) {
                 </div>
             </div>
 
-            {FormCheckResearch (form._research_ids)}
+            {FormCheckResearch (form._research_ids, form._research_visit_ids)}
 
         </>
 

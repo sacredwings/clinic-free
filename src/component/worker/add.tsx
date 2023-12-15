@@ -153,6 +153,24 @@ export default function WorkerAdd ({contract_id}) {
         return age
     }
 
+    const OnCheckInit = (list, formList) => {
+        if (!list) return []
+
+        let newList = list.map((element, i) => {
+            element.checked = false
+
+            if (!formList) return element
+
+            for (let formElement of formList) {
+                if (element._id === formElement) element.checked = true
+            }
+
+            return element
+        })
+
+        return newList
+    }
+
     const FormCheckContractType = () => {
         return <>
             <br/>
