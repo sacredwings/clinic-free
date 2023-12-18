@@ -1,10 +1,12 @@
+'use client'
 import { useRouter } from 'next/router' //переход по url
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
+import {ServerWorkerAdd} from "@/component/function/url_api";
 //import {capitalizeFirstLetter} from "../../util/function"
 
-export default function WorkerAdd ({contract_id}) {
-    const router = useRouter() //для перехода к пользователю
+export default function WorkerAdd ({contract}) {
+    //const router = useRouter() //для перехода к пользователю
 
     const formDefault = {
         hf_code: '1.1,2.1',
@@ -48,6 +50,7 @@ export default function WorkerAdd ({contract_id}) {
         //work_experience: null,
     }
 
+    let [view, setView] = useState(false)
     let [form, setForm] = useState(formDefault)
     let [formContractType, setFormContractType] = useState([]) //для формы
     let [contractTypeList, setContractTypeList] = useState([])
@@ -78,34 +81,35 @@ export default function WorkerAdd ({contract_id}) {
         }))
     }
 
+    /*
     const Default = (err) => {
         setForm(prev => (formDefault))
-    }
+    }*/
 
     const onFormSubmit = async (e) => {
         e.preventDefault() // Stop form submit
 
-        let url = '/api/worker'
-        let fields = form
-        if (formContractType) fields.contract_type_ids = formContractType
+        let arFields = {
+            contract_id: contract._id,
+            contract_type_ids: null,
 
-
-        if (worker_id) {
-            fields.id = worker_id //для понимания,что нужно редактировать
-            delete fields.contract_id
-            url = `${url}/edit`
-        } else {
-            fields.contract_id = contract_id //организация
-
-            url = `${url}/add`
+            hf_code: form.hf_code,
+            first_name: form.first_name,
+            last_name: form.last_name,
+            second_name: form.second_name,
+            man: form.man,
+            date_birth: form.date_birth,
+            price_ultrasound: form.price_ultrasound,
+            price_mammography: form.price_mammography,
+            price_xray: form.price_xray,
+            phone: form.phone,
+            subdivision: form.subdivision,
+            profession: form.profession,
         }
 
-        let result = await axios.post(url, fields)
+        let result = await ServerWorkerAdd(arFields)
 
-        if (result.data.code)
-            setFormResult(false)
-        else
-            await router.push(`/worker/${result.data.response._id}`)
+        //await router.push(`/worker/${result.data.response._id}`)
 
         //setFormResult(true)
 
@@ -252,7 +256,7 @@ export default function WorkerAdd ({contract_id}) {
                         </div>
                         <div className="col-6">
                             <label htmlFor="date_birth" className="col-form-label">Дата рождения</label>
-                            <input type="date" className="form-control" id="date_birth" value={new Date(form.date_birth).toISOString().substring(0, 10)} onChange={onChangeText}/>
+                            <input type="date" className="form-control" id="date_birth" value={form.date_birth ? new Date(form.date_birth).toISOString().substring(0, 10) : ''} onChange={onChangeText}/>
                         </div>
                     </div>
 
@@ -315,7 +319,6 @@ export default function WorkerAdd ({contract_id}) {
     }
 
     return <>
-        <h1>Новый работник</h1>
         {formResult ? Result() : Form()}
     </>
 }
