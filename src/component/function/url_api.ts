@@ -395,12 +395,28 @@ export async function ServerContractGetById ({ids}: interfaceContractGetById, {c
     return res.data.response
 }
 export async function ServerContractAdd ({
-    name
+    org_id,
+
+    name,
+    date_from,
+    date_to,
+    price_ultrasound,
+    price_mammography,
+    price_xray,
+    price,
 }: interfaceContractAdd) {
     if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
     let arFields = {
-        name
+        org_id,
+
+        name,
+        date_from,
+        date_to,
+        price_ultrasound,
+        price_mammography,
+        price_xray,
+        price,
     } as interfaceContractAdd
 
     let url = `/api/contract/add`

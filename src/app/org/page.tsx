@@ -12,7 +12,7 @@ export default async function User ({
 }) {
     let arOrg = await ServerOrgGet({
         offset: 0,
-        count: 100
+        count: 10000
     }, {cookies:cookies()})
 
     const List = (arList) => {
@@ -27,14 +27,14 @@ export default async function User ({
     }
 
     const NoList = () => {
-        return <>
+        return <div className="alert alert-warning" role="alert">
             Организаций нет
-        </>
+        </div>
     }
 
     return (
         <>
-            <h1>Организации</h1>
+            <h1>Организации <Link type="button" className="btn btn-outline-success" href={'/org/add'}> + </Link></h1>
             {(arOrg.items.length) ? List(arOrg.items) : NoList()}
         </>
     )

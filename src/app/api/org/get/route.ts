@@ -18,8 +18,8 @@ export async function GET(request: Request) {
 
             //схема
             const schema = Joi.object({
-                offset: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(0),
-                count: Joi.number().integer().min(0).max(200).allow(null).empty('').default(20)
+                offset: Joi.number().integer().min(0).max(9223372036854775807).empty(null).default(0),
+                count: Joi.number().integer().min(0).max(10000).empty(null).default(20)
             });
 
             value = await schema.validateAsync(url)
@@ -37,6 +37,7 @@ export async function GET(request: Request) {
             }
             let result = await COrg.Get (arFields)
 
+            console.log(arFields)
             return NextResponse.json({
                 code: 0,
                 response: {

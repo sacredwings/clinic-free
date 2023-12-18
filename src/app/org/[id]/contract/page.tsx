@@ -36,14 +36,14 @@ export default async function ContractGet ({
     }
 
     const NoList = () => {
-        return <>
+        return <div className="alert alert-warning" role="alert">
             Договоров нет
-        </>
+        </div>
     }
 
     return (
         <>
-            <h1>Договора</h1>
+            <h1>Договора <Link type="button" className="btn btn-outline-success" href={`/org/${params.id}/contract/add`}> + </Link></h1>
             <OrgId org={org[0]}/>
             {(arContract.items.length) ? List(arContract.items) : NoList()}
         </>

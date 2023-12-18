@@ -73,9 +73,9 @@ export default async function User ({
     }
 
     const NoList = () => {
-        return <>
+        return <div className="alert alert-warning" role="alert">
             Работников нет
-        </>
+        </div>
     }
 
     return (
