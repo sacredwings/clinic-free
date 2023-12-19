@@ -24,7 +24,7 @@ import {
     interfaceSpecialistGet,
     interfaceUserAccess,
     interfaceUserEdit, interfaceUserGet,
-    interfaceUserGetById,
+    interfaceUserGetById, interfaceWorkerAdd,
     interfaceWorkerGet,
     interfaceWorkerGetById
 } from './url_api_type'
@@ -666,13 +666,47 @@ export async function ServerWorkerGetById ({ids}: interfaceWorkerGetById, {cooki
     return res.data.response
 }
 export async function ServerWorkerAdd ({
-                                             name
-                                         }: interfaceContractAdd) {
+    contract_id=null,
+    contract_type_ids=null,
+    hf_code=null,
+
+    first_name,
+    last_name,
+    second_name=null,
+    man,
+    date_birth,
+
+    price_ultrasound,
+    price_mammography,
+    price_xray,
+
+    phone=null,
+
+    subdivision,
+    profession,
+}: interfaceWorkerAdd) {
     if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
     let arFields = {
-        name
-    } as interfaceContractAdd
+        contract_id,
+        contract_type_ids,
+        hf_code,
+
+        first_name,
+        last_name,
+        second_name,
+        man,
+        date_birth,
+
+        price_ultrasound,
+        price_mammography,
+        price_xray,
+
+        phone,
+
+        subdivision,
+        profession,
+    } as interfaceWorkerAdd
 
     let url = `/api/worker/add`
     console.log(url)

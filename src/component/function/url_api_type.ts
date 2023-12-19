@@ -152,7 +152,24 @@ export interface interfaceContractTypeGetById {
 //---------------------------------------------------------------------------------
 //WORKER
 export interface interfaceWorkerAdd {
-    name: string
+    contract_id: string | null
+    contract_type_ids: string[] | null
+    hf_code: string[] | null
+
+    first_name: string,
+    last_name: string,
+    second_name: string | null,
+    man: string,
+    date_birth: Date,
+
+    price_ultrasound: boolean,
+    price_mammography: boolean,
+    price_xray: boolean,
+
+    phone: string | null,
+
+    subdivision: string,
+    profession: string,
 }
 export interface interfaceWorkerEdit {
     id: string

@@ -20,48 +20,46 @@ export async function POST (request: Request) {
 
             //схема
             const schema = Joi.object({
-                contract_id: Joi.string().min(24).max(24).allow(null).empty('').default(null),
-                contract_type_ids: Joi.array().min(0).max(10).items(Joi.string().min(24).max(24)).allow(null).empty('').default(null),
-                hf_code: Joi.array().min(1).max(100).items(Joi.string().min(1).max(20)).allow(null).empty('').default(null),
+                contract_id: Joi.string().min(24).max(24).empty(['', null]).default(null),
+                contract_type_ids: Joi.array().min(0).max(10).items(Joi.string().min(24).max(24)).empty(['', null]).default(null),
+                hf_code: Joi.array().min(1).max(100).items(Joi.string().min(1).max(20)).empty(['', null]).default(null),
 
                 first_name: Joi.string().min(1).max(255).required(),
                 last_name: Joi.string().min(1).max(255).required(),
-                second_name: Joi.string().min(1).max(255).allow(null).empty('').default(null),
-
+                second_name: Joi.string().min(1).max(255).empty(['', null]).default(null),
                 man: Joi.number().integer().min(0).max(1).required(),
-
                 date_birth: Joi.date().min('1-1-1900').max('1-1-2030').required(),
 
-                price_ultrasound: Joi.boolean().allow(null).empty('').default(null),
-                price_mammography: Joi.boolean().allow(null).empty('').default(null),
-                price_xray: Joi.boolean().allow(null).empty('').default(null),
+                price_ultrasound: Joi.boolean().empty(['', null]).default(null),
+                price_mammography: Joi.boolean().empty(['', null]).default(null),
+                price_xray: Joi.boolean().empty(['', null]).default(null),
 
-                oms_policy_number: Joi.number().integer().min(999999999999999).max(9999999999999999).allow(null).empty('').default(null),
-                snils: Joi.number().integer().min(9999999999).max(99999999999).allow(null).empty('').default(null),
-                dogovor_type: Joi.number().integer().min(0).max(1).allow(null).empty('').default(0),
+                //oms_policy_number: Joi.number().integer().min(999999999999999).max(9999999999999999).allow(null).empty('').default(null),
+                //snils: Joi.number().integer().min(9999999999).max(99999999999).allow(null).empty('').default(null),
+                //dogovor_type: Joi.number().integer().min(0).max(1).allow(null).empty('').default(0),
 
-                region: Joi.string().min(0).max(255).allow(null).empty('').default(null),
-                city: Joi.string().min(0).max(255).allow(null).empty('').default(null),
-                street: Joi.string().min(0).max(255).allow(null).empty('').default(null),
-                house: Joi.string().min(0).max(255).allow(null).empty('').default(null),
-                housing: Joi.string().min(0).max(255).allow(null).empty('').default(null),
-                apt: Joi.string().min(0).max(255).allow(null).empty('').default(null),
-                building: Joi.string().min(0).max(255).allow(null).empty('').default(null),
+                //region: Joi.string().min(0).max(255).allow(null).empty('').default(null),
+                //city: Joi.string().min(0).max(255).allow(null).empty('').default(null),
+                //street: Joi.string().min(0).max(255).allow(null).empty('').default(null),
+                //house: Joi.string().min(0).max(255).allow(null).empty('').default(null),
+                //housing: Joi.string().min(0).max(255).allow(null).empty('').default(null),
+                //apt: Joi.string().min(0).max(255).allow(null).empty('').default(null),
+                //building: Joi.string().min(0).max(255).allow(null).empty('').default(null),
 
-                passport_serial: Joi.number().integer().min(1).max(9999).allow(null).empty('').default(null),
-                passport_number: Joi.number().integer().min(1).max(999999).allow(null).empty('').default(null),
-                passport_date: Joi.date().min('1-1-1900').max('1-1-2030').allow(null).empty('').default(null),
+                //passport_serial: Joi.number().integer().min(1).max(9999).allow(null).empty('').default(null),
+                //passport_number: Joi.number().integer().min(1).max(999999).allow(null).empty('').default(null),
+                //passport_date: Joi.date().min('1-1-1900').max('1-1-2030').allow(null).empty('').default(null),
 
-                passport_issued_by: Joi.string().min(0).max(255).allow(null).empty('').default(null),
-                phone: Joi.number().integer().min(70000000000).max(79999999999).allow(null).empty('').default(null),
-                phone_additional: Joi.number().integer().min(70000000000).max(79999999999).allow(null).empty('').default(null),
+                //passport_issued_by: Joi.string().min(0).max(255).allow(null).empty('').default(null),
+                phone: Joi.number().integer().min(70000000000).max(79999999999).empty(['', null]).default(null),
+                //phone_additional: Joi.number().integer().min(70000000000).max(79999999999).allow(null).empty('').default(null),
 
-                subdivision: Joi.string().min(0).max(255).allow(null).empty('').default(null),
-                profession: Joi.string().min(0).max(255).allow(null).empty('').default(null),
-                employment_date: Joi.date().min('1-1-1900').max('1-1-2030').allow(null).empty('').default(null),
+                subdivision: Joi.string().min(0).max(255).empty(['', null]).default(null),
+                profession: Joi.string().min(0).max(255).empty(['', null]).default(null),
+                //employment_date: Joi.date().min('1-1-1900').max('1-1-2030').allow(null).empty('').default(null),
 
-                work_place: Joi.string().min(0).max(255).allow(null).empty('').default(null),
-                work_experience: Joi.number().integer().min(0).max(100).allow(null).empty('').default(null),
+                //work_place: Joi.string().min(0).max(255).allow(null).empty('').default(null),
+                //work_experience: Joi.number().integer().min(0).max(100).allow(null).empty('').default(null),
             })
 
             value = await schema.validateAsync(rsRequest)
@@ -83,6 +81,8 @@ export async function POST (request: Request) {
             //ВЫБОР ТИПОВ ДОГОВОРОВ ИЗ ДОГОВОРА
             if (value.contract_id) {
 
+                console.log('Контракт')
+
                 //загрузка договора
                 hfContract = await CContract.GetById ([value.contract_id])
                 if (!hfContract.length) throw ({code: 30100000, msg: 'Договор не найден'})
@@ -92,6 +92,7 @@ export async function POST (request: Request) {
                 //если типы добавлены в контракт
                 if (hfContract.contract_type_ids) {
 
+                    console.log('Контракт / Типы договоров')
                     //загрузка типов
                     let arType = await CContractType.GetById(hfContract.contract_type_ids)
 
@@ -103,18 +104,24 @@ export async function POST (request: Request) {
                 }
             }
 
+            console.log(arSpecialist)
+            console.log(arResearch)
+
+            /*
             //ВЫБОР ТИПОВ ДОГОВОРОВ ИЗ ПОЛЬЗОВАТЕЛЯ
             if (value.contract_type_ids) {
                 //Запрос с контрактам
                 let arType = await CContractType.GetById(value.contract_type_ids) //загрузка типов
+                if (value.contract_type_ids.length !== arType.length) throw ({code: 30100000, msg: 'Не все типы договоров найдены'})
 
                 //добавляем в общему массиву
                 for (let contract_type of arType) {
                     if (contract_type.research_ids) arResearch = [...arResearch, ...contract_type.research_ids]
                     if (contract_type.specialist_ids) arSpecialist = [...arSpecialist, ...contract_type.specialist_ids]
                 }
-            }
+            }*/
 
+            /*
             //ЗДЕСЬ ВЫТАСКИВАЕМ ИЗ ВРЕДНЫХ ФАКТОРОВ
             //загрузка кодов
             if (value.hf_code) {
@@ -234,16 +241,17 @@ export async function POST (request: Request) {
             }
 
             let result = await CWorker.Add ( arFields )
-
-            res.status(200).json({
-                code: 0,
-                response: result
+*/
+            return NextResponse.json({
+                err: 0,
+                //response: result
             })
+
         } catch (err) {
             throw ({...{code: 10000000, msg: 'Ошибка формирования результата'}, ...err})
         }
     } catch (err) {
-        res.status(200).json({...{code: 10000000, msg: 'RWorker Add'}, ...err})
+        return NextResponse.json({...{code: 10000000, msg: 'RWorker Add'}, ...err})
     }
 }
 

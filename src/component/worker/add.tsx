@@ -19,9 +19,9 @@ export default function WorkerAdd ({contract}) {
 
         date_birth: '',
 
-        price_ultrasound: null,
-        price_mammography: null,
-        price_xray: null,
+        price_ultrasound: false,
+        price_mammography: false,
+        price_xray: false,
 
         //oms_policy_number: null,
         //snils: null,
@@ -52,7 +52,7 @@ export default function WorkerAdd ({contract}) {
 
     let [view, setView] = useState(false)
     let [form, setForm] = useState(formDefault)
-    let [formContractType, setFormContractType] = useState([]) //для формы
+    let [contractTypeIds, setContractTypeIds] = useState([]) //для формы
     let [contractTypeList, setContractTypeList] = useState([])
     let [formResult, setFormResult] = useState(null)
     //const { paramsId } = useParams()
@@ -92,20 +92,25 @@ export default function WorkerAdd ({contract}) {
         let arFields = {
             contract_id: contract._id,
             contract_type_ids: null,
-
             hf_code: form.hf_code,
+
             first_name: form.first_name,
             last_name: form.last_name,
             second_name: form.second_name,
             man: form.man,
             date_birth: form.date_birth,
+
             price_ultrasound: form.price_ultrasound,
             price_mammography: form.price_mammography,
             price_xray: form.price_xray,
+
             phone: form.phone,
+
             subdivision: form.subdivision,
             profession: form.profession,
         }
+
+        if (contractTypeIds && contractTypeIds.length) arFields.contract_type_ids = contractTypeIds
 
         let result = await ServerWorkerAdd(arFields)
 
@@ -134,7 +139,7 @@ export default function WorkerAdd ({contract}) {
             return element
         })
         setContractTypeList(newListCheck)
-        setFormContractType(list)
+        setContractTypeIds(list)
     }
 
     const OnChangeCheckOne = (e) => {
