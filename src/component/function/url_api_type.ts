@@ -1,5 +1,11 @@
 import {ServerOrgEdit, ServerOrgGet} from "@/component/function/url_api";
 
+export interface interfaceUserGet {
+    q: string | null
+    offset: number
+    count: number
+}
+
 export interface interfaceUserGetById {
     ids: string[]
 }

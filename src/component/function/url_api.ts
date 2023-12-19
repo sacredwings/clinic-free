@@ -23,7 +23,7 @@ import {
     interfaceSpecialistEditHf,
     interfaceSpecialistGet,
     interfaceUserAccess,
-    interfaceUserEdit,
+    interfaceUserEdit, interfaceUserGet,
     interfaceUserGetById,
     interfaceWorkerGet,
     interfaceWorkerGetById
@@ -43,7 +43,7 @@ async function request (type, url, data, config) {
     if (type==='post')
         await axios.post(url, params)
 }*/
-
+//---------------------------------------------------------------------------------
 //АККАУНТ
 export async function ServerAccountGet ({cookies=null}) {
     if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
@@ -59,6 +59,33 @@ export async function ServerAccountGet ({cookies=null}) {
     let res = await axios.get(url, arFields)
     return res.data.response
 }
+
+//---------------------------------------------------------------------------------
+//Specialist
+export async function ServerUserGet ({
+    q=null,
+    offset=0,
+    count=20
+}: interfaceUserGet, {cookies=null}) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        params: {
+            q,
+            offset,
+            count
+        } as interfaceUserGet,
+        headers: {
+            Cookie: cookies
+        }
+    } as AxiosRequestConfig
+
+    let url = `/api/user/get`
+    console.log(url)
+    let res = await axios.get(url, arFields)
+    return res.data.response
+}
+
 export async function ServerUserGetById ({ids}: interfaceUserGetById, {cookies=null}) {
     if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
@@ -670,40 +697,6 @@ export async function ServerWorkerEdit ({
     await ToastSystemAdd(res.data)
     return res.data.response
 }
-
-
-
-//---------------------------------------------------------------------------------
-//ПОЛЬЗОВАТЕЛЬ
-export async function ServerUserGet ({
-    q=null,
-
-    offset=0,
-    count=20
-}, {
-    cookies=null
-}) {
-    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
-
-    let arFields = {
-        params: {
-            q,
-
-            offset,
-            count
-        } as interfaceVideoGet,
-        headers: {
-            Cookie: cookies
-        }
-    } as AxiosRequestConfig
-
-    let url = `/api/user/get`
-    console.log(url)
-    let res = await axios.get(url, arFields);
-    return res.data.response
-}
-//ПОЛЬЗОВАТЕЛЬ
-
 
 //---------------------------------------------------------------------------------
 //ВИДЕО

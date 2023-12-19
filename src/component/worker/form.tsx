@@ -83,8 +83,8 @@ export default function UserForm ({worker, account}) {
                                 <input type="text" className="form-control" id="first_name" value={form._user_id.first_name ? form._user_id.first_name : ''} onChange={onChangeText}/>
                             </div>
                             <div className="col-4">
-                                <label htmlFor="patronymic_name" className="col-form-label">Отчество</label>
-                                <input type="text" className="form-control" id="patronymic_name" value={form._user_id.patronymic_name ? form._user_id.patronymic_name : ''} onChange={onChangeText}/>
+                                <label htmlFor="second_name" className="col-form-label">Отчество</label>
+                                <input type="text" className="form-control" id="second_name" value={form._user_id.second_name ? form._user_id.second_name : ''} onChange={onChangeText}/>
                             </div>
                         </div>
                         <div className="mb-3">

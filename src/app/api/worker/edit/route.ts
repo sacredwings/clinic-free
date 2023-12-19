@@ -24,7 +24,7 @@ export default async (req, res) => {
 
                 first_name: Joi.string().min(1).max(255).required(),
                 last_name: Joi.string().min(1).max(255).required(),
-                patronymic_name: Joi.string().min(1).max(255).allow(null).empty('').default(null),
+                second_name: Joi.string().min(1).max(255).allow(null).empty('').default(null),
 
                 man: Joi.number().integer().min(0).max(1).required(),
 
@@ -150,7 +150,7 @@ export default async (req, res) => {
                         let arFields = {
                             first_name: value.first_name,
                             last_name: value.last_name,
-                            patronymic_name: value.patronymic_name,
+                            second_name: value.second_name,
                             date_birth: value.date_birth
                         }
                         let searchUser = await CUser.GetByFields(arFields)*/
@@ -159,7 +159,7 @@ export default async (req, res) => {
             let arFields = {
                 first_name: value.first_name,
                 last_name: value.last_name,
-                patronymic_name: value.patronymic_name,
+                second_name: value.second_name,
 
                 man: value.man,
 

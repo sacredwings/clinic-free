@@ -55,7 +55,7 @@ export default async function User ({
                 //let href = `/contract/${id}/worker`
                 return <li className="list-group-item d-flex justify-content-between align-items-start" key={i}>
                     <div className="ms-2 me-auto">
-                        <div className="fw-bold">{list._user_id.last_name} {list._user_id.first_name} {list._user_id.patronymic_name}</div>
+                        <div className="fw-bold">{list._user_id.last_name} {list._user_id.first_name} {list._user_id.second_name}</div>
                         {ListCode(list.hf_code)}
                         <br/>
                         <Link href={`/worker/${list._id}`}>

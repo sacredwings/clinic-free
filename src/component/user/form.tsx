@@ -176,8 +176,8 @@ export default function UserForm ({user, specialist, research}) {
                                 <input type="text" className="form-control" id="first_name" value={form.first_name ? form.first_name : ''} onChange={onChangeText}/>
                             </div>
                             <div className="col-4">
-                                <label htmlFor="patronymic_name" className="col-form-label">Отчество</label>
-                                <input type="text" className="form-control" id="patronymic_name" value={form.patronymic_name ? form.patronymic_name : ''} onChange={onChangeText}/>
+                                <label htmlFor="second_name" className="col-form-label">Отчество</label>
+                                <input type="text" className="form-control" id="second_name" value={form.second_name ? form.second_name : ''} onChange={onChangeText}/>
                             </div>
                         </div>
                         <div className="mb-3">
@@ -251,8 +251,8 @@ export default function UserForm ({user, specialist, research}) {
                             <input type="text" className="form-control" id="first_name" value={form.first_name ? form.first_name : ''} onChange={onChangeText}/>
                         </div>
                         <div className="col-4">
-                            <label htmlFor="patronymic_name" className="col-form-label">Отчество</label>
-                            <input type="text" className="form-control" id="patronymic_name" value={form.patronymic_name ? form.patronymic_name : ''} onChange={onChangeText}/>
+                            <label htmlFor="second_name" className="col-form-label">Отчество</label>
+                            <input type="text" className="form-control" id="second_name" value={form.second_name ? form.second_name : ''} onChange={onChangeText}/>
                         </div>
                     </div>
 

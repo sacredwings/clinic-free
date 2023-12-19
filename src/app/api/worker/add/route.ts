@@ -26,7 +26,7 @@ export async function POST (request: Request) {
 
                 first_name: Joi.string().min(1).max(255).required(),
                 last_name: Joi.string().min(1).max(255).required(),
-                patronymic_name: Joi.string().min(1).max(255).allow(null).empty('').default(null),
+                second_name: Joi.string().min(1).max(255).allow(null).empty('').default(null),
 
                 man: Joi.number().integer().min(0).max(1).required(),
 
@@ -155,7 +155,7 @@ export async function POST (request: Request) {
             let arFields = {
                 first_name: value.first_name,
                 last_name: value.last_name,
-                patronymic_name: value.patronymic_name,
+                second_name: value.second_name,
                 date_birth: value.date_birth
             }
             let searchUser = await CUser.GetByFields(arFields)
@@ -165,7 +165,7 @@ export async function POST (request: Request) {
                 arFields = {
                     first_name: value.first_name,
                     last_name: value.last_name,
-                    patronymic_name: value.patronymic_name,
+                    second_name: value.second_name,
 
                     man: value.man,
 

@@ -48,7 +48,7 @@ export default async function ({worker}) {
         <>
             <div className="card">
                 <div className="card-body">
-                    <h1>{`${worker._user_id.first_name} ${worker._user_id.last_name} ${worker._user_id.patronymic_name}`}</h1>
+                    <h1>{`${worker._user_id.first_name} ${worker._user_id.last_name} ${worker._user_id.second_name}`}</h1>
                 </div>
             </div>
 
