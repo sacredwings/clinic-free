@@ -39,7 +39,7 @@ export default class {
 
         } catch (err) {
             console.log(err)
-            throw ({...{err: 7001000, msg: 'CVisit Add'}, ...err})
+            throw ({...{err: 7001000, msg: 'CVisit Edit'}, ...err})
         }
     }
 
@@ -61,10 +61,9 @@ export default class {
 
         } catch (err) {
             console.log(err)
-            throw ({...{err: 7001000, msg: 'CVisit Add'}, ...err})
+            throw ({...{err: 7001000, msg: 'CVisit GetDouble'}, ...err})
         }
     }
-
     /*
     static async Add ( {module, ...fields} ) {
         try {
@@ -95,8 +94,8 @@ export default class {
             console.log(err)
             throw ({...{err: 7001000, msg: 'CVisit Add'}, ...err})
         }
-    }*/
-
+    }
+*/
 
 /*
     static async GetById ( ids ) {

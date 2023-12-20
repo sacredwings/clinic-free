@@ -24,7 +24,7 @@ import {
     interfaceSpecialistGet,
     interfaceUserAccess,
     interfaceUserEdit, interfaceUserGet,
-    interfaceUserGetById, interfaceWorkerAdd,
+    interfaceUserGetById, interfaceVisitEdit, interfaceWorkerAdd,
     interfaceWorkerGet,
     interfaceWorkerGetById
 } from './url_api_type'
@@ -733,6 +733,38 @@ export async function ServerWorkerEdit ({
     await ToastSystemAdd(res.data)
     return res.data.response
 }
+
+//---------------------------------------------------------------------------------
+//CONTRACT-TYPE
+export async function ServerVisitEdit ({
+    worker_id,
+    specialist_id=null,
+    research_id=null,
+    status,
+    note,
+    result
+}: interfaceVisitEdit) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        worker_id,
+        specialist_id,
+        research_id,
+        status,
+        note,
+        result
+    } as interfaceVisitEdit
+
+    let url = `/api/visit/edit`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}
+
+
+
+
 
 //---------------------------------------------------------------------------------
 //ВИДЕО

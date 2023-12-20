@@ -14,7 +14,7 @@ export async function POST(request: Request) {
         try {
             //схема
             const schema = Joi.object({
-                id: Joi.string().min(1).max(255).required(),
+                id: Joi.string().min(24).max(24).required(),
 
                 photo_id: Joi.string().min(1).max(255).empty(null).default(null),
 

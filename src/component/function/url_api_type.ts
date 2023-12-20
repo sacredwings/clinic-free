@@ -184,3 +184,14 @@ export interface interfaceWorkerGet {
 export interface interfaceWorkerGetById {
     ids: string[]
 }
+
+//---------------------------------------------------------------------------------
+//VISIT
+export interface interfaceVisitEdit {
+    worker_id: string
+    specialist_id: string | null
+    research_id: string | null
+    status: string
+    note: string
+    result: string
+}

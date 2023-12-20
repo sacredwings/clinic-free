@@ -24,7 +24,9 @@ export default function FormSpecialistRadio ({workerId, specialist, visit}) {
     }
 
     const onSave = () => {
+        let arFields = {
 
+        }
     }
 
     const Form = () => {
@@ -66,16 +68,24 @@ export default function FormSpecialistRadio ({workerId, specialist, visit}) {
                             </div>
                         </div>
                     </div>
+
                     <div className={"row"}>
                         <div className="mb-3 col-6">
                             <label htmlFor="exampleFormControlTextarea1" className="form-label">Заключение</label>
-                            <textarea className="form-control" id="exampleFormControlTextarea1" rows="2" value={result}></textarea>
+                            <textarea className="form-control" id="exampleFormControlTextarea1" rows="2" value={result} onChange={(e)=>{setResult(e.target.value)}}></textarea>
                         </div>
                         <div className="mb-3 col-6">
                             <label htmlFor="exampleFormControlTextarea1" className="form-label">Примечание</label>
-                            <textarea className="form-control" id="exampleFormControlTextarea1" rows="2" value={note}></textarea>
+                            <textarea className="form-control" id="exampleFormControlTextarea1" rows="2" value={note} onChange={(e)=>{setNote(e.target.value)}}></textarea>
                         </div>
                     </div>
+
+                    <div className={"row"}>
+                        <div className="mb-3" style={{float: 'right'}}>
+                            <button type="submit" className="btn btn-success">Сохранить</button>
+                        </div>
+                    </div>
+
                 </form>
             </div>
         </div>
