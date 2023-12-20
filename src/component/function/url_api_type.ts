@@ -112,6 +112,7 @@ export interface interfaceOrgGetById {
 //CONTRACT
 export interface interfaceContractAdd {
     org_id: string
+    contract_type_ids: string[]
 
     name: string
     date_from: string

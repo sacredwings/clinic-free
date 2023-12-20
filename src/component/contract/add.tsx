@@ -4,7 +4,7 @@ import React, {useState, useEffect} from 'react'
 import axios from "axios"
 import {ServerContractAdd, ServerContractEdit, ServerOrgAdd} from "@/component/function/url_api";
 
-export default function ContractAdd ({org}) {
+export default function ContractAdd ({org, contractType}) {
 
     const formDefault = {
         name: '',
@@ -18,6 +18,12 @@ export default function ContractAdd ({org}) {
 
     let [view, setView] = useState(false)
     let [form, setForm] = useState(formDefault)
+    let [contractTypeIds, setContractTypeIds] = useState([]) //для формы
+    let [contractTypeList, setContractTypeList] = useState(contractType)
+
+    useEffect(() => {
+        //console.log(contractTypeIds)
+    }, [contractTypeIds])
 
     const onChangeText = (e) => {
         let name = e.target.id;
@@ -34,6 +40,7 @@ export default function ContractAdd ({org}) {
 
         let arFields = {
             org_id: org._id,
+            contract_type_ids: null,
 
             name: form.name,
             date_from: form.date_from,
@@ -44,7 +51,13 @@ export default function ContractAdd ({org}) {
             price: form.price,
         }
 
+        if (contractTypeIds && contractTypeIds.length) arFields.contract_type_ids = contractTypeIds
+
+        setForm(formDefault)
+        setContractTypeIds([])
+        setContractTypeList([])
         setView(true)
+
         await ServerContractAdd(arFields)
     }
 
@@ -58,6 +71,36 @@ export default function ContractAdd ({org}) {
                 setView(false)
                 setForm(formDefault)
             }}>+ Добавить новый</button>
+        </>
+    }
+
+    const OnChangeCheck = (id) => {
+        let list = []
+        let newListCheck = contractTypeList.map((element, i) => {
+            if (element._id === id)
+                element.checked = !element.checked
+
+            if (element.checked) list.push(element._id)
+            return element
+        })
+        setContractTypeList(newListCheck)
+        setContractTypeIds(list)
+    }
+
+    const FormCheckContractType = () => {
+        return <>
+            <br/>
+            <h6 className="card-title text-center">Типы договоров</h6>
+            <br/>
+
+            {contractTypeList.map((item, i)=>{
+                return <div className="form-check" key={i}>
+                    <input className="form-check-input" type="checkbox" checked={(item.checked) ? true : false} onChange={()=>{OnChangeCheck(item._id)}}/>
+                    <label className="form-check-label" htmlFor="flexCheckDefault">
+                        {item.name}
+                    </label>
+                </div>
+            })}
         </>
     }
 
@@ -82,6 +125,12 @@ export default function ContractAdd ({org}) {
                         <div className="mb-3 row">
                             <label htmlFor="date_to" className="col-sm-2 col-form-label">До</label>
                             <div className="col-sm-10"><input type="date" className="form-control" id="date_to" value={form.date_to ? new Date(form.date_to).toISOString().substring(0, 10) : ''} onChange={onChangeText}/></div>
+                        </div>
+
+                        <div className="mb-3 row">
+                            <div className="col-12">
+                                {FormCheckContractType()}
+                            </div>
                         </div>
 
                         <hr/>

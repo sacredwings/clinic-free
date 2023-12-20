@@ -7,7 +7,7 @@ import CContractType from "@/class/contract-type"
 import CHf from "@/class/hf"
 import CResearch from "@/class/research"
 import CSpecialist from "@/class/specialist"
-//import CUser from "@/class/"
+import {CUser} from "../../../../../../social-framework"
 
 export async function POST (request: Request) {
     let value
@@ -75,13 +75,16 @@ export async function POST (request: Request) {
             let arResearch = []
             let arSpecialist = []
 
+            let arResearchIds = []
+            let arSpecialistIds = []
+
             let hfContract = null
 
+            //----------------------------------------------------------------------
+            //СБОР СПЕЦИАЛИСТОВ И ИСЛЕДОВНИЙ
 
             //ВЫБОР ТИПОВ ДОГОВОРОВ ИЗ ДОГОВОРА
             if (value.contract_id) {
-
-                console.log('Контракт')
 
                 //загрузка договора
                 hfContract = await CContract.GetById ([value.contract_id])
@@ -92,7 +95,6 @@ export async function POST (request: Request) {
                 //если типы добавлены в контракт
                 if (hfContract.contract_type_ids) {
 
-                    console.log('Контракт / Типы договоров')
                     //загрузка типов
                     let arType = await CContractType.GetById(hfContract.contract_type_ids)
 
@@ -104,10 +106,6 @@ export async function POST (request: Request) {
                 }
             }
 
-            console.log(arSpecialist)
-            console.log(arResearch)
-
-            /*
             //ВЫБОР ТИПОВ ДОГОВОРОВ ИЗ ПОЛЬЗОВАТЕЛЯ
             if (value.contract_type_ids) {
                 //Запрос с контрактам
@@ -119,32 +117,38 @@ export async function POST (request: Request) {
                     if (contract_type.research_ids) arResearch = [...arResearch, ...contract_type.research_ids]
                     if (contract_type.specialist_ids) arSpecialist = [...arSpecialist, ...contract_type.specialist_ids]
                 }
-            }*/
+            }
 
-            /*
             //ЗДЕСЬ ВЫТАСКИВАЕМ ИЗ ВРЕДНЫХ ФАКТОРОВ
             //загрузка кодов
             if (value.hf_code) {
+
                 let arHf = await CHf.GetByCode (value.hf_code)
 
                 //сохраняем каждый из массива вредных факторов
                 for (let hf of arHf) {
-                    arResearch = [...arResearch, ...hf.research_ids]
-                    arSpecialist = [...arSpecialist, ...hf.specialist_ids]
+                    if (hf.research_ids)
+                        arResearch = [...arResearch, ...hf.research_ids]
+
+                    if (hf.specialist_ids)
+                        arSpecialist = [...arSpecialist, ...hf.specialist_ids]
                 }
             }
 
             //ОБРАБОТКА ПОЛУЧЕННЫХ ИСЛЕДОВАНИЙ И СПЕЦИАЛИСТОВ
             //Оставляем уникальные
-            arResearch = await CResearch.GetByIdPrice (arResearch)
-            arSpecialist = await CSpecialist.GetByIdPrice (arSpecialist)
+            arResearch = await CResearch.GetById (arResearch, {price:true})
+            arSpecialist = await CSpecialist.GetById (arSpecialist, {price:true})
 
-            console.log(arResearch)
-            console.log(arSpecialist)
+            arResearchIds = FieldToId (arResearch)
+            arSpecialistIds = FieldToId (arSpecialist)
 
-            //фиксированный прайс не указан
-            if ((!hfContract.price) || (hfContract.price===0)) {
-                //считае
+            //----------------------------------------------------------------------
+            //РАСЧЕТ ЦЕНЫ
+
+            //Фиксированный прайс не указан в Договоре
+            if (!hfContract.price) {
+                //считает
                 for (let item of arResearch) {
                     if ((item._price) && (item._price))
                         price += item._price.price
@@ -165,7 +169,7 @@ export async function POST (request: Request) {
                 second_name: value.second_name,
                 date_birth: value.date_birth
             }
-            let searchUser = await CUser.GetByFields(arFields)
+            let searchUser = await CUser.GetByField(arFields)
 
             //создание пользователя
             if (!searchUser) {
@@ -173,29 +177,27 @@ export async function POST (request: Request) {
                     first_name: value.first_name,
                     last_name: value.last_name,
                     second_name: value.second_name,
-
                     man: value.man,
-
                     date_birth: value.date_birth,
 
-                    oms_policy_number: value.oms_policy_number,
-                    snils: value.snils,
+                    //oms_policy_number: value.oms_policy_number,
+                    //snils: value.snils,
 
-                    region: value.region,
-                    city: value.city,
-                    street: value.street,
-                    house: value.house,
-                    housing: value.housing,
-                    apt: value.apt,
-                    building: value.building,
+                    //region: value.region,
+                    //city: value.city,
+                    //street: value.street,
+                    //house: value.house,
+                    //housing: value.housing,
+                    //apt: value.apt,
+                    //building: value.building,
 
-                    passport_serial: value.passport_serial,
-                    passport_number: value.passport_number,
-                    passport_date: value.passport_date,
+                    //passport_serial: value.passport_serial,
+                    //passport_number: value.passport_number,
+                    //passport_date: value.passport_date,
 
-                    passport_issued_by: value.passport_issued_by,
+                    //passport_issued_by: value.passport_issued_by,
                     phone: value.phone,
-                    phone_additional: value.phone_additional,
+                    //phone_additional: value.phone_additional,
                 }
                 await CUser.Add ( arFields )
             }
@@ -218,10 +220,10 @@ export async function POST (request: Request) {
 
                 subdivision: value.subdivision,
                 profession: value.profession,
-                employment_date: value.employment_date,
+                //employment_date: value.employment_date,
 
-                work_place: value.work_place,
-                work_experience: value.work_experience,
+                //work_place: value.work_place,
+                //work_experience: value.work_experience,
             }
 
             if (hfContract) {
@@ -241,10 +243,10 @@ export async function POST (request: Request) {
             }
 
             let result = await CWorker.Add ( arFields )
-*/
+
             return NextResponse.json({
                 err: 0,
-                //response: result
+                response: result
             })
 
         } catch (err) {
@@ -255,10 +257,13 @@ export async function POST (request: Request) {
     }
 }
 
-export const config = {
-    api: {
-        bodyParser: {
-            sizeLimit: '1mb',
-        },
-    },
+function FieldToId (arr) {
+    if (!arr || !arr.length) return null
+
+    let newArr = []
+    for (let item of arr) {
+        newArr.push(item._id)
+    }
+
+    return newArr
 }

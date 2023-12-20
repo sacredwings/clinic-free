@@ -423,6 +423,7 @@ export async function ServerContractGetById ({ids}: interfaceContractGetById, {c
 }
 export async function ServerContractAdd ({
     org_id,
+    contract_type_ids,
 
     name,
     date_from,
@@ -436,6 +437,7 @@ export async function ServerContractAdd ({
 
     let arFields = {
         org_id,
+        contract_type_ids,
 
         name,
         date_from,
