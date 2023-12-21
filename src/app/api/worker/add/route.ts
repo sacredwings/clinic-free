@@ -140,6 +140,9 @@ export async function POST (request: Request) {
             arResearch = await CResearch.GetById (arResearch, {price:true})
             arSpecialist = await CSpecialist.GetById (arSpecialist, {price:true})
 
+            arResearch = Field(arResearch)
+            arSpecialist = Field(arSpecialist)
+
             arResearchIds = FieldToId (arResearch)
             arSpecialistIds = FieldToId (arSpecialist)
 
@@ -199,7 +202,7 @@ export async function POST (request: Request) {
                     phone: value.phone,
                     //phone_additional: value.phone_additional,
                 }
-                await CUser.Add ( arFields )
+                arFields = await CUser.Add ( arFields )
             }
 
             //СОЗДАНИЕ РАБОТНИКА
@@ -215,8 +218,11 @@ export async function POST (request: Request) {
                 price_mammography: null,
                 price_xray: null,
 
-                research_ids: arResearch,
-                specialist_ids: arSpecialist,
+                research_ids: arResearchIds,
+                specialist_ids: arSpecialistIds,
+
+                research: arResearch,
+                specialist: arSpecialist,
 
                 subdivision: value.subdivision,
                 profession: value.profession,
@@ -263,6 +269,25 @@ function FieldToId (arr) {
     let newArr = []
     for (let item of arr) {
         newArr.push(item._id)
+    }
+
+    return newArr
+}
+
+function Field (arr) {
+    if (!arr || !arr.length) return null
+
+    let newArr = []
+    for (let item of arr) {
+        let newItem = {
+            _id: item._id,
+            name: item.name,
+            price: null
+        }
+        if ((item._price) && (item._price))
+            newItem.price = item._price.price
+
+        newArr.push(newItem)
     }
 
     return newArr

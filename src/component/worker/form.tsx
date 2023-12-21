@@ -120,17 +120,13 @@ export default function UserForm ({worker, account}) {
                 <div className="card-body">
                     <form onSubmit={onSaveAccess}>
                         <div className="mb-3 row">
-                            <div className="col-4">
+                            <div className="col-6">
                                 <label htmlFor="subdivision" className="col-form-label">Подразделение</label>
                                 <input type="text" className="form-control" id="subdivision" value={form.subdivision ? form.subdivision : ''} onChange={onChangeText}/>
                             </div>
-                            <div className="col-4">
+                            <div className="col-6">
                                 <label htmlFor="profession" className="col-form-label">Профессия</label>
                                 <input type="text" className="form-control" id="profession" value={form.profession ? form.profession : ''} onChange={onChangeText}/>
-                            </div>
-                            <div className="col-4">
-                                <label htmlFor="employment_date" className="col-form-label">Дата приема на работу</label>
-                                <input type="date" className="form-control" id="employment_date" value={form.employment_date ? form.employment_date : ''} onChange={onChangeText}/>
                             </div>
                         </div>
 

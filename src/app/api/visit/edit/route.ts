@@ -16,16 +16,19 @@ export async function POST (request: Request) {
             const schema = Joi.object({
                 worker_id: Joi.string().min(24).max(24).required(),
 
-                specialist_id: Joi.string().min(24).max(24).required(),
-                research_id: Joi.string().min(24).max(24).required(),
+                specialist_id: Joi.string().min(24).max(24).empty(null).default(null),
+                research_id: Joi.string().min(24).max(24).empty(null).default(null),
 
-                status: Joi.number().integer().min(0).max(1).empty(['', null]).default(null),
+                status: Joi.number().integer().min(0).max(1).empty(null).default(null),
 
                 note: Joi.string().min(1).max(255).empty(['', null]).default(null),
                 result: Joi.string().min(1).max(255).empty(['', null]).default(null),
             })
 
             value = await schema.validateAsync(rsRequest)
+
+            if (value.specialist_id && value.research_id) throw ({})
+            if (!value.specialist_id && !value.research_id) throw ({})
 
         } catch (err) {
             console.log(err)
@@ -40,17 +43,19 @@ export async function POST (request: Request) {
             let arFields = {
                 worker_id: value.worker_id,
 
-                specialist_id: value.worker_id,
-                research_id: value.worker_id,
+                specialist_id: value.specialist_id,
+                research_id: value.research_id,
 
-                status: value.worker_id,
+                status: value.status,
 
-                note: value.worker_id,
-                result: value.worker_id,
+                note: value.note,
+                result: value.result,
 
-                user_id: userId
+                user_id: userId,
             }
-            let result = await CVisit.Edit ( value )
+
+            console.log()
+            let result = await CVisit.Edit ( arFields )
 
             return NextResponse.json({
                 err: 0,

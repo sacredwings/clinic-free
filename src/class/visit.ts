@@ -2,37 +2,45 @@ import { DB, Store } from "../../../social-framework"
 
 export default class {
 
-    static async Edit ( {module, ...fields} ) {
+    static async Edit ( fields ) {
         try {
+            let collectionName = 'specialist'
+            if (fields.research_id) collectionName = 'research'
+
+            fields.worker_id = new DB().ObjectID(fields.worker_id)
+
+            fields.specialist_id = new DB().ObjectID(fields.specialist_id)
+            fields.research_id = new DB().ObjectID(fields.research_id)
+
+            fields.user_id = new DB().ObjectID(fields.user_id)
+            fields.create_date = new Date()
+
             const mongoClient = Store.GetMongoClient()
-            let collection = mongoClient.collection(`${module}_visit`)
+            let collection = mongoClient.collection(`${collectionName}_visit`)
 
             //ищем уже такой же
             let resultDouble = await this.GetDouble({
-                module: module,
+                module: collectionName,
                 worker_id: fields.worker_id,
                 specialist_id: fields.specialist_id,
-                research_ids: fields.research_ids,
+                research_id: fields.research_id,
             })
+
             //существует
             if (resultDouble) {
                 //обновляем
 
                 let arFields = {
-                    status: fields.status
+                    status: fields.status,
+                    note: fields.note,
+                    result: fields.result,
+                    user_id: fields.user_id,
+                    change_date: new Date()
                 }
                 let result = collection.updateOne({_id: resultDouble._id}, {$set: arFields})
 
                 return true
             }
-
-            fields.worker_id = new DB().ObjectID(fields.worker_id)
-
-            fields.specialist_id = new DB().ObjectID(fields.specialist_id)
-            fields.research_ids = new DB().ObjectID(fields.research_ids)
-
-            fields.user_id = new DB().ObjectID(fields.user_id)
-            fields.create_date = new Date()
 
             await collection.insertOne(fields)
             return fields
@@ -51,13 +59,12 @@ export default class {
 
             if (fields.specialist_id)
                 arFields.specialist_id = new DB().ObjectID(fields.specialist_id)
-            if (fields.research_ids)
-                arFields.research_ids = new DB().ObjectID(fields.research_ids)
+            if (fields.research_id)
+                arFields.research_id = new DB().ObjectID(fields.research_id)
 
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection(`${module}_visit`)
-            await collection.findOne(fields)
-            return fields
+            return await collection.findOne(arFields)
 
         } catch (err) {
             console.log(err)
