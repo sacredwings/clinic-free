@@ -6,9 +6,8 @@ import {ServerVisitEdit} from "@/component/function/url_api";
 
 
 
-export default function FormSpecialistRadio ({workerId, specialist, visit}) {
+export default function FormSpecialistRadio ({workerId, access=false, specialist, visit}) {
 
-    const [value, setValue] = useState(visit)
     const [checked, setChecked] = useState(visit ? visit.status : null)
     const [result, setResult] = useState(visit && visit.result ? visit.result : '')
     const [note, setNote] = useState(visit && visit.note ? visit.note : '')
@@ -17,7 +16,7 @@ export default function FormSpecialistRadio ({workerId, specialist, visit}) {
         let name = e.target.id
         let value = e.target.value
 
-        setChecked(!checked)
+        setChecked(e.target.value === '1' ? true : false)
     }
 
     const onSave = async (e) => {
@@ -57,17 +56,17 @@ export default function FormSpecialistRadio ({workerId, specialist, visit}) {
                                 </label>
                             </div>
                             <div className="form-check">
-                                <input className="form-check-input" type="radio" name={`radio_${specialist._id}`} id={`radio_${specialist._id}_1`}
+                                <input className="form-check-input" type="radio" name={`radio_${specialist._id}`} id={`radio_${specialist._id}_1`} value={0}
                                        checked={checked == false ? true : false}
-                                       onChange={onChange} />
+                                       onChange={onChange} disabled={!access}/>
                                 <label className="form-check-label" htmlFor={`radio_${specialist._id}_1`}>
                                     Дообследование
                                 </label>
                             </div>
                             <div className="form-check">
-                                <input className="form-check-input" type="radio" name={`radio_${specialist._id}`} id={`radio_${specialist._id}_2`}
+                                <input className="form-check-input" type="radio" name={`radio_${specialist._id}`} id={`radio_${specialist._id}_2`} value={1}
                                        checked={checked == true ? true : false}
-                                       onChange={onChange} />
+                                       onChange={onChange} disabled={!access}/>
                                 <label className="form-check-label" htmlFor={`radio_${specialist._id}_2`}>
                                     <b>Годен</b>
                                 </label>
@@ -78,19 +77,20 @@ export default function FormSpecialistRadio ({workerId, specialist, visit}) {
                     <div className={"row"}>
                         <div className="mb-3 col-6">
                             <label htmlFor="exampleFormControlTextarea1" className="form-label">Заключение</label>
-                            <textarea className="form-control" id="exampleFormControlTextarea1" rows="2" value={result} onChange={(e)=>{setResult(e.target.value)}}></textarea>
+                            <textarea className="form-control" id="exampleFormControlTextarea1" disabled={!access} rows={2} value={result} onChange={(e)=>{setResult(e.target.value)}}></textarea>
                         </div>
                         <div className="mb-3 col-6">
                             <label htmlFor="exampleFormControlTextarea1" className="form-label">Примечание</label>
-                            <textarea className="form-control" id="exampleFormControlTextarea1" rows="2" value={note} onChange={(e)=>{setNote(e.target.value)}}></textarea>
+                            <textarea className="form-control" id="exampleFormControlTextarea1" disabled={!access} rows={2} value={note} onChange={(e)=>{setNote(e.target.value)}}></textarea>
                         </div>
                     </div>
 
-                    <div className={"row"}>
-                        <div className="mb-3" style={{float: 'right'}}>
-                            <button type="submit" className="btn btn-success">Сохранить</button>
-                        </div>
-                    </div>
+                    {access ?
+                        <div className={"row"}>
+                            <div className="mb-3" style={{float: 'right'}}>
+                                <button type="submit" className="btn btn-success">Сохранить</button>
+                            </div>
+                        </div> : null}
 
                 </form>
             </div>

@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server'
 import { mongo, minio } from "@/utility/connect"
-import { Store, DB, CUser } from "../../../../../../social-framework"
+import { Store, DB } from "../../../../../../social-framework"
 import { Authentication } from "@/app/api/function"
-import Config from "../../../../../config.json";
+import CUser from "@/class/user"
 
 export async function GET (request: Request) {
     try {

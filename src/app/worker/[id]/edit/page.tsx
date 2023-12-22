@@ -16,8 +16,7 @@ export default async function User ({
 }) {
     let account = await ServerAccountGet({cookies:cookies()})
     let worker = await ServerWorkerGetById({ids: [params.id]}, {cookies:cookies()})
-    console.log(params.id)
-    console.log(worker)
+
     let specialist = await ServerSpecialistGet({
         offset: 0,
         count: 100

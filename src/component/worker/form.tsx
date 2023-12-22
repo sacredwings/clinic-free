@@ -49,15 +49,23 @@ export default function UserForm ({worker, account}) {
         return null
     }
 
+    const Access = (id, arr) => {
+        if (!arr || !arr.length) return false
+        for (let item of arr) {
+            if (id === item._id) return true
+        }
+        return false
+    }
+
     const FormCheckSpecialist = (specialist, specialistVisit) => {
         return specialist.map((item, i)=>{
-            return <FormSpecialistRadio key={i} workerId={worker._id} specialist={item} visit={Visit(item._id, specialistVisit, 'specialist_id')}/>
+            return <FormSpecialistRadio key={i} workerId={worker._id} specialist={item} visit={Visit(item._id, specialistVisit, 'specialist_id')} access={Access(item._id, account._specialist_ids)}/>
         })
     }
 
     const FormCheckResearch = (research, researchVisit) => {
         return research.map((item, i)=>{
-            return <FormResearchRadio key={i} workerId={worker._id} research={item} visit={Visit(item._id, researchVisit, 'research_id')}/>
+            return <FormResearchRadio key={i} workerId={worker._id} research={item} visit={Visit(item._id, researchVisit, 'research_id')} access={Access(item._id, account._research_ids)}/>
         })
     }
 
