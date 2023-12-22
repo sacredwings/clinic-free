@@ -7,6 +7,8 @@ export default class {
             let collectionName = 'specialist'
             if (fields.research_id) collectionName = 'research'
 
+            //fields.status = fields.status === 1 ? true : false
+
             fields.worker_id = new DB().ObjectID(fields.worker_id)
 
             fields.specialist_id = new DB().ObjectID(fields.specialist_id)
