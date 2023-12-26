@@ -49,24 +49,54 @@ export default async function User ({
         else
             return ''
     }
+
+    const Progress = (item) => {
+        let countSpecialist = 0
+        let countResearch = 0
+
+        let countSpecialistVisit = 0
+        let countResearchVisit = 0
+
+        let countSpecialistResult = 100
+        let countResearchResult = 100
+
+        let result = 0
+
+        if (item._specialist_ids) countSpecialist = item._specialist_ids.length
+        if (item._research_ids) countResearch = item._research_ids.length
+        if (item._specialist_visit_ids) countSpecialistVisit = item._specialist_visit_ids.length
+        if (item._research_visit_ids) countResearchVisit = item._research_visit_ids.length
+
+        if (countSpecialist) countSpecialistResult = Math.floor(countSpecialistVisit/countSpecialist *100)
+        if (countResearch) countResearchResult = Math.floor(countResearchVisit/countResearch *100)
+
+        result = Math.floor((countSpecialistResult + countResearchResult) / 2)
+
+        return (<div className="progress" role="progressbar" aria-label="Example 1px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style={{height: '1px'}}>
+            <div className="progress-bar" style={{width: `${result}%`}}></div>
+        </div>)
+    }
+
     const List = (arList) => {
         return <ol className="list-group list-group-numbered">
-            {arList.map((list, i) => {
+            {arList.map((item, i) => {
                 //let href = `/contract/${id}/worker`
                 return <li className="list-group-item d-flex justify-content-between align-items-start" key={i}>
-                    <div className="ms-2 me-auto">
-                        <div className="fw-bold">{list._user_id.last_name} {list._user_id.first_name} {list._user_id.second_name}</div>
-                        {ListCode(list.hf_code)}
+                    <div className="ms-2 me-auto" style={{width: '100%'}}>
+                        <div className="fw-bold">{item._user_id.last_name} {item._user_id.first_name} {item._user_id.second_name}</div>
+                        {ListCode(item.hf_code)}
                         <br/>
-                        <Link href={`/worker/${list._id}`}>
+                        <Link href={`/worker/${item._id}`}>
                             Подробно...
                         </Link>
+                        <br/>
+                        {Progress(item)}
                     </div>
-                    <Link href={`/worker/${list._id}/edit`} type="button" className="btn btn-outline-warning btn-sm">
+                    <Link href={`/worker/${item._id}/edit`} type="button" className="btn btn-outline-warning btn-sm">
                         <i className="fa-solid fa-edit"></i>
                     </Link>
 
-                    {ListPrint(list._id)}
+                    {ListPrint(item._id)}
                 </li>
             })}
         </ol>
