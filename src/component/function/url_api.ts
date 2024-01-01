@@ -22,7 +22,7 @@ import {
     interfaceSpecialistEdit,
     interfaceSpecialistEditHf,
     interfaceSpecialistGet,
-    interfaceUserAccess,
+    interfaceUserAccess, interfaceUserAdd,
     interfaceUserEdit, interfaceUserGet,
     interfaceUserGetById, interfaceVisitEdit, interfaceWorkerAdd,
     interfaceWorkerGet,
@@ -131,6 +131,47 @@ export async function ServerUserEdit ({
     await ToastSystemAdd(res.data)
     return res.data.response
 }
+export async function ServerUserAdd ({
+    login,
+    password,
+
+    first_name,
+    last_name,
+    second_name,
+
+    man,
+    date_birth,
+    phone,
+
+    specialist_ids,
+    research_ids,
+
+}: interfaceUserAdd) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        login,
+        password,
+
+        first_name,
+        last_name,
+        second_name,
+
+        man,
+        date_birth,
+        phone,
+
+        specialist_ids,
+        research_ids,
+    } as interfaceUserAdd
+
+    let url = `/api/user/add`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}
+
 export async function ServerUserEditAccess ({
     id,
     specialist_ids,

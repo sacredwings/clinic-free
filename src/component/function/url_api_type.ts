@@ -28,6 +28,23 @@ export interface interfaceUserAccess {
     specialist_ids: string[]
     research_ids: string[]
 }
+export interface interfaceUserAdd {
+    login: string
+    password: string
+
+    first_name: string
+    last_name: string
+    second_name: string
+
+    man: '1' | '0'
+
+    date_birth: Date
+
+    phone: number,
+
+    specialist_ids: string[]
+    research_ids: string[]
+}
 export interface interfaceWorkerGetById {
     ids: string[]
 }

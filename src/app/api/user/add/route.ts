@@ -14,7 +14,8 @@ export async function POST(request: Request) {
         try {
             //схема
             const schema = Joi.object({
-                id: Joi.string().min(24).max(24).required(),
+                login: Joi.string().min(5).max(50).required(),
+                password: Joi.string().min(8).max(100).required(),
 
                 photo_id: Joi.string().min(1).max(255).empty(null).default(null),
 
@@ -28,6 +29,8 @@ export async function POST(request: Request) {
                 phone: Joi.number().min(1000000000).max(9999999999).empty(['', null]).default(null),
                 email: Joi.string().email().min(6).max(100).empty(['', null]).default(null),
 
+                specialist_ids: Joi.array().min(1).max(50).items(Joi.string().min(24).max(24)).empty(null).default(null),
+                research_ids: Joi.array().min(1).max(50).items(Joi.string().min(24).max(24)).empty(null).default(null),
                 //gtoken: Joi.string().required()
             })
             value = await schema.validateAsync(res)
@@ -46,19 +49,26 @@ export async function POST(request: Request) {
             //проверка прав на редактирование
 
             let arFields = {
+                login: value.login,
+                password: value.password,
+
                 photo_id: value.photo_id,
 
                 first_name: value.first_name,
                 last_name: value.last_name,
                 second_name: value.second_name,
 
+                date_birth: value.date_birth,
                 man: value.man,
 
                 phone: value.phone,
                 email: value.email,
+
+                specialist_ids: value.specialist_ids,
+                research_ids: value.research_ids,
             }
 
-            let res = await CUser.Edit(userId, arFields)
+            let res = await CUser.Add(arFields)
 
             return NextResponse.json({ res })
         } catch (err) {
