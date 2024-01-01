@@ -142,6 +142,12 @@ export interface interfaceContractAdd {
 export interface interfaceContractEdit {
     id: string
     name: string
+    date_from: string
+    date_to: string
+    price_ultrasound: number
+    price_mammography: number
+    price_xray: number
+    price: number
 }
 export interface interfaceContractGet {
     org_id: string

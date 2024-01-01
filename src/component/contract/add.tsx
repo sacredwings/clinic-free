@@ -22,8 +22,8 @@ export default function ContractAdd ({org, contractType}) {
     let [contractTypeList, setContractTypeList] = useState(contractType)
 
     useEffect(() => {
-        //console.log(contractTypeIds)
-    }, [contractTypeIds])
+        console.log(form)
+    }, [form])
 
     const onChangeText = (e) => {
         let name = e.target.id;

@@ -497,13 +497,25 @@ export async function ServerContractAdd ({
 }
 export async function ServerContractEdit ({
     id,
-    name
+    name,
+    date_from,
+    date_to,
+    price_ultrasound,
+    price_mammography,
+    price_xray,
+    price,
 }: interfaceContractEdit) {
     if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
     let arFields = {
         id,
-        name
+        name,
+        date_from,
+        date_to,
+        price_ultrasound,
+        price_mammography,
+        price_xray,
+        price,
     } as interfaceContractEdit
 
     let url = `/api/contract/edit`

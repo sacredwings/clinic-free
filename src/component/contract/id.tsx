@@ -9,6 +9,10 @@ export default function ContractId ({contract}) {
     let [edit, setEdit] = useState(false)
     let [form, setForm] = useState(contract)
 
+    useEffect(() => {
+        console.log(form)
+    }, [form])
+
     const onChangeText = (e) => {
         let name = e.target.id;
         let value = e.target.value;
