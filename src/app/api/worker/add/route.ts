@@ -27,6 +27,7 @@ export async function POST (request: Request) {
                 first_name: Joi.string().min(1).max(255).required(),
                 last_name: Joi.string().min(1).max(255).required(),
                 second_name: Joi.string().min(1).max(255).empty(['', null]).default(null),
+
                 man: Joi.number().integer().min(0).max(1).required(),
                 date_birth: Joi.date().min('1-1-1900').max('1-1-2030').required(),
 

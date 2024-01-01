@@ -33,8 +33,8 @@ export async function POST(request: Request) {
             if (!userId) throw ({code: 30100000, msg: 'Требуется авторизация'})
 
             let arFields = {
-                specialist_ids: value.specialist_ids,
-                research_ids: value.research_ids,
+                login: value.login,
+                password: value.password,
             }
 
             let res = await CUser.Edit(userId, arFields)

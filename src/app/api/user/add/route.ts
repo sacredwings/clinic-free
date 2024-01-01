@@ -17,17 +17,14 @@ export async function POST(request: Request) {
                 login: Joi.string().min(5).max(50).required(),
                 password: Joi.string().min(8).max(100).required(),
 
-                photo_id: Joi.string().min(1).max(255).empty(null).default(null),
+                first_name: Joi.string().min(1).max(255).required(),
+                last_name: Joi.string().min(1).max(255).required(),
+                second_name: Joi.string().min(1).max(255).empty(['', null]).default(null),
 
-                first_name: Joi.string().min(1).max(50).required(),
-                last_name: Joi.string().min(1).max(50).required(),
-                second_name: Joi.string().min(1).max(50).required(),
-
+                man: Joi.number().integer().min(0).max(1).required(),
                 date_birth: Joi.date().min('1-1-1900').max('1-1-2030').required(),
-                man: Joi.number().min(0).max(1).empty(null).default(null),
 
                 phone: Joi.number().min(1000000000).max(9999999999).empty(['', null]).default(null),
-                email: Joi.string().email().min(6).max(100).empty(['', null]).default(null),
 
                 specialist_ids: Joi.array().min(1).max(50).items(Joi.string().min(24).max(24)).empty(null).default(null),
                 research_ids: Joi.array().min(1).max(50).items(Joi.string().min(24).max(24)).empty(null).default(null),
