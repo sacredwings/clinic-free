@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server'
 import Joi from "joi"
 import { mongo, minio } from "@/utility/connect"
-import { Store, DB, CComment }  from "../../../../../../social-framework"
 import CWorker from "../../../../class/worker"
 
 export async function GET(request: Request) {

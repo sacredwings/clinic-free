@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import { mongo, minio } from "@/utility/connect"
 import Config from "../../../../../config.json";
-import { Store, DB, CUser }  from "../../../../../../social-framework"
 import Joi from "joi";
 import COrg from "@/class/org"
 

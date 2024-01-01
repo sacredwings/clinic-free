@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server'
 import { mongo, minio } from "@/utility/connect"
 import Joi from "joi"
-import { CAuth, Store }  from "../../../../../../social-framework"
 import {headers} from "next/headers";
 import CSpecialist from "@/class/specialist"
 import CPrice from "@/class/price"

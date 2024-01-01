@@ -1,4 +1,4 @@
-import { CAuth }  from "../../../../social-framework"
+import { CAuth }  from "../../../../social-framework/src"
 
 export function objectToFormData(obj) {
     const formData = new FormData();

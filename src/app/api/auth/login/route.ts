@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server'
 import { mongo, minio } from "@/utility/connect"
 import Joi from "joi"
-import { CAuth, Store }  from "../../../../../../social-framework"
+import { CAuth, Store }  from "../../../../../../social-framework/src"
 import {headers} from "next/headers";
 import config from "../../../../../config.json";
-import {serverCheckResult} from "recaptcha-v3-react-function-async";
+
 
 export async function POST (request: Request) {
     try {

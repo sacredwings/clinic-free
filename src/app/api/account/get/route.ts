@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { mongo, minio } from "@/utility/connect"
-import { Store, DB } from "../../../../../../social-framework"
+import { Store, DB } from "../../../../../../social-framework/src"
 import { Authentication } from "@/app/api/function"
 import CUser from "@/class/user"
 

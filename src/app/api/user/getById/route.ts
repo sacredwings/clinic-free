@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import { mongo, minio } from "@/utility/connect"
 import Config from "../../../../../config.json";
-import { Store, DB, CUser }  from "../../../../../../social-framework"
+import { Store, DB, CUser }  from "../../../../../../social-framework/src"
 import Joi  from "joi"
 import {Authentication} from "@/app/api/function";
 

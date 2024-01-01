@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import Joi from "joi"
 import Config from "../../../../../config.json"
-import { Store, DB, CUser }  from "../../../../../../social-framework"
+import { Store, DB, CUser }  from "../../../../../../social-framework/src"
 import {Authentication} from "@/app/api/function";
 import {mongo} from "@/utility/connect";
 

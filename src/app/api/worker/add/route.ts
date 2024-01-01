@@ -7,7 +7,7 @@ import CContractType from "@/class/contract-type"
 import CHf from "@/class/hf"
 import CResearch from "@/class/research"
 import CSpecialist from "@/class/specialist"
-import {CUser} from "../../../../../../social-framework"
+import {CUser} from "../../../../../../social-framework/src"
 
 export async function POST (request: Request) {
     let value
