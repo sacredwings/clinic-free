@@ -1,9 +1,15 @@
-import { Store }  from "../../../social-framework"
+import { Store }  from "../../../social-framework/src"
 import config from "../../config.json"
+import { MongoClient, ObjectId } from "mongodb"
 
-const mongo = () => {
-    let mongoClient = Store.SetMongoClient(config.mongo.connect)
-    return mongoClient
+const mongo = async () => {
+    return await Store.SetMongoClient({
+        MongoClient,
+        ObjectId
+    },{
+        url: config.mongo.connect.url,
+        dbName: config.mongo.connect.dbName
+    })
 }
 
 const minio = () => {

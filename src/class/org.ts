@@ -1,4 +1,4 @@
-import { DB, Store } from "../../../social-framework"
+import { DB, Store } from "../../../social-framework/src"
 
 export default class {
 
