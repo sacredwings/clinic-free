@@ -1,12 +1,11 @@
 'use client'
-import { useRouter } from 'next/router' //переход по url
+import { useRouter } from 'next/navigation' //переход по url
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
 import {ServerWorkerAdd} from "@/component/function/url_api";
-//import {capitalizeFirstLetter} from "../../util/function"
 
 export default function WorkerAdd ({contract}) {
-    //const router = useRouter() //для перехода к пользователю
+    const router = useRouter() //для перехода к пользователю
 
     const formDefault = {
         hf_code: '1.1,2.1',
@@ -114,7 +113,7 @@ export default function WorkerAdd ({contract}) {
 
         let result = await ServerWorkerAdd(arFields)
 
-        //await router.push(`/worker/${result.data.response._id}`)
+        await router.push(`/worker/${result._id}`)
 
         //setFormResult(true)
 
