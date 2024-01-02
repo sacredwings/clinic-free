@@ -24,7 +24,7 @@ import {
     interfaceSpecialistGet,
     interfaceUserAccess, interfaceUserAdd,
     interfaceUserEdit, interfaceUserGet,
-    interfaceUserGetById, interfaceVisitEdit, interfaceWorkerAdd,
+    interfaceUserGetById, interfaceVisitEdit, interfaceWorkerAdd, interfaceWorkerEdit,
     interfaceWorkerGet,
     interfaceWorkerGetById
 } from './url_api_type'
@@ -116,6 +116,8 @@ export async function ServerUserEdit ({
     if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
     let arFields = {
+        id,
+
         first_name,
         last_name,
         second_name,
@@ -770,15 +772,17 @@ export async function ServerWorkerAdd ({
     return res.data.response
 }
 export async function ServerWorkerEdit ({
-                                              id,
-                                              name
-                                          }: interfaceContractEdit) {
+    id,
+    subdivision,
+    profession,
+}: interfaceWorkerEdit) {
     if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
     let arFields = {
         id,
-        name
-    } as interfaceContractEdit
+        subdivision,
+        profession,
+    } as interfaceWorkerEdit
 
     let url = `/api/worker/edit`
     console.log(url)

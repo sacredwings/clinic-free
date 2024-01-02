@@ -67,7 +67,10 @@ export async function POST(request: Request) {
 
             let res = await CUser.Add(arFields)
 
-            return NextResponse.json({ res })
+            return NextResponse.json({
+                code: 0,
+                response: res
+            })
         } catch (err) {
             console.log(err)
             throw ({...{code: 100000, msg: 'Ошибка в коде'}, ...err})

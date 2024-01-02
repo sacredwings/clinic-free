@@ -43,6 +43,7 @@ export default function UserForm ({specialist, research}) {
         research_ids: null
     }
 
+    let [view, setView] = useState(false)
     let [form, setForm] = useState(formDefault)
     let [checkSpecialist, setCheckSpecialist] = useState(()=>OnCheckInit(specialist, []))
     let [checkResearch, setCheckResearch] = useState(()=>OnCheckInit(research, []))
@@ -88,6 +89,7 @@ export default function UserForm ({specialist, research}) {
         }
 
         let result = await ServerUserAdd(arFields)
+        if (result) setView(true)
     }
 
     const OnChangeCheckSpecialist = (id) => {
@@ -125,13 +127,17 @@ export default function UserForm ({specialist, research}) {
         setCheckResearch(newCheckList)
     }
 
-    const OnChangeCheckOne = (e) => {
-        let name = e.target.id
-        let value = e.target.value
+    const View = () => {
+        return <>
+            <div className="alert alert-success" role="alert">
+                <p>Пользователь добавлен</p>
+            </div>
 
-        setForm(prev => ({
-            ...prev, [name]: !prev[name]
-        }))
+            <button type="button" className="btn btn-outline-secondary" onClick={()=>{
+                setView(false)
+                setForm(formDefault)
+            }}>+ Добавить нового</button>
+        </>
     }
 
     const FormCheckSpecialist = () => {
@@ -268,7 +274,7 @@ export default function UserForm ({specialist, research}) {
     }
 
     return <>
-        {Form()}
+        {!view ? Form() : View()}
     </>
 }
 

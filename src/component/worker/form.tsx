@@ -3,13 +3,14 @@
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
 import {interfaceUserAccess} from "@/component/function/url_api_type";
-import {ServerUserEditAccess} from "@/component/function/url_api";
+import {ServerUserEdit, ServerUserEditAccess, ServerWorkerEdit} from "@/component/function/url_api";
 import FormSpecialistRadio from "@/component/worker/formSpecialistRadio";
 import FormResearchRadio from "@/component/worker/formResearchRadio";
 
 export default function UserForm ({worker, account}) {
     //const router = useRouter() //для перехода к пользователю
 
+    let [formUser, setFormUser] = useState(worker._user_id)
     let [form, setForm] = useState(worker)
 
     useEffect(() => {
@@ -27,6 +28,33 @@ export default function UserForm ({worker, account}) {
         }))
     }
 
+    const onChangeTextUser = (e) => {
+        let name = e.target.id
+        let value = e.target.value
+
+        setFormUser(prev => ({
+            ...prev, [name]: value
+        }))
+    }
+
+    const onSaveUserEdit = async (e) => {
+        e.preventDefault() // Stop form submit
+
+        let arFields = {
+            id: formUser._id,
+            first_name: formUser.first_name,
+            last_name: formUser.last_name,
+            second_name: formUser.second_name,
+
+            man: formUser.man,
+            date_birth: formUser.date_birth,
+            phone: formUser.phone,
+        }
+
+        let result = await ServerUserEdit(arFields)
+    }
+
+    /*
     const onSaveAccess = async (e) => {
         e.preventDefault() // Stop form submit
 
@@ -41,6 +69,7 @@ export default function UserForm ({worker, account}) {
 
         let result = await ServerUserEditAccess(arFields)
     }
+*/
 
     const Visit = (id, arr, arName) => {
         for (let item of arr) {
@@ -80,35 +109,35 @@ export default function UserForm ({worker, account}) {
 
             <div className="card" style={{marginTop: '20px'}}>
                 <div className="card-body">
-                    <form onSubmit={onSaveAccess}>
+                    <form onSubmit={onSaveUserEdit}>
                         <div className="mb-3 row">
                             <div className="col-4">
                                 <label htmlFor="last_name" className="col-form-label">Фамилия</label>
-                                <input type="text" className="form-control" id="last_name" value={form._user_id.last_name ? form._user_id.last_name : ''} onChange={onChangeText}/>
+                                <input type="text" className="form-control" id="last_name" value={formUser.last_name ? formUser.last_name : ''} onChange={onChangeTextUser}/>
                             </div>
                             <div className="col-4">
                                 <label htmlFor="first_name" className="col-form-label">Имя</label>
-                                <input type="text" className="form-control" id="first_name" value={form._user_id.first_name ? form._user_id.first_name : ''} onChange={onChangeText}/>
+                                <input type="text" className="form-control" id="first_name" value={formUser.first_name ? formUser.first_name : ''} onChange={onChangeTextUser}/>
                             </div>
                             <div className="col-4">
                                 <label htmlFor="second_name" className="col-form-label">Отчество</label>
-                                <input type="text" className="form-control" id="second_name" value={form._user_id.second_name ? form._user_id.second_name : ''} onChange={onChangeText}/>
+                                <input type="text" className="form-control" id="second_name" value={formUser.second_name ? formUser.second_name : ''} onChange={onChangeTextUser}/>
                             </div>
                         </div>
                         <div className="mb-3">
                             <label htmlFor="man" className="col-form-label">Пол</label>
-                            <select className="form-select" id="man" aria-label="" value={form._user_id.man} onChange={onChangeText}>
+                            <select className="form-select" id="man" aria-label="" value={formUser.man} onChange={onChangeTextUser}>
                                 <option value="1" defaultValue="1">Мужской</option>
                                 <option value="0">Женский</option>
                             </select>
                         </div>
                         <div className="mb-3">
                             <label htmlFor="date_birth" className="col-form-label">Дата рождения</label>
-                            <input type="date" className="form-control" id="date_birth" value={form._user_id.date_birth ? new Date(form._user_id.date_birth).toISOString().substring(0, 10) : ''} onChange={onChangeText}/>
+                            <input type="date" className="form-control" id="date_birth" value={formUser.date_birth ? new Date(formUser.date_birth).toISOString().substring(0, 10) : ''} onChange={onChangeTextUser}/>
                         </div>
                         <div className="mb-3">
                             <label htmlFor="phone" className="col-form-label">Телефон</label>
-                            <input type="text" className="form-control" id="phone" value={form._user_id.phone ? form._user_id.phone : ''} onChange={onChangeText}/>
+                            <input type="text" className="form-control" id="phone" value={formUser.phone ? formUser.phone : ''} onChange={onChangeTextUser}/>
                         </div>
 
                         <div className="mb-3" style={{float: 'right'}}>
@@ -126,7 +155,7 @@ export default function UserForm ({worker, account}) {
 
             <div className="card" style={{marginTop: '20px'}}>
                 <div className="card-body">
-                    <form onSubmit={onSaveAccess}>
+                    <form>
                         <div className="mb-3 row">
                             <div className="col-6">
                                 <label htmlFor="subdivision" className="col-form-label">Подразделение</label>

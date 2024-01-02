@@ -4,6 +4,7 @@ import {cookies} from "next/headers";
 import Element from "./element";
 import Form from "@/component/menu/form";
 import Pagination from "@/component/menu/pagination";
+import Link from "next/link";
 export default async function ({searchParams}) {
     let page = 1
     if (searchParams.page) page = Number(searchParams.page)
@@ -20,7 +21,7 @@ export default async function ({searchParams}) {
         <>
             <div className={Style.header}>
                 <div>
-                    <h1 className={Style.h1}>Пользователи</h1>
+                    <h1 className={Style.h1}>Пользователи <Link type="button" className="btn btn-outline-success" href={`/user/add`}> + </Link></h1>
                 </div>
 
                 <div>

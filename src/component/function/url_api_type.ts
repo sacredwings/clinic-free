@@ -197,7 +197,15 @@ export interface interfaceWorkerAdd {
 }
 export interface interfaceWorkerEdit {
     id: string
-    name: string
+
+    hf_code: string[] | null
+
+    price_ultrasound: boolean,
+    price_mammography: boolean,
+    price_xray: boolean,
+
+    subdivision: string
+    profession: string
 }
 export interface interfaceWorkerGet {
     contract_id: string

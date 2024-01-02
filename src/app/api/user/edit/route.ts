@@ -23,7 +23,7 @@ export async function POST(request: Request) {
                 man: Joi.number().integer().min(0).max(1).required(),
                 date_birth: Joi.date().min('1-1-1900').max('1-1-2030').required(),
 
-                phone: Joi.number().min(1000000000).max(9999999999).empty(['', null]).default(null),
+                phone: Joi.number().min(10000000000).max(99999999999).empty(['', null]).default(null),
 
                 //gtoken: Joi.string().required()
             })
@@ -43,19 +43,20 @@ export async function POST(request: Request) {
             //проверка прав на редактирование
 
             let arFields = {
-                photo_id: value.photo_id,
+                //photo_id: value.photo_id,
 
                 first_name: value.first_name,
                 last_name: value.last_name,
                 second_name: value.second_name,
 
                 man: value.man,
+                date_birth: value.date_birth,
 
                 phone: value.phone,
-                email: value.email,
+                //email: value.email,
             }
 
-            let res = await CUser.Edit(userId, arFields)
+            let res = await CUser.Edit(value.id, arFields)
 
             return NextResponse.json({ res })
         } catch (err) {

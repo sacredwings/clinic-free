@@ -58,7 +58,8 @@ export default function ContractAdd ({org, contractType}) {
         setContractTypeList([])
         setView(true)
 
-        await ServerContractAdd(arFields)
+        let result = await ServerContractAdd(arFields)
+        if (result) setView(true)
     }
 
     const View = () => {
