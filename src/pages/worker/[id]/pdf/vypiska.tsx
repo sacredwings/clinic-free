@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react'
-import {componentToPDFBuffer} from '../../../../app/components/pdf'
+import {componentToPDFBuffer} from '@/component/pdf'
 import axios from "axios"
-import Config from "../../../../app/config.json"
+import Config from "../../../../../config.json";
+import {ServerWorkerGetById} from "@/component/function/url_api";
 
 export default function () {
     return <></>
@@ -159,7 +160,7 @@ const Page = (worker) => {
                     <br/>
                     <br/>
 
-                    <p style={styleText2}>1. Фамилия Имя Отчество: <b>{worker._user_id.last_name} {worker._user_id.first_name} {worker._user_id.patronymic_name}</b></p>
+                    <p style={styleText2}>1. Фамилия Имя Отчество: <b>{worker._user_id.last_name} {worker._user_id.first_name} {worker._user_id.second_name}</b></p>
                     <p style={styleText2}>2. Пол: <b>{worker._user_id.man ? 'Мужской' : 'Женский'}</b> 3. Дата рождения: <b>{new Date(worker._user_id.date_birth).toLocaleDateString()}</b></p>
                     <p style={styleText2}>4. Адрес регистрации по месту жительства _________________________</p>
                     <p style={styleText2}>______________________________________________________________</p>
@@ -479,21 +480,15 @@ const Page = (worker) => {
 }
 
 const GetById = async (id) => {
-    const url = `${Config.server.url}/api/worker/getById`
-    let fields = {
-        params: {
-            ids: id,
-        }
-    }
-    let result = await axios.get(url, fields)
-    return result.data.response
+    let result = await ServerWorkerGetById({ids: [id]}, {cookies: null})
+    return result
 }
 
 export async function getServerSideProps ({query, req, res}) {
 
     let worker = await GetById(query.id)
     let buffer = await componentToPDFBuffer({
-        component: Page(worker.items[0]),
+        component: Page(worker[0]),
         orientation: 'landscape'
 
     })

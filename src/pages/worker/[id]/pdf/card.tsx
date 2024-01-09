@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {componentToPDFBuffer} from '@/component/pdf'
 import axios from "axios"
-import Config from "../../../../app/config.json";
+import Config from "../../../../../config.json";
 import {ServerWorkerGetById} from "@/component/function/url_api";
 
 export default function () {
@@ -131,7 +131,7 @@ const Page = (worker) => {
                     <br/>
                     <p style={styleText3}>Фамилия: <b>{worker._user_id.last_name}</b></p>
                     <p style={styleText3}>Имя: <b>{worker._user_id.first_name}</b></p>
-                    <p style={styleText3}>Отчество: <b>{worker._user_id.patronymic_name}</b></p>
+                    <p style={styleText3}>Отчество: <b>{worker._user_id.second_name}</b></p>
                     <p style={styleText3}>Дата рождения: <b>{new Date(worker._user_id.date_birth).toLocaleDateString()}</b></p>
                     <p style={styleText3}>Место работы: <b>{worker._contract_id._org_id.name}</b></p>
                     <p style={styleText3}>Структурное подразделение: <b>{worker.subdivision}</b></p>

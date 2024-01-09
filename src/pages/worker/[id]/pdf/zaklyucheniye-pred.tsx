@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react'
-import {componentToPDFBuffer} from '../../../../app/components/pdf'
+import {componentToPDFBuffer} from '@/component/pdf'
 import axios from "axios"
-import Config from "../../../../app/config.json"
+import Config from "../../../../../config.json";
+import {ServerWorkerGetById} from "@/component/function/url_api";
 
 export default function () {
     return <></>
@@ -60,7 +61,7 @@ const Page = (worker) => {
         <br/>
 
         <p style={styleText}>1. Даты выдачи заключения <b>{dateText}</b></p>
-        <p style={styleText}>2. Фамилия, имя, отчество (при наличии) <b>{worker._user_id.last_name} {worker._user_id.first_name} {worker._user_id.patronymic_name}</b></p>
+        <p style={styleText}>2. Фамилия, имя, отчество (при наличии) <b>{worker._user_id.last_name} {worker._user_id.first_name} {worker._user_id.second_name}</b></p>
         <p style={styleText}>3. Дата рождения <b>{new Date(worker._user_id.date_birth).toLocaleDateString()}</b> 4. Пол <b>{worker._user_id.man ? 'Мужской' : 'Женский'}</b></p>
         <p style={styleText}>5. Наименование работодателя <b>{worker._contract_id._org_id.name}</b></p>
         <p style={styleText}>6. Наименование структурного подразделения работодателя (при наличии): <b>{worker.subdivision}</b></p>
@@ -80,22 +81,15 @@ const Page = (worker) => {
 }
 
 const GetById = async (id) => {
-    const url = `${Config.server.url}/api/worker/getById`
-    let fields = {
-        params: {
-            ids: id,
-        }
-    }
-    let result = await axios.get(url, fields)
-    return result.data.response
+    let result = await ServerWorkerGetById({ids: [id]}, {cookies: null})
+    return result
 }
 
 export async function getServerSideProps ({query, req, res}) {
 
-    console.log(query)
     let worker = await GetById(query.id)
     let buffer = await componentToPDFBuffer({
-        component: Page(worker.items[0]),
+        component: Page(worker[0]),
         orientation: 'portrait'
 
     })
