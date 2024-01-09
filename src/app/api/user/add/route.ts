@@ -40,8 +40,8 @@ export async function POST(request: Request) {
         try {
             await mongo()
 
-            let userId = await Authentication(request)
-            if (!userId) throw ({code: 30100000, msg: 'Требуется авторизация'})
+            //let userId = await Authentication(request)
+            //if (!userId) throw ({code: 30100000, msg: 'Требуется авторизация'})
 
             //проверка прав на редактирование
 
