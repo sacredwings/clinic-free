@@ -20,7 +20,7 @@ export default async function User ({
     let arWorker = await ServerWorkerGet({
         contract_id: params.id,
         offset: 0,
-        count: 100
+        count: 10000
     }, {cookies:cookies()})
 
     const ListPrint = (worker_id) => {
