@@ -24,12 +24,23 @@ export default async function ContractGet ({
         count: 100
     }, {cookies:cookies()})
 
+    const ContractType = (arList) => {
+        if (!arList) return null
+        return arList.map((list, i) => {
+            return <span key={i} className="badge bg-primary" style={{margin: '2px'}}>
+                {list.name}
+            </span>
+        })
+    }
+
     const List = (arList) => {
         return <div className="list-group">
             {arList.map((list, i) => {
                 let href = `/contract/${list._id}/worker`
                 return <Link className="list-group-item list-group-item-action" href={href} key={i}>
                     {list.name}
+                    <br/>
+                    {ContractType(list._contract_type_ids)}
                 </Link>
             })}
         </div>
