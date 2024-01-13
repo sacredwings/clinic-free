@@ -198,6 +198,7 @@ export interface interfaceWorkerAdd {
 export interface interfaceWorkerEdit {
     id: string
 
+    contract_type_ids: string[] | null
     hf_code: string[] | null
 
     price_ultrasound: boolean,

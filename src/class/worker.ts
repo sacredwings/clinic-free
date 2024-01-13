@@ -229,26 +229,15 @@ export default class {
         try {
             id = new DB().ObjectID(id)
 
-            /*
-            fields.user_id = new DB().ObjectID(fields.user_id)
-
             fields.contract_id = new DB().ObjectID(fields.contract_id)
             fields.contract_type_ids = new DB().ObjectID(fields.contract_type_ids)
 
             fields.specialist_ids = new DB().ObjectID(fields.specialist_ids)
             fields.research_ids = new DB().ObjectID(fields.research_ids)
-            */
 
             //нельзя менять
             delete fields.user_id
             delete fields.contract_id
-            delete fields.contract_type_ids
-            delete fields.specialist_ids
-            delete fields.research_ids
-
-            let arFields = {
-                _id: id
-            }
 
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('worker')

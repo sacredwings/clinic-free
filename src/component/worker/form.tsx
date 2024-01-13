@@ -2,8 +2,12 @@
 //import { useRouter } from 'next/router' //переход по url
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
-import {interfaceUserAccess} from "@/component/function/url_api_type";
-import {ServerUserEdit, ServerUserEditAccess, ServerWorkerEdit} from "@/component/function/url_api";
+import {
+    ServerContractTypeGet,
+    ServerUserEdit,
+    ServerUserEditAccess,
+    ServerWorkerEdit
+} from "@/component/function/url_api";
 import FormSpecialistRadio from "@/component/worker/formSpecialistRadio";
 import FormResearchRadio from "@/component/worker/formResearchRadio";
 
@@ -11,13 +15,56 @@ export default function UserForm ({worker, account}) {
     //const router = useRouter() //для перехода к пользователю
 
     let [formUser, setFormUser] = useState(worker._user_id)
-    let [form, setForm] = useState(worker)
+    let [form, setForm] = useState({...worker, hf_code: worker.hf_code.join(',')})
+    let [contractTypeIds, setContractTypeIds] = useState([]) //для формы
+    let [contractTypeList, setContractTypeList] = useState([])
 
     useEffect(() => {
         (async () => {
-            console.log(form)
+            await GetTypeContract()
+
         })()
-    }, [form])
+    }, [])
+
+    const OnCheckInit = (list, formList) => {
+        if (!list) return []
+
+        let newList = list.map((element, i) => {
+            element.checked = false
+
+            if (!formList) return element
+
+            for (let formElement of formList) {
+                if (element._id === formElement) element.checked = true
+            }
+
+            return element
+        })
+
+        return newList
+    }
+    const OnCheckInitId = (arr) => {
+        if (!arr || !arr.length) return []
+
+        let newArr = arr.map((element, i) => {
+            return element._id
+        })
+
+        return newArr
+    }
+
+    const GetTypeContract = async () => {
+        let arFields = {
+            offset: 0,
+            count: 100
+        }
+        let result = await ServerContractTypeGet(arFields, {cookies: null})
+
+        let check = OnCheckInit(result.items, form.contract_type_ids)
+        let checkIds = OnCheckInitId(check)
+        setContractTypeList(check)
+        setContractTypeIds(checkIds)
+    }
 
     const onChangeText = (e) => {
         let name = e.target.id
@@ -54,22 +101,106 @@ export default function UserForm ({worker, account}) {
         let result = await ServerUserEdit(arFields)
     }
 
-    /*
-    const onSaveAccess = async (e) => {
+    const onSaveWorkerEdit = async (e) => {
         e.preventDefault() // Stop form submit
 
-        let url = '/user/editAccess'
-
-        console.log(form)
         let arFields = {
             id: form._id,
-            specialist_ids: form.specialist_ids,
-            research_ids: form.research_ids
+
+            contract_type_ids: contractTypeIds,
+            hf_code: form.hf_code,
+
+            price_ultrasound: form.price_ultrasound,
+            price_mammography: form.price_mammography,
+            price_xray: form.price_xray,
+
+            subdivision: form.subdivision,
+            profession: form.profession,
         }
 
-        let result = await ServerUserEditAccess(arFields)
+        let result = await ServerWorkerEdit(arFields)
     }
-*/
+
+    const OnChangeCheck = (id) => {
+        let list = []
+        let newListCheck = contractTypeList.map((element, i) => {
+            if (element._id === id)
+                element.checked = !element.checked
+
+            if (element.checked) list.push(element._id)
+            return element
+        })
+        setContractTypeList(newListCheck)
+        setContractTypeIds(list)
+    }
+
+    const OnChangeCheckOne = (e) => {
+        let name = e.target.id
+        let value = e.target.value
+
+        setForm(prev => ({
+            ...prev, [name]: !prev[name]
+        }))
+    }
+
+    const Age = (date) => {
+        let today = new Date()
+        let birthDate = new Date(date)
+        let age = today.getFullYear() - birthDate.getFullYear()
+        let m = today.getMonth() - birthDate.getMonth()
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--
+        }
+        return age
+    }
+
+    const FormCheckContractType = () => {
+        return <>
+            <label htmlFor="hf_code" className="col-form-label">Типы договоров</label>
+            <br/>
+
+            <div className="mb-3 form-check">
+            <div>
+                    {contractTypeList.map((item, i)=>{
+                        return <div className="form-check" key={i}>
+                            <input className="form-check-input" type="checkbox" checked={(item.checked) ? true : false} onChange={()=>{OnChangeCheck(item._id)}}/>
+                            <label className="form-check-label" htmlFor="flexCheckDefault">
+                                {item.name}
+                            </label>
+                        </div>
+                    })}
+
+                </div>
+            </div>
+        </>
+    }
+
+    const FormCheckContract = () => {
+        return <div className="mb-3 form-check">
+            <div>
+                <div className="form-check">
+                    <input className="form-check-input" type="checkbox" id="price_ultrasound" checked={(form.price_ultrasound) ? true : false} onChange={OnChangeCheckOne}/>
+                    <label className="form-check-label" htmlFor="flexCheckDefault">
+                        УЗИ
+                    </label>
+                </div>
+                {((form.man === '0') && (Age(form.date_birth) >= 40)) ?
+                    <div className="form-check">
+                        <input className="form-check-input" type="checkbox" id="price_mammography" checked={(form.price_mammography) ? true : false} onChange={OnChangeCheckOne}/>
+                        <label className="form-check-label" htmlFor="flexCheckDefault">
+                            ММГ
+                        </label>
+                    </div> : null
+                }
+                <div className="form-check">
+                    <input className="form-check-input" type="checkbox" id="price_xray" checked={(form.price_xray) ? true : false} onChange={OnChangeCheckOne}/>
+                    <label className="form-check-label" htmlFor="flexCheckDefault">
+                        ФЛГ
+                    </label>
+                </div>
+            </div>
+        </div>
+    }
 
     const Visit = (id, arr, arName) => {
         for (let item of arr) {
@@ -155,15 +286,35 @@ export default function UserForm ({worker, account}) {
 
             <div className="card" style={{marginTop: '20px'}}>
                 <div className="card-body">
-                    <form>
+                    <form onSubmit={onSaveWorkerEdit}>
+
+                        <div className="g-3 row">
+                            <div className="col-12">
+                                <label htmlFor="hf_code" className="col-form-label">Вредные факторы</label>
+                                <input type="text" className="form-control" id="hf_code" value={form.hf_code}
+                                       onChange={onChangeText}/>
+                            </div>
+                        </div>
+
+                        <div className="g-3 row">
+                            <div className="col-12">
+                                <label htmlFor="hf_code" className="col-form-label">Дополнительные услуги</label>
+                                {FormCheckContract()}
+
+                                {FormCheckContractType()}
+                            </div>
+                        </div>
+
                         <div className="mb-3 row">
                             <div className="col-6">
                                 <label htmlFor="subdivision" className="col-form-label">Подразделение</label>
-                                <input type="text" className="form-control" id="subdivision" value={form.subdivision ? form.subdivision : ''} onChange={onChangeText}/>
+                                <input type="text" className="form-control" id="subdivision"
+                                       value={form.subdivision ? form.subdivision : ''} onChange={onChangeText}/>
                             </div>
                             <div className="col-6">
                                 <label htmlFor="profession" className="col-form-label">Профессия</label>
-                                <input type="text" className="form-control" id="profession" value={form.profession ? form.profession : ''} onChange={onChangeText}/>
+                                <input type="text" className="form-control" id="profession"
+                                       value={form.profession ? form.profession : ''} onChange={onChangeText}/>
                             </div>
                         </div>
 
@@ -183,7 +334,7 @@ export default function UserForm ({worker, account}) {
             {FormCheckSpecialist (form._specialist_ids, form._specialist_visit_ids)}
 
             <div className="card" style={{marginTop: '20px', textAlign: 'center'}}>
-                <div className="card-body">
+            <div className="card-body">
                     <legend><b>Исследования</b></legend>
                 </div>
             </div>

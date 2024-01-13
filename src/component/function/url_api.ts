@@ -773,6 +773,13 @@ export async function ServerWorkerAdd ({
 }
 export async function ServerWorkerEdit ({
     id,
+    contract_type_ids,
+    hf_code,
+
+    price_ultrasound,
+    price_mammography,
+    price_xray,
+
     subdivision,
     profession,
 }: interfaceWorkerEdit) {
@@ -780,6 +787,13 @@ export async function ServerWorkerEdit ({
 
     let arFields = {
         id,
+        contract_type_ids,
+        hf_code,
+
+        price_ultrasound,
+        price_mammography,
+        price_xray,
+
         subdivision,
         profession,
     } as interfaceWorkerEdit

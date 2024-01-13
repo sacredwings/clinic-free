@@ -1,75 +1,47 @@
 import Joi from "joi"
-import CWorker from "../../../app/classes/worker"
-import CContract from "../../../app/classes/contract"
-import CContractType from "../../../app/classes/contract-type"
-import CHf from "../../../app/classes/hf"
-import CResearch from "../../../app/classes/research"
-import CSpecialist from "../../../app/classes/specialist"
-import CUser from "../../../app/classes/user"
-import DbConnect from "../../../app/util/DbConnect";
+import CWorker from "@/class/worker"
+import CContract from "@/class/contract"
+import CContractType from "@/class/contract-type"
+import CHf from "@/class/hf"
+import CResearch from "@/class/research"
+import CSpecialist from "@/class/specialist"
+import { mongo, minio } from "@/utility/connect"
+import {NextResponse} from "next/server";
 
-export default async (req, res) => {
+export async function POST (request: Request) {
     let value
     try {
         try {
-            if (req.body.hf_code) req.body.hf_code = req.body.hf_code.replace(/ /gi, '') //удаление пробелов
-            if (req.body.hf_code) req.body.hf_code = req.body.hf_code.split(',') //в массив
+            let rsRequest = await request.json()
+
+            if (rsRequest.hf_code) rsRequest.hf_code = rsRequest.hf_code.replace(/ /gi, '') //удаление пробелов
+            if (rsRequest.hf_code) rsRequest.hf_code = rsRequest.hf_code.split(',') //в массив
 
             //схема
             const schema = Joi.object({
                 id: Joi.string().min(24).max(24).allow(null).empty('').default(null),
 
-                contract_type_ids: Joi.array().min(0).max(10).items(Joi.string().min(24).max(24)).allow(null).empty('').default(null),
-                hf_code: Joi.array().min(1).max(100).items(Joi.string().min(1).max(20)).allow(null).empty('').default(null),
-
-                first_name: Joi.string().min(1).max(255).required(),
-                last_name: Joi.string().min(1).max(255).required(),
-                second_name: Joi.string().min(1).max(255).allow(null).empty('').default(null),
-
-                man: Joi.number().integer().min(0).max(1).required(),
-
-                date_birth: Joi.date().min('1-1-1900').max('1-1-2030').required(),
+                contract_type_ids: Joi.array().min(0).max(10).items(Joi.string().min(24).max(24)).empty(['', null]).default(null),
+                hf_code: Joi.array().min(1).max(100).items(Joi.string().min(1).max(20)).empty(['', null]).default(null),
 
                 price_ultrasound: Joi.boolean().allow(null).empty('').default(null),
                 price_mammography: Joi.boolean().allow(null).empty('').default(null),
                 price_xray: Joi.boolean().allow(null).empty('').default(null),
 
-                oms_policy_number: Joi.number().integer().min(999999999999999).max(9999999999999999).allow(null).empty('').default(null),
-                snils: Joi.number().integer().min(9999999999).max(99999999999).allow(null).empty('').default(null),
-                dogovor_type: Joi.number().integer().min(0).max(1).allow(null).empty('').default(0),
-
-                region: Joi.string().min(0).max(255).allow(null).empty('').default(null),
-                city: Joi.string().min(0).max(255).allow(null).empty('').default(null),
-                street: Joi.string().min(0).max(255).allow(null).empty('').default(null),
-                house: Joi.string().min(0).max(255).allow(null).empty('').default(null),
-                housing: Joi.string().min(0).max(255).allow(null).empty('').default(null),
-                apt: Joi.string().min(0).max(255).allow(null).empty('').default(null),
-                building: Joi.string().min(0).max(255).allow(null).empty('').default(null),
-
-                passport_serial: Joi.number().integer().min(1).max(9999).allow(null).empty('').default(null),
-                passport_number: Joi.number().integer().min(1).max(999999).allow(null).empty('').default(null),
-                passport_date: Joi.date().min('1-1-1900').max('1-1-2030').allow(null).empty('').default(null),
-
-                passport_issued_by: Joi.string().min(0).max(255).allow(null).empty('').default(null),
-                phone: Joi.number().integer().min(70000000000).max(79999999999).allow(null).empty('').default(null),
-                phone_additional: Joi.number().integer().min(70000000000).max(79999999999).allow(null).empty('').default(null),
-
-                subdivision: Joi.string().min(0).max(255).allow(null).empty('').default(null),
-                profession: Joi.string().min(0).max(255).allow(null).empty('').default(null),
-                employment_date: Joi.date().min('1-1-1900').max('1-1-2030').allow(null).empty('').default(null),
-
-                work_place: Joi.string().min(0).max(255).allow(null).empty('').default(null),
-                work_experience: Joi.number().integer().min(0).max(100).allow(null).empty('').default(null),
+                subdivision: Joi.string().min(0).max(255).empty(['', null]).default(null),
+                profession: Joi.string().min(0).max(255).empty(['', null]).default(null),
             })
 
-            value = await schema.validateAsync(req.body)
+            value = await schema.validateAsync(rsRequest)
+
+            if (value.contract_type_ids && !value.contract_type_ids.length) value.contract_type_ids = null
 
         } catch (err) {
             console.log(err)
             throw ({code: 412, msg: 'Неверные параметры'})
         }
         try {
-            await DbConnect()
+            await mongo()
 
             let searchWorker = await CWorker.GetById([value.id])
             searchWorker = searchWorker[0]
@@ -77,6 +49,9 @@ export default async (req, res) => {
             let price = 0
             let arResearch = []
             let arSpecialist = []
+
+            let arResearchIds = []
+            let arSpecialistIds = []
 
             let hfContract = null
 
@@ -106,6 +81,7 @@ export default async (req, res) => {
             if (value.contract_type_ids) {
                 //Запрос с контрактам
                 let arType = await CContractType.GetById(value.contract_type_ids) //загрузка типов
+                if (value.contract_type_ids.length !== arType.length) throw ({code: 30100000, msg: 'Не все типы договоров найдены'})
 
                 //добавляем в общему массиву
                 for (let contract_type of arType) {
@@ -114,138 +90,114 @@ export default async (req, res) => {
                 }
             }
 
-            //console.log(arResearch)
-            //console.log(arSpecialist)
-
             //ЗДЕСЬ ВЫТАСКИВАЕМ ИЗ ВРЕДНЫХ ФАКТОРОВ
             //загрузка кодов
             if (value.hf_code) {
+
                 let arHf = await CHf.GetByCode (value.hf_code)
 
                 //сохраняем каждый из массива вредных факторов
                 for (let hf of arHf) {
-                    arResearch = [...arResearch, ...hf.research_ids]
-                    arSpecialist = [...arSpecialist, ...hf.specialist_ids]
+                    if (hf.research_ids)
+                        arResearch = [...arResearch, ...hf.research_ids]
+
+                    if (hf.specialist_ids)
+                        arSpecialist = [...arSpecialist, ...hf.specialist_ids]
                 }
+            }
 
-                //Оставляем уникальные с прайсами
-                arResearch = await CResearch.GetByIdPrice (arResearch)
-                arSpecialist = await CSpecialist.GetByIdPrice (arSpecialist)
+            //ОБРАБОТКА ПОЛУЧЕННЫХ ИСЛЕДОВАНИЙ И СПЕЦИАЛИСТОВ
+            //Оставляем уникальные
+            arResearch = await CResearch.GetById (arResearch, {price:true})
+            arSpecialist = await CSpecialist.GetById (arSpecialist, {price:true})
 
-                //console.log(arResearch)
-                //console.log(arSpecialist)
+            arResearch = Field(arResearch)
+            arSpecialist = Field(arSpecialist)
 
+            arResearchIds = FieldToId (arResearch)
+            arSpecialistIds = FieldToId (arSpecialist)
+
+            //----------------------------------------------------------------------
+            //РАСЧЕТ ЦЕНЫ
+
+            //Фиксированный прайс не указан в Договоре
+            if (!hfContract.price) {
+                //считает
                 for (let item of arResearch) {
-                    if ((item._price) && (item._price[0]))
-                        price += item._price[0].price
+                    if ((item._price) && (item._price))
+                        price += item._price.price
                 }
                 for (let item of arSpecialist) {
-                    if ((item._price) && (item._price[0]))
-                        price += item._price[0].price
+                    if ((item._price) && (item._price))
+                        price += item._price.price
                 }
+            } else {
+                //указана фиксированная цена
+                price = hfContract.price
             }
-
-            //поиск пользователя среди существующих
-            /*
-                        let arFields = {
-                            first_name: value.first_name,
-                            last_name: value.last_name,
-                            second_name: value.second_name,
-                            date_birth: value.date_birth
-                        }
-                        let searchUser = await CUser.GetByFields(arFields)*/
-
 
             let arFields = {
-                first_name: value.first_name,
-                last_name: value.last_name,
-                second_name: value.second_name,
-
-                man: value.man,
-
-                date_birth: value.date_birth,
-
-                oms_policy_number: value.oms_policy_number,
-                snils: value.snils,
-
-                region: value.region,
-                city: value.city,
-                street: value.street,
-                house: value.house,
-                housing: value.housing,
-                apt: value.apt,
-                building: value.building,
-
-                passport_serial: value.passport_serial,
-                passport_number: value.passport_number,
-                passport_date: value.passport_date,
-
-                passport_issued_by: value.passport_issued_by,
-                phone: value.phone,
-                phone_additional: value.phone_additional,
-            }
-
-            await CUser.Edit ( searchWorker.user_id, arFields )
-
-            arFields = {
-                //user_id: searchUser._id,
-
-                contract_id: value.contract_id,
                 contract_type_ids: value.contract_type_ids,
                 hf_code: value.hf_code,
 
                 price: price,
-                price_ultrasound: null,
-                price_mammography: null,
-                price_xray: null,
+                price_ultrasound: value.price_ultrasound,
+                price_mammography: value.price_mammography,
+                price_xray: value.price_xray,
 
-                research_ids: arResearch,
-                specialist_ids: arSpecialist,
+                research_ids: arResearchIds,
+                specialist_ids: arSpecialistIds,
+
+                research: arResearch,
+                specialist: arSpecialist,
 
                 subdivision: value.subdivision,
                 profession: value.profession,
-                employment_date: value.employment_date,
-
-                work_place: value.work_place,
-                work_experience: value.work_experience,
             }
 
-            if (hfContract) {
-                //добавление последних полей
-                if ((hfContract.price_ultrasound) && (value.price_ultrasound)) {
-                    arFields.price_ultrasound = hfContract.price_ultrasound
-                    arFields.price += hfContract.price_ultrasound
-                }
-                if ((hfContract.price_mammography) && (value.price_mammography)) {
-                    arFields.price_mammography = hfContract.price_mammography
-                    arFields.price += hfContract.price_mammography
-                }
-                if ((hfContract.price_xray) && (value.price_xray)) {
-                    arFields.price_xray = hfContract.price_xray
-                    arFields.price += hfContract.price_xray
-                }
-            }
+            let result = await CWorker.Edit ( value.id, arFields )
 
-            await CWorker.Edit ( value.id, arFields )
-
-            res.status(200).json({
-                code: 0,
+            return NextResponse.json({
+                err: 0,
                 response: {
                     _id: value.id
                 }
             })
+
         } catch (err) {
             throw ({...{code: 10000000, msg: 'Ошибка формирования результата'}, ...err})
         }
     } catch (err) {
-        res.status(200).json({...{code: 10000000, msg: 'RWorker Add'}, ...err})
+        return NextResponse.json({...{code: 10000000, msg: 'RWorker Edit'}, ...err})
     }
 }
 
-export const config = {
-    api: {
-        bodyParser: {
-            sizeLimit: '1mb',
-        },
-    },
+function FieldToId (arr) {
+    if (!arr || !arr.length) return null
+
+    let newArr = []
+    for (let item of arr) {
+        newArr.push(item._id)
+    }
+
+    return newArr
+}
+
+function Field (arr) {
+    if (!arr || !arr.length) return null
+
+    let newArr = []
+    for (let item of arr) {
+        let newItem = {
+            _id: item._id,
+            name: item.name,
+            price: null
+        }
+        if ((item._price) && (item._price))
+            newItem.price = item._price.price
+
+        newArr.push(newItem)
+    }
+
+    return newArr
 }

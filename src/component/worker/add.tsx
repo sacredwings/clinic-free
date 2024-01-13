@@ -2,7 +2,7 @@
 import { useRouter } from 'next/navigation' //переход по url
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
-import {ServerWorkerAdd} from "@/component/function/url_api";
+import {ServerWorkerAdd, ServerContractTypeGet} from "@/component/function/url_api";
 
 export default function WorkerAdd ({contract}) {
     const router = useRouter() //для перехода к пользователю
@@ -121,11 +121,13 @@ export default function WorkerAdd ({contract}) {
 
     //список типов договоров
     const GetTypeContract = async () => {
-        const url = '/api/contract-type/get'
+        let arFields = {
+            offset: 0,
+            count: 100
+        }
+        let result = await ServerContractTypeGet(arFields, {cookies: null})
 
-        let result = await axios.get(url)
-
-        setContractTypeList(result.data.response.items)
+        setContractTypeList(result.items)
     }
 
     const OnChangeCheck = (id) => {
@@ -159,24 +161,6 @@ export default function WorkerAdd ({contract}) {
             age--
         }
         return age
-    }
-
-    const OnCheckInit = (list, formList) => {
-        if (!list) return []
-
-        let newList = list.map((element, i) => {
-            element.checked = false
-
-            if (!formList) return element
-
-            for (let formElement of formList) {
-                if (element._id === formElement) element.checked = true
-            }
-
-            return element
-        })
-
-        return newList
     }
 
     const FormCheckContractType = () => {
