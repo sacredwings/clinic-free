@@ -2,33 +2,15 @@
 
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
-import {ServerContractAdd, ServerContractEdit, ServerOrgAdd} from "@/component/function/url_api";
+import {ServerContractEdit} from "@/component/function/url_api";
 
-export default function ContractAdd ({org, contractType}) {
+export default function ContractId ({contract}) {
 
-    const formDefault = {
-        name: '',
-        date_from: '',
-        date_to: '',
-
-        price_ultrasound: '',
-        price_mammography: '',
-        price_xray: '',
-
-        price_pcr: '',
-        price_hti: '',
-        price_brucellosis: '',
-
-        price: '',
-    }
-
-    let [view, setView] = useState(false)
-    let [form, setForm] = useState(formDefault)
-    let [contractTypeIds, setContractTypeIds] = useState([]) //для формы
-    let [contractTypeList, setContractTypeList] = useState(contractType)
+    let [edit, setEdit] = useState(false)
+    let [form, setForm] = useState(contract)
 
     useEffect(() => {
-        console.log(form)
+        //console.log(form)
     }, [form])
 
     const onChangeText = (e) => {
@@ -45,9 +27,7 @@ export default function ContractAdd ({org, contractType}) {
             e.preventDefault() // Stop form submit
 
         let arFields = {
-            org_id: org._id,
-            contract_type_ids: null,
-
+            id: form._id,
             name: form.name,
             date_from: form.date_from,
             date_to: form.date_to,
@@ -60,61 +40,16 @@ export default function ContractAdd ({org, contractType}) {
             price_hti: form.price_hti,
             price_brucellosis: form.price_brucellosis,
 
-            price: form.price,
+            price: form.price
         }
 
-        if (contractTypeIds && contractTypeIds.length) arFields.contract_type_ids = contractTypeIds
+        await ServerContractEdit(arFields)
 
-        setForm(formDefault)
-        setContractTypeIds([])
-        setContractTypeList([])
-        setView(true)
-
-        let result = await ServerContractAdd(arFields)
-        if (result) setView(true)
+        setEdit(!edit)
     }
 
     const View = () => {
-        return <>
-            <div className="alert alert-success" role="alert">
-                <p>Договор <b>{form.name}</b> добавлен</p>
-            </div>
-
-            <button type="button" className="btn btn-outline-secondary" onClick={()=>{
-                setView(false)
-                setForm(formDefault)
-            }}>+ Добавить новый</button>
-        </>
-    }
-
-    const OnChangeCheck = (id) => {
-        let list = []
-        let newListCheck = contractTypeList.map((element, i) => {
-            if (element._id === id)
-                element.checked = !element.checked
-
-            if (element.checked) list.push(element._id)
-            return element
-        })
-        setContractTypeList(newListCheck)
-        setContractTypeIds(list)
-    }
-
-    const FormCheckContractType = () => {
-        return <>
-            <br/>
-            <h6 className="card-title text-center">Типы договоров</h6>
-            <br/>
-
-            {contractTypeList.map((item, i)=>{
-                return <div className="form-check" key={i}>
-                    <input className="form-check-input" type="checkbox" checked={(item.checked) ? true : false} onChange={()=>{OnChangeCheck(item._id)}}/>
-                    <label className="form-check-label" htmlFor="flexCheckDefault">
-                        {item.name}
-                    </label>
-                </div>
-            })}
-        </>
+        return <h1>Договор: {(form) ? form.name : null} <button type="button" className="btn btn-outline-secondary" onClick={()=>setEdit(!edit)}><i className="far fa-edit"></i></button></h1>
     }
 
     const Form = () => {
@@ -145,15 +80,8 @@ export default function ContractAdd ({org, contractType}) {
                                                               onChange={onChangeText}/></div>
                         </div>
 
-                        <div className="mb-3 row">
-                            <div className="col-12">
-                                {FormCheckContractType()}
-                            </div>
-                        </div>
-
                         <hr/>
                         <h2>Цены</h2>
-
                         <div className="mb-3 row">
                             <label htmlFor="price_ultrasound" className="col-sm-2 col-form-label">УЗИ</label>
                             <div className="col-sm-10"><input type="number" className="form-control"
@@ -186,8 +114,10 @@ export default function ContractAdd ({org, contractType}) {
                         </div>
                         <div className="mb-3 row">
                             <label htmlFor="price_brucellosis" className="col-sm-2 col-form-label">Бруцеллез</label>
-                            <div className="col-sm-10"><input type="number" className="form-control" id="price_brucellosis"
-                                                              value={form.price_brucellosis} onChange={onChangeText}/></div>
+                            <div className="col-sm-10"><input type="number" className="form-control"
+                                                              id="price_brucellosis"
+                                                              value={form.price_brucellosis} onChange={onChangeText}/>
+                            </div>
                         </div>
 
                         <div className="mb-3 row">
@@ -196,9 +126,13 @@ export default function ContractAdd ({org, contractType}) {
                                                               value={form.price} onChange={onChangeText}/></div>
                         </div>
 
-                        <div className="mb-3">
+                        <div className="">
+                            <button type="button" className="btn btn-secondary btn-sm"
+                                    onClick={() => setEdit(!edit)}>Отмена
+                            </button>
+                            &nbsp;
                             <button type="submit" className="btn btn-primary btn-sm">
-                                Добавить
+                                Сохранить
                             </button>
                         </div>
                     </div>
@@ -208,6 +142,6 @@ export default function ContractAdd ({org, contractType}) {
     }
 
     return <>
-        {!view ? Form() : View()}
+        {edit ? Form() : View()}
     </>
 }

@@ -14,17 +14,18 @@ export async function POST (request: Request) {
                 id: Joi.string().min(24).max(24).required(),
 
                 name: Joi.string().min(3).max(255).required(),
-                //org_id: Joi.string().min(24).max(24).required(),
 
                 //contract_type_ids: Joi.array().min(1).max(10).items(Joi.string().min(24).max(24)).allow(null).empty('').default(null),
 
-                price: Joi.number().integer().min(0).max(999999).empty(['', null]).default(null),
                 price_ultrasound: Joi.number().integer().min(0).max(999999).empty(['', null]).default(null),
                 price_mammography: Joi.number().integer().min(0).max(999999).empty(['', null]).default(null),
                 price_xray: Joi.number().integer().min(0).max(999999).empty(['', null]).default(null),
 
-                date_from: Joi.date().empty(['', null]).default(null),
-                date_to: Joi.date().empty(['', null]).default(null),
+                price_pcr: Joi.number().integer().min(0).max(999999).empty(['', null]).default(null),
+                price_hti: Joi.number().integer().min(0).max(999999).empty(['', null]).default(null),
+                price_brucellosis: Joi.number().integer().min(0).max(999999).empty(['', null]).default(null),
+
+                price: Joi.number().integer().min(0).max(999999).empty(['', null]).default(null),
             })
 
             value = await schema.validateAsync(rsRequest)

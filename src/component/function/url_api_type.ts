@@ -134,9 +134,15 @@ export interface interfaceContractAdd {
     name: string
     date_from: string
     date_to: string
+
     price_ultrasound: number
     price_mammography: number
     price_xray: number
+
+    price_pcr: number
+    price_hti: number
+    price_brucellosis: number
+
     price: number
 }
 export interface interfaceContractEdit {
@@ -144,9 +150,15 @@ export interface interfaceContractEdit {
     name: string
     date_from: string
     date_to: string
+
     price_ultrasound: number
     price_mammography: number
     price_xray: number
+
+    price_pcr: number
+    price_hti: number
+    price_brucellosis: number
+
     price: number
 }
 export interface interfaceContractGet {

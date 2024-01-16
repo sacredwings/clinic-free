@@ -1,4 +1,4 @@
-import ContractId from '@/component/contract/id'
+import ContractId from '@/component/contract/form'
 import {
     ServerWorkerGet,
     ServerOrgGet,

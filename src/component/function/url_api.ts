@@ -471,9 +471,15 @@ export async function ServerContractAdd ({
     name,
     date_from,
     date_to,
+
     price_ultrasound,
     price_mammography,
     price_xray,
+
+    price_pcr,
+    price_hti,
+    price_brucellosis,
+
     price,
 }: interfaceContractAdd) {
     if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
@@ -485,9 +491,15 @@ export async function ServerContractAdd ({
         name,
         date_from,
         date_to,
+
         price_ultrasound,
         price_mammography,
         price_xray,
+
+        price_pcr,
+        price_hti,
+        price_brucellosis,
+
         price,
     } as interfaceContractAdd
 
@@ -502,9 +514,15 @@ export async function ServerContractEdit ({
     name,
     date_from,
     date_to,
+
     price_ultrasound,
     price_mammography,
     price_xray,
+
+    price_pcr,
+    price_hti,
+    price_brucellosis,
+
     price,
 }: interfaceContractEdit) {
     if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
@@ -514,9 +532,15 @@ export async function ServerContractEdit ({
         name,
         date_from,
         date_to,
+
         price_ultrasound,
         price_mammography,
         price_xray,
+
+        price_pcr,
+        price_hti,
+        price_brucellosis,
+
         price,
     } as interfaceContractEdit
 
