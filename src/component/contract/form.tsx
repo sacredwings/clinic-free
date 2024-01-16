@@ -28,6 +28,7 @@ export default function ContractId ({contract}) {
 
         let arFields = {
             id: form._id,
+
             name: form.name,
             date_from: form.date_from,
             date_to: form.date_to,
@@ -40,7 +41,9 @@ export default function ContractId ({contract}) {
             price_hti: form.price_hti,
             price_brucellosis: form.price_brucellosis,
 
-            price: form.price
+            price_worker_all: form.price_worker_all,
+            price_worker_man: form.price_worker_man,
+            price_worker_woman: form.price_worker_woman,
         }
 
         await ServerContractEdit(arFields)
@@ -121,9 +124,25 @@ export default function ContractId ({contract}) {
                         </div>
 
                         <div className="mb-3 row">
-                            <label htmlFor="price" className="col-sm-2 col-form-label">За человека</label>
-                            <div className="col-sm-10"><input type="number" className="form-control" id="price"
-                                                              value={form.price} onChange={onChangeText}/></div>
+                            <label htmlFor="price_worker_all" className="col-sm-2 col-form-label">Работник</label>
+                            <div className="col-sm-10"><input type="number" className="form-control"
+                                                              id="price_worker_all"
+                                                              value={form.price_worker_all} onChange={onChangeText}/>
+                            </div>
+                        </div>
+                        <div className="mb-3 row">
+                            <label htmlFor="price_worker_man" className="col-sm-2 col-form-label">Мужчина</label>
+                            <div className="col-sm-10"><input type="number" className="form-control"
+                                                              id="price_worker_man"
+                                                              value={form.price_worker_man} onChange={onChangeText}/>
+                            </div>
+                        </div>
+                        <div className="mb-3 row">
+                            <label htmlFor="price_worker_woman" className="col-sm-2 col-form-label">Женщина</label>
+                            <div className="col-sm-10"><input type="number" className="form-control"
+                                                              id="price_worker_woman"
+                                                              value={form.price_worker_woman} onChange={onChangeText}/>
+                            </div>
                         </div>
 
                         <div className="">

@@ -22,6 +22,10 @@ export default function WorkerAdd ({contract}) {
         price_mammography: false,
         price_xray: false,
 
+        price_pcr: false,
+        price_hti: false,
+        price_brucellosis: false,
+
         //oms_policy_number: null,
         //snils: null,
 
@@ -189,23 +193,49 @@ export default function WorkerAdd ({contract}) {
         return <div className="mb-3 form-check">
             <div>
                 <div className="form-check">
-                    <input className="form-check-input" type="checkbox" id="price_ultrasound" checked={(form.price_ultrasound) ? true : false} onChange={OnChangeCheckOne}/>
+                    <input className="form-check-input" type="checkbox" id="price_ultrasound"
+                           checked={(form.price_ultrasound) ? true : false} onChange={OnChangeCheckOne}/>
                     <label className="form-check-label" htmlFor="flexCheckDefault">
                         УЗИ
                     </label>
                 </div>
                 {((form.man === '0') && (Age(form.date_birth) >= 40)) ?
                     <div className="form-check">
-                        <input className="form-check-input" type="checkbox" id="price_mammography" checked={(form.price_mammography) ? true : false} onChange={OnChangeCheckOne}/>
+                        <input className="form-check-input" type="checkbox" id="price_mammography"
+                               checked={(form.price_mammography) ? true : false} onChange={OnChangeCheckOne}/>
                         <label className="form-check-label" htmlFor="flexCheckDefault">
                             ММГ
                         </label>
                     </div> : null
                 }
                 <div className="form-check">
-                    <input className="form-check-input" type="checkbox" id="price_xray" checked={(form.price_xray) ? true : false} onChange={OnChangeCheckOne}/>
+                    <input className="form-check-input" type="checkbox" id="price_xray"
+                           checked={(form.price_xray) ? true : false} onChange={OnChangeCheckOne}/>
                     <label className="form-check-label" htmlFor="flexCheckDefault">
                         ФЛГ
+                    </label>
+                </div>
+
+                <br/>
+                <div className="form-check">
+                    <input className="form-check-input" type="checkbox" id="price_pcr"
+                           checked={(form.price_pcr) ? true : false} onChange={OnChangeCheckOne}/>
+                    <label className="form-check-label" htmlFor="price_pcr">
+                        ПЦР
+                    </label>
+                </div>
+                <div className="form-check">
+                    <input className="form-check-input" type="checkbox" id="price_hti"
+                           checked={(form.price_hti) ? true : false} onChange={OnChangeCheckOne}/>
+                    <label className="form-check-label" htmlFor="price_hti">
+                        ХТИ
+                    </label>
+                </div>
+                <div className="form-check">
+                    <input className="form-check-input" type="checkbox" id="price_brucellosis"
+                           checked={(form.price_brucellosis) ? true : false} onChange={OnChangeCheckOne}/>
+                    <label className="form-check-label" htmlFor="price_brucellosis">
+                        Бруцеллез
                     </label>
                 </div>
             </div>

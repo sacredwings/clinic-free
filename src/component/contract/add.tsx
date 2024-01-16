@@ -19,7 +19,9 @@ export default function ContractAdd ({org, contractType}) {
         price_hti: '',
         price_brucellosis: '',
 
-        price: '',
+        price_worker_all: '',
+        price_worker_man: '',
+        price_worker_woman: '',
     }
 
     let [view, setView] = useState(false)
@@ -60,7 +62,9 @@ export default function ContractAdd ({org, contractType}) {
             price_hti: form.price_hti,
             price_brucellosis: form.price_brucellosis,
 
-            price: form.price,
+            price_worker_all: form.price_worker_all,
+            price_worker_man: form.price_worker_man,
+            price_worker_woman: form.price_worker_woman,
         }
 
         if (contractTypeIds && contractTypeIds.length) arFields.contract_type_ids = contractTypeIds
@@ -186,14 +190,26 @@ export default function ContractAdd ({org, contractType}) {
                         </div>
                         <div className="mb-3 row">
                             <label htmlFor="price_brucellosis" className="col-sm-2 col-form-label">Бруцеллез</label>
-                            <div className="col-sm-10"><input type="number" className="form-control" id="price_brucellosis"
-                                                              value={form.price_brucellosis} onChange={onChangeText}/></div>
+                            <div className="col-sm-10"><input type="number" className="form-control"
+                                                              id="price_brucellosis"
+                                                              value={form.price_brucellosis} onChange={onChangeText}/>
+                            </div>
                         </div>
 
                         <div className="mb-3 row">
-                            <label htmlFor="price" className="col-sm-2 col-form-label">За человека</label>
-                            <div className="col-sm-10"><input type="number" className="form-control" id="price"
-                                                              value={form.price} onChange={onChangeText}/></div>
+                            <label htmlFor="price_worker_all" className="col-sm-2 col-form-label">Работник</label>
+                            <div className="col-sm-10"><input type="number" className="form-control" id="price_worker_all"
+                                                              value={form.price_worker_all} onChange={onChangeText}/></div>
+                        </div>
+                        <div className="mb-3 row">
+                            <label htmlFor="price_worker_man" className="col-sm-2 col-form-label">Мужчина</label>
+                            <div className="col-sm-10"><input type="number" className="form-control" id="price_worker_man"
+                                                              value={form.price_worker_man} onChange={onChangeText}/></div>
+                        </div>
+                        <div className="mb-3 row">
+                            <label htmlFor="price_worker_woman" className="col-sm-2 col-form-label">Женщина</label>
+                            <div className="col-sm-10"><input type="number" className="form-control" id="price_worker_woman"
+                                                              value={form.price_worker_woman} onChange={onChangeText}/></div>
                         </div>
 
                         <div className="mb-3">

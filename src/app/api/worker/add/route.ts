@@ -8,6 +8,7 @@ import CHf from "@/class/hf"
 import CResearch from "@/class/research"
 import CSpecialist from "@/class/specialist"
 import {CUser} from "../../../../../../social-framework/src"
+import worker from "@/class/worker";
 
 export async function POST (request: Request) {
     let value
@@ -34,6 +35,10 @@ export async function POST (request: Request) {
                 price_ultrasound: Joi.boolean().empty(['', null]).default(null),
                 price_mammography: Joi.boolean().empty(['', null]).default(null),
                 price_xray: Joi.boolean().empty(['', null]).default(null),
+
+                price_pcr: Joi.boolean().empty(['', null]).default(null),
+                price_hti: Joi.boolean().empty(['', null]).default(null),
+                price_brucellosis: Joi.boolean().empty(['', null]).default(null),
 
                 //oms_policy_number: Joi.number().integer().min(999999999999999).max(9999999999999999).allow(null).empty('').default(null),
                 //snils: Joi.number().integer().min(9999999999).max(99999999999).allow(null).empty('').default(null),
@@ -147,37 +152,95 @@ export async function POST (request: Request) {
             arResearchIds = FieldToId (arResearch)
             arSpecialistIds = FieldToId (arSpecialist)
 
-            //----------------------------------------------------------------------
-            //РАСЧЕТ ЦЕНЫ
 
-            //Фиксированный прайс не указан в Договоре
-            if (!hfContract.price) {
-                //считает
-                for (let item of arResearch) {
-                    if ((item._price) && (item._price))
-                        price += item._price.price
-                }
-                for (let item of arSpecialist) {
-                    if ((item._price) && (item._price))
-                        price += item._price.price
-                }
-            } else {
-                //указана фиксированная цена
-                price = hfContract.price
+            //----------------------------------------------------------------------
+            //РАСЧЕТ ЦЕНЫ ДОПОЛНИТЕЛЬНОГО
+
+            let arPrice = {
+                price_ultrasound: 0,
+                price_mammography: 0,
+                price_xray: 0,
+
+                price_pcr: 0,
+                price_hti: 0,
+                price_brucellosis: 0,
+
+                price_worker_hf: 0,
+                price_worker_all: 0,
+                price_worker_man: 0,
+                price_worker_woman: 0,
+
+                price: 0
             }
 
+            //ВРЕДНЫЙ ФАКТОР
+            for (let item of arResearch) {
+                if ((item._price) && (item._price.price))
+                    arPrice.price_worker_hf += item._price.price
+            }
+            for (let item of arSpecialist) {
+                if ((item._price) && (item._price.price))
+                    arPrice.price_worker_hf += item._price.price
+            }
+
+            //по умолчанию основной - вредный фактор
+            arPrice.price += arPrice.price_worker_hf
+
+            if (hfContract) {
+                //основные поля
+                if (hfContract.price_worker_all) {
+                    arPrice.price_worker_all = hfContract.price_worker_all
+                    arPrice.price = arPrice.price_worker_all
+                }
+                if (hfContract.price_worker_man) {
+                    arPrice.price_worker_man = hfContract.price_worker_man
+                    arPrice.price = arPrice.price_worker_man
+                }
+                if (hfContract.price_worker_woman) {
+                    arPrice.price_worker_woman = hfContract.price_worker_woman
+                    arPrice.price = arPrice.price_worker_woman
+                }
+
+                //дополнительные поля
+                if ((hfContract.price_ultrasound) && (value.price_ultrasound)) {
+                    arPrice.price_ultrasound = hfContract.price_ultrasound
+                    arPrice.price += arPrice.price_ultrasound
+                }
+                if ((hfContract.price_mammography) && (value.price_mammography)) {
+                    arPrice.price_mammography = hfContract.price_mammography
+                    arPrice.price += arPrice.price_mammography
+                }
+                if ((hfContract.price_xray) && (value.price_xray)) {
+                    arPrice.price_xray = hfContract.price_xray
+                    arPrice.price += arPrice.price_xray
+                }
+                if ((hfContract.price_pcr) && (value.price_pcr)) {
+                    arPrice.price_pcr = hfContract.price_pcr
+                    arPrice.price += arPrice.price_pcr
+                }
+                if ((hfContract.price_hti) && (value.price_hti)) {
+                    arPrice.price_hti = hfContract.price_hti
+                    arPrice.price += arPrice.price_hti
+                }
+                if ((hfContract.price_brucellosis) && (value.price_brucellosis)) {
+                    arPrice.price_brucellosis = hfContract.price_brucellosis
+                    arPrice.price += arPrice.price_brucellosis
+                }
+            }
+
+            //----------------------------------------------------------------------
             //поиск пользователя среди существующих
-            let arFields = {
+            let arFieldsSearch = {
                 first_name: value.first_name,
                 last_name: value.last_name,
                 second_name: value.second_name,
                 date_birth: value.date_birth
             }
-            let searchUser = await CUser.GetByField(arFields)
+            let arUser = await CUser.GetByField(arFieldsSearch)
 
             //создание пользователя
-            if (!searchUser) {
-                arFields = {
+            if (!arUser) {
+                let arFieldsUser = {
                     first_name: value.first_name,
                     last_name: value.last_name,
                     second_name: value.second_name,
@@ -203,21 +266,31 @@ export async function POST (request: Request) {
                     phone: value.phone,
                     //phone_additional: value.phone_additional,
                 }
-                arFields = await CUser.Add ( arFields )
+                arUser = await CUser.Add ( arFieldsUser )
             }
 
             //СОЗДАНИЕ РАБОТНИКА
-            arFields = {
-                user_id: searchUser ? searchUser._id : arFields._id,
+            let arWorker = {
+                user_id: arUser._id,
 
                 contract_id: value.contract_id,
                 contract_type_ids: value.contract_type_ids,
                 hf_code: value.hf_code,
 
-                price: price,
-                price_ultrasound: null,
-                price_mammography: null,
-                price_xray: null,
+                price_ultrasound: arPrice.price_ultrasound ? arPrice.price_ultrasound : null,
+                price_mammography: arPrice.price_mammography ? arPrice.price_mammography : null,
+                price_xray: arPrice.price_xray ? arPrice.price_xray : null,
+
+                price_pcr: arPrice.price_pcr ? arPrice.price_pcr : null,
+                price_hti: arPrice.price_hti ? arPrice.price_hti : null,
+                price_brucellosis: arPrice.price_brucellosis ? arPrice.price_brucellosis : null,
+
+                price_worker_hf: arPrice.price_worker_hf ? arPrice.price_worker_hf : null,
+                price_worker_all: arPrice.price_worker_all ? arPrice.price_worker_all : null,
+                price_worker_man: arPrice.price_worker_man ? arPrice.price_worker_man : null,
+                price_worker_woman: arPrice.price_worker_woman ? arPrice.price_worker_woman : null,
+
+                price: arPrice.price,
 
                 research_ids: arResearchIds,
                 specialist_ids: arSpecialistIds,
@@ -233,23 +306,7 @@ export async function POST (request: Request) {
                 //work_experience: value.work_experience,
             }
 
-            if (hfContract) {
-                //добавление последних полей
-                if ((hfContract.price_ultrasound) && (value.price_ultrasound)) {
-                    arFields.price_ultrasound = hfContract.price_ultrasound
-                    arFields.price += hfContract.price_ultrasound
-                }
-                if ((hfContract.price_mammography) && (value.price_mammography)) {
-                    arFields.price_mammography = hfContract.price_mammography
-                    arFields.price += hfContract.price_mammography
-                }
-                if ((hfContract.price_xray) && (value.price_xray)) {
-                    arFields.price_xray = hfContract.price_xray
-                    arFields.price += hfContract.price_xray
-                }
-            }
-
-            let result = await CWorker.Add ( arFields )
+            let result = await CWorker.Add ( arWorker )
 
             return NextResponse.json({
                 err: 0,
