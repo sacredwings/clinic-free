@@ -8,13 +8,27 @@ import {ServerOwnerGetById, ServerVideoGet} from "@/component/function/url_api"
 //import VideoAdd from "@/component/video/add";
 import React from "react";
 
-export default async function ({worker}) {
-    const List = (ar) => {
-        return ar.map((item, i)=>{
-            return <p key={i}>
-                {item.name}
-            </p>
-        })
+export default function ({worker}) {
+    console.log(worker)
+    const List = (arr) => {
+        if (!arr) return null
+
+        return <ul className="list-group list-group-flush">
+            {arr.map((item, i)=>{
+                return <li className="list-group-item" key={i}>
+                    {item.name}
+                    &#160;
+                    {(item.price ?
+                            (!worker.price_worker_all && !worker.price_worker_man && !worker.price_worker_woman) ?
+                                <span className="badge text-bg-primary">{item.price} руб.</span> :
+                                <span className="badge text-bg-secondary">{item.price} руб.</span>
+                            :
+                            null
+                    )}
+                </li>
+            })}
+        </ul>
+
     }
     const ListCode = (arList) => {
         if (arList)
@@ -49,23 +63,37 @@ export default async function ({worker}) {
             <div className="card">
                 <div className="card-body">
                     <h1>{`${worker._user_id.first_name} ${worker._user_id.last_name} ${worker._user_id.second_name}`}</h1>
+                    <Link href={`/worker/${worker._id}/edit`} type="button" className="btn btn-outline-warning btn-sm">
+                        <i className="fa-solid fa-edit"></i>
+                    </Link>
+
+                    {ListPrint(worker._id)}
                 </div>
             </div>
 
-            {ListCode(worker.hf_code)}
+            <div className="card">
+                <div className="card-body">
+                    <h3>Вредные факторы</h3>
+                    {ListCode(worker.hf_code)}
+                </div>
+            </div>
 
-            <Link href={`/worker/${worker._id}/edit`} type="button" className="btn btn-outline-warning btn-sm">
-                <i className="fa-solid fa-edit"></i>
-            </Link>
 
-            {ListPrint(worker._id)}
+            <div className="card">
+                <div className="card-body">
+                    <h3>Исследования</h3>
+                    {List(worker.research)}
+                </div>
+            </div>
 
-            <h3>Иследования</h3>
-            {List(worker._research_ids)}
-
+            <div className="card">
+                <div className="card-body">
+                    <h3>Специалисты</h3>
+                    {List(worker.specialist)}
+                </div>
+            </div>
             <hr/>
-            <h3>Специалисты</h3>
-            {List(worker._specialist_ids)}
+
         </>
     )
 }

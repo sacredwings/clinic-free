@@ -4,6 +4,7 @@ import Joi from "joi"
 import {headers} from "next/headers";
 import CResearch from "@/class/research"
 import CPrice from "@/class/price"
+import CSpecialist from "@/class/specialist";
 
 export async function POST (request: Request) {
     let value
@@ -32,10 +33,9 @@ export async function POST (request: Request) {
             }
             let result = await CResearch.Edit ( value.id, arFields )
 
-            /*
             //меняется цена если есть
             if (value.price) {
-                let researchPrice = await CResearch.GetByIdPrice ( [value.id] )
+                let researchPrice = await CResearch.GetById ( [value.id], {price: true} )
                 if ((!researchPrice) || (!researchPrice[0]) || (!researchPrice[0]._price) || (researchPrice[0]._price.price !== value.price)) {
                     let arFields = {
                         object_id: value.id,
@@ -44,7 +44,7 @@ export async function POST (request: Request) {
                     }
                     result = await CPrice.Add ( arFields )
                 }
-            }*/
+            }
             return NextResponse.json({
                 err: 0,
                 response: result

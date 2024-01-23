@@ -15,9 +15,16 @@ export default function UserForm ({worker, account}) {
     //const router = useRouter() //для перехода к пользователю
 
     let [formUser, setFormUser] = useState(worker._user_id)
-    let [form, setForm] = useState({...worker, hf_code: worker.hf_code.join(',')})
+    let [form, setForm] = useState({...worker, hf_code: (worker.hf_code ? worker.hf_code.join(',') : null)})
     let [contractTypeIds, setContractTypeIds] = useState([]) //для формы
     let [contractTypeList, setContractTypeList] = useState([])
+
+    useEffect(() => {
+        (async () => {
+            console.log(form)
+
+        })()
+    }, [form])
 
     useEffect(() => {
         (async () => {
@@ -113,6 +120,10 @@ export default function UserForm ({worker, account}) {
             price_ultrasound: form.price_ultrasound,
             price_mammography: form.price_mammography,
             price_xray: form.price_xray,
+
+            price_pcr: form.price_pcr,
+            price_hti: form.price_hti,
+            price_brucellosis: form.price_brucellosis,
 
             subdivision: form.subdivision,
             profession: form.profession,
@@ -361,7 +372,7 @@ export default function UserForm ({worker, account}) {
                 </div>
             </div>
 
-            {FormCheckSpecialist (form._specialist_ids, form._specialist_visit_ids)}
+            {FormCheckSpecialist (form.specialist, form._specialist_visit_ids)}
 
             <div className="card" style={{marginTop: '20px', textAlign: 'center'}}>
             <div className="card-body">
@@ -369,7 +380,7 @@ export default function UserForm ({worker, account}) {
                 </div>
             </div>
 
-            {FormCheckResearch (form._research_ids, form._research_visit_ids)}
+            {FormCheckResearch (form.research, form._research_visit_ids)}
 
         </>
 

@@ -17,6 +17,9 @@ export async function POST (request: Request) {
 
                 //contract_type_ids: Joi.array().min(1).max(10).items(Joi.string().min(24).max(24)).allow(null).empty('').default(null),
 
+                date_from: Joi.date().empty(['', null]).default(null),
+                date_to: Joi.date().empty(['', null]).default(null),
+
                 price_ultrasound: Joi.number().integer().min(0).max(999999).empty(['', null]).default(null),
                 price_mammography: Joi.number().integer().min(0).max(999999).empty(['', null]).default(null),
                 price_xray: Joi.number().integer().min(0).max(999999).empty(['', null]).default(null),
@@ -25,7 +28,9 @@ export async function POST (request: Request) {
                 price_hti: Joi.number().integer().min(0).max(999999).empty(['', null]).default(null),
                 price_brucellosis: Joi.number().integer().min(0).max(999999).empty(['', null]).default(null),
 
-                price: Joi.number().integer().min(0).max(999999).empty(['', null]).default(null),
+                price_worker_all: Joi.number().integer().min(0).max(999999).empty(['', null]).default(null),
+                price_worker_man: Joi.number().integer().min(0).max(999999).empty(['', null]).default(null),
+                price_worker_woman: Joi.number().integer().min(0).max(999999).empty(['', null]).default(null),
             })
 
             value = await schema.validateAsync(rsRequest)
@@ -43,13 +48,20 @@ export async function POST (request: Request) {
 
                 //contract_type_ids: value.contract_type_ids,
 
-                price: value.price,
                 price_ultrasound: value.price_ultrasound,
                 price_mammography: value.price_mammography,
                 price_xray: value.price_xray,
 
-                //date_from: value.date_from,
-                //date_to: value.date_to,
+                price_pcr: value.price_pcr,
+                price_hti: value.price_hti,
+                price_brucellosis: value.price_brucellosis,
+
+                price_worker_all: value.price_worker_all,
+                price_worker_man: value.price_worker_man,
+                price_worker_woman: value.price_worker_woman,
+
+                date_from: value.date_from,
+                date_to: value.date_to,
             }
             let result = await CContract.Edit ( value.id, arFields )
 

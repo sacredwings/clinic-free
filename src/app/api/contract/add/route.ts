@@ -26,7 +26,9 @@ export async function POST (request: Request) {
                 price_hti: Joi.number().integer().min(0).max(999999).empty(['', null]).default(null),
                 price_brucellosis: Joi.number().integer().min(0).max(999999).empty(['', null]).default(null),
 
-                price: Joi.number().integer().min(0).max(999999).empty(['', null]).default(null),
+                price_worker_all: Joi.number().integer().min(0).max(999999).empty(['', null]).default(null),
+                price_worker_man: Joi.number().integer().min(0).max(999999).empty(['', null]).default(null),
+                price_worker_woman: Joi.number().integer().min(0).max(999999).empty(['', null]).default(null),
             })
 
             value = await schema.validateAsync(rsRequest)

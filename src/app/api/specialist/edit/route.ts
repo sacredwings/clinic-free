@@ -14,7 +14,7 @@ export async function POST (request: Request) {
             const schema = Joi.object({
                 id: Joi.string().min(24).max(24).required(),
                 name: Joi.string().min(1).max(255).required(),
-                price: Joi.number().integer().min(0).max(999999).allow(null).empty('').default(null),
+                price: Joi.number().integer().min(0).max(999999).empty([null, '']).default(null),
             });
 
             value = await schema.validateAsync(rsRequest)
@@ -32,10 +32,9 @@ export async function POST (request: Request) {
             }
             let result = await CSpecialist.Edit ( value.id, arFields )
 
-            /*
             //меняется цена если есть
             if (value.price) {
-                let specialistPrice = await CSpecialist.GetByIdPrice ( [value.id] )
+                let specialistPrice = await CSpecialist.GetById ( [value.id], {price: true} )
                 if ((!specialistPrice) || (!specialistPrice[0]) || (!specialistPrice[0]._price) || (specialistPrice[0]._price.price !== value.price)) {
                     let arFields = {
                         object_id: value.id,
@@ -44,7 +43,7 @@ export async function POST (request: Request) {
                     }
                     result = await CPrice.Add ( arFields )
                 }
-            }*/
+            }
 
             return NextResponse.json({
                 err: 0,

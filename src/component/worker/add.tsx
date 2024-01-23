@@ -107,6 +107,10 @@ export default function WorkerAdd ({contract}) {
             price_mammography: form.price_mammography,
             price_xray: form.price_xray,
 
+            price_pcr: form.price_pcr,
+            price_hti: form.price_hti,
+            price_brucellosis: form.price_brucellosis,
+
             phone: form.phone,
 
             subdivision: form.subdivision,

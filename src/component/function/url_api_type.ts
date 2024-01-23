@@ -56,6 +56,7 @@ export interface interfaceSpecialistAdd {
 export interface interfaceSpecialistEdit {
     id: string
     name: string
+    price: number
 }
 export interface interfaceSpecialistDelete {
     id: string
@@ -77,6 +78,7 @@ export interface interfaceResearchAdd {
 export interface interfaceResearchEdit {
     id: string
     name: string
+    price: number
 }
 export interface interfaceResearchDelete {
     id: string
@@ -143,7 +145,9 @@ export interface interfaceContractAdd {
     price_hti: number
     price_brucellosis: number
 
-    price: number
+    price_worker_all: number
+    price_worker_man: number
+    price_worker_woman: number
 }
 export interface interfaceContractEdit {
     id: string
@@ -159,7 +163,9 @@ export interface interfaceContractEdit {
     price_hti: number
     price_brucellosis: number
 
-    price: number
+    price_worker_all: number
+    price_worker_man: number
+    price_worker_woman: number
 }
 export interface interfaceContractGet {
     org_id: string
@@ -202,6 +208,10 @@ export interface interfaceWorkerAdd {
     price_mammography: boolean,
     price_xray: boolean,
 
+    price_pcr: boolean
+    price_hti: boolean
+    price_brucellosis: boolean
+
     phone: string | null,
 
     subdivision: string,
@@ -216,6 +226,10 @@ export interface interfaceWorkerEdit {
     price_ultrasound: boolean,
     price_mammography: boolean,
     price_xray: boolean,
+
+    price_pcr: boolean
+    price_hti: boolean
+    price_brucellosis: boolean
 
     subdivision: string
     profession: string

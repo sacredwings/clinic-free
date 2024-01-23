@@ -221,13 +221,15 @@ export async function ServerSpecialistGet ({
 }
 export async function ServerSpecialistEdit ({
     id,
-    name
+    name,
+    price
 }: interfaceSpecialistEdit) {
     if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
     let arFields = {
         id,
-        name
+        name,
+        price
     } as interfaceSpecialistEdit
 
     let url = `/api/specialist/edit`
@@ -316,13 +318,15 @@ export async function ServerResearchEditHf ({
 }
 export async function ServerResearchEdit ({
     id,
-    name
+    name,
+    price
 }: interfaceSpecialistEdit) {
     if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
     let arFields = {
         id,
-        name
+        name,
+        price
     } as interfaceSpecialistEdit
 
     let url = `/api/research/edit`
@@ -480,7 +484,9 @@ export async function ServerContractAdd ({
     price_hti,
     price_brucellosis,
 
-    price,
+    price_worker_all,
+    price_worker_man,
+    price_worker_woman,
 }: interfaceContractAdd) {
     if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
@@ -500,7 +506,9 @@ export async function ServerContractAdd ({
         price_hti,
         price_brucellosis,
 
-        price,
+        price_worker_all,
+        price_worker_man,
+        price_worker_woman,
     } as interfaceContractAdd
 
     let url = `/api/contract/add`
@@ -523,7 +531,9 @@ export async function ServerContractEdit ({
     price_hti,
     price_brucellosis,
 
-    price,
+    price_worker_all,
+    price_worker_man,
+    price_worker_woman,
 }: interfaceContractEdit) {
     if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
@@ -541,7 +551,9 @@ export async function ServerContractEdit ({
         price_hti,
         price_brucellosis,
 
-        price,
+        price_worker_all,
+        price_worker_man,
+        price_worker_woman,
     } as interfaceContractEdit
 
     let url = `/api/contract/edit`
@@ -761,6 +773,10 @@ export async function ServerWorkerAdd ({
     price_mammography,
     price_xray,
 
+    price_pcr,
+    price_hti,
+    price_brucellosis,
+
     phone=null,
 
     subdivision,
@@ -783,6 +799,10 @@ export async function ServerWorkerAdd ({
         price_mammography,
         price_xray,
 
+        price_pcr,
+        price_hti,
+        price_brucellosis,
+
         phone,
 
         subdivision,
@@ -804,6 +824,10 @@ export async function ServerWorkerEdit ({
     price_mammography,
     price_xray,
 
+    price_pcr,
+    price_hti,
+    price_brucellosis,
+
     subdivision,
     profession,
 }: interfaceWorkerEdit) {
@@ -817,6 +841,10 @@ export async function ServerWorkerEdit ({
         price_ultrasound,
         price_mammography,
         price_xray,
+
+        price_pcr,
+        price_hti,
+        price_brucellosis,
 
         subdivision,
         profession,

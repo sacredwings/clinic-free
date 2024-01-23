@@ -33,7 +33,7 @@ export async function GET(request: Request) {
                 count: 1000,
                 offset: 0
             }
-            let result = await CResearch.Get (arFields, {})
+            let result = await CResearch.Get (arFields, {price: true})
 
             return NextResponse.json({
                 code: 0,

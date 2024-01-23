@@ -21,20 +21,24 @@ export async function POST (request: Request) {
             const schema = Joi.object({
                 id: Joi.string().min(24).max(24).allow(null).empty('').default(null),
 
-                contract_type_ids: Joi.array().min(0).max(10).items(Joi.string().min(24).max(24)).empty(['', null]).default(null),
-                hf_code: Joi.array().min(1).max(100).items(Joi.string().min(1).max(20)).empty(['', null]).default(null),
+                contract_type_ids: Joi.array().min(1).max(10).items(Joi.string().min(24).max(24)).allow(null).empty(Joi.array().length(0)).default(null),
+                hf_code: Joi.array().min(1).max(100).items(Joi.string().min(1).max(20)).allow(null).empty('').default(null),
 
                 price_ultrasound: Joi.boolean().allow(null).empty('').default(null),
                 price_mammography: Joi.boolean().allow(null).empty('').default(null),
                 price_xray: Joi.boolean().allow(null).empty('').default(null),
 
-                subdivision: Joi.string().min(0).max(255).empty(['', null]).default(null),
-                profession: Joi.string().min(0).max(255).empty(['', null]).default(null),
+                price_pcr: Joi.boolean().allow(null).empty('').default(null),
+                price_hti: Joi.boolean().allow(null).empty('').default(null),
+                price_brucellosis: Joi.boolean().allow(null).empty('').default(null),
+
+                subdivision: Joi.string().min(0).max(255).allow(null).empty('').default(null),
+                profession: Joi.string().min(0).max(255).allow(null).empty('').default(null),
             })
 
             value = await schema.validateAsync(rsRequest)
 
-            if (value.contract_type_ids && !value.contract_type_ids.length) value.contract_type_ids = null
+            //if (value.contract_type_ids && !value.contract_type_ids.length) value.contract_type_ids = null
 
         } catch (err) {
             console.log(err)
@@ -46,7 +50,7 @@ export async function POST (request: Request) {
             let searchWorker = await CWorker.GetById([value.id])
             searchWorker = searchWorker[0]
 
-            let price = 0
+            //let price = 0
             let arResearch = []
             let arSpecialist = []
 
@@ -118,32 +122,102 @@ export async function POST (request: Request) {
             arSpecialistIds = FieldToId (arSpecialist)
 
             //----------------------------------------------------------------------
-            //РАСЧЕТ ЦЕНЫ
+            //РАСЧЕТ ЦЕНЫ ДОПОЛНИТЕЛЬНОГО
 
-            //Фиксированный прайс не указан в Договоре
-            if (!hfContract.price) {
-                //считает
+            let arPrice = {
+                price_ultrasound: 0,
+                price_mammography: 0,
+                price_xray: 0,
+
+                price_pcr: 0,
+                price_hti: 0,
+                price_brucellosis: 0,
+
+                price_worker_hf: 0,
+                price_worker_all: 0,
+                price_worker_man: 0,
+                price_worker_woman: 0,
+
+                price: 0
+            }
+
+            //нет фиксированных сумм
+            if (!hfContract.price_worker_all && !hfContract.price_worker_man && !hfContract.price_worker_woman) {
+                //ВРЕДНЫЙ ФАКТОР
                 for (let item of arResearch) {
-                    if ((item._price) && (item._price))
-                        price += item._price.price
+                    if ((item._price) && (item._price.price))
+                        arPrice.price_worker_hf += item._price.price
                 }
                 for (let item of arSpecialist) {
-                    if ((item._price) && (item._price))
-                        price += item._price.price
+                    if ((item._price) && (item._price.price))
+                        arPrice.price_worker_hf += item._price.price
                 }
-            } else {
-                //указана фиксированная цена
-                price = hfContract.price
+
+                //по умолчанию основной - вредный фактор
+                arPrice.price += arPrice.price_worker_hf
+            }
+
+            console.log(hfContract)
+            if (hfContract) {
+                //основные поля
+                if (hfContract.price_worker_all) {
+                    arPrice.price_worker_all = hfContract.price_worker_all
+                    arPrice.price = arPrice.price_worker_all
+                }
+                if (hfContract.price_worker_man) {
+                    arPrice.price_worker_man = hfContract.price_worker_man
+                    arPrice.price = arPrice.price_worker_man
+                }
+                if (hfContract.price_worker_woman) {
+                    arPrice.price_worker_woman = hfContract.price_worker_woman
+                    arPrice.price = arPrice.price_worker_woman
+                }
+
+                //дополнительные поля
+                if ((hfContract.price_ultrasound) && (value.price_ultrasound)) {
+                    arPrice.price_ultrasound = hfContract.price_ultrasound
+                    arPrice.price += arPrice.price_ultrasound
+                }
+                if ((hfContract.price_mammography) && (value.price_mammography)) {
+                    arPrice.price_mammography = hfContract.price_mammography
+                    arPrice.price += arPrice.price_mammography
+                }
+                if ((hfContract.price_xray) && (value.price_xray)) {
+                    arPrice.price_xray = hfContract.price_xray
+                    arPrice.price += arPrice.price_xray
+                }
+                if ((hfContract.price_pcr) && (value.price_pcr)) {
+                    arPrice.price_pcr = hfContract.price_pcr
+                    arPrice.price += arPrice.price_pcr
+                }
+                if ((hfContract.price_hti) && (value.price_hti)) {
+                    arPrice.price_hti = hfContract.price_hti
+                    arPrice.price += arPrice.price_hti
+                }
+                if ((hfContract.price_brucellosis) && (value.price_brucellosis)) {
+                    arPrice.price_brucellosis = hfContract.price_brucellosis
+                    arPrice.price += arPrice.price_brucellosis
+                }
             }
 
             let arFields = {
                 contract_type_ids: value.contract_type_ids,
                 hf_code: value.hf_code,
 
-                price: price,
-                price_ultrasound: value.price_ultrasound,
-                price_mammography: value.price_mammography,
-                price_xray: value.price_xray,
+                price_ultrasound: arPrice.price_ultrasound ? arPrice.price_ultrasound : null,
+                price_mammography: arPrice.price_mammography ? arPrice.price_mammography : null,
+                price_xray: arPrice.price_xray ? arPrice.price_xray : null,
+
+                price_pcr: arPrice.price_pcr ? arPrice.price_pcr : null,
+                price_hti: arPrice.price_hti ? arPrice.price_hti : null,
+                price_brucellosis: arPrice.price_brucellosis ? arPrice.price_brucellosis : null,
+
+                price_worker_hf: arPrice.price_worker_hf ? arPrice.price_worker_hf : null,
+                price_worker_all: arPrice.price_worker_all ? arPrice.price_worker_all : null,
+                price_worker_man: arPrice.price_worker_man ? arPrice.price_worker_man : null,
+                price_worker_woman: arPrice.price_worker_woman ? arPrice.price_worker_woman : null,
+
+                price: arPrice.price,
 
                 research_ids: arResearchIds,
                 specialist_ids: arSpecialistIds,
@@ -193,7 +267,8 @@ function Field (arr) {
             name: item.name,
             price: null
         }
-        if ((item._price) && (item._price))
+
+        if ((item._price) && (item._price.price))
             newItem.price = item._price.price
 
         newArr.push(newItem)

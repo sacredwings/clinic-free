@@ -82,6 +82,7 @@ export default class {
                     as: '_research_visit_ids'
                 }
             })
+            /*
             arAggregate.push({
                 $lookup: {
                     from: 'specialist',
@@ -97,7 +98,7 @@ export default class {
                     foreignField: '_id',
                     as: '_research_ids'
                 }
-            })
+            })*/
             arAggregate.push({
                 $unwind: {
                     path: '$_user_id',
@@ -177,6 +178,7 @@ export default class {
                     as: '_research_visit_ids'
                 }
             })
+            /*
             arAggregate.push({
                 $lookup: {
                     from: 'specialist',
@@ -192,7 +194,7 @@ export default class {
                     foreignField: '_id',
                     as: '_research_ids'
                 }
-            })
+            })*/
             arAggregate.push({
                 $unwind: {
                     path: '$_user_id',
