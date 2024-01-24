@@ -35,6 +35,9 @@ export async function POST (request: Request) {
 
             value = await schema.validateAsync(rsRequest)
 
+            if ((value.price_worker_man && !value.price_worker_woman) || (!value.price_worker_man && value.price_worker_woman)) throw ({code: 412, msg: ''})
+            if ((value.price_worker_all && value.price_worker_man && value.price_worker_woman)) throw ({code: 412, msg: ''})
+
         } catch (err) {
             console.log(err)
             throw ({code: 412, msg: 'Неверные параметры'})

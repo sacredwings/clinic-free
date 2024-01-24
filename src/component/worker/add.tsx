@@ -18,13 +18,13 @@ export default function WorkerAdd ({contract}) {
 
         date_birth: '',
 
-        price_ultrasound: false,
-        price_mammography: false,
-        price_xray: false,
+        check_ultrasound: false,
+        check_mammography: false,
+        check_xray: false,
 
-        price_pcr: false,
-        price_hti: false,
-        price_brucellosis: false,
+        check_pcr: false,
+        check_hti: false,
+        check_brucellosis: false,
 
         //oms_policy_number: null,
         //snils: null,
@@ -103,13 +103,13 @@ export default function WorkerAdd ({contract}) {
             man: form.man,
             date_birth: form.date_birth,
 
-            price_ultrasound: form.price_ultrasound,
-            price_mammography: form.price_mammography,
-            price_xray: form.price_xray,
+            check_ultrasound: form.check_ultrasound,
+            check_mammography: form.check_mammography,
+            check_xray: form.check_xray,
 
-            price_pcr: form.price_pcr,
-            price_hti: form.price_hti,
-            price_brucellosis: form.price_brucellosis,
+            check_pcr: form.check_pcr,
+            check_hti: form.check_hti,
+            check_brucellosis: form.check_brucellosis,
 
             phone: form.phone,
 
@@ -197,24 +197,24 @@ export default function WorkerAdd ({contract}) {
         return <div className="mb-3 form-check">
             <div>
                 <div className="form-check">
-                    <input className="form-check-input" type="checkbox" id="price_ultrasound"
-                           checked={(form.price_ultrasound) ? true : false} onChange={OnChangeCheckOne}/>
+                    <input className="form-check-input" type="checkbox" id="check_ultrasound"
+                           checked={(form.check_ultrasound) ? true : false} onChange={OnChangeCheckOne}/>
                     <label className="form-check-label" htmlFor="flexCheckDefault">
                         УЗИ
                     </label>
                 </div>
                 {((form.man === '0') && (Age(form.date_birth) >= 40)) ?
                     <div className="form-check">
-                        <input className="form-check-input" type="checkbox" id="price_mammography"
-                               checked={(form.price_mammography) ? true : false} onChange={OnChangeCheckOne}/>
+                        <input className="form-check-input" type="checkbox" id="check_mammography"
+                               checked={(form.check_mammography) ? true : false} onChange={OnChangeCheckOne}/>
                         <label className="form-check-label" htmlFor="flexCheckDefault">
                             ММГ
                         </label>
                     </div> : null
                 }
                 <div className="form-check">
-                    <input className="form-check-input" type="checkbox" id="price_xray"
-                           checked={(form.price_xray) ? true : false} onChange={OnChangeCheckOne}/>
+                    <input className="form-check-input" type="checkbox" id="check_xray"
+                           checked={(form.check_xray) ? true : false} onChange={OnChangeCheckOne}/>
                     <label className="form-check-label" htmlFor="flexCheckDefault">
                         ФЛГ
                     </label>
@@ -222,23 +222,23 @@ export default function WorkerAdd ({contract}) {
 
                 <br/>
                 <div className="form-check">
-                    <input className="form-check-input" type="checkbox" id="price_pcr"
-                           checked={(form.price_pcr) ? true : false} onChange={OnChangeCheckOne}/>
-                    <label className="form-check-label" htmlFor="price_pcr">
+                    <input className="form-check-input" type="checkbox" id="check_pcr"
+                           checked={(form.check_pcr) ? true : false} onChange={OnChangeCheckOne}/>
+                    <label className="form-check-label" htmlFor="check_pcr">
                         ПЦР
                     </label>
                 </div>
                 <div className="form-check">
-                    <input className="form-check-input" type="checkbox" id="price_hti"
-                           checked={(form.price_hti) ? true : false} onChange={OnChangeCheckOne}/>
-                    <label className="form-check-label" htmlFor="price_hti">
+                    <input className="form-check-input" type="checkbox" id="check_hti"
+                           checked={(form.check_hti) ? true : false} onChange={OnChangeCheckOne}/>
+                    <label className="form-check-label" htmlFor="check_hti">
                         ХТИ
                     </label>
                 </div>
                 <div className="form-check">
-                    <input className="form-check-input" type="checkbox" id="price_brucellosis"
-                           checked={(form.price_brucellosis) ? true : false} onChange={OnChangeCheckOne}/>
-                    <label className="form-check-label" htmlFor="price_brucellosis">
+                    <input className="form-check-input" type="checkbox" id="check_brucellosis"
+                           checked={(form.check_brucellosis) ? true : false} onChange={OnChangeCheckOne}/>
+                    <label className="form-check-label" htmlFor="check_brucellosis">
                         Бруцеллез
                     </label>
                 </div>

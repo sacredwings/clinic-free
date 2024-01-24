@@ -204,13 +204,13 @@ export interface interfaceWorkerAdd {
     man: string,
     date_birth: Date,
 
-    price_ultrasound: boolean,
-    price_mammography: boolean,
-    price_xray: boolean,
+    check_ultrasound: boolean,
+    check_mammography: boolean,
+    check_xray: boolean,
 
-    price_pcr: boolean
-    price_hti: boolean
-    price_brucellosis: boolean
+    check_pcr: boolean
+    check_hti: boolean
+    check_brucellosis: boolean
 
     phone: string | null,
 
@@ -223,13 +223,13 @@ export interface interfaceWorkerEdit {
     contract_type_ids: string[] | null
     hf_code: string[] | null
 
-    price_ultrasound: boolean,
-    price_mammography: boolean,
-    price_xray: boolean,
+    check_ultrasound: boolean,
+    check_mammography: boolean,
+    check_xray: boolean,
 
-    price_pcr: boolean
-    price_hti: boolean
-    price_brucellosis: boolean
+    check_pcr: boolean
+    check_hti: boolean
+    check_brucellosis: boolean
 
     subdivision: string
     profession: string

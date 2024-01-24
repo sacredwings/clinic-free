@@ -24,13 +24,13 @@ export async function POST (request: Request) {
                 contract_type_ids: Joi.array().min(1).max(10).items(Joi.string().min(24).max(24)).allow(null).empty(Joi.array().length(0)).default(null),
                 hf_code: Joi.array().min(1).max(100).items(Joi.string().min(1).max(20)).allow(null).empty('').default(null),
 
-                price_ultrasound: Joi.boolean().allow(null).empty('').default(null),
-                price_mammography: Joi.boolean().allow(null).empty('').default(null),
-                price_xray: Joi.boolean().allow(null).empty('').default(null),
+                check_ultrasound: Joi.boolean().allow(null).empty('').default(null),
+                check_mammography: Joi.boolean().allow(null).empty('').default(null),
+                check_xray: Joi.boolean().allow(null).empty('').default(null),
 
-                price_pcr: Joi.boolean().allow(null).empty('').default(null),
-                price_hti: Joi.boolean().allow(null).empty('').default(null),
-                price_brucellosis: Joi.boolean().allow(null).empty('').default(null),
+                check_pcr: Joi.boolean().allow(null).empty('').default(null),
+                check_hti: Joi.boolean().allow(null).empty('').default(null),
+                check_brucellosis: Joi.boolean().allow(null).empty('').default(null),
 
                 subdivision: Joi.string().min(0).max(255).allow(null).empty('').default(null),
                 profession: Joi.string().min(0).max(255).allow(null).empty('').default(null),
@@ -203,6 +203,14 @@ export async function POST (request: Request) {
             let arFields = {
                 contract_type_ids: value.contract_type_ids,
                 hf_code: value.hf_code,
+
+                check_ultrasound: value.check_ultrasound,
+                check_mammography: value.check_mammography,
+                check_xray: value.check_xray,
+
+                check_pcr: value.check_pcr,
+                check_hti: value.check_hti,
+                check_brucellosis: value.check_brucellosis,
 
                 price_ultrasound: arPrice.price_ultrasound ? arPrice.price_ultrasound : null,
                 price_mammography: arPrice.price_mammography ? arPrice.price_mammography : null,

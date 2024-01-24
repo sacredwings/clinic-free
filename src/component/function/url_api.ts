@@ -769,13 +769,13 @@ export async function ServerWorkerAdd ({
     man,
     date_birth,
 
-    price_ultrasound,
-    price_mammography,
-    price_xray,
+    check_ultrasound,
+    check_mammography,
+    check_xray,
 
-    price_pcr,
-    price_hti,
-    price_brucellosis,
+    check_pcr,
+    check_hti,
+    check_brucellosis,
 
     phone=null,
 
@@ -795,13 +795,13 @@ export async function ServerWorkerAdd ({
         man,
         date_birth,
 
-        price_ultrasound,
-        price_mammography,
-        price_xray,
+        check_ultrasound,
+        check_mammography,
+        check_xray,
 
-        price_pcr,
-        price_hti,
-        price_brucellosis,
+        check_pcr,
+        check_hti,
+        check_brucellosis,
 
         phone,
 
@@ -820,13 +820,13 @@ export async function ServerWorkerEdit ({
     contract_type_ids,
     hf_code,
 
-    price_ultrasound,
-    price_mammography,
-    price_xray,
+    check_ultrasound,
+    check_mammography,
+    check_xray,
 
-    price_pcr,
-    price_hti,
-    price_brucellosis,
+    check_pcr,
+    check_hti,
+    check_brucellosis,
 
     subdivision,
     profession,
@@ -838,13 +838,13 @@ export async function ServerWorkerEdit ({
         contract_type_ids,
         hf_code,
 
-        price_ultrasound,
-        price_mammography,
-        price_xray,
+        check_ultrasound,
+        check_mammography,
+        check_xray,
 
-        price_pcr,
-        price_hti,
-        price_brucellosis,
+        check_pcr,
+        check_hti,
+        check_brucellosis,
 
         subdivision,
         profession,

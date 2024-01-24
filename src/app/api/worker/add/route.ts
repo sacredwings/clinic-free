@@ -32,13 +32,13 @@ export async function POST (request: Request) {
                 man: Joi.number().integer().min(0).max(1).required(),
                 date_birth: Joi.date().min('1-1-1900').max('1-1-2030').required(),
 
-                price_ultrasound: Joi.boolean().allow(null).empty('').default(null),
-                price_mammography: Joi.boolean().allow(null).empty('').default(null),
-                price_xray: Joi.boolean().allow(null).empty('').default(null),
+                check_ultrasound: Joi.boolean().allow(null).empty('').default(null),
+                check_mammography: Joi.boolean().allow(null).empty('').default(null),
+                check_xray: Joi.boolean().allow(null).empty('').default(null),
 
-                price_pcr: Joi.boolean().allow(null).empty('').default(null),
-                price_hti: Joi.boolean().allow(null).empty('').default(null),
-                price_brucellosis: Joi.boolean().allow(null).empty('').default(null),
+                check_pcr: Joi.boolean().allow(null).empty('').default(null),
+                check_hti: Joi.boolean().allow(null).empty('').default(null),
+                check_brucellosis: Joi.boolean().allow(null).empty('').default(null),
 
                 //oms_policy_number: Joi.number().integer().min(999999999999999).max(9999999999999999).allow(null).empty('').default(null),
                 //snils: Joi.number().integer().min(9999999999).max(99999999999).allow(null).empty('').default(null),
@@ -205,27 +205,27 @@ export async function POST (request: Request) {
                 }
 
                 //дополнительные поля
-                if ((hfContract.price_ultrasound) && (value.price_ultrasound)) {
+                if ((hfContract.price_ultrasound) && (value.check_ultrasound)) {
                     arPrice.price_ultrasound = hfContract.price_ultrasound
                     arPrice.price += arPrice.price_ultrasound
                 }
-                if ((hfContract.price_mammography) && (value.price_mammography)) {
+                if ((hfContract.price_mammography) && (value.check_mammography)) {
                     arPrice.price_mammography = hfContract.price_mammography
                     arPrice.price += arPrice.price_mammography
                 }
-                if ((hfContract.price_xray) && (value.price_xray)) {
+                if ((hfContract.price_xray) && (value.check_xray)) {
                     arPrice.price_xray = hfContract.price_xray
                     arPrice.price += arPrice.price_xray
                 }
-                if ((hfContract.price_pcr) && (value.price_pcr)) {
+                if ((hfContract.price_pcr) && (value.check_pcr)) {
                     arPrice.price_pcr = hfContract.price_pcr
                     arPrice.price += arPrice.price_pcr
                 }
-                if ((hfContract.price_hti) && (value.price_hti)) {
+                if ((hfContract.price_hti) && (value.check_hti)) {
                     arPrice.price_hti = hfContract.price_hti
                     arPrice.price += arPrice.price_hti
                 }
-                if ((hfContract.price_brucellosis) && (value.price_brucellosis)) {
+                if ((hfContract.price_brucellosis) && (value.check_brucellosis)) {
                     arPrice.price_brucellosis = hfContract.price_brucellosis
                     arPrice.price += arPrice.price_brucellosis
                 }
@@ -279,6 +279,14 @@ export async function POST (request: Request) {
                 contract_id: value.contract_id,
                 contract_type_ids: value.contract_type_ids,
                 hf_code: value.hf_code,
+
+                check_ultrasound: value.check_ultrasound,
+                check_mammography: value.check_mammography,
+                check_xray: value.check_xray,
+
+                check_pcr: value.check_pcr,
+                check_hti: value.check_hti,
+                check_brucellosis: value.check_brucellosis,
 
                 price_ultrasound: arPrice.price_ultrasound ? arPrice.price_ultrasound : null,
                 price_mammography: arPrice.price_mammography ? arPrice.price_mammography : null,
