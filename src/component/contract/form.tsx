@@ -8,6 +8,7 @@ export default function ContractId ({contract}) {
 
     let [edit, setEdit] = useState(false)
     let [form, setForm] = useState(contract)
+    let [priceType, setPriceType] = useState('0')
 
     useEffect(() => {
         //console.log(form)
@@ -20,6 +21,10 @@ export default function ContractId ({contract}) {
         setForm(prev => ({
             ...prev, [name]: value
         }))
+    }
+
+    const onChangeType = (e) => {
+        setPriceType(e.target.value)
     }
 
     const onFormSubmit = async (e) => {
@@ -123,27 +128,41 @@ export default function ContractId ({contract}) {
                             </div>
                         </div>
 
+                        <hr/>
+                        <h2>Расчет</h2>
                         <div className="mb-3 row">
+                            <select className="form-select" id="man" aria-label="" value={priceType}
+                                    onChange={onChangeType}>
+                                <option value="0" defaultValue="1">По вредным факторам</option>
+                                <option value="1">За человека</option>
+                                <option value="2">С разделением по полу</option>
+                            </select>
+                        </div>
+
+                        {priceType === '1' ? <div className="mb-3 row">
                             <label htmlFor="price_worker_all" className="col-sm-2 col-form-label">Работник</label>
                             <div className="col-sm-10"><input type="number" className="form-control"
                                                               id="price_worker_all"
                                                               value={form.price_worker_all} onChange={onChangeText}/>
                             </div>
-                        </div>
-                        <div className="mb-3 row">
-                            <label htmlFor="price_worker_man" className="col-sm-2 col-form-label">Мужчина</label>
-                            <div className="col-sm-10"><input type="number" className="form-control"
-                                                              id="price_worker_man"
-                                                              value={form.price_worker_man} onChange={onChangeText}/>
+                        </div> : null}
+
+                        {priceType === '2' ? <>
+                            <div className="mb-3 row">
+                                <label htmlFor="price_worker_man" className="col-sm-2 col-form-label">Мужчина</label>
+                                <div className="col-sm-10"><input type="number" className="form-control"
+                                                                  id="price_worker_man"
+                                                                  value={form.price_worker_man} onChange={onChangeText}/>
+                                </div>
                             </div>
-                        </div>
-                        <div className="mb-3 row">
-                            <label htmlFor="price_worker_woman" className="col-sm-2 col-form-label">Женщина</label>
-                            <div className="col-sm-10"><input type="number" className="form-control"
-                                                              id="price_worker_woman"
-                                                              value={form.price_worker_woman} onChange={onChangeText}/>
+                            <div className="mb-3 row">
+                                <label htmlFor="price_worker_woman" className="col-sm-2 col-form-label">Женщина</label>
+                                <div className="col-sm-10"><input type="number" className="form-control"
+                                                                  id="price_worker_woman"
+                                                                  value={form.price_worker_woman} onChange={onChangeText}/>
+                                </div>
                             </div>
-                        </div>
+                        </> : null}
 
                         <div className="">
                             <button type="button" className="btn btn-secondary btn-sm"
