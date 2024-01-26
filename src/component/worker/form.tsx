@@ -255,6 +255,7 @@ export default function UserForm ({worker, account}) {
     }
 
     const FormCheckSpecialist = (specialist, specialistVisit) => {
+        if (!specialist) return null
         return specialist.map((item, i) => {
             return <FormSpecialistRadio key={i} workerId={worker._id} specialist={item}
                                         visit={Visit(item._id, specialistVisit, 'specialist_id')}
@@ -263,6 +264,7 @@ export default function UserForm ({worker, account}) {
     }
 
     const FormCheckResearch = (research, researchVisit) => {
+        if (!research) return null
         return research.map((item, i) => {
             return <FormResearchRadio key={i} workerId={worker._id} research={item}
                                       visit={Visit(item._id, researchVisit, 'research_id')}
