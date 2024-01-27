@@ -20,7 +20,12 @@ export default async function Constructor ({
     return (
         <>
             <h1>Новый работник</h1>
-            <WorkerAdd contract={contract} />
+            <Link href={`/contract/${contract._id}/worker`} type="button" className="btn btn-primary btn-sm">
+                <i className="fa-solid fa-arrow-left"></i>
+                &nbsp;
+                договор
+            </Link>
+            <WorkerAdd contract={contract}/>
         </>
     )
 }

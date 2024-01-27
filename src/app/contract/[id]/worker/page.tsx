@@ -110,8 +110,16 @@ export default async function User ({
 
     return (
         <>
-            <h1>Работники <Link type="button" className="btn btn-outline-success" href={`/contract/${params.id}/worker/add`}> + </Link></h1>
+            <h1>Работники <Link type="button" className="btn btn-outline-success"
+                                href={`/contract/${params.id}/worker/add`}> + </Link></h1>
             <ContractId contract={contract[0]}/>
+            <Link href={`/org/${contract[0].org_id}/contract`} type="button" className="btn btn-primary btn-sm">
+                <i className="fa-solid fa-arrow-left"></i>
+                &nbsp;
+                организация
+            </Link>
+            <br/>
+            <br/>
             {(arWorker.items.length) ? List(arWorker.items) : NoList()}
         </>
     )

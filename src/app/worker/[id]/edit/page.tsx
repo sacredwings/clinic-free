@@ -6,6 +6,7 @@ import {
     ServerWorkerGetById
 } from "@/component/function/url_api";
 import { cookies } from 'next/headers'
+import Link from "next/link";
 
 export default async function User ({
                                         params,
@@ -29,6 +30,11 @@ export default async function User ({
     return (
         <>
             <h1>Работник</h1>
+            <Link href={`/contract/${worker[0].contract_id}/worker`} type="button" className="btn btn-primary btn-sm">
+                <i className="fa-solid fa-arrow-left"></i>
+                &nbsp;
+                договор
+            </Link>
             <WorkerEdit worker={worker[0]} account={account}/>
         </>
     )
