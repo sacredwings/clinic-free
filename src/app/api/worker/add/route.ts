@@ -91,7 +91,6 @@ export async function POST (request: Request) {
 
             //ВЫБОР ТИПОВ ДОГОВОРОВ ИЗ ДОГОВОРА
             if (value.contract_id) {
-
                 //загрузка договора
                 hfContract = await CContract.GetById ([value.contract_id])
                 if (!hfContract.length) throw ({code: 30100000, msg: 'Договор не найден'})
@@ -176,14 +175,11 @@ export async function POST (request: Request) {
             //нет фиксированных сумм
             if (!hfContract.price_worker_all && !hfContract.price_worker_man && !hfContract.price_worker_woman) {
                 //ВРЕДНЫЙ ФАКТОР
-                for (let item of arResearch) {
-                    if ((item._price) && (item._price.price))
-                        arPrice.price_worker_hf += item._price.price
-                }
-                for (let item of arSpecialist) {
-                    if ((item._price) && (item._price.price))
-                        arPrice.price_worker_hf += item._price.price
-                }
+                for (let item of arResearch)
+                    if (item.price) arPrice.price_worker_hf += item.price
+
+                for (let item of arSpecialist)
+                    if (item.price) arPrice.price_worker_hf += item.price
 
                 //по умолчанию основной - вредный фактор
                 arPrice.price += arPrice.price_worker_hf
@@ -195,13 +191,15 @@ export async function POST (request: Request) {
                     arPrice.price_worker_all = hfContract.price_worker_all
                     arPrice.price = arPrice.price_worker_all
                 }
-                if (hfContract.price_worker_man) {
-                    arPrice.price_worker_man = hfContract.price_worker_man
-                    arPrice.price = arPrice.price_worker_man
-                }
-                if (hfContract.price_worker_woman) {
-                    arPrice.price_worker_woman = hfContract.price_worker_woman
-                    arPrice.price = arPrice.price_worker_woman
+                if (hfContract.price_worker_man && hfContract.price_worker_woman) {
+                    if (value.man === 1)
+                        arPrice.price_worker_man = hfContract.price_worker_man
+                    else
+                        arPrice.price_worker_woman = hfContract.price_worker_woman
+
+                    arPrice.price += arPrice.price_worker_man
+                    arPrice.price += arPrice.price_worker_woman
+
                 }
 
                 //дополнительные поля

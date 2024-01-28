@@ -92,6 +92,65 @@ export default function ({worker}) {
                     {List(worker.specialist)}
                 </div>
             </div>
+
+            <div className="card">
+                <div className="card-body">
+                    <h3>Дополнительно</h3>
+                    <ul className="list-group list-group-flush">
+                        {worker.price_ultrasound ? <li className="list-group-item">УЗИ
+                            &#160;
+                            <span className="badge text-bg-primary">{worker.price_ultrasound} руб.</span>
+                        </li> : null}
+                        {worker.price_mammography ? <li className="list-group-item">Мамография
+                            &#160;
+                            <span className="badge text-bg-primary">{worker.price_mammography} руб.</span>
+                        </li> : null}
+                        {worker.price_xray ? <li className="list-group-item">ФЛГ
+                            &#160;
+                            <span className="badge text-bg-primary">{worker.price_xray} руб.</span>
+                        </li> : null}
+
+                        {worker.price_pcr ? <li className="list-group-item">ПЦР
+                            &#160;
+                            <span className="badge text-bg-primary">{worker.price_pcr} руб.</span>
+                        </li> : null}
+                        {worker.price_hti ? <li className="list-group-item">ХТИ
+                            &#160;
+                            <span className="badge text-bg-primary">{worker.price_hti} руб.</span>
+                        </li> : null}
+                        {worker.price_brucellosis ? <li className="list-group-item">Бруцеллез
+                            &#160;
+                            <span className="badge text-bg-primary">{worker.price_brucellosis} руб.</span>
+                        </li> : null}
+                    </ul>
+                </div>
+            </div>
+
+            <div className="card">
+                <div className="card-body">
+                    <h3>Договор</h3>
+                    <ul className="list-group list-group-flush">
+                        {worker.price_worker_all ? <li className="list-group-item">За человека
+                            &#160;
+                            <span className="badge text-bg-primary">{worker.price_worker_all} руб.</span>
+                        </li> : null}
+                        {worker.price_worker_man ? <li className="list-group-item">Мужчина
+                            &#160;
+                            <span className="badge text-bg-primary">{worker.price_worker_man} руб.</span>
+                        </li> : null}
+                        {worker.price_worker_woman ? <li className="list-group-item">Женщина
+                            &#160;
+                            <span className="badge text-bg-primary">{worker.price_worker_woman} руб.</span>
+                        </li> : null}
+                    </ul>
+                </div>
+            </div>
+
+            <div className="card">
+                <div className="card-body">
+                    Итого: <b>{worker.price ? worker.price : 0} руб.</b>
+                </div>
+            </div>
             <hr/>
 
         </>

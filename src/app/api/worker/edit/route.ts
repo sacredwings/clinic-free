@@ -1,4 +1,5 @@
 import Joi from "joi"
+import CUser from "@/class/user"
 import CWorker from "@/class/worker"
 import CContract from "@/class/contract"
 import CContractType from "@/class/contract-type"
@@ -50,6 +51,9 @@ export async function POST (request: Request) {
             let searchWorker = await CWorker.GetById([value.id])
             searchWorker = searchWorker[0]
 
+            let searchUser = await CUser.GetById([searchWorker.user_id])
+            searchUser = searchUser[0]
+
             //let price = 0
             let arResearch = []
             let arSpecialist = []
@@ -70,6 +74,8 @@ export async function POST (request: Request) {
                 //ЗДЕСЬ ВЫТАСКИВАЕМ ИЗ ОБЩИХ указанных в контракте
                 //если типы добавлены в контракт
                 if (hfContract.contract_type_ids) {
+
+                    //загрузка типов
                     let arType = await CContractType.GetById(hfContract.contract_type_ids) //загрузка типов
 
                     //добавляем в общему массиву
@@ -144,57 +150,56 @@ export async function POST (request: Request) {
             //нет фиксированных сумм
             if (!hfContract.price_worker_all && !hfContract.price_worker_man && !hfContract.price_worker_woman) {
                 //ВРЕДНЫЙ ФАКТОР
-                for (let item of arResearch) {
-                    if ((item._price) && (item._price.price))
-                        arPrice.price_worker_hf += item._price.price
-                }
-                for (let item of arSpecialist) {
-                    if ((item._price) && (item._price.price))
-                        arPrice.price_worker_hf += item._price.price
-                }
+                for (let item of arResearch)
+                    if (item.price) arPrice.price_worker_hf += item.price
+
+                for (let item of arSpecialist)
+                    if (item.price) arPrice.price_worker_hf += item.price
 
                 //по умолчанию основной - вредный фактор
                 arPrice.price += arPrice.price_worker_hf
             }
 
-            console.log(hfContract)
+            //console.log(hfContract)
             if (hfContract) {
                 //основные поля
                 if (hfContract.price_worker_all) {
                     arPrice.price_worker_all = hfContract.price_worker_all
                     arPrice.price = arPrice.price_worker_all
                 }
-                if (hfContract.price_worker_man) {
-                    arPrice.price_worker_man = hfContract.price_worker_man
-                    arPrice.price = arPrice.price_worker_man
-                }
-                if (hfContract.price_worker_woman) {
-                    arPrice.price_worker_woman = hfContract.price_worker_woman
-                    arPrice.price = arPrice.price_worker_woman
+                if (hfContract.price_worker_man && hfContract.price_worker_woman) {
+                    if (searchUser.man === 1)
+                        arPrice.price_worker_man = hfContract.price_worker_man
+                    else
+                        arPrice.price_worker_woman = hfContract.price_worker_woman
+
+                    arPrice.price += arPrice.price_worker_man
+                    arPrice.price += arPrice.price_worker_woman
+
                 }
 
                 //дополнительные поля
-                if ((hfContract.price_ultrasound) && (value.price_ultrasound)) {
+                if ((hfContract.price_ultrasound) && (value.check_ultrasound)) {
                     arPrice.price_ultrasound = hfContract.price_ultrasound
                     arPrice.price += arPrice.price_ultrasound
                 }
-                if ((hfContract.price_mammography) && (value.price_mammography)) {
+                if ((hfContract.price_mammography) && (value.check_mammography)) {
                     arPrice.price_mammography = hfContract.price_mammography
                     arPrice.price += arPrice.price_mammography
                 }
-                if ((hfContract.price_xray) && (value.price_xray)) {
+                if ((hfContract.price_xray) && (value.check_xray)) {
                     arPrice.price_xray = hfContract.price_xray
                     arPrice.price += arPrice.price_xray
                 }
-                if ((hfContract.price_pcr) && (value.price_pcr)) {
+                if ((hfContract.price_pcr) && (value.check_pcr)) {
                     arPrice.price_pcr = hfContract.price_pcr
                     arPrice.price += arPrice.price_pcr
                 }
-                if ((hfContract.price_hti) && (value.price_hti)) {
+                if ((hfContract.price_hti) && (value.check_hti)) {
                     arPrice.price_hti = hfContract.price_hti
                     arPrice.price += arPrice.price_hti
                 }
-                if ((hfContract.price_brucellosis) && (value.price_brucellosis)) {
+                if ((hfContract.price_brucellosis) && (value.check_brucellosis)) {
                     arPrice.price_brucellosis = hfContract.price_brucellosis
                     arPrice.price += arPrice.price_brucellosis
                 }
