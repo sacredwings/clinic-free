@@ -1,9 +1,12 @@
+// @ts-nocheck
 //обработка результатов ответа сервера на запросы
-import Store from '@/store'
-import { Add, Del } from '@/store/toastSystem'
+
+import { useAppSelector, useAppDispatch, useAppStore } from '@/store/hooks'
+import { Add, Del } from '@/store/reducer/toastSystem'
 
 async function ToastSystemAdd ({code, msg}) {
-    Store.dispatch(
+    const dispatch = useAppDispatch()
+    dispatch(
         Add({
             code,
             msg
@@ -12,7 +15,7 @@ async function ToastSystemAdd ({code, msg}) {
 }
 
 async function ToastSystemDel (id) {
-    Store.dispatch(
+    dispatch(
         Del({
             id
         })

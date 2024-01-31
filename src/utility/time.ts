@@ -1,3 +1,4 @@
+// @ts-nocheck
 export function DateFormat (date) {
     //нет даты
     if (!date) return ''

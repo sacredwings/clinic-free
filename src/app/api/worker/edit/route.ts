@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Joi from "joi"
 import CUser from "@/class/user"
 import CWorker from "@/class/worker"

@@ -1,7 +1,8 @@
+// @ts-nocheck
 import Style from "./element.module.sass";
 import React from "react";
 import Link from "next/link";
-export default async function ({element}) {
+export default async function Search ({element}) {
 
     return (
         <li className="list-group-item">

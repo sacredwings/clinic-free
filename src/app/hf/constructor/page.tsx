@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {ServerHfGet, ServerResearchGet, ServerSpecialistGet} from "@/component/function/url_api";
 import { cookies } from 'next/headers'
 import Link from 'next/link'

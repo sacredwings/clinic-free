@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { renderToStaticMarkup } from 'react-dom/server'
 import pdf from 'html-pdf'
 

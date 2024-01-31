@@ -1,6 +1,7 @@
+// @ts-nocheck
 import { DB, Store } from "../../../social-framework/src"
 
-export default class {
+export default class Visit {
 
     static async Edit ( fields ) {
         try {

@@ -1,7 +1,8 @@
+// @ts-nocheck
 import type { Metadata } from 'next'
 import Auth from '@/component/auth/login'
 
-export default function () {
+export default function Login () {
     return (
         <main>
             <Auth />

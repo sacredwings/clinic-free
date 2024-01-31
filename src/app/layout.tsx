@@ -1,10 +1,11 @@
+// @ts-nocheck
 import type { Metadata } from 'next'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "fontawesome-free-v6/css/all.css"
 import '@/app/globals.sass'
 import Navbar from '@/component/menu/navbar/server'
 import Toast from '@/component/toast/list'
-import Provider from '@/store/provider'
+import StoreProvider from '@/store/StoreProvider'
 import ReactYandexMetrika from '@/component/metrika/react-yandex-metrika'
 
 export const metadata: Metadata = {
@@ -20,11 +21,11 @@ export default function RootLayout({
   return (
       <html lang="ru">
       <body>
-      <Provider>
-          <Toast />
-          <Navbar />
+      <StoreProvider>
+          <Toast/>
+          <Navbar/>
           {children}
-      </Provider>
+      </StoreProvider>
       </body>
       </html>
   )

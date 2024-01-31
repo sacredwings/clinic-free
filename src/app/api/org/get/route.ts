@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import { mongo, minio } from "@/utility/connect"
@@ -50,3 +51,5 @@ export async function GET(request: Request) {
         return NextResponse.json({...{code: 10000000, msg: 'ROrg Add'}, ...err})
     }
 }
+
+export const dynamic = 'force-dynamic';

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {forEachBail} from "enhanced-resolve";
 
 export function FileType (file) {

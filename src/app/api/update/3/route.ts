@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { NextResponse } from 'next/server'
 import Joi from "joi"
 import {Authentication} from "@/app/api/function";

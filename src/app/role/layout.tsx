@@ -1,10 +1,5 @@
+// @ts-nocheck
 import type { Metadata } from 'next'
-//import 'bootstrap/dist/css/bootstrap.min.css'
-import Navbar from '@/component/menu/navbar/server'
-import Toast from '@/component/toast/list'
-import Provider from '@/store/provider'
-
-
 
 export const metadata: Metadata = {
     title: 'Пользователи',

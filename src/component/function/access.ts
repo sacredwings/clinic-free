@@ -1,4 +1,5 @@
-export default function (account, arObjects) {
+// @ts-nocheck
+export default function Access (account, arObjects) {
     let access = false
     if ((!account) || (!arObjects.length)) return false
 

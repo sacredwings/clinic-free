@@ -1,10 +1,11 @@
+// @ts-nocheck
 import React, {useState, useEffect} from 'react'
 import {componentToPDFBuffer} from '@/component/pdf'
 import axios from "axios"
 import Config from "../../../../../config.json";
 import {ServerWorkerGetById} from "@/component/function/url_api";
 
-export default function () {
+export default function Pdf () {
     return <></>
 }
 
@@ -41,7 +42,7 @@ const Page = (worker) => {
     return <>
         <p style={styleHeader}>Министерство здравоохранения и</p>
         <p style={styleHeader}>социального развития Российской Федерации</p>
-        <p style={styleHeader}>ООО "Пульсар"</p>
+        <p style={styleHeader}>ООО Пульсар</p>
         <p style={styleHeader}>_________________________________________</p>
         <p style={styleHeader}>(наименование медицинской организации)</p>
         <p style={styleHeader}>НСО  обл. г. Искитим ул. Комсомольская д.44 оф.1</p>

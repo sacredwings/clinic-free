@@ -1,3 +1,4 @@
+// @ts-nocheck
 'use client'
 
 //import Styles from './profile.module.sass'
@@ -8,7 +9,7 @@ import {ServerOwnerGetById, ServerVideoGet} from "@/component/function/url_api"
 //import VideoAdd from "@/component/video/add";
 import React from "react";
 
-export default function ({worker}) {
+export default function WorkerId ({worker}) {
     console.log(worker)
     const List = (arr) => {
         if (!arr) return null

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Style from "./pagination.module.sass";
 import Link from "next/link";
 

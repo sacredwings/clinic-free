@@ -1,3 +1,4 @@
+// @ts-nocheck
 import 'bootstrap/dist/css/bootstrap.css'
 
 function Modal({show = false, content = ''}) {

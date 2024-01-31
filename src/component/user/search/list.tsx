@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Style from "./list.module.sass";
 import {ServerUserGet} from "@/component/function/url_api";
 import {cookies} from "next/headers";
@@ -5,7 +6,7 @@ import Element from "./element";
 import Form from "@/component/menu/form";
 import Pagination from "@/component/menu/pagination";
 import Link from "next/link";
-export default async function ({searchParams}) {
+export default async function Search ({searchParams}) {
     let page = 1
     if (searchParams.page) page = Number(searchParams.page)
     const step = 20

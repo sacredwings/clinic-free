@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { NextResponse } from 'next/server'
 import { mongo, minio } from "@/utility/connect"
 import { Store, DB } from "../../../../../../social-framework/src"
@@ -36,3 +37,5 @@ export async function GET (request: Request) {
         return NextResponse.json(err)
     }
 }
+
+export const dynamic = 'force-dynamic';

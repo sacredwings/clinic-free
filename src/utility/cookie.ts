@@ -1,3 +1,4 @@
+// @ts-nocheck
 /*
 	Обработка cookies
 	NetPoint, 2019

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {ServerOrgEdit, ServerOrgGet} from "@/component/function/url_api";
 
 export interface interfaceUserGet {

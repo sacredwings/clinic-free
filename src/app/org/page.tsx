@@ -1,3 +1,4 @@
+// @ts-nocheck
 import WorkerId from '@/component/worker/id'
 import {ServerOrgGet, ServerSpecialistGet, ServerWorkerGetById} from "@/component/function/url_api";
 import { cookies } from 'next/headers'

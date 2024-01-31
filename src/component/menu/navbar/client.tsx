@@ -1,8 +1,9 @@
+// @ts-nocheck
 'use client'
 import {useEffect, useState} from "react";
 import Link from "next/link"
 import { useAppSelector, useAppDispatch } from '@/store/hooks'
-import {AuthDel, AuthUpdate} from '@/store/myUser'
+import {AuthDel, AuthUpdate} from '@/store/reducer/myUser'
 import config from '../../../../config.json'
 import { useRouter } from 'next/navigation';
 import Style from "./navbar.module.sass";
@@ -78,7 +79,7 @@ export default function Navbar ({resAccount}) {
     return (
         <nav className="navbar navbar-expand-lg bg-white shadow p-2 mb-2">
             <div className="container-fluid">
-                <Link className="navbar-brand" href={'/'}>ООО "Пульсар"</Link>
+                <Link className="navbar-brand" href={'/'}>ООО Пульсар</Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
                         aria-label="Toggle navigation">

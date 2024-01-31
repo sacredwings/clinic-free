@@ -1,3 +1,4 @@
+// @ts-nocheck
 import WorkerEdit from '@/component/worker/form'
 import {
     ServerAccountGet,

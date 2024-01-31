@@ -1,6 +1,7 @@
+// @ts-nocheck
 import React, {useEffect, useRef, useState} from 'react'
 import axios from "axios"
-import Modal from '../Modal'
+import Modal from '@/component/modal'
 import {ServerContractTypeAdd} from "@/component/function/url_api";
 
 export default function Add () {

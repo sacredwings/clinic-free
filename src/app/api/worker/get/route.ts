@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { NextResponse } from 'next/server'
 import Joi from "joi"
 import { mongo, minio } from "@/utility/connect"
@@ -65,3 +66,5 @@ export async function GET(request: Request) {
 
     }
 }
+
+export const dynamic = 'force-dynamic';

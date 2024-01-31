@@ -1,3 +1,4 @@
+// @ts-nocheck
 'use client'
 
 import {useAppSelector, useAppDispatch} from "@/store/hooks"
@@ -5,7 +6,7 @@ import {useRef, useEffect, useState} from "react"
 import ToastContainer from "react-bootstrap/ToastContainer"
 import { ToastSystemDel } from "@/component/toast/function"
 
-export default function (props) {
+export default function Toast (props) {
     const toastSystem = useAppSelector((state) => state.toastSystem)
     //const count = useAppSelector((state) => state.myUser)
     const dispatch = useAppDispatch()

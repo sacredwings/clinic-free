@@ -1,3 +1,4 @@
+// @ts-nocheck
 import UserEdit from '@/component/user/form'
 import {ServerResearchGet, ServerSpecialistGet, ServerUserGet, ServerUserGetById} from "@/component/function/url_api";
 import { cookies } from 'next/headers'

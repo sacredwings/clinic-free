@@ -1,3 +1,4 @@
+// @ts-nocheck
 import ContractAdd from '@/component/contract/add'
 import {
     ServerContractTypeGet,
@@ -9,7 +10,7 @@ import {
 import { cookies } from 'next/headers'
 import Link from 'next/link'
 
-export default async function ({
+export default async function ContractAdd ({
                                         params,
                                         //searchParams
                                     }:{

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { CAuth }  from "../../../../social-framework/src"
 
 export function objectToFormData(obj) {

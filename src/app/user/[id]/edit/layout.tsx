@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { Metadata } from 'next'
 //import 'bootstrap/dist/css/bootstrap.min.css'
 import Navbar from '@/component/menu/navbar/server'

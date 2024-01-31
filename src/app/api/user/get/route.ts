@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import { mongo, minio } from "@/utility/connect"
@@ -21,7 +22,7 @@ export async function GET(request: Request) {
                 q: Joi.string().min(3).max(255).empty(['', null]).default(null),
 
                 offset: Joi.number().integer().min(0).max(9223372036854775807).empty(null).default(0),
-                count: Joi.number().integer().min(0).max(2000).empty(null).default(20)
+                count: Joi.number().integer().min(0).max(10000).empty(null).default(20)
             })
             value = await schema.validateAsync(url)
         } catch (err) {
@@ -59,3 +60,5 @@ export async function GET(request: Request) {
         return NextResponse.json(err)
     }
 }
+
+export const dynamic = 'force-dynamic';

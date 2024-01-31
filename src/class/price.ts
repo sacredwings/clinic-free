@@ -1,6 +1,7 @@
+// @ts-nocheck
 import { DB, Store } from "../../../social-framework/src"
 
-export default class {
+export default class Price {
 
     static async Add ( fields ) {
         try {

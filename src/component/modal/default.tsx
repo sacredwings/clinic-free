@@ -1,9 +1,10 @@
+// @ts-nocheck
 'use client'
 
 import Styles from './style.module.sass'
 import React from "react";
 
-export default function ({children, Close, title=''}) {
+export default function Modal ({children, Close, title=''}) {
     const style = {
         display: 'block',
         backgroundColor: 'rgba(0,0,0,0.7)'

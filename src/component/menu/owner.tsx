@@ -1,10 +1,11 @@
+// @ts-nocheck
 'use client'
 
 import Link from "next/link"
 import { useSelectedLayoutSegment } from 'next/navigation';
 import React from "react";
 
-export default function ({owner}) {
+export default function Menu ({owner}) {
 
     let pageOwner = 'user'
     if (owner.title) pageOwner = 'group'

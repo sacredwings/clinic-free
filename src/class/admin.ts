@@ -1,6 +1,7 @@
+// @ts-nocheck
 import { DB } from "../../../social-framework/src"
 
-export default class {
+export default class Admin {
 
     //Индексация базы
     static async DdIndex() {

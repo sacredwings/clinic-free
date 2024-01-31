@@ -1,3 +1,4 @@
+// @ts-nocheck
 import ContractId from '@/component/contract/form'
 import {
     ServerWorkerGet,

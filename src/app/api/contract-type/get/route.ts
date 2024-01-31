@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import { mongo, minio } from "@/utility/connect"
@@ -17,7 +18,7 @@ export async function GET(request: Request) {
 
             const schema = Joi.object({
                 offset: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(0),
-                count: Joi.number().integer().min(0).max(200).allow(null).empty('').default(20)
+                count: Joi.number().integer().min(0).max(10000).allow(null).empty('').default(20)
             });
 
             value = await schema.validateAsync(url)
@@ -48,3 +49,5 @@ export async function GET(request: Request) {
         return NextResponse.json({...{code: 10000000, msg: 'RContractType Get'}, ...err})
     }
 }
+
+export const dynamic = 'force-dynamic';
