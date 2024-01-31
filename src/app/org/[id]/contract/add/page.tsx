@@ -10,7 +10,7 @@ import {
 import { cookies } from 'next/headers'
 import Link from 'next/link'
 
-export default async function ContractAdd ({
+export default async function ContractAddPage ({
                                         params,
                                         //searchParams
                                     }:{
