@@ -253,3 +253,21 @@ export interface interfaceVisitEdit {
     note: string
     result: string
 }
+
+//---------------------------------------------------------------------------------
+//ROLE
+export interface interfaceRoleAdd {
+    name: string
+}
+export interface interfaceRoleEdit {
+    id: string
+    name: string
+    access: string[]
+}
+export interface interfaceRoleGet {
+    offset: number
+    count: number
+}
+export interface interfaceRoleGetById {
+    ids: string[]
+}

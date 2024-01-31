@@ -34,7 +34,7 @@ export async function POST (request: Request) {
                 login: rsRequest.login,
                 password: rsRequest.password,
                 ip: null,
-                browser: userAgent
+                device: userAgent
             }
             let result = await CAuth.LoginByField ( arFields )
 

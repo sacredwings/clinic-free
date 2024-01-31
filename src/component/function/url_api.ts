@@ -16,7 +16,7 @@ import {
     interfaceOrgGet,
     interfaceOrgGetById,
     interfaceResearchEdit,
-    interfaceResearchEditHf,
+    interfaceResearchEditHf, interfaceRoleAdd, interfaceRoleEdit, interfaceRoleGet, interfaceRoleGetById,
     interfaceSpecialistAdd,
     interfaceSpecialistDelete,
     interfaceSpecialistEdit,
@@ -884,7 +884,82 @@ export async function ServerVisitEdit ({
     await ToastSystemAdd(res.data)
     return res.data.response
 }
+//---------------------------------------------------------------------------------
+//Role
+export async function ServerRoleGet ({
+    offset=0,
+    count=20
+}: interfaceRoleGet, {
+    cookies=null
+}) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
+    let arFields = {
+        params: {
+            offset,
+            count
+        } as interfaceRoleGet,
+        headers: {
+            Cookie: cookies
+        }
+    } as AxiosRequestConfig
+
+    let url = `/api/role/get`
+    console.log(url)
+    let res = await axios.get(url, arFields);
+    return res.data.response
+}
+export async function ServerRoleGetById ({ids}: interfaceRoleGetById, {cookies=null}) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        params: {
+            ids
+        } as interfaceRoleGetById,
+        headers: {
+            Cookie: cookies
+        }
+    } as AxiosRequestConfig
+
+    let url = `/api/role/getById`
+    console.log(url)
+    let res = await axios.get(url, arFields)
+    return res.data.response
+}
+export async function ServerRoleAdd ({
+     name,
+}: interfaceRoleAdd) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        name
+    } as interfaceRoleAdd
+
+    let url = `/api/role/add`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}
+export async function ServerRoleEdit ({
+                                            id,
+                                            name,
+                                            access
+                                        }: interfaceRoleEdit) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        id,
+        name,
+        access
+    } as interfaceRoleEdit
+
+    let url = `/api/role/edit`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}
 
 
 
