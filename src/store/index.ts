@@ -1,3 +1,4 @@
+'use client'
 import { configureStore } from '@reduxjs/toolkit'
 //объединение редьюсеров
 import { combineReducers } from 'redux'
@@ -11,11 +12,15 @@ const reducer = combineReducers({
     myUser: myUserReducer
 })
 
+let app = configureStore({
+    reducer: reducer
+})
+
 export const makeStore = () => {
-    return configureStore({
-        reducer: reducer
-    })
+    return app
 }
+
+export default app
 
 // Infer the type of makeStore
 export type AppStore = ReturnType<typeof makeStore>

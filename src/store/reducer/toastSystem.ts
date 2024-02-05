@@ -1,4 +1,4 @@
-// @ts-nocheck
+//@ts-nocheck
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 //import type { RootState } from './index'
 //import store from "./index";
@@ -30,10 +30,10 @@ const counterSlice = createSlice({
                 msg: action.payload.msg,
             }
 
-            state.push(newState)
-
             //увеличение id
             id++
+
+            return [...state, ...[newState]]
         },
         Del (state, action: PayloadAction<typeDel>) {
             let newI
@@ -43,10 +43,10 @@ const counterSlice = createSlice({
             })
 
             state.splice(newI, 1); // начиная с позиции 1, удалить 1 элемент
+            //return newI
         }
     },
 })
 
-//export type Type = ToastSystemStateExport
 export const { Add, Del } = counterSlice.actions
 export default counterSlice.reducer
