@@ -1,6 +1,6 @@
 // @ts-nocheck
 import UserEdit from '@/component/user/form'
-import {ServerResearchGet, ServerSpecialistGet, ServerUserGetById} from "@/component/function/url_api";
+import {ServerResearchGet, ServerSpecialistGet, ServerUserGetById, ServerRoleGet} from "@/component/function/url_api";
 import { cookies } from 'next/headers'
 
 export default async function User ({
@@ -11,6 +11,7 @@ export default async function User ({
     //searchParams: { page: number, q: string }
 }) {
     let user = await ServerUserGetById({ids: [params.id]}, {cookies:cookies()})
+
     let specialist = await ServerSpecialistGet({
         offset: 0,
         count: 100
@@ -19,11 +20,15 @@ export default async function User ({
         offset: 0,
         count: 100
     }, {cookies:cookies()})
+    let role = await ServerRoleGet({
+        offset: 0,
+        count: 100
+    }, {cookies:cookies()})
 
     return (
         <>
             <h1>Пользователь / редактирование</h1>
-            <UserEdit user={user[0]} specialist={specialist.items} research={research.items}/>
+            <UserEdit user={user[0]} specialist={specialist.items} research={research.items} role={role.items}/>
         </>
     )
 }

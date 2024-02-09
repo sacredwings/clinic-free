@@ -23,11 +23,16 @@ export interface interfaceUserEdit {
 
     phone: number
 }
-export interface interfaceUserAccess {
+export interface interfaceUserEditAccess {
     id: string
 
     specialist_ids: string[]
     research_ids: string[]
+}
+export interface interfaceUserEditRole {
+    id: string
+
+    role_ids: string[]
 }
 export interface interfaceUserAdd {
     login: string
@@ -271,4 +276,7 @@ export interface interfaceRoleGet {
 }
 export interface interfaceRoleGetById {
     ids: string[]
+}
+export interface interfaceRoleDelete {
+    id: string
 }
