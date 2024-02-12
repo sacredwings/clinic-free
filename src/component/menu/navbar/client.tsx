@@ -96,6 +96,7 @@ export default function Navbar ({resAccount}) {
                                 <li><Link className="dropdown-item" href={'/org'}>Проф. осмотр</Link></li>
                                 <div className="dropdown-divider"/>
                                 <li><Link className="dropdown-item" href={'/user'}>Пользователи</Link></li>
+                                <li><Link className="dropdown-item" href={'/role'}>Роли</Link></li>
                             </ul>
                         </li>
                         <li className="nav-item dropdown">

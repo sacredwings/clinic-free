@@ -1,5 +1,6 @@
 // @ts-nocheck
 import {
+    interfaceAuthLogin,
     interfaceContractAdd,
     interfaceContractEdit,
     interfaceContractGet,
@@ -44,6 +45,26 @@ async function request (type, url, data, config) {
     if (type==='post')
         await axios.post(url, params)
 }*/
+//---------------------------------------------------------------------------------
+//АВТОРИЗАЦИЯ
+export async function ServerAuthLogin ({
+    login,
+    password,
+}: interfaceAuthLogin) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        login,
+        password,
+    } as interfaceAuthLogin
+
+    let url = `/api/auth/login`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}
+
 //---------------------------------------------------------------------------------
 //АККАУНТ
 export async function ServerAccountGet ({cookies=null}) {

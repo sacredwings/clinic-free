@@ -28,7 +28,7 @@ export default async function Constructor ({
 
     return (
         <>
-            <h1>Новый работник</h1>
+            <h1>Новый пользователь</h1>
             <UserAdd specialist={specialist.items} research={research.items}/>
         </>
     )

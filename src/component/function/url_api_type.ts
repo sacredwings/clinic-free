@@ -1,6 +1,11 @@
 // @ts-nocheck
 import {ServerOrgEdit, ServerOrgGet} from "@/component/function/url_api";
 
+export interface interfaceAuthLogin {
+    login: string
+    password: number
+}
+
 export interface interfaceUserGet {
     q: string | null
     offset: number

@@ -4,12 +4,12 @@ import React, {useState, useEffect} from 'react'
 import Hf from "@/component/hf/list";
 import RoleAdd from "@/component/role/add";
 import RoleElement from "@/component/role/element";
-import {ServerHfEdit} from "@/component/function/url_api";
+import {ServerRoleEdit} from "@/component/function/url_api";
 import axios from "axios";
 
 export default function Element ({element, setSelectRole}) {
     let [edit, setEdit] = useState(null)
-    let [clientElement, setClientElement] = useState(null)
+    let [clientElement, setClientElement] = useState(element)
 
     //загрузка спистка
     useEffect( () => {
@@ -18,13 +18,23 @@ export default function Element ({element, setSelectRole}) {
         })()
     }, [])
 
+    const onChangeText = (e) => {
+        let name = e.target.id;
+        let value = e.target.value;
+
+        setClientElement(prev => ({
+            ...prev, [name]: value
+        }))
+    }
+
     const OnSave = async () => {
         //сохранение в базе
         let arFields = {
-            id: edit.id,
-            name: edit.name
+            id: clientElement._id,
+            name: clientElement.name,
+            access: clientElement.access,
         }
-        let result = await ServerHfEdit(arFields)
+        let result = await ServerRoleEdit(arFields)
 
         setEdit(null)
     }
@@ -39,28 +49,25 @@ export default function Element ({element, setSelectRole}) {
     }
 
     const Form = () => {
-        return <tr>
-            <td>
-                <input type="text" className="form-control" id="name" onChange={(e) => {
-                    OnChange(e, element._id)
-                }} value={edit.name}/>
-            </td>
-            <td>
-                <div className="btn-group" role="group" aria-label="Basic example">
-                    <button type="button" className="btn btn-primary" onClick={() => setEdit(null)}>Отмена</button>
-                    <button type="button" className="btn btn-primary" onClick={OnSave}>Сохранить</button>
-                    <button type="button" className="btn btn-danger" onClick={OnDelete}>Удалить</button>
-                </div>
-            </td>
-        </tr>
+        return <li className="list-group-item">
+
+            <input type="text" className="form-control" id="name" onChange={onChangeText} value={clientElement.name}/>
+
+            <div className="btn-group btn-sm" role="group" aria-label="Basic example">
+                <button type="button" className="btn btn-primary btn-sm" onClick={() => setEdit(null)}>Отмена</button>
+                <button type="button" className="btn btn-primary btn-sm" onClick={OnSave}>Сохранить</button>
+                <button type="button" className="btn btn-danger btn-sm" onClick={OnDelete}>Удалить</button>
+            </div>
+
+        </li>
     }
 
     const View = () => {
         return <li className="list-group-item" onClick={() => {
-            setSelectRole(element)
+            setSelectRole(clientElement)
         }}>
-            {element.name}
-            <button type="button" className="btn btn-warning" onClick={()=>{setEdit(!edit)}}>Редактировать</button>
+            {clientElement.name}
+            <button type="button" className="btn btn-warning btn-sm" onClick={()=>{setEdit(!edit)}}>Редактировать</button>
         </li>
     }
 
