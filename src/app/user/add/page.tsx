@@ -3,7 +3,7 @@ import {
     ServerContractGetById,
     ServerHfGet,
     ServerOrgGetById,
-    ServerResearchGet,
+    ServerResearchGet, ServerRoleGet,
     ServerSpecialistGet
 } from "@/component/function/url_api";
 import { cookies } from 'next/headers'
@@ -24,12 +24,15 @@ export default async function Constructor ({
         offset: 0,
         count: 100
     }, {cookies:cookies()})
-
+    let role = await ServerRoleGet({
+        offset: 0,
+        count: 100
+    }, {cookies:cookies()})
 
     return (
         <>
             <h1>Новый пользователь</h1>
-            <UserAdd specialist={specialist.items} research={research.items}/>
+            <UserAdd specialist={specialist.items} research={research.items} role={role.items}/>
         </>
     )
 }

@@ -15,21 +15,20 @@ export async function POST(request: Request) {
         try {
             //схема
             const schema = Joi.object({
-                login: Joi.string().min(5).max(50).required(),
-                password: Joi.string().min(8).max(100).required(),
+                login: Joi.string().min(6).max(50).allow(null).empty('').default(null),
+                password: Joi.string().min(8).max(100).allow(null).empty('').default(null),
 
                 first_name: Joi.string().min(1).max(255).required(),
                 last_name: Joi.string().min(1).max(255).required(),
-                second_name: Joi.string().min(1).max(255).empty(['', null]).default(null),
+                second_name: Joi.string().min(1).max(255).allow(null).empty('').default(null),
 
                 man: Joi.number().integer().min(0).max(1).required(),
                 date_birth: Joi.date().min('1-1-1900').max('1-1-2030').required(),
 
-                phone: Joi.number().min(1000000000).max(9999999999).empty(['', null]).default(null),
+                phone: Joi.number().min(1000000000).max(9999999999).allow(null).empty('').default(null),
 
-                specialist_ids: Joi.array().min(1).max(50).items(Joi.string().min(24).max(24)).empty(null).default(null),
-                research_ids: Joi.array().min(1).max(50).items(Joi.string().min(24).max(24)).empty(null).default(null),
-                //gtoken: Joi.string().required()
+                specialist_ids: Joi.array().min(1).max(50).items(Joi.string().min(24).max(24)).allow(null).empty(Joi.array().length(0)).default(null),
+                research_ids: Joi.array().min(1).max(50).items(Joi.string().min(24).max(24)).allow(null).empty(Joi.array().length(0)).default(null),
             })
             value = await schema.validateAsync(res)
 
@@ -50,8 +49,6 @@ export async function POST(request: Request) {
                 login: value.login,
                 password: value.password,
 
-                photo_id: value.photo_id,
-
                 first_name: value.first_name,
                 last_name: value.last_name,
                 second_name: value.second_name,
@@ -60,10 +57,9 @@ export async function POST(request: Request) {
                 man: value.man,
 
                 phone: value.phone,
-                email: value.email,
 
-                specialist_ids: value.specialist_ids,
-                research_ids: value.research_ids,
+                specialist_ids: new DB().ObjectID(value.specialist_ids),
+                research_ids: new DB().ObjectID(value.research_ids),
             }
 
             let res = await CUser.Add(arFields)

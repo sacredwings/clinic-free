@@ -17,7 +17,7 @@ export async function POST(request: Request) {
             const schema = Joi.object({
                 id: Joi.string().min(1).max(255).required(),
 
-                role_ids: Joi.array().min(1).max(50).items(Joi.string().min(24).max(24)).empty(null).default(null),
+                role_ids: Joi.array().min(1).max(50).items(Joi.string().min(24).max(24)).allow(null).empty(Joi.array().length(0)).default(null),
             })
             value = await schema.validateAsync(rsRequest)
 
@@ -29,7 +29,7 @@ export async function POST(request: Request) {
         try {
             await mongo()
 
-            let userId = await Authentication(request)
+            //let userId = await Authentication(request)
             //if (!userId) throw ({code: 30100000, msg: 'Требуется авторизация'})
 
             let arFields = {

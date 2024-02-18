@@ -19,14 +19,12 @@ export async function POST(request: Request) {
 
                 first_name: Joi.string().min(1).max(255).required(),
                 last_name: Joi.string().min(1).max(255).required(),
-                second_name: Joi.string().min(1).max(255).empty(['', null]).default(null),
+                second_name: Joi.string().min(1).max(255).allow(null).empty('').default(null),
 
                 man: Joi.number().integer().min(0).max(1).required(),
                 date_birth: Joi.date().min('1-1-1900').max('1-1-2030').required(),
 
-                phone: Joi.number().min(10000000000).max(99999999999).empty(['', null]).default(null),
-
-                //gtoken: Joi.string().required()
+                phone: Joi.number().min(1000000000).max(9999999999).allow(null).empty('').default(null),
             })
             value = await schema.validateAsync(res)
 
@@ -44,8 +42,6 @@ export async function POST(request: Request) {
             //проверка прав на редактирование
 
             let arFields = {
-                //photo_id: value.photo_id,
-
                 first_name: value.first_name,
                 last_name: value.last_name,
                 second_name: value.second_name,
@@ -54,7 +50,6 @@ export async function POST(request: Request) {
                 date_birth: value.date_birth,
 
                 phone: value.phone,
-                //email: value.email,
             }
 
             let res = await CUser.Edit(value.id, arFields)

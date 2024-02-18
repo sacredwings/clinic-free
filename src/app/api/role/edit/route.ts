@@ -14,7 +14,7 @@ export async function POST (request: Request) {
             const schema = Joi.object({
                 id: Joi.string().min(24).max(24).required(),
                 name: Joi.string().min(1).max(255).required(),
-                access: Joi.array().min(0).max(50).items(Joi.string().min(1).max(30)).empty(['', null]).default(null),
+                access: Joi.array().min(1).max(50).items(Joi.string().min(1).max(30)).allow(null).empty(Joi.array().length(0)).default(null),
             });
 
             value = await schema.validateAsync(rsRequest)

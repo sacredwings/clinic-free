@@ -39,6 +39,12 @@ export interface interfaceUserEditRole {
 
     role_ids: string[]
 }
+export interface interfaceUserEditAuth {
+    id: string
+
+    login: string
+    password: string
+}
 export interface interfaceUserAdd {
     login: string
     password: string

@@ -17,8 +17,8 @@ export async function POST(request: Request) {
             const schema = Joi.object({
                 id: Joi.string().min(1).max(255).required(),
 
-                login: Joi.string().min(1).max(50).required(),
-                password: Joi.string().min(1).max(50).required(),
+                login: Joi.string().min(6).max(50).allow(null).empty('').default(null),
+                password: Joi.string().min(8).max(50).allow(null).empty('').default(null),
             })
             value = await schema.validateAsync(res)
 
@@ -35,10 +35,10 @@ export async function POST(request: Request) {
 
             let arFields = {
                 login: value.login,
-                password: value.password,
+                password: (value.login && value.password) ? null : value.password,
             }
 
-            let res = await CUser.Edit(userId, arFields)
+            let res = await CUser.Edit(value.id, arFields)
 
             return NextResponse.json({ res })
         } catch (err) {

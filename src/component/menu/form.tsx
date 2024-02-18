@@ -5,6 +5,7 @@ import Link from "next/link";
 import React, {useEffect, useState} from "react";
 
 export default function Menu ({searchParams, url}) {
+    if (!searchParams.q) searchParams.q = ''
     let [form, setForm] = useState(searchParams.q)
 
     const onChangeText = (e) => {

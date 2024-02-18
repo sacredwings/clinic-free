@@ -12,8 +12,12 @@ export default function RootLayout({
     children: React.ReactNode
 }) {
     return (
-        <main className={'container'} style={{maxWidth: '992px'}}>
-            {children}
+        <main className={'container'} style={{maxWidth: '960px'}}>
+            <div className={'row'}>
+                <div className={'col-12'}>
+                    {children}
+                </div>
+            </div>
         </main>
     )
 }

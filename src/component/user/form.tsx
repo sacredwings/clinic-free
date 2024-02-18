@@ -1,9 +1,9 @@
 // @ts-nocheck
 'use client'
 //import { useRouter } from 'next/router' //переход по url
-import React, {useState, useEffect} from 'react'
+import  iReact, {useState, useEffect} from 'react'
 import axios from "axios"
-import {ServerUserEditAccess, ServerUserEditRole} from "@/component/function/url_api";
+import {ServerUserEditAuth, ServerUserEditAccess, ServerUserEditRole} from "@/component/function/url_api";
 
 export default function UserForm ({user, specialist, research, role}) {
     //const router = useRouter() //для перехода к пользователю
@@ -40,14 +40,14 @@ export default function UserForm ({user, specialist, research, role}) {
         research_ids: null
     }*/
 
-    let [form, setForm] = useState(user)
+    let [form, setForm] = useState({...user, password: ''})
     let [checkSpecialist, setCheckSpecialist] = useState(()=>OnCheckInit(specialist, user.specialist_ids))
     let [checkResearch, setCheckResearch] = useState(()=>OnCheckInit(research, user.research_ids))
     let [checkRole, setCheckRole] = useState(()=>OnCheckInit(role, user.role_ids))
 
     useEffect(() => {
         (async () => {
-            console.log(form)
+            //console.log(form)
         })()
     }, [form])
 
@@ -64,6 +64,20 @@ export default function UserForm ({user, specialist, research, role}) {
     const Default = () => {
         setForm(prev => (formDefault))
     }*/
+
+    const onAdd = async (e) => {
+        e.preventDefault() // Stop form submit
+
+        let arFields = {
+            id: form._id,
+            login: form.login,
+            password: form.password,
+
+        }
+
+        let result = await ServerUserEditAuth(arFields)
+        if (result) setView(true)
+    }
 
     const onSaveAccess = async (e) => {
         e.preventDefault() // Stop form submit
@@ -243,8 +257,9 @@ export default function UserForm ({user, specialist, research, role}) {
                                    value={form.date_birth ? new Date(form.date_birth).toISOString().substring(0, 10) : ''}
                                    onChange={onChangeText}/>
                         </div>
-                        <div className="mb-3">
-                            <label htmlFor="phone" className="col-form-label">Телефон</label>
+                        <label htmlFor="phone" className="col-form-label">Телефон</label>
+                        <div className="input-group mb-3">
+                            <span className="input-group-text" id="phone-label">+7</span>
                             <input type="text" className="form-control" id="phone" value={form.phone ? form.phone : ''}
                                    onChange={onChangeText}/>
                         </div>
@@ -260,9 +275,38 @@ export default function UserForm ({user, specialist, research, role}) {
                 <div className="card-body">
 
 
-                    <form onSubmit={onSaveRole}>
+                    <form onSubmit={onAdd}>
                         <div className="mb-0">
                             <legend>Доступ к системе</legend>
+                            <hr/>
+                        </div>
+                        <div className="mb-3 row">
+                            <div className="col-6">
+                                <label htmlFor="last_name" className="col-form-label">Логин</label>
+                                <input type="text" className="form-control" id="login"
+                                       value={form.login ? form.login : ''} onChange={onChangeText}/>
+                            </div>
+                            <div className="col-6">
+                                <label htmlFor="first_name" className="col-form-label">Пароль</label>
+                                <input type="text" className="form-control" id="password"
+                                       value={form.password ? form.password : ''} onChange={onChangeText}/>
+                            </div>
+                        </div>
+                        <div className="mb-3" style={{float: 'right'}}>
+                            <button type="submit" className="btn btn-success">Сохранить</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+            <div className="card" style={{marginTop: '20px'}}>
+                <div className="card-body">
+
+
+                    <form onSubmit={onSaveRole}>
+                        <div className="mb-0">
+                            <legend>Права доступа к системе</legend>
                             <hr/>
                         </div>
                         <div className="mb-3">

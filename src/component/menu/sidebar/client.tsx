@@ -3,10 +3,8 @@
 import {useEffect, useState} from "react";
 import Link from "next/link"
 import { useAppSelector, useAppDispatch } from '@/store/hooks'
-import {AuthDel, AuthUpdate} from '@/store/myUser'
-import {loadReCaptcha} from "recaptcha-v3-react-function-async"
-import config from '../../../../config.json'
-import { useRouter } from 'next/navigation';
+import {AuthDel, AuthUpdate} from '@/store/reducer/myUser'
+import style from './style.module.sass'
 
 export default function Navbar ({resAccount}) {
     const myUser = useAppSelector((state) => state.myUser)
@@ -20,36 +18,38 @@ export default function Navbar ({resAccount}) {
     }, [myUser])
 
 
-    const LogIn = (account) => {
-        if (!account) return
-        dispatch(AuthUpdate({
-            _id: account._id,
-            login: account.login,
-        }))
-    }
-
-    const LogOut = () => {
-        dispatch(AuthDel())
-    }
-
     const Auth = () => {
-        return <div className="d-flex">
-            <ul className="navbar-nav">
-                <li className="nav-item dropdown">
-                    <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
-                       role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        {user.login}
-                    </a>
-                    <ul className="dropdown-menu dropdown-menu-right" style={{left: 'auto', right: 0}}
-                        aria-labelledby="navbarDropdownMenuLink">
-                        <li><Link legacyBehavior href={`/user/${user._id}`}><a className="dropdown-item" >Моя страница</a></Link></li>
-                        <li><Link legacyBehavior href={"/setting"}><a className="dropdown-item" >Настройки</a></Link></li>
-                        <div className="dropdown-divider"/>
-                        <li><Link legacyBehavior href="/"><a className="dropdown-item" onClick={LogOut}>Выход</a></Link></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
+        return <>
+
+            <div className={style.block}>
+                <h1>Мед. комиссии</h1>
+
+                <ul className="list-group list-group-flush">
+                    <li className="list-group-item">
+                        <Link href={'/org'}>Организации</Link>
+                    </li>
+                    <li className="list-group-item">
+                        <Link href={'/hf/constructor'}>Вредные факторы</Link>
+                    </li>
+                    <li className="list-group-item">
+                        <Link href={'/contract-type/constructor'}>Типы договоров</Link>
+                    </li>
+                </ul>
+            </div>
+
+            <div className={style.block}>
+                <h1>Пользователи</h1>
+
+                <ul className="list-group list-group-flush">
+                    <li className="list-group-item">
+                        <Link href={'/user'}>Пользователи</Link>
+                    </li>
+                    <li className="list-group-item">
+                        <Link href={'/role'}>Роли</Link>
+                    </li>
+                </ul>
+            </div>
+        </>
     }
 
     const NoAuth = () => {
@@ -69,7 +69,7 @@ export default function Navbar ({resAccount}) {
     }
 
     return (
-        <div>
+        <div className={style.sideBar}>
             {user && user._id ? Auth() : NoAuth()}
         </div>
     )

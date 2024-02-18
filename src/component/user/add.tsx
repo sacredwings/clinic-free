@@ -6,7 +6,7 @@ import axios from "axios"
 import {interfaceUserAccess} from "@/component/function/url_api_type";
 import {ServerUserAdd, ServerUserEditAccess} from "@/component/function/url_api";
 
-export default function UserForm ({specialist, research}) {
+export default function UserForm ({specialist, research, role}) {
     //const router = useRouter() //для перехода к пользователю
 
     const OnCheckInit = (list, formList) => {
@@ -40,6 +40,8 @@ export default function UserForm ({specialist, research}) {
         date_birth: null,
         phone: null,
 
+        role_ids: null,
+
         specialist_ids: null,
         research_ids: null
     }
@@ -48,11 +50,11 @@ export default function UserForm ({specialist, research}) {
     let [form, setForm] = useState(formDefault)
     let [checkSpecialist, setCheckSpecialist] = useState(()=>OnCheckInit(specialist, []))
     let [checkResearch, setCheckResearch] = useState(()=>OnCheckInit(research, []))
-
+    let [checkRole, setCheckRole] = useState(()=>OnCheckInit(role, []))
 
     useEffect(() => {
         (async () => {
-            console.log(form)
+            //console.log(form)
         })()
     }, [form])
 
@@ -85,11 +87,18 @@ export default function UserForm ({specialist, research}) {
             man: form.man,
             date_birth: form.date_birth,
             phone: form.phone,
+
+            role_ids: form.role_ids,
+
             specialist_ids: form.specialist_ids,
             research_ids: form.research_ids
         }
 
         let result = await ServerUserAdd(arFields)
+        if (!result) return
+        setForm(prev => ({
+            ...prev, ['_id']: result._id
+        }))
         if (result) setView(true)
     }
 
@@ -128,10 +137,29 @@ export default function UserForm ({specialist, research}) {
         setCheckResearch(newCheckList)
     }
 
+    const OnChangeCheckRole = (id) => {
+        let newIds = []
+        let newCheckList = checkRole.map((element, i) => {
+            if (element._id === id)
+                element.checked = !element.checked
+
+            //заполнение чеками
+            if (element.checked) newIds.push(element._id)
+
+            return element
+        })
+
+        setForm(prev => ({
+            ...prev, role_ids: (newIds.length) ? newIds : null
+        }))
+        setCheckRole(newCheckList)
+    }
+
     const View = () => {
         return <>
             <div className="alert alert-success" role="alert">
                 <p>Пользователь добавлен</p>
+                <p><a href={`/user/${form._id}`}>Открыть профиль</a></p>
             </div>
 
             <button type="button" className="btn btn-outline-secondary" onClick={()=>{
@@ -175,24 +203,94 @@ export default function UserForm ({specialist, research}) {
             </div>
         </>
     }
+
+    const FormCheckRole = () => {
+        return <>
+            <div className="mb-3 form-check">
+                <div>
+                    {checkRole.map((item, i)=>{
+                        return <div className="form-check" key={i}>
+                            <input className="form-check-input" type="checkbox" checked={(item.checked) ? true : false} onChange={()=>{OnChangeCheckRole(item._id)}}/>
+                            <label className="form-check-label" htmlFor="flexCheckDefault">
+                                {item.name}
+                            </label>
+                        </div>
+                    })}
+                </div>
+            </div>
+        </>
+    }
+
     const Form = () => {
         return <>
             <form onSubmit={onAdd}>
+
+
                 <div className="card">
                     <div className="card-body">
 
                         <div className="mb-0">
-                            <legend>Авторизация</legend>
+                            <legend>Основное</legend>
+                            <hr/>
+                        </div>
+                        <div className="mb-3 row">
+                            <div className="col-4">
+                                <label htmlFor="last_name" className="col-form-label">Фамилия</label>
+                                <input type="text" className="form-control" id="last_name"
+                                       value={form.last_name ? form.last_name : ''} onChange={onChangeText}/>
+                            </div>
+                            <div className="col-4">
+                                <label htmlFor="first_name" className="col-form-label">Имя</label>
+                                <input type="text" className="form-control" id="first_name"
+                                       value={form.first_name ? form.first_name : ''} onChange={onChangeText}/>
+                            </div>
+                            <div className="col-4">
+                                <label htmlFor="second_name" className="col-form-label">Отчество</label>
+                                <input type="text" className="form-control" id="second_name"
+                                       value={form.second_name ? form.second_name : ''} onChange={onChangeText}/>
+                            </div>
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="man" className="col-form-label">Пол</label>
+                            <select className="form-select" id="man" aria-label="" value={form.man}
+                                    onChange={onChangeText}>
+                                <option value="1" defaultValue="1">Мужской</option>
+                                <option value="0">Женский</option>
+                            </select>
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="date_birth" className="col-form-label">Дата рождения</label>
+                            <input type="date" className="form-control" id="date_birth"
+                                   value={form.date_birth ? new Date(form.date_birth).toISOString().substring(0, 10) : ''}
+                                   onChange={onChangeText}/>
+                        </div>
+                        <label htmlFor="phone" className="col-form-label">Телефон</label>
+                        <div className="input-group mb-3">
+                            <span className="input-group-text" id="phone-label">+7</span>
+                            <input type="text" className="form-control" id="phone" value={form.phone ? form.phone : ''}
+                                   onChange={onChangeText}/>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div className="card" style={{marginTop: '20px'}}>
+                    <div className="card-body">
+
+                        <div className="mb-0">
+                            <legend>Доступ к системе</legend>
                             <hr/>
                         </div>
                         <div className="mb-3 row">
                             <div className="col-6">
                                 <label htmlFor="last_name" className="col-form-label">Логин</label>
-                                <input type="text" className="form-control" id="login" value={form.login ? form.login : ''} onChange={onChangeText}/>
+                                <input type="text" className="form-control" id="login"
+                                       value={form.login ? form.login : ''} onChange={onChangeText}/>
                             </div>
                             <div className="col-6">
                                 <label htmlFor="first_name" className="col-form-label">Пароль</label>
-                                <input type="text" className="form-control" id="password" value={form.password ? form.password : ''} onChange={onChangeText}/>
+                                <input type="text" className="form-control" id="password"
+                                       value={form.password ? form.password : ''} onChange={onChangeText}/>
                             </div>
                         </div>
 
@@ -203,37 +301,12 @@ export default function UserForm ({specialist, research}) {
                     <div className="card-body">
 
                         <div className="mb-0">
-                            <legend>Основное</legend>
+                            <legend>Права доступа к системе</legend>
                             <hr/>
                         </div>
-                        <div className="mb-3 row">
-                            <div className="col-4">
-                                <label htmlFor="last_name" className="col-form-label">Фамилия</label>
-                                <input type="text" className="form-control" id="last_name" value={form.last_name ? form.last_name : ''} onChange={onChangeText}/>
-                            </div>
-                            <div className="col-4">
-                                <label htmlFor="first_name" className="col-form-label">Имя</label>
-                                <input type="text" className="form-control" id="first_name" value={form.first_name ? form.first_name : ''} onChange={onChangeText}/>
-                            </div>
-                            <div className="col-4">
-                                <label htmlFor="second_name" className="col-form-label">Отчество</label>
-                                <input type="text" className="form-control" id="second_name" value={form.second_name ? form.second_name : ''} onChange={onChangeText}/>
-                            </div>
-                        </div>
                         <div className="mb-3">
-                            <label htmlFor="man" className="col-form-label">Пол</label>
-                            <select className="form-select" id="man" aria-label="" value={form.man} onChange={onChangeText}>
-                                <option value="1" defaultValue="1">Мужской</option>
-                                <option value="0">Женский</option>
-                            </select>
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="date_birth" className="col-form-label">Дата рождения</label>
-                            <input type="date" className="form-control" id="date_birth" value={form.date_birth ? new Date(form.date_birth).toISOString().substring(0, 10) : ''} onChange={onChangeText}/>
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="phone" className="col-form-label">Телефон</label>
-                            <input type="text" className="form-control" id="phone" value={form.phone ? form.phone : ''} onChange={onChangeText}/>
+                            <p className={'text-center'}>Роли</p>
+                            {FormCheckRole()}
                         </div>
 
                     </div>
@@ -247,7 +320,7 @@ export default function UserForm ({specialist, research}) {
                             <hr/>
                         </div>
                         <div className="mb-3">
-                            <p className={'text-center'}>Специалисты</p>
+                        <p className={'text-center'}>Специалисты</p>
                             {FormCheckSpecialist()}
                         </div>
                         <div className="mb-3">
@@ -279,13 +352,13 @@ export default function UserForm ({specialist, research}) {
     </>
 }
 
-function formDate (oldDate) {
+function formDate(oldDate) {
     if (!oldDate) return null
 
     let date = new Date(oldDate)
-    let month=new Array("01","02","03","04","05","06","07","08","09","10","11","12")
-    let day=`${date.getDate()}`
-    if (date.getDate()<10)
-        day=`0${date.getDate()}`
-    return (date.getFullYear()+"-"+month[date.getMonth()]+"-"+day)
+    let month = new Array("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12")
+    let day = `${date.getDate()}`
+    if (date.getDate() < 10)
+        day = `0${date.getDate()}`
+    return (date.getFullYear() + "-" + month[date.getMonth()] + "-" + day)
 }

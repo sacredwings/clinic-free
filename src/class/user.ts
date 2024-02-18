@@ -41,4 +41,25 @@ export default class User {
         }
     }
 
+    static async EditAuth ( id, fields ) {
+        try {
+            const mongoClient = Store.GetMongoClient()
+            let collection = mongoClient.collection('user')
+
+            if (fields.login)
+                fields.login = fields.login.toLowerCase()
+
+            let arFields = {
+                login: fields.login,
+                password: fields.password,
+            }
+            let result = collection.updateOne({_id: id}, {$set: arFields})
+
+            return fields
+
+        } catch (err) {
+            console.log(err)
+            throw ({...{err: 7001000, msg: 'CUser EditAuth'}, ...err})
+        }
+    }
 }

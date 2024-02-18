@@ -25,7 +25,7 @@ import {
     interfaceSpecialistEditHf,
     interfaceSpecialistGet,
     interfaceUserAccess, interfaceUserAdd,
-    interfaceUserEdit, interfaceUserEditAccess, interfaceUserEditRole, interfaceUserGet,
+    interfaceUserEdit, interfaceUserEditAccess, interfaceUserEditAuth, interfaceUserEditRole, interfaceUserGet,
     interfaceUserGetById, interfaceVisitEdit, interfaceWorkerAdd, interfaceWorkerEdit,
     interfaceWorkerGet,
     interfaceWorkerGetById
@@ -228,6 +228,25 @@ export async function ServerUserEditRole ({
     } as interfaceUserEditAccess
 
     let url = `/api/user/editRole`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}
+export async function ServerUserEditAuth ({
+    id,
+    login,
+    password
+}: interfaceUserEditAuth) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        id,
+        login,
+        password
+    } as interfaceUserEditAuth
+
+    let url = `/api/user/editAuth`
     console.log(url)
     let res = await axios.post(url, arFields);
     await ToastSystemAdd(res.data)

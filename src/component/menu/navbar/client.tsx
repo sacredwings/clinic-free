@@ -77,7 +77,7 @@ export default function Navbar ({resAccount}) {
     }
 
     return (
-        <nav className="navbar navbar-expand-lg bg-white shadow p-2 mb-2">
+        <nav className="navbar navbar-expand-lg bg-white shadow p-2">
             <div className="container-fluid">
                 <Link className="navbar-brand" href={'/'}>ООО Пульсар</Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -90,23 +90,22 @@ export default function Navbar ({resAccount}) {
                         <li className="nav-item dropdown">
                             <Link className="nav-link dropdown-toggle" href={'#'} role="button" data-bs-toggle="dropdown"
                                aria-expanded="false">
-                                Навигация
+                                Мед. комиссии
                             </Link>
                             <ul className="dropdown-menu">
-                                <li><Link className="dropdown-item" href={'/org'}>Проф. осмотр</Link></li>
-                                <div className="dropdown-divider"/>
-                                <li><Link className="dropdown-item" href={'/user'}>Пользователи</Link></li>
-                                <li><Link className="dropdown-item" href={'/role'}>Роли</Link></li>
+                                <li><Link className="dropdown-item" href={'/org'}>Организации</Link></li>
+                                <li><Link className="dropdown-item" href={'/hf/constructor'}>Вредные факторы</Link></li>
+                                <li><Link className="dropdown-item" href={'/contract-type/constructor'}>Типы договоров</Link></li>
                             </ul>
                         </li>
                         <li className="nav-item dropdown">
                             <Link className="nav-link dropdown-toggle" href={'#'} role="button" data-bs-toggle="dropdown"
                                   aria-expanded="false">
-                                Кострукторы
+                                Пользователи
                             </Link>
                             <ul className="dropdown-menu">
-                                <li><Link className="dropdown-item" href={'/hf/constructor'}>Вред. факторы</Link></li>
-                                <li><Link className="dropdown-item" href={'/contract-type/constructor'}>Типы договоров</Link></li>
+                                <li><Link className="dropdown-item" href={'/user'}>Пользователи</Link></li>
+                                <li><Link className="dropdown-item" href={'/role'}>Роли</Link></li>
                             </ul>
                         </li>
                     </ul>
