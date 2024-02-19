@@ -35,8 +35,19 @@ export async function POST(request: Request) {
 
             let arFields = {
                 login: value.login,
-                password: (value.login && value.password) ? null : value.password,
+                password: value.password,
             }
+
+            if (!value.login)
+                arFields = {
+                    login: null,
+                    password: null,
+                }
+
+            if (!value.password)
+                arFields = {
+                    login: value.login,
+                }
 
             let res = await CUser.Edit(value.id, arFields)
 

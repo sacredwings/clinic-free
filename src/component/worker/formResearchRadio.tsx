@@ -3,7 +3,7 @@
 
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
-import {ServerVisitEdit} from "@/component/function/url_api";
+import {serverWorkerEditVisit} from "@/component/function/url_api";
 
 export default function FormSpecialistRadio ({workerId, access=false, research, visit}) {
     const [checked, setChecked] = useState(visit ? visit.status : null)
@@ -31,7 +31,7 @@ export default function FormSpecialistRadio ({workerId, access=false, research, 
             note: note
         }
         console.log(arFields)
-        await ServerVisitEdit(arFields)
+        await serverWorkerEditVisit(arFields)
     }
 
     const Form = () => {

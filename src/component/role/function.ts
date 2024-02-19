@@ -40,13 +40,32 @@ export const accessList = [
     {name: 'Специалист - Создание', access: 'specialistAdd'},
     {name: 'Специалист - Удаление', access: 'specialistDelete'},
 
-    {name: 'Пользователь - Чтение', access: 'userGet'},
-    {name: 'Пользователь - Запись', access: 'userEdit'},
-    {name: 'Пользователь - Создание', access: 'userAdd'},
+    {name: 'Пользователь | Чтение', access: 'userGet'},
+    {name: 'Пользователь | Создание', access: 'userAdd'},
+    {name: 'Пользователь | Редактирование', access: 'userEdit'},
+    {name: 'Пользователь | Редактирование | Авторизация', access: 'userEditAuth'},
+    {name: 'Пользователь | Редактирование | Роль', access: 'userEditRole'},
+    {name: 'Пользователь | Редактирование | Визит', access: 'userEditVisit'},
     {name: 'Пользователь - Удаление', access: 'userDelete'},
 
-    {name: 'Работник - Чтение', access: 'workerGet'},
-    {name: 'Работник - Запись', access: 'workerEdit'},
-    {name: 'Работник - Создание', access: 'workerAdd'},
-    {name: 'Работник - Удаление', access: 'workerDelete'},
+    {name: 'Работник | Чтение', access: 'workerGet'},
+    {name: 'Работник | Создание', access: 'workerAdd'},
+    {name: 'Работник | Редактирование', access: 'workerEdit'},
+    {name: 'Работник | Редактирование | Визит', access: 'workerEditVisit'},
+    {name: 'Работник | Удаление', access: 'workerDelete'},
 ]
+
+export const accessCheck = (element, list) => {
+    if (!list) return false
+    let newArr = []
+    list.forEach((item)=>{
+        newArr = [...newArr, ...item.access]
+    })
+
+    let result = false
+    newArr.forEach((item)=>{
+        if (element === item) result = true
+    })
+
+    return result
+}

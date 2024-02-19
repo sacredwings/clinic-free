@@ -29,7 +29,14 @@ export default class User {
                     as: '_specialist_ids'
                 }
             })
-
+            arAggregate.push({
+                $lookup: {
+                    from: 'role',
+                    localField: 'role_ids',
+                    foreignField: '_id',
+                    as: '_role_ids'
+                }
+            })
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('user')
             let result = await collection.aggregate(arAggregate).toArray()

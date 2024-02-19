@@ -55,7 +55,6 @@ export async function POST (request: Request) {
                 user_id: userId,
             }
 
-            console.log()
             let result = await CVisit.Edit ( arFields )
 
             return NextResponse.json({

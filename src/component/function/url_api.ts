@@ -25,10 +25,10 @@ import {
     interfaceSpecialistEditHf,
     interfaceSpecialistGet,
     interfaceUserAccess, interfaceUserAdd,
-    interfaceUserEdit, interfaceUserEditAccess, interfaceUserEditAuth, interfaceUserEditRole, interfaceUserGet,
+    interfaceUserEdit, interfaceUserEditVisit, interfaceUserEditAuth, interfaceUserEditRole, interfaceUserGet,
     interfaceUserGetById, interfaceVisitEdit, interfaceWorkerAdd, interfaceWorkerEdit,
     interfaceWorkerGet,
-    interfaceWorkerGetById
+    interfaceWorkerGetById, interfaceWorkerEditVisit
 } from './url_api_type'
 import axios, {AxiosRequestConfig} from "axios"
 import {ToastSystemAdd} from "@/component/toast/function";
@@ -196,20 +196,20 @@ export async function ServerUserAdd ({
     return res.data.response
 }
 
-export async function ServerUserEditAccess ({
+export async function ServerUserEditVisit ({
     id,
     specialist_ids,
     research_ids
-}: interfaceUserEditAccess) {
+}: interfaceUserEditVisit) {
     if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
     let arFields = {
         id,
         specialist_ids,
         research_ids
-    } as interfaceUserEditAccess
+    } as interfaceUserEditVisit
 
-    let url = `/api/user/editAccess`
+    let url = `/api/user/editVisit`
     console.log(url)
     let res = await axios.post(url, arFields);
     await ToastSystemAdd(res.data)
@@ -917,14 +917,14 @@ export async function ServerWorkerEdit ({
 
 //---------------------------------------------------------------------------------
 //CONTRACT-TYPE
-export async function ServerVisitEdit ({
+export async function serverWorkerEditVisit ({
     worker_id,
     specialist_id=null,
     research_id=null,
     status,
     note,
     result
-}: interfaceVisitEdit) {
+}: interfaceWorkerEditVisit) {
     if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
     let arFields = {
@@ -934,9 +934,9 @@ export async function ServerVisitEdit ({
         status,
         note,
         result
-    } as interfaceVisitEdit
+    } as interfaceWorkerEditVisit
 
-    let url = `/api/visit/edit`
+    let url = `/api/worker/editVisit`
     console.log(url)
     let res = await axios.post(url, arFields);
     await ToastSystemAdd(res.data)

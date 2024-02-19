@@ -3,7 +3,7 @@
 
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
-import {ServerVisitEdit} from "@/component/function/url_api";
+import {serverWorkerEditVisit} from "@/component/function/url_api";
 
 
 
@@ -34,7 +34,7 @@ export default function FormSpecialistRadio ({workerId, access=false, specialist
             note: note
         }
         console.log(arFields)
-        await ServerVisitEdit(arFields)
+        await serverWorkerEditVisit(arFields)
     }
 
     const Form = () => {

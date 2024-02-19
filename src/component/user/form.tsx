@@ -3,7 +3,7 @@
 //import { useRouter } from 'next/router' //переход по url
 import  iReact, {useState, useEffect} from 'react'
 import axios from "axios"
-import {ServerUserEditAuth, ServerUserEditAccess, ServerUserEditRole} from "@/component/function/url_api";
+import {ServerUserEditAuth, ServerUserEditVisit, ServerUserEditRole} from "@/component/function/url_api";
 
 export default function UserForm ({user, specialist, research, role}) {
     //const router = useRouter() //для перехода к пользователю
@@ -90,7 +90,7 @@ export default function UserForm ({user, specialist, research, role}) {
             research_ids: form.research_ids
         }
 
-        let result = await ServerUserEditAccess(arFields)
+        let result = await ServerUserEditVisit(arFields)
     }
 
     const onSaveRole = async (e) => {

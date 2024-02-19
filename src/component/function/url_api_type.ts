@@ -28,7 +28,7 @@ export interface interfaceUserEdit {
 
     phone: number
 }
-export interface interfaceUserEditAccess {
+export interface interfaceUserEditVisit {
     id: string
 
     specialist_ids: string[]
@@ -262,7 +262,7 @@ export interface interfaceWorkerGetById {
 
 //---------------------------------------------------------------------------------
 //VISIT
-export interface interfaceVisitEdit {
+export interface interfaceWorkerEditVisit {
     worker_id: string
     specialist_id: string | null
     research_id: string | null

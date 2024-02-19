@@ -12,7 +12,7 @@ import {
 import FormSpecialistRadio from "@/component/worker/formSpecialistRadio";
 import FormResearchRadio from "@/component/worker/formResearchRadio";
 
-export default function UserForm ({worker, account}) {
+export default function UserForm ({worker, account, accessEdit}) {
     //const router = useRouter() //для перехода к пользователю
 
     let [formUser, setFormUser] = useState(worker._user_id)
@@ -248,6 +248,7 @@ export default function UserForm ({worker, account}) {
     }
 
     const Access = (id, arr) => {
+        if (accessEdit) return true
         if (!arr || !arr.length) return false
         for (let item of arr) {
             if (id === item._id) return true
@@ -288,31 +289,42 @@ export default function UserForm ({worker, account}) {
                         <div className="mb-3 row">
                             <div className="col-4">
                                 <label htmlFor="last_name" className="col-form-label">Фамилия</label>
-                                <input type="text" className="form-control" id="last_name" value={formUser.last_name ? formUser.last_name : ''} onChange={onChangeTextUser}/>
+                                <input type="text" className="form-control" id="last_name"
+                                       value={formUser.last_name ? formUser.last_name : ''}
+                                       onChange={onChangeTextUser}/>
                             </div>
                             <div className="col-4">
                                 <label htmlFor="first_name" className="col-form-label">Имя</label>
-                                <input type="text" className="form-control" id="first_name" value={formUser.first_name ? formUser.first_name : ''} onChange={onChangeTextUser}/>
+                                <input type="text" className="form-control" id="first_name"
+                                       value={formUser.first_name ? formUser.first_name : ''}
+                                       onChange={onChangeTextUser}/>
                             </div>
                             <div className="col-4">
                                 <label htmlFor="second_name" className="col-form-label">Отчество</label>
-                                <input type="text" className="form-control" id="second_name" value={formUser.second_name ? formUser.second_name : ''} onChange={onChangeTextUser}/>
+                                <input type="text" className="form-control" id="second_name"
+                                       value={formUser.second_name ? formUser.second_name : ''}
+                                       onChange={onChangeTextUser}/>
                             </div>
                         </div>
                         <div className="mb-3">
                             <label htmlFor="man" className="col-form-label">Пол</label>
-                            <select className="form-select" id="man" aria-label="" value={formUser.man} onChange={onChangeTextUser}>
+                            <select className="form-select" id="man" aria-label="" value={formUser.man}
+                                    onChange={onChangeTextUser}>
                                 <option value="1" defaultValue="1">Мужской</option>
                                 <option value="0">Женский</option>
                             </select>
                         </div>
                         <div className="mb-3">
                             <label htmlFor="date_birth" className="col-form-label">Дата рождения</label>
-                            <input type="date" className="form-control" id="date_birth" value={formUser.date_birth ? new Date(formUser.date_birth).toISOString().substring(0, 10) : ''} onChange={onChangeTextUser}/>
+                            <input type="date" className="form-control" id="date_birth"
+                                   value={formUser.date_birth ? new Date(formUser.date_birth).toISOString().substring(0, 10) : ''}
+                                   onChange={onChangeTextUser}/>
                         </div>
-                        <div className="mb-3">
-                            <label htmlFor="phone" className="col-form-label">Телефон</label>
-                            <input type="text" className="form-control" id="phone" value={formUser.phone ? formUser.phone : ''} onChange={onChangeTextUser}/>
+                        <label htmlFor="phone" className="col-form-label">Телефон</label>
+                        <div className="input-group mb-3">
+                            <span className="input-group-text" id="phone-label">+7</span>
+                            <input type="text" className="form-control" id="phone" value={form.phone ? form.phone : ''}
+                                   onChange={onChangeText}/>
                         </div>
 
                         <div className="mb-3" style={{float: 'right'}}>
@@ -332,7 +344,7 @@ export default function UserForm ({worker, account}) {
                 <div className="card-body">
                     <form onSubmit={onSaveWorkerEdit}>
 
-                        <div className="g-3 row">
+                    <div className="g-3 row">
                             <div className="col-12">
                                 <label htmlFor="hf_code" className="col-form-label">Вредные факторы</label>
                                 <input type="text" className="form-control" id="hf_code" value={form.hf_code}

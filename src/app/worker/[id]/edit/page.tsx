@@ -8,6 +8,7 @@ import {
 } from "@/component/function/url_api";
 import { cookies } from 'next/headers'
 import Link from "next/link";
+import {accessCheck} from "@/component/role/function";
 
 export default async function User ({
                                         params,
@@ -18,7 +19,6 @@ export default async function User ({
 }) {
     let account = await ServerAccountGet({cookies:cookies()})
     let worker = await ServerWorkerGetById({ids: [params.id]}, {cookies:cookies()})
-
     let specialist = await ServerSpecialistGet({
         offset: 0,
         count: 100
@@ -28,6 +28,9 @@ export default async function User ({
         count: 100
     }, {cookies:cookies()})
 
+    //права доступа
+    let accessEdit = accessCheck('workerEdit', account._role_ids)
+
     return (
         <>
             <h1>Работник</h1>
@@ -36,7 +39,7 @@ export default async function User ({
                 &nbsp;
                 договор
             </Link>
-            <WorkerEdit worker={worker[0]} account={account}/>
+            <WorkerEdit worker={worker[0]} account={account} accessEdit={accessEdit}/>
         </>
     )
 }
