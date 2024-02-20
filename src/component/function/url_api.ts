@@ -28,7 +28,7 @@ import {
     interfaceUserEdit, interfaceUserEditVisit, interfaceUserEditAuth, interfaceUserEditRole, interfaceUserGet,
     interfaceUserGetById, interfaceVisitEdit, interfaceWorkerAdd, interfaceWorkerEdit,
     interfaceWorkerGet,
-    interfaceWorkerGetById, interfaceWorkerEditVisit
+    interfaceWorkerGetById, interfaceWorkerEditVisit, interfaceWorkerGetDoctor
 } from './url_api_type'
 import axios, {AxiosRequestConfig} from "axios"
 import {ToastSystemAdd} from "@/component/toast/function";
@@ -795,6 +795,29 @@ export async function ServerWorkerGet ({
     } as AxiosRequestConfig
 
     let url = `/api/worker/get`
+    console.log(url)
+    let res = await axios.get(url, arFields);
+    return res.data.response
+}
+export async function ServerWorkerGetDoctor ({
+                                           offset=0,
+                                           count=20
+                                       }: interfaceWorkerGetDoctor, {
+                                           cookies=null
+                                       }) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        params: {
+            offset,
+            count
+        } as interfaceWorkerGetDoctor,
+        headers: {
+            Cookie: cookies
+        }
+    } as AxiosRequestConfig
+
+    let url = `/api/worker/getDoctor`
     console.log(url)
     let res = await axios.get(url, arFields);
     return res.data.response

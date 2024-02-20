@@ -256,6 +256,10 @@ export interface interfaceWorkerGet {
     offset: number
     count: number
 }
+export interface interfaceWorkerGetDoctor {
+    offset: number
+    count: number
+}
 export interface interfaceWorkerGetById {
     ids: string[]
 }

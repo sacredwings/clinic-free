@@ -34,6 +34,9 @@ export default function Navbar ({resAccount}) {
                     <li className="list-group-item">
                         <Link href={'/contract-type/constructor'}>Типы договоров</Link>
                     </li>
+                    <li className="list-group-item">
+                        <Link href={'/doctor/hf'}>Врач</Link>
+                    </li>
                 </ul>
             </div>
 
@@ -41,7 +44,7 @@ export default function Navbar ({resAccount}) {
                 <h1>Пользователи</h1>
 
                 <ul className="list-group list-group-flush">
-                    <li className="list-group-item">
+                <li className="list-group-item">
                         <Link href={'/user'}>Пользователи</Link>
                     </li>
                     <li className="list-group-item">
