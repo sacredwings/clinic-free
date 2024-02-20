@@ -27,20 +27,6 @@ export default function UserForm ({user, specialist, research, role}) {
         return newList
     }
 
-    /*
-    const formDefault = {
-        first_name: '',
-        last_name: '',
-        second_name: '',
-
-        man: '1',
-        date_birth: null,
-        phone: '',
-
-        specialist_ids: null,
-        research_ids: null
-    }*/
-
     let [form, setForm] = useState({...user, password: ''})
     let [checkRole, setCheckRole] = useState(()=>OnCheckInit(role, user.role_ids))
 
@@ -50,7 +36,7 @@ export default function UserForm ({user, specialist, research, role}) {
         })()
     }, [form])
 
-    const onSaveRole = async (e) => {
+    const onSave = async (e) => {
         e.preventDefault() // Stop form submit
 
         let arFields = {
@@ -116,7 +102,7 @@ export default function UserForm ({user, specialist, research, role}) {
             </div>
 
             <div className="mb-3" style={{float: 'right', marginTop: '20px'}}>
-                <button type="submit" className="btn btn-success" onClick={onSaveRole}>Сохранить</button>
+                <button type="submit" className="btn btn-success" onClick={onSave}>Сохранить</button>
             </div>
         </>
     }

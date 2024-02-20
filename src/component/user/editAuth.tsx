@@ -26,14 +26,14 @@ export default function UserForm ({user, specialist, research, role}) {
         }))
     }
 
-    const onAdd = async (e) => {
+    const onSave = async (e) => {
         e.preventDefault() // Stop form submit
 
         let arFields = {
             id: form._id,
+
             login: form.login,
             password: form.password,
-
         }
 
         let result = await ServerUserEditAuth(arFields)
@@ -69,7 +69,7 @@ export default function UserForm ({user, specialist, research, role}) {
             </div>
 
             <div className="mb-3" style={{float: 'right', marginTop: '20px'}}>
-                <button type="submit" className="btn btn-success" onClick={onAdd}>Сохранить</button>
+                <button type="submit" className="btn btn-success" onClick={onSave}>Сохранить</button>
             </div>
 
         </>

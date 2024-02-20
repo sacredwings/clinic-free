@@ -15,14 +15,14 @@ import FormResearchRadio from "@/component/worker/formResearchRadio";
 export default function UserForm ({worker, account, accessEdit}) {
     //const router = useRouter() //для перехода к пользователю
 
+    let [formUser, setFormUser] = useState(worker._user_id)
     let [form, setForm] = useState({...worker, hf_code: (worker.hf_code ? worker.hf_code.join(',') : null)})
     let [contractTypeIds, setContractTypeIds] = useState([]) //для формы
     let [contractTypeList, setContractTypeList] = useState([])
 
     useEffect(() => {
         (async () => {
-            console.log(form)
-
+            //console.log(form)
         })()
     }, [form])
 
@@ -170,7 +170,7 @@ export default function UserForm ({worker, account, accessEdit}) {
                         УЗИ
                     </label>
                 </div>
-                {((form.man === '0') && (Age(form.date_birth) >= 40)) ?
+                {((Number(formUser.man) === 0) && (Number(Age(formUser.date_birth)) >= 40)) ?
                     <div className="form-check">
                         <input className="form-check-input" type="checkbox" id="check_mammography"
                                checked={(form.check_mammography) ? true : false} onChange={OnChangeCheckOne}/>

@@ -16,14 +16,14 @@ export async function POST (request: Request) {
             const schema = Joi.object({
                 worker_id: Joi.string().min(24).max(24).required(),
 
-                specialist_id: Joi.string().min(24).max(24).empty(null).default(null),
-                research_id: Joi.string().min(24).max(24).empty(null).default(null),
+                specialist_id: Joi.string().min(24).max(24).allow(null).empty('').default(null),
+                research_id: Joi.string().min(24).max(24).allow(null).empty('').default(null),
 
                 //status: Joi.number().integer().min(0).max(1).empty(null).default(null),
-                status: Joi.boolean().empty(null).default(null),
+                status: Joi.boolean().allow(null).empty('').default(null),
 
-                note: Joi.string().min(1).max(255).empty(['', null]).default(null),
-                result: Joi.string().min(1).max(255).empty(['', null]).default(null),
+                note: Joi.string().min(1).max(255).allow(null).empty('').default(null),
+                result: Joi.string().min(1).max(255).allow(null).empty('').default(null),
             })
 
             value = await schema.validateAsync(rsRequest)

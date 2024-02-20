@@ -15,15 +15,8 @@ import FormResearchRadio from "@/component/worker/formResearchRadio";
 export default function UserForm ({worker, account, accessEdit}) {
     //const router = useRouter() //для перехода к пользователю
 
-    let [formUser, setFormUser] = useState(worker._user_id)
-    let [form, setForm] = useState({...worker, hf_code: (worker.hf_code ? worker.hf_code.join(',') : null)})
-
-    useEffect(() => {
-        (async () => {
-            console.log(form)
-
-        })()
-    }, [form])
+    let [form, setForm] = useState(worker._user_id)
+    //let [form, setForm] = useState({...worker, hf_code: (worker.hf_code ? worker.hf_code.join(',') : null)})
 
     const onChangeText = (e) => {
         let name = e.target.id
@@ -34,20 +27,20 @@ export default function UserForm ({worker, account, accessEdit}) {
         }))
     }
 
-    const onSaveUserEdit = async (e) => {
+    const onSave = async (e) => {
         e.preventDefault() // Stop form submit
 
         let arFields = {
-            id: formUser._id,
+            id: form._id,
 
-            first_name: formUser.first_name,
-            last_name: formUser.last_name,
-            second_name: formUser.second_name,
+            first_name: form.first_name,
+            last_name: form.last_name,
+            second_name: form.second_name,
 
-            man: formUser.man,
-            date_birth: formUser.date_birth,
+            man: form.man,
+            date_birth: form.date_birth,
 
-            phone: formUser.phone,
+            phone: form.phone,
         }
 
         let result = await ServerUserEdit(arFields)
@@ -68,25 +61,25 @@ export default function UserForm ({worker, account, accessEdit}) {
                         <div className="col-4">
                             <label htmlFor="last_name" className="col-form-label">Фамилия</label>
                             <input type="text" className="form-control" id="last_name"
-                                   value={formUser.last_name ? formUser.last_name : ''}
+                                   value={form.last_name ? form.last_name : ''}
                                    onChange={onChangeText}/>
                         </div>
                         <div className="col-4">
                             <label htmlFor="first_name" className="col-form-label">Имя</label>
                             <input type="text" className="form-control" id="first_name"
-                                   value={formUser.first_name ? formUser.first_name : ''}
+                                   value={form.first_name ? form.first_name : ''}
                                    onChange={onChangeText}/>
                         </div>
                         <div className="col-4">
                             <label htmlFor="second_name" className="col-form-label">Отчество</label>
                             <input type="text" className="form-control" id="second_name"
-                                   value={formUser.second_name ? formUser.second_name : ''}
+                                   value={form.second_name ? form.second_name : ''}
                                    onChange={onChangeText}/>
                         </div>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="man" className="col-form-label">Пол</label>
-                        <select className="form-select" id="man" aria-label="" value={formUser.man}
+                        <select className="form-select" id="man" aria-label="" value={form.man}
                                 onChange={onChangeText}>
                             <option value="1" defaultValue="1">Мужской</option>
                             <option value="0">Женский</option>
@@ -95,7 +88,7 @@ export default function UserForm ({worker, account, accessEdit}) {
                     <div className="mb-3">
                         <label htmlFor="date_birth" className="col-form-label">Дата рождения</label>
                         <input type="date" className="form-control" id="date_birth"
-                               value={formUser.date_birth ? new Date(formUser.date_birth).toISOString().substring(0, 10) : ''}
+                               value={form.date_birth ? new Date(form.date_birth).toISOString().substring(0, 10) : ''}
                                onChange={onChangeText}/>
                     </div>
                 </div>
@@ -120,7 +113,7 @@ export default function UserForm ({worker, account, accessEdit}) {
             </div>
 
             <div className="mb-3" style={{float: 'right', marginTop: '20px'}}>
-                <button type="submit" className="btn btn-success" onClick={onSaveUserEdit}>Сохранить</button>
+                <button type="submit" className="btn btn-success" onClick={onSave}>Сохранить</button>
             </div>
         </>
 

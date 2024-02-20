@@ -38,13 +38,14 @@ export default function UserForm ({user, specialist, research, role}) {
         })()
     }, [form])
 
-    const onSaveVisit = async (e) => {
+    const onSave = async (e) => {
         e.preventDefault() // Stop form submit
 
         let url = '/user/editAccess'
 
         let arFields = {
             id: form._id,
+
             specialist_ids: form.specialist_ids,
             research_ids: form.research_ids
         }
@@ -144,7 +145,7 @@ export default function UserForm ({user, specialist, research, role}) {
             </div>
 
             <div className="mb-3" style={{float: 'right', marginTop: '20px'}}>
-                <button type="submit" className="btn btn-success" onClick={onSaveVisit}>Сохранить</button>
+                <button type="submit" className="btn btn-success" onClick={onSave}>Сохранить</button>
             </div>
         </>
 

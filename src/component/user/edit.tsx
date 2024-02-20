@@ -3,7 +3,12 @@
 //import { useRouter } from 'next/router' //переход по url
 import  iReact, {useState, useEffect} from 'react'
 import axios from "axios"
-import {ServerUserEditAuth, ServerUserEditVisit, ServerUserEditRole} from "@/component/function/url_api";
+import {
+    ServerUserEditAuth,
+    ServerUserEditVisit,
+    ServerUserEditRole,
+    ServerUserEdit
+} from "@/component/function/url_api";
 import React from "react";
 
 export default function UserForm ({user, specialist, research, role}) {
@@ -26,18 +31,25 @@ export default function UserForm ({user, specialist, research, role}) {
         }))
     }
 
-    const onSaveAccess = async (e) => {
+    const onSave = async (e) => {
         e.preventDefault() // Stop form submit
 
         let url = '/user/editAccess'
 
         let arFields = {
             id: form._id,
-            specialist_ids: form.specialist_ids,
-            research_ids: form.research_ids
+
+            first_name: form.first_name,
+            last_name: form.last_name,
+            second_name: form.second_name,
+
+            man: form.man,
+            date_birth: form.date_birth,
+
+            phone: form.phone,
         }
 
-        let result = await ServerUserEditVisit(arFields)
+        let result = await ServerUserEdit(arFields)
     }
 
     const Form = () => {
@@ -87,6 +99,17 @@ export default function UserForm ({user, specialist, research, role}) {
                                value={form.date_birth ? new Date(form.date_birth).toISOString().substring(0, 10) : ''}
                                onChange={onChangeText}/>
                     </div>
+                </div>
+            </div>
+
+            <div className="card" style={{marginTop: '20px', textAlign: 'center'}}>
+                <div className="card-body">
+                    <legend><b>Дополнительно</b></legend>
+                </div>
+            </div>
+
+            <div className="card" style={{marginTop: '20px'}}>
+                <div className="card-body">
                     <label htmlFor="phone" className="col-form-label">Телефон</label>
                     <div className="input-group mb-3">
                         <span className="input-group-text" id="phone-label">+7</span>
@@ -98,7 +121,7 @@ export default function UserForm ({user, specialist, research, role}) {
             </div>
 
             <div className="mb-3" style={{float: 'right', marginTop: '20px'}}>
-                <button type="submit" className="btn btn-success" onClick={onSaveAccess}>Сохранить</button>
+                <button type="submit" className="btn btn-success" onClick={onSave}>Сохранить</button>
             </div>
         </>
     }
