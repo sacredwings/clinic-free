@@ -4,10 +4,11 @@ import {
     ServerWorkerGet,
     ServerSpecialistGet,
     ServerWorkerEdit,
-    ServerWorkerGetById, ServerWorkerGetDoctor
+    ServerWorkerGetById, ServerWorkerGetDoctor, ServerAccountGet
 } from "@/component/function/url_api";
 import { cookies } from 'next/headers'
 import Link from "next/link";
+import React from "react";
 
 
 export default async function User ({
@@ -17,6 +18,7 @@ export default async function User ({
     params: { id: string },
     //searchParams: { page: number, q: string }
 }) {
+    let account = await ServerAccountGet({cookies:cookies()})
     let worker = await ServerWorkerGetDoctor({
         offset: 0,
         count: 100
@@ -24,11 +26,7 @@ export default async function User ({
 
     return (
         <>
-            <h1>Пациенты</h1>
-
-            <br/>
-            <br/>
-            <DoctorList worker={worker}/>
+            <DoctorList worker={worker} account={account}/>
         </>
     )
 }

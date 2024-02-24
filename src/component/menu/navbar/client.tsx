@@ -51,7 +51,7 @@ export default function Navbar ({resAccount}) {
                     <ul className="dropdown-menu dropdown-menu-right" style={{left: 'auto', right: 0}}
                         aria-labelledby="navbarDropdownMenuLink">
                         <li><Link legacyBehavior href={`/user/${user._id}`}><a className="dropdown-item" >Моя страница</a></Link></li>
-                        <li><Link legacyBehavior href={"/setting"}><a className="dropdown-item" >Настройки</a></Link></li>
+                        <li><Link legacyBehavior href={`/user/${user._id}/edit`}><a className="dropdown-item" >Настройки</a></Link></li>
                         <div className="dropdown-divider"/>
                         <li><Link legacyBehavior href="/"><a className="dropdown-item" onClick={LogOut}>Выход</a></Link></li>
                     </ul>
