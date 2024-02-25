@@ -68,10 +68,6 @@ export default function Navbar ({resAccount}) {
                     <Link legacyBehavior href={"/auth/login"}><a className="nav-link">Вход</a></Link>
                 </li>
 
-                <li className="nav-item">
-                    <Link legacyBehavior href={"/auth/reg"}><a className="nav-link">Регистрация</a></Link>
-                </li>
-
             </ul>
         </div>
     }

@@ -56,19 +56,17 @@ export default function Navbar ({resAccount}) {
     }
 
     const NoAuth = () => {
-        return <div className="d-flex">
-            <ul className="navbar-nav">
+        return <>
+            <div className={style.block}>
+                <h1>Авторизация</h1>
 
-                <li className="nav-item">
-                    <Link legacyBehavior href={"/auth/login"}><a className="nav-link">Вход</a></Link>
-                </li>
-
-                <li className="nav-item">
-                    <Link legacyBehavior href={"/auth/reg"}><a className="nav-link">Регистрация</a></Link>
-                </li>
-
-            </ul>
-        </div>
+                <ul className="list-group list-group-flush">
+                    <li className="list-group-item">
+                        <Link href={'/auth/login'}>Вход</Link>
+                    </li>
+                </ul>
+            </div>
+        </>
     }
 
     return (
