@@ -208,16 +208,27 @@ export default class Worker {
                     preserveNullAndEmptyArrays: true
                 }
             })
-            if (!fields.specialist_ids)
+            if (!fields.specialist_ids && !fields.specialist_ids)
                 arAggregate.push({
                     $sort: {
                         "_user_id.last_name": 1
                         //_id: -1
                     }
                 })
+            else
+                arAggregate.push({
+                    $sort: {
+                        "_id": -1
+                    }
+                })
 
             if (fields.contract_id) arAggregate[0].$match.contract_id = fields.contract_id
-            if (fields.specialist_ids) arAggregate[0].$match.specialist_ids = { $in: fields.specialist_ids }
+            if (fields.specialist_ids || fields.research_ids) arAggregate[0].$match = {
+                $or: [
+                    { specialist_ids: { $in: fields.specialist_ids ? fields.specialist_ids : [] }},
+                    { research_ids: { $in: fields.research_ids ? fields.research_ids : [] }},
+                ]}
+            //if (fields.specialist_ids || fields.research_ids) arAggregate[0].$match.specialist_ids = { $in: fields.specialist_ids }
 
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('worker')

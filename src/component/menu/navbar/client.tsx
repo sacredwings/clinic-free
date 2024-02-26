@@ -92,7 +92,7 @@ export default function Navbar ({resAccount}) {
                                 <li><Link className="dropdown-item" href={'/org'}>Организации</Link></li>
                                 <li><Link className="dropdown-item" href={'/hf/constructor'}>Вредные факторы</Link></li>
                                 <li><Link className="dropdown-item" href={'/contract-type/constructor'}>Типы договоров</Link></li>
-                                <li><Link className="dropdown-item" href={'/doctor/hf'}>Врач</Link></li>
+                                <li><Link className="dropdown-item" href={'/doctor'}>Врач</Link></li>
                             </ul>
                         </li>
                         <li className="nav-item dropdown">

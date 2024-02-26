@@ -35,7 +35,7 @@ export default function Navbar ({resAccount}) {
                         <Link href={'/contract-type/constructor'}>Типы договоров</Link>
                     </li>
                     <li className="list-group-item">
-                        <Link href={'/doctor/hf'}>Врач</Link>
+                        <Link href={'/doctor'}>Врач</Link>
                     </li>
                 </ul>
             </div>

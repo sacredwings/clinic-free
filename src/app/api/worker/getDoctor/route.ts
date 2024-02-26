@@ -47,13 +47,15 @@ export async function GET(request: Request) {
                 q: value.q,
 
                 specialist_ids: user[0].specialist_ids,
+                research_ids: user[0].research_ids,
 
                 offset: value.offset,
                 count: value.count
             }
             let items = await CWorker.Get (arFields)
 
-            if (!user[0].specialist_ids) items = []
+            //if (!user[0].specialist_ids) items = []
+            //if (!user[0].research_ids) items = []
 
             return NextResponse.json({
                 code: 0,

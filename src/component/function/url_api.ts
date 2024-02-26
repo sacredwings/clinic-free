@@ -18,17 +18,33 @@ import {
     interfaceOrgGet,
     interfaceOrgGetById,
     interfaceResearchEdit,
-    interfaceResearchEditHf, interfaceRoleAdd, interfaceRoleEdit, interfaceRoleGet, interfaceRoleGetById,
+    interfaceResearchEditHf,
+    interfaceRoleAdd,
+    interfaceRoleEdit,
+    interfaceRoleGet,
+    interfaceRoleGetById,
     interfaceSpecialistAdd,
     interfaceSpecialistDelete,
     interfaceSpecialistEdit,
     interfaceSpecialistEditHf,
     interfaceSpecialistGet,
-    interfaceUserAccess, interfaceUserAdd,
-    interfaceUserEdit, interfaceUserEditVisit, interfaceUserEditAuth, interfaceUserEditRole, interfaceUserGet,
-    interfaceUserGetById, interfaceVisitEdit, interfaceWorkerAdd, interfaceWorkerEdit,
+    interfaceUserAccess,
+    interfaceUserAdd,
+    interfaceUserEdit,
+    interfaceUserEditVisit,
+    interfaceUserEditAuth,
+    interfaceUserEditRole,
+    interfaceUserGet,
+    interfaceUserGetById,
+    interfaceVisitEdit,
+    interfaceWorkerAdd,
+    interfaceWorkerEdit,
     interfaceWorkerGet,
-    interfaceWorkerGetById, interfaceWorkerEditVisit, interfaceWorkerGetDoctor
+    interfaceWorkerGetById,
+    interfaceWorkerEditVisit,
+    interfaceWorkerGetDoctor,
+    interfaceWorkerGetDoctorSpecialist,
+    interfaceWorkerGetDoctorResearch
 } from './url_api_type'
 import axios, {AxiosRequestConfig} from "axios"
 import {ToastSystemAdd} from "@/component/toast/function";
@@ -822,6 +838,7 @@ export async function ServerWorkerGetDoctor ({
     let res = await axios.get(url, arFields);
     return res.data.response
 }
+
 export async function ServerWorkerGetById ({ids}: interfaceWorkerGetById, {cookies=null}) {
     if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
