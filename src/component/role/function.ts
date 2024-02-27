@@ -59,7 +59,7 @@ export const accessCheck = (element, list) => {
     if (!list) return false
     let newArr = []
     list.forEach((item)=>{
-        newArr = [...newArr, ...item.access]
+        if (item.access) newArr = [...newArr, ...item.access]
     })
 
     let result = false

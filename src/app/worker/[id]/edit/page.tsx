@@ -31,7 +31,9 @@ export default async function User ({
     }, {cookies:cookies()})
 
     //права доступа
-    let accessEdit = accessCheck('workerEdit', account._role_ids)
+    let accessUserEdit = accessCheck('userEdit', account._role_ids)
+    let accessWorkerEdit = accessCheck('workerEdit', account._role_ids)
+    let accessWorkerEditVisit = accessCheck('workerEditVisit', account._role_ids)
 
     //if (!searchParams.q) searchParams.q = 'user'
     return (
@@ -58,9 +60,9 @@ export default async function User ({
                 </li>
             </ul>
 
-            {(!searchParams.form || searchParams.form === 'user') ? <WorkerEditUser worker={worker[0]} account={account} accessEdit={accessEdit}/> : null}
-            {(searchParams.form === 'worker') ? <WorkerEdit worker={worker[0]} account={account} accessEdit={accessEdit}/> : null}
-            {(searchParams.form === 'visit') ? <WorkerEditVisit worker={worker[0]} account={account} accessEdit={accessEdit}/> : null}
+            {(!searchParams.form || searchParams.form === 'user') ? <WorkerEditUser worker={worker[0]} account={account} accessEdit={accessUserEdit}/> : null}
+            {(searchParams.form === 'worker') ? <WorkerEdit worker={worker[0]} account={account} accessEdit={accessWorkerEdit}/> : null}
+            {(searchParams.form === 'visit') ? <WorkerEditVisit worker={worker[0]} account={account} accessEdit={accessWorkerEditVisit}/> : null}
         </>
     )
 }
