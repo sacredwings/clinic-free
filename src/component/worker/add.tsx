@@ -305,7 +305,12 @@ export default function WorkerAdd ({contract}) {
                     <div className="row g-3 align-items-center">
                         <div className="col-12">
                             <label htmlFor="phone" className="col-form-label">Телефон</label>
-                            <input type="text" className="form-control" id="phone" value={form.phone ? form.phone : ''} onChange={onChangeText}/>
+                            <div className="input-group mb-3">
+                                <span className="input-group-text" id="phone-label">+7</span>
+                                <input type="text" className="form-control" id="phone"
+                                       value={form.phone ? form.phone : ''}
+                                       onChange={onChangeText}/>
+                            </div>
                         </div>
                     </div>
 
