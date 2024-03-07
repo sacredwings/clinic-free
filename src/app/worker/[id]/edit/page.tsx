@@ -2,6 +2,8 @@
 import WorkerEdit from '@/component/worker/edit'
 import WorkerEditUser from '@/component/worker/editUser'
 import WorkerEditVisit from '@/component/worker/editVisit'
+import WorkerEditFinale from '@/component/worker/editFinale'
+
 import {
     ServerAccountGet,
     ServerResearchGet,
@@ -34,6 +36,7 @@ export default async function User ({
     let accessUserEdit = accessCheck('userEdit', account._role_ids)
     let accessWorkerEdit = accessCheck('workerEdit', account._role_ids)
     let accessWorkerEditVisit = accessCheck('workerEditVisit', account._role_ids)
+    let accessWorkerEditFinale = accessCheck('workerEditFinale', account._role_ids)
 
     //if (!searchParams.q) searchParams.q = 'user'
     return (
@@ -50,19 +53,30 @@ export default async function User ({
 
             <ul className="nav nav-tabs">
                 <li className="nav-item">
-                    <Link className={(!searchParams.form || searchParams.form === 'user') ? `nav-link active` : `nav-link`} aria-current="page" href="?form=user">Пациент</Link>
+                    <Link
+                        className={(!searchParams.form || searchParams.form === 'user') ? `nav-link active` : `nav-link`}
+                        aria-current="page" href="?form=user">Пациент</Link>
                 </li>
                 <li className="nav-item">
-                    <Link className={(searchParams.form === 'worker') ? `nav-link active` : `nav-link`} aria-current="page" href="?form=worker">Работник</Link>
+                    <Link className={(searchParams.form === 'worker') ? `nav-link active` : `nav-link`}
+                          aria-current="page" href="?form=worker">Работник</Link>
                 </li>
                 <li className="nav-item">
-                    <Link className={(searchParams.form === 'visit') ? `nav-link active` : `nav-link`} aria-current="page" href="?form=visit">Приемы</Link>
+                    <Link className={(searchParams.form === 'visit') ? `nav-link active` : `nav-link`}
+                          aria-current="page" href="?form=visit">Приемы</Link>
+                </li>
+                <li className="nav-item">
+                    <Link className={(searchParams.form === 'finale') ? `nav-link active` : `nav-link`}
+                          aria-current="page" href="?form=finale">Заключение</Link>
                 </li>
             </ul>
 
-            {(!searchParams.form || searchParams.form === 'user') ? <WorkerEditUser worker={worker[0]} account={account} accessEdit={accessUserEdit}/> : null}
-            {(searchParams.form === 'worker') ? <WorkerEdit worker={worker[0]} account={account} accessEdit={accessWorkerEdit}/> : null}
+            {(!searchParams.form || searchParams.form === 'user') ?
+                <WorkerEditUser worker={worker[0]} account={account} accessEdit={accessUserEdit}/> : null}
+            {(searchParams.form === 'worker') ?
+                <WorkerEdit worker={worker[0]} account={account} accessEdit={accessWorkerEdit}/> : null}
             {(searchParams.form === 'visit') ? <WorkerEditVisit worker={worker[0]} account={account} accessEdit={accessWorkerEditVisit}/> : null}
+            {(searchParams.form === 'finale') ? <WorkerEditFinale worker={worker[0]} account={account} accessEdit={accessWorkerEditFinale}/> : null}
         </>
     )
 }
