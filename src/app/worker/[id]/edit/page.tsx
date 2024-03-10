@@ -13,6 +13,7 @@ import {
 import { cookies } from 'next/headers'
 import Link from "next/link";
 import {accessCheck} from "@/component/role/function";
+import React from "react";
 
 export default async function User ({
                                         params,
@@ -38,7 +39,25 @@ export default async function User ({
     let accessWorkerEditVisit = accessCheck('workerEditVisit', account._role_ids)
     let accessWorkerEditFinale = accessCheck('workerEditFinale', account._role_ids)
 
-    //if (!searchParams.q) searchParams.q = 'user'
+    const ListPrint = (workerId) => {
+        return <div className="btn-group-vertical" role="group" aria-label="Vertical button group" style={{paddingLeft: '5px'}}>
+            <div className="btn-group" role="group">
+                <button type="button" className="btn btn-primary dropdown-toggle btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i className="fa-solid fa-print"></i>
+                </button>
+                <ul className="dropdown-menu">
+                    <li>
+                        <Link href={`/worker/${workerId}/pdf/zaklyucheniye-pred`} className="dropdown-item" target="_blank">Закл. предварительного осмотра</Link>
+                        <Link href={`/worker/${workerId}/pdf/zaklyucheniye`} className="dropdown-item" target="_blank">Закл. периодического осмотра</Link>
+                        <Link href={`/worker/${workerId}/pdf/card`} className="dropdown-item" target="_blank">Карта</Link>
+                        <Link href={`/worker/${workerId}/pdf/vypiska`} className="dropdown-item" target="_blank">Выписка</Link>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    }
+
     return (
         <>
             <h1>Работник</h1>
@@ -47,6 +66,8 @@ export default async function User ({
                 &nbsp;
                 договор
             </Link>
+
+            {ListPrint(worker[0]._id)}
 
             <br/>
             <br/>
