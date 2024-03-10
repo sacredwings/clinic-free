@@ -79,7 +79,8 @@ const Page = (worker) => {
         <p style={styleText}>Имеет
             противопоказания: <b>{worker.contraindications ? worker.contraindications.join(', ') : ''}</b></p>
         <p style={styleText}>Группа здоровья: <b>{worker.health_group}</b></p>
-        <p style={styleText}>Переосвидетельствование через: <b>{worker.re_hf} месяцев</b></p>
+        <p style={styleText}><b>{arVisitResult(worker._specialist_visit_ids)}</b></p>
+        <p style={styleText}>Переосвидетельствование через: {worker.re_hf ? <b>{worker.re_hf} месяцев</b> : null}</p>
         <br/>
         <p style={styleText}>Председатель врачебной комиссии _______________ / ________________</p>
         <p style={styleTextRight}>(подпись) (Ф.И.О.)</p>
@@ -98,6 +99,17 @@ const arDeleteAr = (a, b) => {
     if (!c) return ''
     return c.join(', ')
 }
+
+const arVisitResult = (arr) => {
+    if (!arr) return ''
+    let newAr = []
+    arr.forEach((item)=>{
+        if (item.result) newAr.push(item.result)
+    })
+    if (!newAr.length) return ''
+    return newAr.join(', ')
+}
+
 
 const GetById = async (id) => {
     let result = await ServerWorkerGetById({ids: [id]}, {cookies: null})
