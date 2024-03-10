@@ -151,7 +151,7 @@ const Page = (worker) => {
                     <p style={styleHeaderBold}>Российской Федерации</p>
                     <br/>
                     <p style={styleHeaderBold}>ООО «ПУЛЬСАР»</p>
-                    <p style={styleHeaderBold}>633208, г. Искитим, ул. Комсомольская, 44</p>
+                    <p style={styleHeaderBold}>633209, г. Искитим, ул. Комсомольская, 44</p>
                     <br/>
                     <br/>
                     <p style={styleHeaderBold}>ВЫПИСКА ИЗ АМБУЛАТОРНОЙ КАРТЫ</p>

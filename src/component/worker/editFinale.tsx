@@ -18,11 +18,11 @@ export default function UserForm ({worker, account, accessEdit}) {
 
     const [healthGroup, setHealthGroup] = useState(worker.health_group);
     const [healthGroupList, setHealthGroupList] = useState([
-        {name: 'Ⅰ', value: '1'},
-        {name: 'Ⅱ', value: '2'},
-        {name: 'Ⅲ а', value: '3а'},
-        {name: 'Ⅲ б', value: '3б'},
-        {name: 'Ⅳ', value: '4'}
+        'Ⅰ',
+        'Ⅱ',
+        'Ⅲа',
+        'Ⅲб',
+        'Ⅳ',
     ]);
     const [contraindications, setContraindications] = useState(worker.contraindications ? worker.contraindications : []);
 
@@ -78,9 +78,9 @@ export default function UserForm ({worker, account, accessEdit}) {
         return healthGroupList.map((item, i)=> {
             return <div className="form-check" key={i}>
                 <input className="form-check-input" type="radio" name="health_group"
-                       id={item.value} onChange={ChangeHealthGroupList} value={item.value} checked={item.value === healthGroup}/>
-                <label className="form-check-label" htmlFor={item.value}>
-                    {item.name}
+                       id={item} onChange={ChangeHealthGroupList} value={item} checked={item === healthGroup}/>
+                <label className="form-check-label" htmlFor={item}>
+                    {item}
                 </label>
             </div>
         })

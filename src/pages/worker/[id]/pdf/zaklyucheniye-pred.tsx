@@ -45,7 +45,7 @@ const Page = (worker) => {
         <p style={styleHeader}>ООО Пульсар</p>
         <p style={styleHeader}>_________________________________________</p>
         <p style={styleHeader}>(наименование медицинской организации)</p>
-        <p style={styleHeader}>НСО  обл. г. Искитим ул. Комсомольская д.44 оф.1</p>
+        <p style={styleHeader}>НСО обл. г. Искитим ул. Комсомольская д.44</p>
         <p style={styleHeader}>_________________________________________</p>
         <p style={styleHeader}>(адрес)</p>
         <p style={styleHeader}>Код ОГРН: 1 1 0 5 4 7 2 0 0 0 7 8 7</p>
@@ -62,23 +62,41 @@ const Page = (worker) => {
         <br/>
 
         <p style={styleText}>1. Даты выдачи заключения <b>{dateText}</b></p>
-        <p style={styleText}>2. Фамилия, имя, отчество (при наличии) <b>{worker._user_id.last_name} {worker._user_id.first_name} {worker._user_id.second_name}</b></p>
-        <p style={styleText}>3. Дата рождения <b>{new Date(worker._user_id.date_birth).toLocaleDateString()}</b> 4. Пол <b>{worker._user_id.man ? 'Мужской' : 'Женский'}</b></p>
+        <p style={styleText}>2. Фамилия, имя, отчество (при
+            наличии) <b>{worker._user_id.last_name} {worker._user_id.first_name} {worker._user_id.second_name}</b></p>
+        <p style={styleText}>3. Дата рождения <b>{new Date(worker._user_id.date_birth).toLocaleDateString()}</b> 4.
+            Пол <b>{worker._user_id.man ? 'Мужской' : 'Женский'}</b></p>
         <p style={styleText}>5. Наименование работодателя <b>{worker._contract_id._org_id.name}</b></p>
-        <p style={styleText}>6. Наименование структурного подразделения работодателя (при наличии): <b>{worker.subdivision}</b></p>
+        <p style={styleText}>6. Наименование структурного подразделения работодателя (при
+            наличии): <b>{worker.subdivision}</b></p>
         <p style={styleText}>7. Должность (профессия) или вид работ: <b>{worker.profession}</b></p>
-        <p style={styleText}>8. Наименование вредного производственного фактора ( -ов) и (или) вида работ: <b>{worker.hf_code ? worker.hf_code.join(', ') : ''}</b></p>
+        <p style={styleText}>8. Наименование вредного производственного фактора ( -ов) и (или) вида
+            работ: <b>{worker.hf_code ? worker.hf_code.join(', ') : ''}</b></p>
         <p style={styleText}>9. Результаты периодического осмотра:</p>
         <br/>
-        <p style={styleText}>Медицинские противопоказания к работе не выявлены:</p>
-        <p style={styleText}>Группа здоровья: ____________________________________________________________</p>
+        <p style={styleText}>Медицинские противопоказания к работе не
+            выявлены: <b>{arDeleteAr(worker.hf_code, worker.contraindications)}</b></p>
+        <p style={styleText}>Имеет
+            противопоказания: <b>{worker.contraindications ? worker.contraindications.join(', ') : ''}</b></p>
+        <p style={styleText}>Группа здоровья: <b>{worker.health_group}</b></p>
+        <p style={styleText}>Переосвидетельствование через: <b>{worker.re_hf} месяцев</b></p>
         <br/>
         <p style={styleText}>Председатель врачебной комиссии _______________ / ________________</p>
-        <p style={styleTextRight}>(подпись)	(Ф.И.О.)</p>
+        <p style={styleTextRight}>(подпись) (Ф.И.О.)</p>
         <br/>
         <p style={styleText}>М.П. ЛПУ</p>
 
-  </>
+    </>
+}
+
+const arDeleteAr = (a, b) => {
+    if (!a) return ''
+    if (!b) return a.join(', ')
+    let c = a.filter(function(item) {
+        return b.indexOf(item) === -1;
+    });
+    if (!c) return ''
+    return c.join(', ')
 }
 
 const GetById = async (id) => {
@@ -86,7 +104,7 @@ const GetById = async (id) => {
     return result
 }
 
-export async function getServerSideProps ({query, req, res}) {
+export async function getServerSideProps({query, req, res}) {
 
     let worker = await GetById(query.id)
     let buffer = await componentToPDFBuffer({
