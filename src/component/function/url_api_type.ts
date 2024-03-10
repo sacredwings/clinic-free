@@ -251,6 +251,21 @@ export interface interfaceWorkerEdit {
     subdivision: string
     profession: string
 }
+export interface interfaceWorkerEditVisit {
+    worker_id: string
+    specialist_id: string | null
+    research_id: string | null
+    status: string
+    note: string
+    result: string
+}
+export interface interfaceWorkerEditFinale {
+    id: string
+
+    health_group: string,
+    contraindications: string[],
+    re_hf: number,
+}
 export interface interfaceWorkerGet {
     contract_id: string
     offset: number
@@ -266,14 +281,7 @@ export interface interfaceWorkerGetById {
 
 //---------------------------------------------------------------------------------
 //VISIT
-export interface interfaceWorkerEditVisit {
-    worker_id: string
-    specialist_id: string | null
-    research_id: string | null
-    status: string
-    note: string
-    result: string
-}
+
 
 //---------------------------------------------------------------------------------
 //ROLE

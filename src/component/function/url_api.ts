@@ -44,7 +44,7 @@ import {
     interfaceWorkerEditVisit,
     interfaceWorkerGetDoctor,
     interfaceWorkerGetDoctorSpecialist,
-    interfaceWorkerGetDoctorResearch
+    interfaceWorkerGetDoctorResearch, interfaceWorkerEditFinale
 } from './url_api_type'
 import axios, {AxiosRequestConfig} from "axios"
 import {ToastSystemAdd} from "@/component/toast/function";
@@ -955,16 +955,40 @@ export async function ServerWorkerEdit ({
     return res.data.response
 }
 
-//---------------------------------------------------------------------------------
-//CONTRACT-TYPE
+export async function ServerWorkerEditFinale ({
+    id,
+
+    health_group,
+    contraindications,
+    re_hf,
+
+}: interfaceWorkerEditFinale) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        id,
+
+        health_group,
+        contraindications,
+        re_hf
+
+    } as interfaceWorkerEditFinale
+
+    let url = `/api/worker/editFinale`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}
+
 export async function serverWorkerEditVisit ({
-    worker_id,
-    specialist_id=null,
-    research_id=null,
-    status,
-    note,
-    result
-}: interfaceWorkerEditVisit) {
+                                                 worker_id,
+                                                 specialist_id=null,
+                                                 research_id=null,
+                                                 status,
+                                                 note,
+                                                 result
+                                             }: interfaceWorkerEditVisit) {
     if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
     let arFields = {
@@ -982,6 +1006,7 @@ export async function serverWorkerEditVisit ({
     await ToastSystemAdd(res.data)
     return res.data.response
 }
+
 //---------------------------------------------------------------------------------
 //Role
 export async function ServerRoleGet ({

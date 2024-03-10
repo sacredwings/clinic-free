@@ -7,13 +7,14 @@ import {
     ServerContractTypeGet,
     ServerUserEdit,
     ServerUserEditAccess,
-    ServerWorkerEdit
+    ServerWorkerEdit, ServerWorkerEditFinale
 } from "@/component/function/url_api";
 import FormSpecialistRadio from "@/component/worker/formSpecialistRadio";
 import FormResearchRadio from "@/component/worker/formResearchRadio";
 
 export default function UserForm ({worker, account, accessEdit}) {
-    //const router = useRouter() //для перехода к пользователю
+
+    let [form, setForm] = useState(worker)
 
     const [healthGroup, setHealthGroup] = useState(worker.health_group);
     const [healthGroupList, setHealthGroupList] = useState([
@@ -27,9 +28,9 @@ export default function UserForm ({worker, account, accessEdit}) {
 
     useEffect(() => {
         (async () => {
-            console.log(contraindications)
+            //console.log(healthGroup)
         })()
-    }, [contraindications])
+    }, [healthGroup])
 
     function ChangeHealthGroupList (event) {
         setHealthGroup(event.target.value);
@@ -58,35 +59,26 @@ export default function UserForm ({worker, account, accessEdit}) {
         }))
     }
 
-    const onSaveWorkerEdit = async (e) => {
+    const onSaveWorkerEditFinale = async (e) => {
         e.preventDefault() // Stop form submit
 
         let arFields = {
             id: form._id,
 
-            contract_type_ids: contractTypeIds,
-            hf_code: form.hf_code,
+            health_group: healthGroup,
+            contraindications: contraindications,
+            re_hf: form.re_hf,
 
-            check_ultrasound: form.check_ultrasound,
-            check_mammography: form.check_mammography,
-            check_xray: form.check_xray,
-
-            check_pcr: form.check_pcr,
-            check_hti: form.check_hti,
-            check_brucellosis: form.check_brucellosis,
-
-            subdivision: form.subdivision,
-            profession: form.profession,
         }
 
-        let result = await ServerWorkerEdit(arFields)
+        let result = await ServerWorkerEditFinale(arFields)
     }
 
     const HealthGroupList = () => {
         return healthGroupList.map((item, i)=> {
             return <div className="form-check" key={i}>
                 <input className="form-check-input" type="radio" name="health_group"
-                       id={item.value} onChange={ChangeHealthGroupList}/>
+                       id={item.value} onChange={ChangeHealthGroupList} value={item.value} checked={item.value === healthGroup}/>
                 <label className="form-check-label" htmlFor={item.value}>
                     {item.name}
                 </label>
@@ -95,8 +87,8 @@ export default function UserForm ({worker, account, accessEdit}) {
     }
 
     const Contraindications = () => {
-        if (!worker.hf_code) return
-        return worker.hf_code.map((item, i)=> {
+        if (!form.hf_code) return
+        return form.hf_code.map((item, i)=> {
             let check = false
 
             if (contraindications)
@@ -139,7 +131,7 @@ export default function UserForm ({worker, account, accessEdit}) {
                     <div className="mb-3">
                         <label htmlFor="re_hf" className="form-label">Через (количество месяцев)</label>
                         <input type="number" className="form-control" id="re_hf"
-                               value={worker.re_hf ? worker.re_hf : null}/>
+                               value={form.re_hf ? form.re_hf : null} onChange={onChangeText}/>
                     </div>
                 </div>
             </div>
@@ -157,7 +149,7 @@ export default function UserForm ({worker, account, accessEdit}) {
             </div>
 
             <div className="mb-3" style={{float: 'right', marginTop: '20px'}}>
-                <button type="submit" className="btn btn-success" onClick={onSaveWorkerEdit}>Сохранить</button>
+                <button type="submit" className="btn btn-success" onClick={onSaveWorkerEditFinale}>Сохранить</button>
             </div>
         </>
 
