@@ -52,8 +52,6 @@ const Page = (worker) => {
 
         <br/>
         <br/>
-        <br/>
-        <br/>
 
         <h1 style={styleH1}>ЗАКЛЮЧЕНИЕ ПЕРИОДИЧЕСКОГО</h1>
         <h1 style={styleH1}>МЕДИЦИНСКОГО ОСМОТРА (ОБСЛЕДОВАНИЯ)</h1>
@@ -73,7 +71,6 @@ const Page = (worker) => {
         <p style={styleText}>8. Наименование вредного производственного фактора ( -ов) и (или) вида
             работ: <b>{worker.hf_code ? worker.hf_code.join(', ') : ''}</b></p>
         <p style={styleText}>9. Результаты периодического осмотра:</p>
-        <br/>
         <p style={styleText}>Медицинские противопоказания к работе не
             выявлены: <b>{arDeleteAr(worker.hf_code, worker.contraindications)}</b></p>
         <p style={styleText}>Имеет
