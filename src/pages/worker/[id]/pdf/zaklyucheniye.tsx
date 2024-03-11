@@ -71,13 +71,21 @@ const Page = (worker) => {
         <p style={styleText}>8. Наименование вредного производственного фактора ( -ов) и (или) вида
             работ: <b>{worker.hf_code ? worker.hf_code.join(', ') : ''}</b></p>
         <p style={styleText}>9. Результаты периодического осмотра:</p>
-        <p style={styleText}>Медицинские противопоказания к работе не
-            выявлены: <b>{arDeleteAr(worker.hf_code, worker.contraindications)}</b></p>
-        <p style={styleText}>Имеет
-            противопоказания: <b>{worker.contraindications ? worker.contraindications.join(', ') : ''}</b></p>
+
+        {arDeleteAr(worker.hf_code, worker.contraindications) ?
+            <p style={styleText}>Медицинские противопоказания к работе не
+                выявлены: <b>{arDeleteAr(worker.hf_code, worker.contraindications)}</b></p> : null}
+
+        {worker.contraindications ? <p style={styleText}>Имеет
+            противопоказания: <b>{worker.contraindications.join(', ')}</b></p> : null}
+
         <p style={styleText}>Группа здоровья: <b>{worker.health_group}</b></p>
-        <p style={styleText}><b>{arVisitResult(worker._specialist_visit_ids)}</b></p>
-        <p style={styleText}>Переосвидетельствование через: {worker.re_hf ? <b>{worker.re_hf} месяцев</b> : null}</p>
+
+        {arVisitResult(worker._specialist_visit_ids) ?
+            <p style={styleText}><b>{arVisitResult(worker._specialist_visit_ids)}</b></p> : null}
+
+        {worker.re_hf ? <p style={styleText}>Переосвидетельствование через: <b>{worker.re_hf} месяцев</b></p> : null}
+
         <br/>
         <p style={styleText}>Председатель врачебной комиссии _______________ / ________________</p>
         <p style={styleTextRight}>(подпись) (Ф.И.О.)</p>
@@ -87,22 +95,22 @@ const Page = (worker) => {
 }
 
 const arDeleteAr = (a, b) => {
-    if (!a) return ''
+    if (!a) return null
     if (!b) return a.join(', ')
     let c = a.filter(function (item) {
         return b.indexOf(item) === -1;
     });
-    if (!c) return ''
+    if (!c) return null
     return c.join(', ')
 }
 
 const arVisitResult = (arr) => {
-    if (!arr) return ''
+    if (!arr) return null
     let newAr = []
     arr.forEach((item) => {
         if (item.result) newAr.push(item.result)
     })
-    if (!newAr.length) return ''
+    if (!newAr.length) return null
     return newAr.join(', ')
 }
 
