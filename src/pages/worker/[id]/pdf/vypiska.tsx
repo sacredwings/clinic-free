@@ -112,11 +112,6 @@ const Page = (worker) => {
                             <td style={styleTableTd}></td>
                         </tr>
                         <tr>
-                            <td style={styleTableTd}>Пульсоксиметрия</td>
-                            <td style={styleTableTd}></td>
-                            <td style={styleTableTd}></td>
-                        </tr>
-                        <tr>
                             <td style={styleTableTd}>УЗИ органов малого таза</td>
                             <td style={styleTableTd}></td>
                             <td style={styleTableTd}></td>
