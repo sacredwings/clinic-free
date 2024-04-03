@@ -175,12 +175,15 @@ export async function POST (request: Request) {
 
             //нет фиксированных сумм
             if (!hfContract.price_worker_all && !hfContract.price_worker_man && !hfContract.price_worker_woman) {
-                //ВРЕДНЫЙ ФАКТОР
-                for (let item of arResearch)
-                    if (item.price) arPrice.price_worker_hf += item.price
 
-                for (let item of arSpecialist)
-                    if (item.price) arPrice.price_worker_hf += item.price
+                //ВРЕДНЫЙ ФАКТОР
+                if (arResearch)
+                    for (let item of arResearch)
+                        if (item.price) arPrice.price_worker_hf += item.price
+
+                if (arSpecialist)
+                    for (let item of arSpecialist)
+                        if (item.price) arPrice.price_worker_hf += item.price
 
                 //по умолчанию основной - вредный фактор
                 arPrice.price += arPrice.price_worker_hf
