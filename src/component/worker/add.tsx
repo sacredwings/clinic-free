@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation' //переход по url
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
 import {ServerWorkerAdd, ServerContractTypeGet} from "@/component/function/url_api";
+import ActivitiesList from "@/component/gigtest/activitiesList";
 
 export default function WorkerAdd ({contract}) {
     const router = useRouter() //для перехода к пользователю
@@ -18,6 +19,9 @@ export default function WorkerAdd ({contract}) {
         man: '1',
 
         date_birth: '',
+
+        snils: '',
+        gigtest_activities_id: null,
 
         check_ultrasound: false,
         check_mammography: false,
@@ -103,6 +107,9 @@ export default function WorkerAdd ({contract}) {
             second_name: form.second_name,
             man: form.man,
             date_birth: form.date_birth,
+
+            snils: form.snils,
+            gigtest_activities_id: form.gigtest_activities_id,
 
             check_ultrasound: form.check_ultrasound,
             check_mammography: form.check_mammography,
@@ -247,6 +254,12 @@ export default function WorkerAdd ({contract}) {
         </div>
     }
 
+    function onSelectActivitiesList (id)  {
+        setForm(prev => ({
+            ...prev, gigtest_activities_id: id
+        }))
+    }
+
     const Form = () => {
         return <form onSubmit={onFormSubmit} className="p-3">
             <div className="card m-3">
@@ -257,37 +270,60 @@ export default function WorkerAdd ({contract}) {
                     <div className="row g-3 align-items-center">
                         <div className="col-4">
                             <label htmlFor="last_name" className="col-form-label">Фамилия</label>
-                            <input type="text" className="form-control" id="last_name" value={form.last_name} onChange={onChangeText}/>
+                            <input type="text" className="form-control" id="last_name" value={form.last_name}
+                                   onChange={onChangeText}/>
                         </div>
                         <div className="col-4">
                             <label htmlFor="first_name" className="col-form-label">Имя</label>
-                            <input type="text" className="form-control" id="first_name" value={form.first_name} onChange={onChangeText}/>
+                            <input type="text" className="form-control" id="first_name" value={form.first_name}
+                                   onChange={onChangeText}/>
                         </div>
                         <div className="col-4">
                             <label htmlFor="second_name" className="col-form-label">Отчество</label>
-                            <input type="text" className="form-control" id="second_name" value={form.second_name} onChange={onChangeText}/>
+                            <input type="text" className="form-control" id="second_name" value={form.second_name}
+                                   onChange={onChangeText}/>
                         </div>
                     </div>
 
                     <div className="row g-4 align-items-center">
                         <div className="col-6">
                             <label htmlFor="man" className="col-form-label">Пол</label>
-                            <select className="form-select" id="man" aria-label="" value={form.man} onChange={onChangeText}>
+                            <select className="form-select" id="man" aria-label="" value={form.man}
+                                    onChange={onChangeText}>
                                 <option value="1" defaultValue="1">Мужской</option>
                                 <option value="0">Женский</option>
                             </select>
                         </div>
                         <div className="col-6">
                             <label htmlFor="date_birth" className="col-form-label">Дата рождения</label>
-                            <input type="date" className="form-control" id="date_birth" value={form.date_birth ? new Date(form.date_birth).toISOString().substring(0, 10) : ''} onChange={onChangeText}/>
+                            <input type="date" className="form-control" id="date_birth"
+                                   value={form.date_birth ? new Date(form.date_birth).toISOString().substring(0, 10) : ''}
+                                   onChange={onChangeText}/>
                         </div>
                     </div>
 
+                    <div className="row g-4 align-items-center">
+                        <div className="col-12">
+                            <label htmlFor="snils" className="col-form-label">СНИЛС <span
+                                className="badge text-bg-warning">ЭЛМК</span></label>
+                            <input type="text" className="form-control" id="snils"
+                                   value={form.snils ? form.snils : ''} onChange={onChangeText}/>
+                        </div>
+                    </div>
 
                     <div className="row g-3 align-items-center">
                         <div className="col-12">
                             <label htmlFor="hf_code" className="col-form-label">Вредные факторы</label>
-                            <input type="text" className="form-control" id="hf_code" value={form.hf_code} onChange={onChangeText}/>
+                            <input type="text" className="form-control" id="hf_code" value={form.hf_code}
+                                   onChange={onChangeText}/>
+                        </div>
+                    </div>
+
+                    <div className="row g-3 align-items-center">
+                        <div className="col-12">
+
+                            <ActivitiesList onSelect={onSelectActivitiesList}/>
+
                         </div>
                     </div>
 
@@ -321,11 +357,13 @@ export default function WorkerAdd ({contract}) {
                     <div className="row g-3 align-items-center">
                         <div className="col-6">
                             <label htmlFor="subdivision" className="col-form-label">Подразделение</label>
-                            <input type="text" className="form-control" id="subdivision" value={form.subdivision ? form.subdivision : ''} onChange={onChangeText}/>
+                            <input type="text" className="form-control" id="subdivision"
+                                   value={form.subdivision ? form.subdivision : ''} onChange={onChangeText}/>
                         </div>
                         <div className="col-6">
                             <label htmlFor="profession" className="col-form-label">Профессия</label>
-                            <input type="text" className="form-control" id="profession" value={form.profession ? form.profession : ''} onChange={onChangeText}/>
+                            <input type="text" className="form-control" id="profession"
+                                   value={form.profession ? form.profession : ''} onChange={onChangeText}/>
                         </div>
 
                     </div>
@@ -351,13 +389,13 @@ export default function WorkerAdd ({contract}) {
     </>
 }
 
-function formDate (oldDate) {
+function formDate(oldDate) {
     if (!oldDate) return null
 
     let date = new Date(oldDate)
-    let month=new Array("01","02","03","04","05","06","07","08","09","10","11","12")
-    let day=`${date.getDate()}`
-    if (date.getDate()<10)
-        day=`0${date.getDate()}`
+    let month = new Array("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12")
+    let day = `${date.getDate()}`
+    if (date.getDate() < 10)
+        day = `0${date.getDate()}`
     return (date.getFullYear()+"-"+month[date.getMonth()]+"-"+day)
 }

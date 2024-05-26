@@ -9,6 +9,7 @@ import {
 } from "@/component/function/url_api";
 import { cookies } from 'next/headers'
 import Link from 'next/link'
+import UserSynchronizationButton from '@/component/gigtest/userSynchronizationButton'
 
 export default async function User ({
                                         params,
@@ -38,6 +39,8 @@ export default async function User ({
                         <a href={`/worker/${worker_id}/pdf/vypiska`} className="dropdown-item" target="_blank">Выписка</a>
                     </li>
                 </ul>
+
+                <UserSynchronizationButton worker_id={worker_id}/>
             </div>
 
         </div>

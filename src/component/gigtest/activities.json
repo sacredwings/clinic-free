@@ -1,0 +1,863 @@
+[
+    {
+        "id": 89908,
+        "title": "ПРОДУКТЫ (КРОМЕ РЫНКОВ)",
+        "key": "1",
+        "parent_id": null,
+        "types_work": null
+    },
+    {
+        "id": 89909,
+        "title": "ОБЩЕПИТ",
+        "key": "11",
+        "parent_id": 89908,
+        "types_work": 211
+    },
+    {
+        "id": 89910,
+        "title": "ПРОД. БАЗА",
+        "key": "13",
+        "parent_id": 89908,
+        "types_work": 211
+    },
+    {
+        "id": 89911,
+        "title": "ПРОД. ТОРГОВЛЯ",
+        "key": "14",
+        "parent_id": 89908,
+        "types_work": 211
+    },
+    {
+        "id": 89912,
+        "title": "КРЕМОВО-КОНДИТЕРСКОЕ ПРОИЗВОДСТВО",
+        "key": "15",
+        "parent_id": 89908,
+        "types_work": 211
+    },
+    {
+        "id": 89913,
+        "title": "ПИЩЕБЛОК МЕДИЦИНСКОЙ ОРГАНИЗАЦИИ",
+        "key": "16",
+        "parent_id": 89908,
+        "types_work": 211
+    },
+    {
+        "id": 89914,
+        "title": "ПИЩЕБЛОК ОБРАЗОВАТЕЛЬНОЙ ОРГАНИЗАЦИИ (ССУЗ, ВУЗ)",
+        "key": "17",
+        "parent_id": 89908,
+        "types_work": 211
+    },
+    {
+        "id": 89915,
+        "title": "ПРОИЗВОДСТВО МОЛОКА И МОЛОЧНЫХ ПРОДУКТОВ",
+        "key": "18",
+        "parent_id": 89908,
+        "types_work": 211
+    },
+    {
+        "id": 89916,
+        "title": "МЯСОПЕРЕРАБАТЫВАЮЩИЕ ПРЕДПРИЯТИЯ",
+        "key": "19",
+        "parent_id": 89908,
+        "types_work": 211
+    },
+    {
+        "id": 89917,
+        "title": "РЫБОПЕРЕРАБАТЫВАЮЩИЕ ПРЕДПРИЯТИЯ",
+        "key": "1A",
+        "parent_id": 89908,
+        "types_work": 211
+    },
+    {
+        "id": 89918,
+        "title": "ПРОИЗВОДСТВО ХЛЕБОБУЛОЧНЫХ ИЗДЕЛИЙ",
+        "key": "1B",
+        "parent_id": 89908,
+        "types_work": 211
+    },
+    {
+        "id": 89919,
+        "title": "ПРОЧИЕ ПИЩ. ПРОМ.",
+        "key": "1C",
+        "parent_id": 89908,
+        "types_work": 211
+    },
+    {
+        "id": 89920,
+        "title": "ПИЩЕБЛОК ДЕТСКОЙ ОБРАЗОВАТЕЛЬНОЙ ОРГАНИЗАЦИИ",
+        "key": "1D",
+        "parent_id": 89908,
+        "types_work": 211
+    },
+    {
+        "id": 89921,
+        "title": "ПРОДОВОЛЬСТВЕННЫЕ РЫНКИ",
+        "key": "2",
+        "parent_id": null,
+        "types_work": null
+    },
+    {
+        "id": 89922,
+        "title": "ПРОД. РЫНОК",
+        "key": "21",
+        "parent_id": 89921,
+        "types_work": 211
+    },
+    {
+        "id": 89923,
+        "title": "ДОШКОЛЬНЫЕ ОБРАЗОВАТЕЛЬНЫЕ УЧРЕЖДЕНИЯ",
+        "key": "4",
+        "parent_id": null,
+        "types_work": null
+    },
+    {
+        "id": 89924,
+        "title": "ДЕТСКИЙ ДОМ (ДОШКОЛЬНЫЙ)",
+        "key": "41",
+        "parent_id": 89923,
+        "types_work": 213
+    },
+    {
+        "id": 89925,
+        "title": "ДЕТСКИЙ САД",
+        "key": "42",
+        "parent_id": 89923,
+        "types_work": 213
+    },
+    {
+        "id": 89926,
+        "title": "Д/САД – НАЧ.  ШКОЛА",
+        "key": "43",
+        "parent_id": 89923,
+        "types_work": 213
+    },
+    {
+        "id": 89927,
+        "title": "ДОМ РЕБЕНКА",
+        "key": "44",
+        "parent_id": 89923,
+        "types_work": 213
+    },
+    {
+        "id": 89928,
+        "title": "РАБОТА В СЕМЬЕ",
+        "key": "45",
+        "parent_id": 89923,
+        "types_work": 213
+    },
+    {
+        "id": 89929,
+        "title": "ЯСЛИ–САД",
+        "key": "46",
+        "parent_id": 89923,
+        "types_work": 213
+    },
+    {
+        "id": 89930,
+        "title": "ОБЩЕОБРАЗОВАТЕЛЬНЫЕ УЧРЕЖДЕНИЯ",
+        "key": "5",
+        "parent_id": null,
+        "types_work": null
+    },
+    {
+        "id": 89931,
+        "title": "ГИМНАЗИЯ",
+        "key": "51",
+        "parent_id": 89930,
+        "types_work": 213
+    },
+    {
+        "id": 89932,
+        "title": "ЛИЦЕЙ",
+        "key": "52",
+        "parent_id": 89930,
+        "types_work": 213
+    },
+    {
+        "id": 89933,
+        "title": "ШКОЛА",
+        "key": "53",
+        "parent_id": 89930,
+        "types_work": 213
+    },
+    {
+        "id": 89934,
+        "title": "ШКОЛА–ИНТЕРНАТ",
+        "key": "54",
+        "parent_id": 89930,
+        "types_work": 213
+    },
+    {
+        "id": 89935,
+        "title": "ИНТЕРНАТ ДЕТСКИЙ",
+        "key": "55",
+        "parent_id": 89930,
+        "types_work": 213
+    },
+    {
+        "id": 89936,
+        "title": "ЦЕНТР ОБРАЗОВАНИЯ",
+        "key": "57",
+        "parent_id": 89930,
+        "types_work": 213
+    },
+    {
+        "id": 89937,
+        "title": "ДЕТСКИЙ ДОМ (ШКОЛЬНЫЙ)",
+        "key": "58",
+        "parent_id": 89930,
+        "types_work": 213
+    },
+    {
+        "id": 89938,
+        "title": "СРЕДНИЕ СПЕЦИАЛЬНЫЕ УЧЕБНЫЕ ЗАВЕДЕНИЯ",
+        "key": "6",
+        "parent_id": null,
+        "types_work": null
+    },
+    {
+        "id": 89939,
+        "title": "КОЛЛЕДЖ",
+        "key": "61",
+        "parent_id": 89938,
+        "types_work": 213
+    },
+    {
+        "id": 89940,
+        "title": "МЕДУЧИЛИЩЕ",
+        "key": "62",
+        "parent_id": 89938,
+        "types_work": 213
+    },
+    {
+        "id": 89941,
+        "title": "МУЗУЧИЛИЩЕ",
+        "key": "63",
+        "parent_id": 89938,
+        "types_work": 213
+    },
+    {
+        "id": 89942,
+        "title": "МУК",
+        "key": "64",
+        "parent_id": 89938,
+        "types_work": 213
+    },
+    {
+        "id": 89943,
+        "title": "ПЕДУЧИЛИЩЕ",
+        "key": "65",
+        "parent_id": 89938,
+        "types_work": 213
+    },
+    {
+        "id": 89944,
+        "title": "ПРОФУЧИЛИЩЕ",
+        "key": "66",
+        "parent_id": 89938,
+        "types_work": 213
+    },
+    {
+        "id": 89945,
+        "title": "ТЕХНИКУМ",
+        "key": "67",
+        "parent_id": 89938,
+        "types_work": 213
+    },
+    {
+        "id": 89946,
+        "title": "УЧИЛИЩЕ",
+        "key": "68",
+        "parent_id": 89938,
+        "types_work": 213
+    },
+    {
+        "id": 89947,
+        "title": "ДОПОЛНИТЕЛЬНОЕ ОБРАЗОВАНИЕ",
+        "key": "7",
+        "parent_id": null,
+        "types_work": null
+    },
+    {
+        "id": 89948,
+        "title": "БИБЛИОТЕКА",
+        "key": "71",
+        "parent_id": 89947,
+        "types_work": 213
+    },
+    {
+        "id": 89949,
+        "title": "ДОМ ТВОРЧЕСТВА",
+        "key": "72",
+        "parent_id": 89947,
+        "types_work": 213
+    },
+    {
+        "id": 89950,
+        "title": "МУЗ. ШКОЛА",
+        "key": "73",
+        "parent_id": 89947,
+        "types_work": 213
+    },
+    {
+        "id": 89951,
+        "title": "СПОРТШКОЛА",
+        "key": "74",
+        "parent_id": 89947,
+        "types_work": 213
+    },
+    {
+        "id": 89952,
+        "title": "СТУДИЯ",
+        "key": "75",
+        "parent_id": 89947,
+        "types_work": 213
+    },
+    {
+        "id": 89953,
+        "title": "ХУД. ШКОЛА",
+        "key": "76",
+        "parent_id": 89947,
+        "types_work": 213
+    },
+    {
+        "id": 89954,
+        "title": "ЦВР",
+        "key": "77",
+        "parent_id": 89947,
+        "types_work": 213
+    },
+    {
+        "id": 89955,
+        "title": "ШКОЛА ИСКУССТВ",
+        "key": "79",
+        "parent_id": 89947,
+        "types_work": 213
+    },
+    {
+        "id": 89956,
+        "title": "ПРОЧИЕ",
+        "key": "7A",
+        "parent_id": 89947,
+        "types_work": 213
+    },
+    {
+        "id": 89957,
+        "title": "ДЕТСКИЕ ОЗДОРОВИТЕЛЬНЫЕ УЧРЕЖДЕНИЯ",
+        "key": "8",
+        "parent_id": null,
+        "types_work": null
+    },
+    {
+        "id": 89958,
+        "title": "ГОРОДСКОЙ ЛАГЕРЬ",
+        "key": "81",
+        "parent_id": 89957,
+        "types_work": 213
+    },
+    {
+        "id": 89959,
+        "title": "ДАЧА",
+        "key": "82",
+        "parent_id": 89957,
+        "types_work": 213
+    },
+    {
+        "id": 89960,
+        "title": "ДЕТСКИЙ САНАТОРИЙ",
+        "key": "83",
+        "parent_id": 89957,
+        "types_work": 213
+    },
+    {
+        "id": 89961,
+        "title": "ЗАГОРОДНЫЙ ЛАГЕРЬ",
+        "key": "84",
+        "parent_id": 89957,
+        "types_work": 213
+    },
+    {
+        "id": 89962,
+        "title": "ПАЛАТОЧНЫЙ ЛАГЕРЬ",
+        "key": "84.1",
+        "parent_id": 89957,
+        "types_work": 213
+    },
+    {
+        "id": 89963,
+        "title": "ЛАГЕРЬ ТРУДА и ОТДЫХА",
+        "key": "84.2",
+        "parent_id": 89957,
+        "types_work": 213
+    },
+    {
+        "id": 89964,
+        "title": "ЛЕСНАЯ ШКОЛА",
+        "key": "85",
+        "parent_id": 89957,
+        "types_work": 213
+    },
+    {
+        "id": 89965,
+        "title": "САНАТОРНАЯ ШКОЛА",
+        "key": "86",
+        "parent_id": 89957,
+        "types_work": 213
+    },
+    {
+        "id": 89966,
+        "title": "САНАТОРНЫЙ Д/САД",
+        "key": "87",
+        "parent_id": 89957,
+        "types_work": 213
+    },
+    {
+        "id": 89967,
+        "title": "ПАССАЖИРСКИЙ ТРАНСПОРТ",
+        "key": "9",
+        "parent_id": null,
+        "types_work": null
+    },
+    {
+        "id": 89968,
+        "title": "ГОРОДСКОЙ ТРАНСПОРТ",
+        "key": "97",
+        "parent_id": 89967,
+        "types_work": 214
+    },
+    {
+        "id": 89969,
+        "title": "ПРОВОДНИКИ (СТЮАРДЫ)",
+        "key": "98",
+        "parent_id": 89967,
+        "types_work": 211
+    },
+    {
+        "id": 89970,
+        "title": "КОММУНАЛЬНО-БЫТОВОЕ ОБСЛУЖИВАНИЕ",
+        "key": "B",
+        "parent_id": null,
+        "types_work": null
+    },
+    {
+        "id": 89971,
+        "title": "БАНЯ",
+        "key": "B1",
+        "parent_id": 89970,
+        "types_work": 214
+    },
+    {
+        "id": 89972,
+        "title": "БАССЕЙН",
+        "key": "B2",
+        "parent_id": 89970,
+        "types_work": 214
+    },
+    {
+        "id": 89973,
+        "title": "ДОМ ОТДЫХА",
+        "key": "B3",
+        "parent_id": 89970,
+        "types_work": 214
+    },
+    {
+        "id": 89974,
+        "title": "ОБЩЕЖИТИЕ",
+        "key": "B4",
+        "parent_id": 89970,
+        "types_work": 214
+    },
+    {
+        "id": 89975,
+        "title": "ГОСТИНИЦА",
+        "key": "B5",
+        "parent_id": 89970,
+        "types_work": 214
+    },
+    {
+        "id": 89976,
+        "title": "ПАНСИОНАТ",
+        "key": "B6",
+        "parent_id": 89970,
+        "types_work": 214
+    },
+    {
+        "id": 89977,
+        "title": "ПАРИКМАХЕРСКАЯ",
+        "key": "B7",
+        "parent_id": 89970,
+        "types_work": 214
+    },
+    {
+        "id": 89978,
+        "title": "ПРАЧЕЧНАЯ",
+        "key": "B8",
+        "parent_id": 89970,
+        "types_work": 214
+    },
+    {
+        "id": 89979,
+        "title": "ПУНКТ ПРИЕМА БЕЛЬЯ",
+        "key": "B9",
+        "parent_id": 89970,
+        "types_work": 214
+    },
+    {
+        "id": 89980,
+        "title": "САЛОН КРАСОТЫ",
+        "key": "BA",
+        "parent_id": 89970,
+        "types_work": 214
+    },
+    {
+        "id": 89981,
+        "title": "САУНА",
+        "key": "BB",
+        "parent_id": 89970,
+        "types_work": 214
+    },
+    {
+        "id": 89982,
+        "title": "ФОК",
+        "key": "BC",
+        "parent_id": 89970,
+        "types_work": 214
+    },
+    {
+        "id": 89983,
+        "title": "ХИМЧИСТКА",
+        "key": "BD",
+        "parent_id": 89970,
+        "types_work": 214
+    },
+    {
+        "id": 89984,
+        "title": "ЖКХ",
+        "key": "BE",
+        "parent_id": 89970,
+        "types_work": 214
+    },
+    {
+        "id": 89985,
+        "title": "КОМ.-БЫТ. В ЛПУ",
+        "key": "BG",
+        "parent_id": 89970,
+        "types_work": 214
+    },
+    {
+        "id": 89986,
+        "title": "ВОДОПРОВОДНЫЕ СООРУЖЕНИЯ",
+        "key": "BI",
+        "parent_id": 89970,
+        "types_work": 212
+    },
+    {
+        "id": 89987,
+        "title": "ПРОЧИЕ ОРГАНИЗАЦИИ",
+        "key": "BL",
+        "parent_id": 89970,
+        "types_work": 214
+    },
+    {
+        "id": 89988,
+        "title": "МЕДИЦИНСКАЯ ДЕЯТЕЛЬНОСТЬ",
+        "key": "C",
+        "parent_id": null,
+        "types_work": null
+    },
+    {
+        "id": 89989,
+        "title": "БОЛЬНИЦА",
+        "key": "C1",
+        "parent_id": 89988,
+        "types_work": 215
+    },
+    {
+        "id": 89990,
+        "title": "ДЕТСКАЯ БОЛЬНИЦА",
+        "key": "C2",
+        "parent_id": 89988,
+        "types_work": 215
+    },
+    {
+        "id": 89991,
+        "title": "ДЕТСКАЯ ПОЛИКЛИНИКА",
+        "key": "C3",
+        "parent_id": 89988,
+        "types_work": 215
+    },
+    {
+        "id": 89992,
+        "title": "ДИСПАНСЕР",
+        "key": "C4",
+        "parent_id": 89988,
+        "types_work": 215
+    },
+    {
+        "id": 89993,
+        "title": "КЛИНИКА",
+        "key": "C5",
+        "parent_id": 89988,
+        "types_work": 215
+    },
+    {
+        "id": 89994,
+        "title": "МЕДИЦИНСКИЙ ЦЕНТР",
+        "key": "C6",
+        "parent_id": 89988,
+        "types_work": 215
+    },
+    {
+        "id": 89995,
+        "title": "ПОЛИКЛИНИКА",
+        "key": "C7",
+        "parent_id": 89988,
+        "types_work": 215
+    },
+    {
+        "id": 89996,
+        "title": "РОДИЛЬНЫЙ ДОМ",
+        "key": "C8",
+        "parent_id": 89988,
+        "types_work": 215
+    },
+    {
+        "id": 89997,
+        "title": "СТОМАТОЛОГИЯ",
+        "key": "C9",
+        "parent_id": 89988,
+        "types_work": 215
+    },
+    {
+        "id": 89998,
+        "title": "САНАТОРИЙ",
+        "key": "CB",
+        "parent_id": 89988,
+        "types_work": 215
+    },
+    {
+        "id": 89999,
+        "title": "ПОДСТАНЦИЯ СКОРОЙ ПОМОЩИ",
+        "key": "CC",
+        "parent_id": 89988,
+        "types_work": 215
+    },
+    {
+        "id": 90000,
+        "title": "МЕДИКО-САНИТАРНАЯ ЧАСТЬ",
+        "key": "CD",
+        "parent_id": 89988,
+        "types_work": 215
+    },
+    {
+        "id": 90001,
+        "title": "МЕДИЦИНСКИЙ ПУНКТ",
+        "key": "CE",
+        "parent_id": 89988,
+        "types_work": 215
+    },
+    {
+        "id": 90002,
+        "title": "АМБУЛАТОРИЯ",
+        "key": "CF",
+        "parent_id": 89988,
+        "types_work": 215
+    },
+    {
+        "id": 90003,
+        "title": "ЦЕНТР ГИГИЕНЫ И ЭПИДЕМИОЛОГИИ",
+        "key": "CG",
+        "parent_id": 89988,
+        "types_work": 215
+    },
+    {
+        "id": 90004,
+        "title": "ПРОМ. ТОРГОВЛЯ",
+        "key": "F",
+        "parent_id": null,
+        "types_work": null
+    },
+    {
+        "id": 90005,
+        "title": "ПРОМ. СКЛАД",
+        "key": "F1",
+        "parent_id": 90004,
+        "types_work": 214
+    },
+    {
+        "id": 90006,
+        "title": "ПРОМ. ТОРГОВЛЯ",
+        "key": "F2",
+        "parent_id": 90004,
+        "types_work": 214
+    },
+    {
+        "id": 90007,
+        "title": "ПРОМ. РЫНОК",
+        "key": "G",
+        "parent_id": null,
+        "types_work": null
+    },
+    {
+        "id": 90008,
+        "title": "ПРОМ. РЫНОК",
+        "key": "G1",
+        "parent_id": 90007,
+        "types_work": 214
+    },
+    {
+        "id": 90009,
+        "title": "ВЫСШИЕ УЧЕБНЫЕ ЗАВЕДЕНИЯ",
+        "key": "K",
+        "parent_id": null,
+        "types_work": null
+    },
+    {
+        "id": 90010,
+        "title": "ВУЗ",
+        "key": "K1",
+        "parent_id": 90009,
+        "types_work": null
+    },
+    {
+        "id": 90011,
+        "title": "ПРОЧИЕ (ВОДНЫЙ ТРАНСПОРТ)",
+        "key": "L",
+        "parent_id": null,
+        "types_work": null
+    },
+    {
+        "id": 90012,
+        "title": "ВОДНЫЙ ТРАНСПОРТ",
+        "key": "L1",
+        "parent_id": 90011,
+        "types_work": 214
+    },
+    {
+        "id": 90013,
+        "title": "ИНОСТРАННЫЕ ГРАЖДАНЕ ЭПИДЗНАЧИМЫХ ПРОФЕССИЙ",
+        "key": "M",
+        "parent_id": null,
+        "types_work": null
+    },
+    {
+        "id": 90014,
+        "title": "ИНОСТРАННЫЕ ГРАЖДАНЕ ЭПИДЗНАЧИМЫХ ПРОФЕССИЙ",
+        "key": "M1",
+        "parent_id": 90013,
+        "types_work": null
+    },
+    {
+        "id": 90015,
+        "title": "СОЦИАЛЬНЫЕ УЧРЕЖДЕНИЯ ДЛЯ ДЕТЕЙ",
+        "key": "N",
+        "parent_id": null,
+        "types_work": null
+    },
+    {
+        "id": 90016,
+        "title": "ПАНСИОНАТ",
+        "key": "N1",
+        "parent_id": 90015,
+        "types_work": 213
+    },
+    {
+        "id": 90017,
+        "title": "СОЦИАЛЬНЫЙ ПРИЮТ",
+        "key": "N2",
+        "parent_id": 90015,
+        "types_work": 213
+    },
+    {
+        "id": 90018,
+        "title": "ПРИЮТ",
+        "key": "N3",
+        "parent_id": 90015,
+        "types_work": 213
+    },
+    {
+        "id": 90019,
+        "title": "РЕАБИЛИТАЦИОННЫЙ ЦЕНТР",
+        "key": "N4",
+        "parent_id": 90015,
+        "types_work": 213
+    },
+    {
+        "id": 90020,
+        "title": "ЦСО",
+        "key": "N5",
+        "parent_id": 90015,
+        "types_work": 213
+    },
+    {
+        "id": 90021,
+        "title": "СОЦИАЛЬНЫЕ УЧРЕЖДЕНИЯ ДЛЯ ВЗРОСЛЫХ",
+        "key": "O",
+        "parent_id": null,
+        "types_work": null
+    },
+    {
+        "id": 90022,
+        "title": "ЦСО",
+        "key": "O1",
+        "parent_id": 90021,
+        "types_work": 214
+    },
+    {
+        "id": 90023,
+        "title": "ПАНСИОНАТ",
+        "key": "O2",
+        "parent_id": 90021,
+        "types_work": 214
+    },
+    {
+        "id": 90024,
+        "title": "ИНТЕРНАТ",
+        "key": "O3",
+        "parent_id": 90021,
+        "types_work": 214
+    },
+    {
+        "id": 90025,
+        "title": "СОЦИАЛЬНЫЙ ПРИЮТ",
+        "key": "O4",
+        "parent_id": 90021,
+        "types_work": null
+    },
+    {
+        "id": 90026,
+        "title": "ПРИЮТ",
+        "key": "O5",
+        "parent_id": 90021,
+        "types_work": 214
+    },
+    {
+        "id": 90027,
+        "title": "РЕАБИЛИТАЦИОННЫЙ ЦЕНТР",
+        "key": "O6",
+        "parent_id": 90021,
+        "types_work": 214
+    },
+    {
+        "id": 90028,
+        "title": "ПРОИЗВОДСТВО И РЕАЛИЗАЦИЯ ЛЕКАРСТВЕННЫХ СРЕДСТВ",
+        "key": "P",
+        "parent_id": null,
+        "types_work": null
+    },
+    {
+        "id": 90029,
+        "title": "АПТЕЧНЫЕ УЧРЕЖДЕНИЯ",
+        "key": "P1",
+        "parent_id": 90028,
+        "types_work": 211
+    },
+    {
+        "id": 90030,
+        "title": "МЕДИЦИНСКАЯ ПРОМЫШЛЕННОСТЬ",
+        "key": "P2",
+        "parent_id": 90028,
+        "types_work": 214
+    }
+]

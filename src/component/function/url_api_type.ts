@@ -1,5 +1,5 @@
 // @ts-nocheck
-import {ServerOrgEdit, ServerOrgGet} from "@/component/function/url_api";
+import {ServerGigtestUser, ServerOrgEdit, ServerOrgGet} from "@/component/function/url_api";
 
 export interface interfaceAuthLogin {
     login: string
@@ -302,4 +302,9 @@ export interface interfaceRoleGetById {
 }
 export interface interfaceRoleDelete {
     id: string
+}
+//--------------------------------------------------------------
+//GigTest
+export interface interfaceGigtestUser {
+    worker_id: string
 }

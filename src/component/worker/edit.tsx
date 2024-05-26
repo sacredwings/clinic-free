@@ -11,6 +11,7 @@ import {
 } from "@/component/function/url_api";
 import FormSpecialistRadio from "@/component/worker/formSpecialistRadio";
 import FormResearchRadio from "@/component/worker/formResearchRadio";
+import ActivitiesList from "@/component/gigtest/activitiesList";
 
 export default function UserForm ({worker, account, accessEdit}) {
     //const router = useRouter() //для перехода к пользователю
@@ -90,6 +91,8 @@ export default function UserForm ({worker, account, accessEdit}) {
 
             contract_type_ids: contractTypeIds,
             hf_code: form.hf_code,
+
+            gigtest_activities_id: form.gigtest_activities_id,
 
             check_ultrasound: form.check_ultrasound,
             check_mammography: form.check_mammography,
@@ -213,6 +216,11 @@ export default function UserForm ({worker, account, accessEdit}) {
         </div>
     }
 
+    function onSelectActivitiesList (id)  {
+        setForm(prev => ({
+            ...prev, gigtest_activities_id: id
+        }))
+    }
 
     const Form = () => {
         return <>
@@ -231,6 +239,14 @@ export default function UserForm ({worker, account, accessEdit}) {
                             <label htmlFor="hf_code" className="col-form-label">Вредные факторы</label>
                             <input type="text" className="form-control" id="hf_code" value={form.hf_code}
                                    onChange={onChangeText}/>
+                        </div>
+                    </div>
+
+                    <div className="row g-3 align-items-center">
+                        <div className="col-12">
+
+                            <ActivitiesList onSelect={onSelectActivitiesList}/>
+
                         </div>
                     </div>
 

@@ -40,6 +40,8 @@ export default function UserForm ({worker, account, accessEdit}) {
             man: form.man,
             date_birth: form.date_birth,
 
+            snils: form.snils,
+
             phone: form.phone,
         }
 
@@ -90,6 +92,12 @@ export default function UserForm ({worker, account, accessEdit}) {
                         <input type="date" className="form-control" id="date_birth"
                                value={form.date_birth ? new Date(form.date_birth).toISOString().substring(0, 10) : ''}
                                onChange={onChangeText}/>
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="snils" className="col-form-label">СНИЛС <span
+                            className="badge text-bg-warning">ЭЛМК</span></label>
+                        <input type="text" className="form-control" id="snils"
+                               value={form.snils ? form.snils : ''} onChange={onChangeText}/>
                     </div>
                 </div>
             </div>

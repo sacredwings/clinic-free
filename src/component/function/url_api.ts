@@ -44,7 +44,7 @@ import {
     interfaceWorkerEditVisit,
     interfaceWorkerGetDoctor,
     interfaceWorkerGetDoctorSpecialist,
-    interfaceWorkerGetDoctorResearch, interfaceWorkerEditFinale
+    interfaceWorkerGetDoctorResearch, interfaceWorkerEditFinale, interfaceGigtestUser
 } from './url_api_type'
 import axios, {AxiosRequestConfig} from "axios"
 import {ToastSystemAdd} from "@/component/toast/function";
@@ -1103,4 +1103,20 @@ export async function ServerRoleDelete ({
 function is_server () {
     return ! (typeof window != 'undefined' && window.document);
 }
+//--------------------------------------------------------------
+//GigTest
+export async function ServerGigtestUser ({
+    worker_id,
+}: interfaceGigtestUser) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
+    let arFields = {
+        worker_id,
+    } as interfaceRoleEdit
+
+    let url = `/api/worker/gigtest`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}

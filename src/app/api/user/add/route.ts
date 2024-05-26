@@ -25,7 +25,9 @@ export async function POST(request: Request) {
                 man: Joi.number().integer().min(0).max(1).required(),
                 date_birth: Joi.date().min('1-1-1900').max('1-1-2030').required(),
 
-                phone: Joi.number().min(1000000000).max(9999999999).allow(null).empty('').default(null),
+                snils: Joi.number().min(9999999999).max(99999999999).allow(null).empty('').default(null),
+
+                phone: Joi.number().min(999999999).max(9999999999).allow(null).empty('').default(null),
 
                 specialist_ids: Joi.array().min(1).max(50).items(Joi.string().min(24).max(24)).allow(null).empty(Joi.array().length(0)).default(null),
                 research_ids: Joi.array().min(1).max(50).items(Joi.string().min(24).max(24)).allow(null).empty(Joi.array().length(0)).default(null),
@@ -55,6 +57,8 @@ export async function POST(request: Request) {
 
                 date_birth: value.date_birth,
                 man: value.man,
+
+                snils: value.snils,
 
                 phone: value.phone,
 
