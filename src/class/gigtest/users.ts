@@ -3,7 +3,7 @@ import { DB, Store } from "../../../social-framework/src"
 import axios, {AxiosRequestConfig} from "axios";
 import config from "../../../config.json";
 
-export default class Users {
+export default class CGigtestUser {
 
     static async UserSearch ( snils ) {
         try {
@@ -27,39 +27,36 @@ export default class Users {
 
     static async UserAdd ( fields ) {
         try {
-            let url = `https://gigtest.ru/api/v2/users`
+            let url = `https://gigtest.ru/api/v2/users?access-token=${config.gigtest.accessToken}`
 
             let arFields = {
-                params: {
-                    'access-token': config.gigtest.accessToken,
-
-                    fio: fields.fio,
-                    birthday: fields.birthday,
-                    country_id: fields.country_id,
-                    home_address: fields.home_address,
-                    company_name: fields.company_name,
-                    position: fields.position,
-                    phone: fields.phone,
-                    avatar_link: fields.avatar_link,
-                    snils: fields.snils,
-                    passport: {
-                        series: fields.series,
-                        number: fields.number,
-                        issue_org_name: fields.issue_org_name,
-                        issue_org_code: fields.issue_org_code,
-                        issue_date: fields.issue_date,
-                    },
-                    address_state_code: fields.address_state_code,
-                    position_id: fields.position_id,
-                    gender: fields.gender,
-                    first_name: fields.first_name,
-                    last_name: fields.last_name,
-                    patronymic: fields.patronymic,
-                }
+                fio: fields.fio,
+                birthday: fields.birthday,
+                country_id: fields.country_id,
+                home_address: fields.home_address,
+                company_name: fields.company_name,
+                position: fields.position,
+                phone: fields.phone,
+                avatar_link: fields.avatar_link,
+                snils: fields.snils,
+                passport: {
+                    series: fields.series,
+                    number: fields.number,
+                    issue_org_name: fields.issue_org_name,
+                    issue_org_code: fields.issue_org_code,
+                    issue_date: fields.issue_date,
+                },
+                address_state_code: fields.address_state_code,
+                position_id: fields.position_id,
+                gender: fields.gender,
+                first_name: fields.first_name,
+                last_name: fields.last_name,
+                patronymic: fields.patronymic,
             } as AxiosRequestConfig
 
+            console.log(arFields)
             let res = await axios.post(url, arFields);
-            console(res.data)
+            console.log(res.data)
 
         } catch (err) {
             console.log(err)
