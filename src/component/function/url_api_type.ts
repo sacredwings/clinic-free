@@ -308,3 +308,12 @@ export interface interfaceRoleDelete {
 export interface interfaceGigtestUser {
     worker_id: string
 }
+
+//--------------------------------------------------------------
+//CLINIC
+export interface interfaceClinicAdd {
+    name: string
+    description: string
+
+    inn: number
+}

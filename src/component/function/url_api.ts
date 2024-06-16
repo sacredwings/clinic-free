@@ -1120,3 +1120,27 @@ export async function ServerGigtestUser ({
     await ToastSystemAdd(res.data)
     return res.data.response
 }
+
+//--------------------------------------------------------------
+//CLINIC
+export async function ServerClinicAdd ({
+    name,
+    description,
+
+    inn
+}: interfaceGigtestUser) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        name,
+        description,
+
+        inn
+    } as interfaceRoleEdit
+
+    let url = `/api/clinic/add`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}

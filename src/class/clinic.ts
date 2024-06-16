@@ -74,7 +74,7 @@ export default class Clinic {
 
         } catch (err) {
             console.log(err)
-            throw ({...{err: 7001000, msg: 'CClinic Update'}, ...err})
+            throw ({...{err: 7001000, msg: 'CClinic Edit'}, ...err})
         }
     }
 }

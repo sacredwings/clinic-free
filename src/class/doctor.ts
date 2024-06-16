@@ -1,27 +1,25 @@
 /*
-    Роли
+    Врачи
 */
 
 // @ts-nocheck
 import { DB, Store } from "../../../social-framework/src"
 
-export default class Role {
+export default class Clinic {
 
     static async Add ( fields ) {
         try {
             fields.create_user_id = new DB().ObjectID(fields.create_user_id)
             fields.create_date = new Date()
-            if (!fields.access)
-                fields.access = []
 
             const mongoClient = Store.GetMongoClient()
-            let collection = mongoClient.collection('role')
+            let collection = mongoClient.collection('doctor')
             await collection.insertOne(fields)
             return fields
 
         } catch (err) {
             console.log(err)
-            throw ({...{err: 7001000, msg: 'CRole Add'}, ...err})
+            throw ({...{err: 7001000, msg: 'CDoctor Add'}, ...err})
         }
     }
 
@@ -37,31 +35,35 @@ export default class Role {
             })
 
             const mongoClient = Store.GetMongoClient()
-            let collection = mongoClient.collection('role')
+            let collection = mongoClient.collection('doctor')
             let result = await collection.aggregate(arAggregate).toArray()
             return result
 
         } catch (err) {
             console.log(err)
-            throw ({...{err: 7001000, msg: 'CRole GetById'}, ...err})
+            throw ({...{err: 7001000, msg: 'CDoctor GetById'}, ...err})
         }
     }
 
     static async Get ( fields ) {
         try {
+            fields.org_id = new DB().ObjectID(fields.org_id)
+
             let arAggregate = []
             arAggregate.push({
-                $match: {}
+                $match: {
+                    org_id: fields.org_id
+                }
             })
 
             const mongoClient = Store.GetMongoClient()
-            let collection = mongoClient.collection('role')
+            let collection = mongoClient.collection('doctor')
             let result = await collection.aggregate(arAggregate).skip(fields.offset).limit(fields.count).toArray()
             return result
 
         } catch (err) {
             console.log(err)
-            throw ({...{err: 7001000, msg: 'CRole Get'}, ...err})
+            throw ({...{err: 7001000, msg: 'CDoctor Get'}, ...err})
         }
     }
 
@@ -70,13 +72,13 @@ export default class Role {
             id = new DB().ObjectID(id)
 
             const mongoClient = Store.GetMongoClient()
-            let collection = mongoClient.collection('role')
+            let collection = mongoClient.collection('doctor')
             let result = collection.updateOne({_id: id}, {$set: fields})
             return result
 
         } catch (err) {
             console.log(err)
-            throw ({...{err: 7001000, msg: 'CRole Edit'}, ...err})
+            throw ({...{err: 7001000, msg: 'CDoctor Edit'}, ...err})
         }
     }
 }
