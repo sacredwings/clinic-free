@@ -49,7 +49,9 @@ export default class Clinic {
         try {
             let arAggregate = []
             arAggregate.push({
-                $match: {}
+                $match: {
+                    delete: {$ne: true}
+                }
             })
 
             const mongoClient = Store.GetMongoClient()
