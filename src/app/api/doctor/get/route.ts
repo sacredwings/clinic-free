@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import { mongo, minio } from "@/utility/connect"
 import Config from "../../../../../config.json";
-import CClinic from "@/class/clinic"
+import CDoctor from "@/class/doctor"
 
 export async function GET(request: Request) {
     let value
@@ -34,7 +34,7 @@ export async function GET(request: Request) {
                 offset: value.offset,
                 count: value.count,
             }
-            let result = await CClinic.Get (arFields)
+            let result = await CDoctor.Get (arFields)
 
             return NextResponse.json({
                 code: 0,
@@ -46,7 +46,7 @@ export async function GET(request: Request) {
             throw ({...{err: 10000000, msg: 'Ошибка формирования результата'}, ...err})
         }
     } catch (err) {
-        return NextResponse.json({...{code: 10000000, msg: 'CClinic Get'}, ...err})
+        return NextResponse.json({...{code: 10000000, msg: 'CDoctor Get'}, ...err})
     }
 }
 

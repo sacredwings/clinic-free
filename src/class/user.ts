@@ -3,6 +3,22 @@ import { DB, Store } from "../../../social-framework/src"
 
 export default class User {
 
+    static async Add(fields) {
+        try {
+            fields.create_user_id = new DB().ObjectID(fields.create_user_id)
+            fields.create_date = new Date()
+
+            const mongoClient = Store.GetMongoClient()
+            let collection = mongoClient.collection('user')
+            await collection.insertOne(fields)
+            return fields
+
+        } catch (err) {
+            console.log(err)
+            throw ({...{err: 7001000, msg: 'CUser Add'}, ...err})
+        }
+    }
+
     static async GetById ( ids ) {
         try {
             ids = new DB().ObjectID(ids)
@@ -48,7 +64,51 @@ export default class User {
         }
     }
 
-    static async EditAuth ( id, fields ) {
+    static async Get ( fields ) {
+        try {
+            let arAggregate = []
+            arAggregate.push({
+                $match: {}
+            })
+
+            const mongoClient = Store.GetMongoClient()
+            let collection = mongoClient.collection('user')
+            let result = await collection.aggregate(arAggregate).skip(fields.offset).limit(fields.count).toArray()
+            return result
+
+        } catch (err) {
+            console.log(err)
+            throw ({...{err: 7001000, msg: 'CUser Get'}, ...err})
+        }
+    }
+
+    static async GetCount ( fields ) {
+        try {
+            let arAggregate = []
+            arAggregate.push({
+                $match: {
+                    delete: {$ne: true}
+                }
+            })
+
+            arAggregate.push({
+                $count: 'count'
+            })
+
+            const mongoClient = Store.GetMongoClient()
+            let collection = mongoClient.collection('user')
+            let result = await collection.aggregate(arAggregate).toArray()
+
+            if (!result.length) return 0
+            return result[0].count
+
+        } catch (err) {
+            console.log(err)
+            throw ({code: 6004000, msg: 'CUser GetCount'})
+        }
+    }
+
+    static async Edit ( id, fields ) {
         try {
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('user')
@@ -56,17 +116,33 @@ export default class User {
             if (fields.login)
                 fields.login = fields.login.toLowerCase()
 
-            let arFields = {
-                login: fields.login,
-                password: fields.password,
-            }
-            let result = collection.updateOne({_id: id}, {$set: arFields})
-
-            return fields
+            let result = collection.updateOne({_id: id}, {$set: fields})
+            return result
 
         } catch (err) {
             console.log(err)
-            throw ({...{err: 7001000, msg: 'CUser EditAuth'}, ...err})
+            throw ({...{err: 7001000, msg: 'CUser Edit'}, ...err})
+        }
+    }
+
+    static async Delete ( id, user_id ) {
+        try {
+            id = new DB().ObjectID(id)
+            user_id = new DB().ObjectID(user_id)
+
+            let arFields = {
+                delete: true,
+                delete_user: user_id,
+                delete_date: new Date(),
+            }
+
+            const mongoClient = Store.GetMongoClient()
+            let collection = mongoClient.collection('user')
+            let result = collection.updateOne({_id: id}, {$set: arFields}, {upsert: true})
+            return result
+        } catch (err) {
+            console.log(err)
+            throw ({code: 7001000, msg: 'CUser Delete'})
         }
     }
 }

@@ -1,3 +1,7 @@
+/*
+    Клиники
+*/
+
 // @ts-nocheck
 import { DB, Store } from "../../../social-framework/src"
 
@@ -43,13 +47,9 @@ export default class Clinic {
 
     static async Get ( fields ) {
         try {
-            fields.org_id = new DB().ObjectID(fields.org_id)
-
             let arAggregate = []
             arAggregate.push({
-                $match: {
-                    org_id: fields.org_id
-                }
+                $match: {}
             })
 
             const mongoClient = Store.GetMongoClient()
@@ -60,6 +60,32 @@ export default class Clinic {
         } catch (err) {
             console.log(err)
             throw ({...{err: 7001000, msg: 'CClinic Get'}, ...err})
+        }
+    }
+
+    static async GetCount ( fields ) {
+        try {
+            let arAggregate = []
+            arAggregate.push({
+                $match: {
+                    delete: {$ne: true}
+                }
+            })
+
+            arAggregate.push({
+                $count: 'count'
+            })
+
+            const mongoClient = Store.GetMongoClient()
+            let collection = mongoClient.collection('clinic')
+            let result = await collection.aggregate(arAggregate).toArray()
+
+            if (!result.length) return 0
+            return result[0].count
+
+        } catch (err) {
+            console.log(err)
+            throw ({code: 6004000, msg: 'CClinic GetCount'})
         }
     }
 
@@ -75,6 +101,27 @@ export default class Clinic {
         } catch (err) {
             console.log(err)
             throw ({...{err: 7001000, msg: 'CClinic Edit'}, ...err})
+        }
+    }
+
+    static async Delete ( id, user_id ) {
+        try {
+            id = new DB().ObjectID(id)
+            user_id = new DB().ObjectID(user_id)
+
+            let arFields = {
+                delete: true,
+                delete_user: user_id,
+                delete_date: new Date(),
+            }
+
+            const mongoClient = Store.GetMongoClient()
+            let collection = mongoClient.collection('clinic')
+            let result = collection.updateOne({_id: id}, {$set: arFields}, {upsert: true})
+            return result
+        } catch (err) {
+            console.log(err)
+            throw ({code: 7001000, msg: 'CClinic Delete'})
         }
     }
 }

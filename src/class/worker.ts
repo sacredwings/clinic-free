@@ -23,6 +23,28 @@ export default class Worker {
         }
     }
 
+    static async GetById ( ids ) {
+        try {
+            ids = new DB().ObjectID(ids)
+
+            let arAggregate = []
+            arAggregate.push({
+                $match: {
+                    _id: {$in: ids}
+                }
+            })
+
+            const mongoClient = Store.GetMongoClient()
+            let collection = mongoClient.collection('worker')
+            let result = await collection.aggregate(arAggregate).toArray()
+            return result
+
+        } catch (err) {
+            console.log(err)
+            throw ({...{err: 7001000, msg: 'CWorker GetById'}, ...err})
+        }
+    }
+
     static async Get ( fields ) {
         try {
             let arAggregate = []
@@ -41,6 +63,32 @@ export default class Worker {
         }
     }
 
+    static async GetCount ( fields ) {
+        try {
+            let arAggregate = []
+            arAggregate.push({
+                $match: {
+                    delete: {$ne: true}
+                }
+            })
+
+            arAggregate.push({
+                $count: 'count'
+            })
+
+            const mongoClient = Store.GetMongoClient()
+            let collection = mongoClient.collection('worker')
+            let result = await collection.aggregate(arAggregate).toArray()
+
+            if (!result.length) return 0
+            return result[0].count
+
+        } catch (err) {
+            console.log(err)
+            throw ({code: 6004000, msg: 'CWorker GetCount'})
+        }
+    }
+
     static async Edit ( id, fields ) {
         try {
             id = new DB().ObjectID(id)
@@ -53,6 +101,27 @@ export default class Worker {
         } catch (err) {
             console.log(err)
             throw ({...{err: 7001000, msg: 'CWorker Update'}, ...err})
+        }
+    }
+
+    static async Delete ( id, user_id ) {
+        try {
+            id = new DB().ObjectID(id)
+            user_id = new DB().ObjectID(user_id)
+
+            let arFields = {
+                delete: true,
+                delete_user: user_id,
+                delete_date: new Date(),
+            }
+
+            const mongoClient = Store.GetMongoClient()
+            let collection = mongoClient.collection('worker')
+            let result = collection.updateOne({_id: id}, {$set: arFields}, {upsert: true})
+            return result
+        } catch (err) {
+            console.log(err)
+            throw ({code: 7001000, msg: 'CWorker Delete'})
         }
     }
 }

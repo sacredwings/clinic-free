@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server'
 import { mongo, minio } from "@/utility/connect"
 import Joi from "joi"
 import CClinic from "@/class/clinic"
+import {Authentication} from "@/app/api/function";
 
 export async function POST (request: Request) {
     let value
@@ -24,6 +25,8 @@ export async function POST (request: Request) {
         }
         try {
             await mongo()
+            let userId = await Authentication(request)
+            if (!userId) throw ({code: 30100000, msg: 'Требуется авторизация'})
 
             let result = await CClinic.Add ( value )
 
