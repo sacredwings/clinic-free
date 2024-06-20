@@ -1,22 +1,22 @@
 // @ts-nocheck
-import RoleList from '@/component/role/list'
-import {ServerRoleGet} from "@/component/function/url_api";
+
+import {ServerClinicGet} from "@/component/function/url_api";
 import {cookies} from "next/headers";
 import Form from "@/component/menu/form";
-import List from "@/component/clinic/list";
+import List from '@/component/worker/list'
 import Pagination from "@/component/menu/pagination";
 
-export default async function Role ({
-                                        searchParams
-                                    }:{
+export default async function Clinic ({
+                                       searchParams
+                                   }:{
     searchParams: { page: number, q: string }
 }) {
     let page = 1
     if (searchParams.page) page = Number(searchParams.page)
     const step = 20
-    const url = `/role`
+    const url = `/worker`
 
-    let list = await ServerRoleGet({
+    const list = await ServerClinicGet({
         q: searchParams.q ? searchParams.q : null,
 
         count: step,
@@ -27,7 +27,7 @@ export default async function Role ({
         <div>
 
             <div>
-                <h1>Клиники</h1>
+                <h1>Работники</h1>
             </div>
 
             <div>
@@ -44,4 +44,6 @@ export default async function Role ({
 
         </div>
     )
+
 }
+

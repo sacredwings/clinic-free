@@ -1,158 +1,129 @@
 // @ts-nocheck
 'use client'
+import React, {useState, useEffect} from 'react'
+import MinioFileViewer from "@/component/file/viewer";
+import {FileAdd, ServerVideoEdit} from "@/component/function/url_api";
+import AlbumCheckList from "@/component/album/checkList";
 
-//import Styles from './profile.module.sass'
-import Link from "next/link"
-import {cookies} from "next/headers"
-import {ServerOwnerGetById, ServerVideoGet} from "@/component/function/url_api"
-//import MinioFileViewer from "@/component/file/viewer"
-//import VideoAdd from "@/component/video/add";
-import React from "react";
+export default function VideoId ({object, accessEdit}) {
+    let [form, setForm] = useState(object)
+    let [edit, setEdit] = useState(false)
+    let [formLoad, setFormLoad] = useState({
+        processBarLoaded: 0,
+        processBarTotal: 0,
+        processBar: 0
+    })
 
-export default function WorkerId ({worker}) {
-    console.log(worker)
-    const List = (arr) => {
-        if (!arr) return null
+    const onFormSubmit = async (e) => {
+        if (e) e.preventDefault() // Stop form submit
 
-        return <ul className="list-group list-group-flush">
-            {arr.map((item, i)=>{
-                return <li className="list-group-item" key={i}>
-                    {item.name}
-                    &#160;
-                    {(item.price ?
-                            (!worker.price_worker_all && !worker.price_worker_man && !worker.price_worker_woman) ?
-                                <span className="badge text-bg-primary">{item.price} руб.</span> :
-                                <span className="badge text-bg-secondary">{item.price} руб.</span>
-                            :
-                            null
-                    )}
-                </li>
-            })}
-        </ul>
+        let arFields = {
+            id: form._id,
 
-    }
-    const ListCode = (arList) => {
-        if (arList)
-            return arList.map((list, i) => {
-                return <span className="badge text-bg-primary" style={{margin:'2px'}} key={i}>{list}</span>
-            })
-        else
-            return ''
+            image_id: form.image_id,
+            title: form.title,
+            description: form.description,
+
+            album_ids: form.album_ids,
+        }
+        let result = await ServerVideoEdit(arFields);
+
+        setEdit(false)
     }
 
-    const ListPrint = (workerId) => {
-        return <div className="btn-group-vertical" role="group" aria-label="Vertical button group">
-            <div className="btn-group" role="group">
-                <button type="button" className="btn btn-primary dropdown-toggle btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i className="fa-solid fa-print"></i>
-                </button>
-                <ul className="dropdown-menu">
-                    <li>
-                        <a href={`/worker/${workerId}/pdf/zaklyucheniye-pred`} className="dropdown-item" target="_blank">Закл. предварительного осмотра</a>
-                        <a href={`/worker/${workerId}/pdf/zaklyucheniye`} className="dropdown-item" target="_blank">Закл. периодического осмотра</a>
-                        <a href={`/worker/${workerId}/pdf/card`} className="dropdown-item" target="_blank">Карта</a>
-                        <a href={`/worker/${workerId}/pdf/vypiska`} className="dropdown-item" target="_blank">Выписка</a>
-                    </li>
-                </ul>
+    //добавление файла и получение его по id
+    const onChangeFiles = async (e) => {
+        //загружаю
+        let arResult = await FileAdd({
+            module: 'video',
+            object_id: form._id,
+            files: e.target.files,
+            FormLoad: setFormLoad,
+            user_id: form.to_user_id,
+            group_id: form.to_group_id,
+
+        })
+
+        //нет загруженных файлов - не продолжаем их добавлять
+        if (!arResult) return false
+
+        //получаю всю инфу о файле
+        //arIds = await FileGet (arIds)
+
+        setForm(prev => ({
+            ...prev, ['image_id']: arResult[0]._id
+        }))
+    }
+
+    //получаем результат выбранных альбомов от checked
+    const ChangeSelectAlbums = (arSelectAlbums) => {
+        setForm(prev => ({...prev, album_ids: arSelectAlbums}))
+    }
+
+    const onChangeText = (e) => {
+        let name = e.target.id;
+        let value = e.target.value;
+
+        setForm(prev => ({
+            ...prev, [name]: value
+        }))
+    }
+
+    const Form = () => {
+        return <form onSubmit={onFormSubmit}>
+            <div className="mb-3">
+                <label htmlFor="image_id" className="form-label">Изображение</label>
+                <input className="form-control form-control-sm" id="image_id" type="file" onChange={onChangeFiles}
+                       accept="image/gif, image/png, image/jpeg"/>
             </div>
+            <div className="mb-3">
+                <label htmlFor="title" className="form-label">Название</label>
+                <input type="text" className="form-control" id="title" placeholder="Название"
+                       value={form.title} onChange={onChangeText}/>
+            </div>
+            <div className="mb-3">
+                <label htmlFor="description" className="form-label">Краткое описание</label>
+                <textarea className="form-control" id="description" rows="3" value={form.description}
+                          onChange={onChangeText}></textarea>
+            </div>
+            <div className="mb-3">
+                <label htmlFor="" className="form-label">Альбомы</label>
+                {/* checked массив альбомов */}
+                <AlbumCheckList albums={form.album_ids ? form.album_ids : []} module={'video'}
+                                userId={form.to_user_id} groupId={form.to_group_id}
+                                func={ChangeSelectAlbums}/>
+            </div>
+            <div className="modal-footer">
+                <button type="button" className="btn btn-secondary btn-sm" onClick={() => {
+                    setEdit(false)
+                }}>Отмена
+                </button>
+                <button type="submit" className="btn btn-primary btn-sm">Сохранить</button>
+            </div>
+        </form>
+    }
 
-        </div>
+    const View = () => {
+        return (
+            <>
+                <div className="card">
+                    <div className="card-body">
+                        <h1>{form.title}</h1>
+                        {accessEdit && !edit ? <button type="button" className="btn btn-outline-secondary btn-sm"
+                                                       onClick={() => setEdit(!edit)}><i className="fas fa-edit"></i>...
+                        </button> : null}
+                    </div>
+                </div>
+
+                <MinioFileViewer file={form} attributes={{controls: true}}
+                                 style={{marginTop: '10px', width: '100%', borderRadius: '5px'}}/>
+            </>
+        )
     }
 
     return (
         <>
-            <div className="card">
-                <div className="card-body">
-                    <h1>{`${worker._user_id.first_name} ${worker._user_id.last_name} ${worker._user_id.second_name}`}</h1>
-                    <Link href={`/worker/${worker._id}/edit`} type="button" className="btn btn-outline-warning btn-sm">
-                        <i className="fa-solid fa-edit"></i>
-                    </Link>
-
-                    {ListPrint(worker._id)}
-                </div>
-            </div>
-
-            <div className="card">
-                <div className="card-body">
-                    <h3>Вредные факторы</h3>
-                    {ListCode(worker.hf_code)}
-                </div>
-            </div>
-
-
-            <div className="card">
-                <div className="card-body">
-                    <h3>Исследования</h3>
-                    {List(worker.research)}
-                </div>
-            </div>
-
-            <div className="card">
-                <div className="card-body">
-                    <h3>Специалисты</h3>
-                    {List(worker.specialist)}
-                </div>
-            </div>
-
-            <div className="card">
-                <div className="card-body">
-                    <h3>Дополнительно</h3>
-                    <ul className="list-group list-group-flush">
-                        {worker.price_ultrasound ? <li className="list-group-item">УЗИ
-                            &#160;
-                            <span className="badge text-bg-primary">{worker.price_ultrasound} руб.</span>
-                        </li> : null}
-                        {worker.price_mammography ? <li className="list-group-item">Мамография
-                            &#160;
-                            <span className="badge text-bg-primary">{worker.price_mammography} руб.</span>
-                        </li> : null}
-                        {worker.price_xray ? <li className="list-group-item">ФЛГ
-                            &#160;
-                            <span className="badge text-bg-primary">{worker.price_xray} руб.</span>
-                        </li> : null}
-
-                        {worker.price_pcr ? <li className="list-group-item">ПЦР
-                            &#160;
-                            <span className="badge text-bg-primary">{worker.price_pcr} руб.</span>
-                        </li> : null}
-                        {worker.price_hti ? <li className="list-group-item">ХТИ
-                            &#160;
-                            <span className="badge text-bg-primary">{worker.price_hti} руб.</span>
-                        </li> : null}
-                        {worker.price_brucellosis ? <li className="list-group-item">Бруцеллез
-                            &#160;
-                            <span className="badge text-bg-primary">{worker.price_brucellosis} руб.</span>
-                        </li> : null}
-                    </ul>
-                </div>
-            </div>
-
-            <div className="card">
-                <div className="card-body">
-                    <h3>Договор</h3>
-                    <ul className="list-group list-group-flush">
-                        {worker.price_worker_all ? <li className="list-group-item">За человека
-                            &#160;
-                            <span className="badge text-bg-primary">{worker.price_worker_all} руб.</span>
-                        </li> : null}
-                        {worker.price_worker_man ? <li className="list-group-item">Мужчина
-                            &#160;
-                            <span className="badge text-bg-primary">{worker.price_worker_man} руб.</span>
-                        </li> : null}
-                        {worker.price_worker_woman ? <li className="list-group-item">Женщина
-                            &#160;
-                            <span className="badge text-bg-primary">{worker.price_worker_woman} руб.</span>
-                        </li> : null}
-                    </ul>
-                </div>
-            </div>
-
-            <div className="card">
-                <div className="card-body">
-                    Итого: <b>{worker.price ? worker.price : 0} руб.</b>
-                </div>
-            </div>
-            <hr/>
+            { edit && accessEdit ? Form() : View() }
 
         </>
     )
