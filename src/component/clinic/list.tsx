@@ -38,7 +38,7 @@ export default function List ({list,  account, accessAdd, accessEdit, accessDele
 
     return <div className={Style.cardContainer}>
 
-        {accessAdd ? <Link href={'/doctor/add'} className={'btn btn-primary'}>Добавить</Link> : null}
+        {accessAdd ? <Link href={'/clinic/add'} className={'btn btn-primary'}>Добавить</Link> : null}
 
         {clientList.items.map((item, i) => {
             let accessElementEdit = Access(account, [item])

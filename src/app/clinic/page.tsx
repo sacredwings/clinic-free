@@ -1,12 +1,12 @@
 // @ts-nocheck
 
-import {ServerDoctorGet} from "@/component/function/url_api";
+import {ServerClinicGet} from "@/component/function/url_api";
 import {cookies} from "next/headers";
 import Form from "@/component/menu/form";
-import List from '@/component/doctor/list'
+import List from '@/component/clinic/list'
 import Pagination from "@/component/menu/pagination";
 
-export default async function Doctor ({
+export default async function Clinic ({
                                        searchParams
                                    }:{
     searchParams: { page: number, q: string }
@@ -14,9 +14,9 @@ export default async function Doctor ({
     let page = 1
     if (searchParams.page) page = Number(searchParams.page)
     const step = 20
-    const url = `/doctor`
+    const url = `/clinic`
 
-    const list = await ServerDoctorGet({
+    const list = await ServerClinicGet({
         q: searchParams.q ? searchParams.q : null,
 
         count: step,
@@ -27,7 +27,7 @@ export default async function Doctor ({
         <div>
 
             <div>
-                <h1>Врачи</h1>
+                <h1>Клиники</h1>
             </div>
 
             <div>

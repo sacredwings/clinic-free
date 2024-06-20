@@ -12,7 +12,7 @@ export async function POST (request: Request) {
             let rsRequest = await request.json()
 
             const schema = Joi.object({
-                name: Joi.string().min(3).max(255).required(),
+                title: Joi.string().min(3).max(255).required(),
                 description: Joi.string().min(1).max(10000).allow(null).empty('').default(null),
 
                 inn: Joi.number().integer().min(999999999).max(999999999999).allow(null).empty('').default(null),

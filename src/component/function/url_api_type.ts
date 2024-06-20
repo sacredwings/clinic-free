@@ -317,3 +317,22 @@ export interface interfaceClinicAdd {
 
     inn: number
 }
+export interface interfaceClinicGet {
+    q: string
+
+    offset: number
+    count: number
+}
+
+//--------------------------------------------------------------
+//CLINIC
+export interface interfaceDoctorAdd {
+    user_id: string
+    specialist_id: string[]
+}
+export interface interfaceDoctorGet {
+    q: string
+
+    offset: number
+    count: number
+}

@@ -44,7 +44,11 @@ import {
     interfaceWorkerEditVisit,
     interfaceWorkerGetDoctor,
     interfaceWorkerGetDoctorSpecialist,
-    interfaceWorkerGetDoctorResearch, interfaceWorkerEditFinale, interfaceGigtestUser
+    interfaceWorkerGetDoctorResearch,
+    interfaceWorkerEditFinale,
+    interfaceGigtestUser,
+    interfaceClinicGet,
+    interfaceDoctorAdd, interfaceClinicAdd, interfaceDoctorGet
 } from './url_api_type'
 import axios, {AxiosRequestConfig} from "axios"
 import {ToastSystemAdd} from "@/component/toast/function";
@@ -81,6 +85,18 @@ export async function ServerAuthLogin ({
     return res.data.response
 }
 
+export async function ServerAuthTelegram (fields: any) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3030`
+    //let gtoken = await reCaptchaExecute(config.google.reCaptcha.public, `auth_vk`)
+
+    let arFields = fields as AxiosRequestConfig
+
+    const url = `/api/auth/telegram`;
+    console.log(url)
+    let res = await axios.post(url, arFields)
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}
 //---------------------------------------------------------------------------------
 //АККАУНТ
 export async function ServerAccountGet ({cookies=null}) {
@@ -1128,7 +1144,7 @@ export async function ServerClinicAdd ({
     description,
 
     inn
-}: interfaceGigtestUser) {
+}: interfaceClinicAdd) {
     if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
     let arFields = {
@@ -1136,11 +1152,85 @@ export async function ServerClinicAdd ({
         description,
 
         inn
-    } as interfaceRoleEdit
+    } as interfaceClinicAdd
 
     let url = `/api/clinic/add`
     console.log(url)
     let res = await axios.post(url, arFields);
     await ToastSystemAdd(res.data)
+    return res.data.response
+}
+export async function ServerClinicGet ({
+    q=null,
+
+    offset=0,
+    count=20
+}: interfaceClinicGet, {
+    cookies=null
+}) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        params: {
+            q,
+
+            offset,
+            count
+        } as interfaceClinicGet,
+        headers: {
+            Cookie: cookies
+        }
+    } as AxiosRequestConfig
+
+    let url = `/api/clinic/get`
+    console.log(url)
+    let res = await axios.get(url, arFields);
+    return res.data.response
+}
+
+//--------------------------------------------------------------
+//CLINIC
+export async function ServerDoctorAdd ({
+                                           user_id,
+                                           specialist_id,
+                                       }: interfaceDoctorAdd) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        user_id,
+        specialist_id
+    } as interfaceDoctorAdd
+
+    let url = `/api/doctor/add`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}
+export async function ServerDoctorGet ({
+                                           q=null,
+
+                                           offset=0,
+                                           count=20
+                                       }: interfaceDoctorGet, {
+                                           cookies=null
+                                       }) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        params: {
+            q,
+
+            offset,
+            count
+        } as interfaceDoctorGet,
+        headers: {
+            Cookie: cookies
+        }
+    } as AxiosRequestConfig
+
+    let url = `/api/doctor/get`
+    console.log(url)
+    let res = await axios.get(url, arFields);
     return res.data.response
 }
