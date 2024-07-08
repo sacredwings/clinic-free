@@ -48,7 +48,7 @@ import {
     interfaceWorkerEditFinale,
     interfaceGigtestUser,
     interfaceClinicGet,
-    interfaceDoctorAdd, interfaceClinicAdd, interfaceDoctorGet
+    interfaceDoctorAdd, interfaceClinicAdd, interfaceDoctorGet, interfaceAccountSelectClinic, interfaceClinicGetById
 } from './url_api_type'
 import axios, {AxiosRequestConfig} from "axios"
 import {ToastSystemAdd} from "@/component/toast/function";
@@ -113,7 +113,21 @@ export async function ServerAccountGet ({cookies=null}) {
     let res = await axios.get(url, arFields)
     return res.data.response
 }
+export async function ServerAccountSelectClinic ({
+                                          clinic_id,
+                                      }: interfaceAccountSelectClinic) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
+    let arFields = {
+        clinic_id,
+    } as interfaceAccountSelectClinic
+
+    let url = `/api/account/selectClinic`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}
 //---------------------------------------------------------------------------------
 //Specialist
 export async function ServerUserGet ({
@@ -1187,9 +1201,25 @@ export async function ServerClinicGet ({
     let res = await axios.get(url, arFields);
     return res.data.response
 }
+export async function ServerClinicGetById ({ids}: interfaceClinicGetById, {cookies=null}) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
+    let arFields = {
+        params: {
+            ids
+        } as interfaceClinicGetById,
+        headers: {
+            Cookie: cookies
+        }
+    } as AxiosRequestConfig
+
+    let url = `/api/clinic/getById`
+    console.log(url)
+    let res = await axios.get(url, arFields)
+    return res.data.response
+}
 //--------------------------------------------------------------
-//CLINIC
+//Doctor
 export async function ServerDoctorAdd ({
                                            user_id,
                                            specialist_id,

@@ -6,6 +6,7 @@ import style from "./style.module.sass";
 import Link from "next/link";
 import LikeElementList from "@/component/like/elementList";
 import {DateFormat} from "@/utility/time";
+import {ServerAccountSelectClinic, ServerClinicAdd} from "@/component/function/url_api";
 
 export default function Element ({element, accessEdit, accessDelete, ElementDelete}) {
     let [form, setForm] = useState(element)
@@ -17,10 +18,17 @@ export default function Element ({element, accessEdit, accessDelete, ElementDele
         })()
     }, [])
 
-    return (
-        <div>
-            {element.title}
+    const onClick = async (clinic_id) => {
+        let arFields = {
+            clinic_id: clinic_id,
+        }
 
+        let result = await ServerAccountSelectClinic(arFields)
+    }
+
+    return (
+        <div onClick={()=>{onClick(element._id)}}>
+            <Link href={`/clinic/${element._id}`}>{element.title}</Link>
         </div>
     )
 }

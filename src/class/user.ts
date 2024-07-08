@@ -118,6 +118,9 @@ export default class User {
             if (fields.login)
                 fields.login = fields.login.toLowerCase()
 
+            if (fields.select_clinic_id)
+                fields.select_clinic_id = new DB().ObjectID(fields.select_clinic_id)
+
             let result = collection.updateOne({_id: id}, {$set: fields})
             return result
 

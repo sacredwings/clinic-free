@@ -11,16 +11,28 @@ export default async function User ({
                                         params,
                                         searchParams
                                     }:{
-    params: { id: string },
+    params: { user_id: string },
     searchParams: { page: number, q: string }
 }) {
-    let user = await ServerUserGetById({ids: [params.id]}, {cookies:cookies()})
+    let user = await ServerUserGetById({ids: [params.user_id]}, {cookies:cookies()})
     user = user[0]
     return (
         <>
             <h1>Пользователь: </h1>
             <p><b>{user.second_name} {user.first_name} {user.last_name}</b></p>
-            <p><Link type="button" className="btn btn-outline-success btn-sm" href={`/user/${user._id}/edit`}> редактировать ... </Link></p>
+            <p><Link type="button" className="btn btn-outline-success btn-sm"
+                     href={`/user/${user._id}/edit`}> редактировать ... </Link></p>
+
+            <p><Link type="button" className=""
+                     href={`/user/${user._id}/clinic`}>Клиники</Link></p>
+
+            <p><Link type="button" className=""
+                     href={`/user/${user._id}/doctor`}>Врачебные специальности</Link></p>
+
+            <p><Link type="button" className=""
+                     href={`/user/${user._id}/service`}>Услуги</Link></p>
+
+
         </>
     )
 }

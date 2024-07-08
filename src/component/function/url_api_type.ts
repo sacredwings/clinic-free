@@ -5,7 +5,12 @@ export interface interfaceAuthLogin {
     login: string
     password: number
 }
-
+//----------------------------------------------------------------------------------------------------------------------
+//Аккаунт
+export interface interfaceAccountSelectClinic {
+    clinic_id: string
+}
+//----------------------------------------------------------------------------------------------------------------------
 export interface interfaceUserGet {
     q: string | null
     offset: number
@@ -324,8 +329,11 @@ export interface interfaceClinicGet {
     count: number
 }
 
+export interface interfaceClinicGetById {
+    ids: string[]
+}
 //--------------------------------------------------------------
-//CLINIC
+//Doctor
 export interface interfaceDoctorAdd {
     user_id: string
     specialist_id: string[]
