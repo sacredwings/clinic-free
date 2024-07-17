@@ -24,13 +24,13 @@ export default async function User ({
                      href={`/user/${user._id}/edit`}> редактировать ... </Link></p>
 
             <p><Link type="button" className=""
-                     href={`/user/${user._id}/clinic`}>Клиники</Link></p>
+                     href={`/user/${user._id}/clinic`}>Клиники (где был)</Link></p>
 
             <p><Link type="button" className=""
-                     href={`/user/${user._id}/doctor`}>Врачебные специальности</Link></p>
+                     href={`/user/${user._id}/doctor`}>Врачебные специальности (если такие имеются)</Link></p>
 
             <p><Link type="button" className=""
-                     href={`/user/${user._id}/service`}>Услуги</Link></p>
+                     href={`/user/${user._id}/service`}>Услуги (если такие имеются)</Link></p>
 
 
         </>

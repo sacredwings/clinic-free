@@ -4,10 +4,9 @@ import React, {useEffect, useState} from "react";
 import Access from "@/component/function/access";
 import Style from "./style.module.sass";
 import Element from "./element";
-import Add from "./add";
 import Link from "next/link";
 
-export default function List ({list,  account, accessAdd, accessEdit, accessDelete, userId, groupId}) {
+export default function List ({list,  account, accessAdd, accessEdit, accessDelete}) {
     let [clientList, setClientList] = useState(list)
 
     useEffect(() => {
@@ -38,6 +37,7 @@ export default function List ({list,  account, accessAdd, accessEdit, accessDele
 
     return <div className={Style.cardContainer}>
 
+        Здесь список врачей
         {accessAdd ? <Link href={'/doctor/add'} className={'btn btn-primary'}>Добавить</Link> : null}
 
         {clientList.items.map((item, i) => {
