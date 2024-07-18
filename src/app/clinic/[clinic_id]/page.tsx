@@ -34,19 +34,22 @@ export default async function ClinicId ({
             {clinic._id}
             <h1>{clinic.title}</h1>
 
+            <br/>
+            <Link href={`/clinic/${params.clinic_id}/patient`}>Пациент</Link>
+            <br/>
+            <Link href={`/clinic/${params.clinic_id}/doctor`}>Врач</Link>
+            <br/>
+            <Link href={`/clinic/${params.clinic_id}/admin`}>Администратор</Link>
+            <br/>
 
-            <br/>
-            <Link href={`/clinic/${params.clinic_id}/receptionist`}>Регистратор</Link>
-            <br/>
+
+
             <Link href={`/clinic/${params.clinic_id}/accountant`}>Бухралтер</Link>
             <br/>
             <Link href={`/clinic/${params.clinic_id}/cashier`}>Кассир</Link>
             <br/>
-            <Link href={`/clinic/${params.clinic_id}/worker`}>Мед работник</Link>
-            <br/>
-            <Link href={`/clinic/${params.clinic_id}/doctor`}>Врач</Link>
-            <br/>
-            <Link href={`/clinic/${params.clinic_id}/worker`}>Клиент</Link>
+            <Link href={`/clinic/${params.clinic_id}/reception`}>Регистратура</Link>
+
             <br/>
             <Link href={`/clinic/${params.clinic_id}/edit`}>Настройки</Link>
         </div>

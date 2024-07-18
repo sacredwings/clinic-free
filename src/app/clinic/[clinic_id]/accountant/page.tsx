@@ -13,7 +13,11 @@ export default async function ClinicId ({
 
     return (
         <div>
-            Отчеты
+            <div>
+                <p>Клиника панель Бухгалтера</p>
+            </div>
+
+            {clinic._id}
         </div>
     )
 

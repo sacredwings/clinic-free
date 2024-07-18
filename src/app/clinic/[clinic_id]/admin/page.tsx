@@ -14,17 +14,19 @@ export default async function ClinicId ({
     return (
         <div>
             <div>
-                <p>Клиника панель Клиента</p>
+                <p>Клиника панель Админа</p>
             </div>
 
             {params.clinic_id}
 
             <br/>
-            <Link href={`/clinic/${params.clinic_id}/doctor/appointment`}>Список приемов</Link>
+            <Link href={`/clinic/${params.clinic_id}/admin/appointment`}>Приемы</Link>
             <br/>
-            <Link href={`/clinic/${params.clinic_id}/doctor/prof-examination`}>Список проф. осмотров</Link>
+            <Link href={`/clinic/${params.clinic_id}/admin/org`}>Организации</Link>
             <br/>
-            <Link href={`/clinic/${params.clinic_id}/doctor/services`}>Список услуг</Link>
+            <Link href={`/clinic/${params.clinic_id}/admin/contract`}>Договора</Link>
+            <br/>
+            <Link href={`/clinic/${params.clinic_id}/admin/prof-examination`}>Проф. осмотры</Link>
         </div>
     )
 

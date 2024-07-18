@@ -13,9 +13,7 @@ export default async function ClinicId ({
 
     return (
         <div>
-            <Link href={`/`}>Организации</Link>
-            <br/>
-            <Link href={`/`}>Проф. осмотры</Link>
+            <>Здесь список услуг</>
         </div>
     )
 
