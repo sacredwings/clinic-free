@@ -18,7 +18,7 @@ export async function GET(request: Request) {
             }
 
             const schema = Joi.object({
-                org_id: Joi.string().min(24).max(24).required(),
+                org_id: Joi.string().min(24).max(24).allow(null).empty('').default(null),
 
                 offset: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(0),
                 count: Joi.number().integer().min(0).max(10000).allow(null).empty('').default(20)

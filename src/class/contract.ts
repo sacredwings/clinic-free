@@ -1,4 +1,9 @@
 // @ts-nocheck
+
+/*
+    Договора привязанны к конкретной клинике
+*/
+
 import { DB, Store } from "../../../social-framework/src"
 
 export default class Contract {
@@ -8,6 +13,7 @@ export default class Contract {
             fields.clinic_id = new DB().ObjectID(fields.clinic_id)
             fields.org_id = new DB().ObjectID(fields.org_id)
 
+            //ПОЛЕ ПОД ВОПРОСОМ
             fields.contract_type_ids = new DB().ObjectID(fields.contract_type_ids)
 
             fields.create_user_id = new DB().ObjectID(fields.create_user_id)
@@ -31,9 +37,11 @@ export default class Contract {
             let arAggregate = []
             arAggregate.push({
                 $match: {
-                    _id: {$in: ids}
+                    _id: {$in: ids},
+                    delete: {$ne: true}
                 }
             })
+            //ПОЛЕ ПОД ВОПРОСОМ
             arAggregate.push({
                 $lookup: {
                     from: 'contract-type',
@@ -56,14 +64,16 @@ export default class Contract {
 
     static async Get ( fields ) {
         try {
+            fields.clinic_id = new DB().ObjectID(fields.clinic_id)
             fields.org_id = new DB().ObjectID(fields.org_id)
 
             let arAggregate = []
             arAggregate.push({
                 $match: {
-                    org_id: fields.org_id
+                    delete: {$ne: true}
                 }
             })
+            //ПОЛЕ ПОД ВОПРОСОМ
             arAggregate.push({
                 $lookup: {
                     from: 'contract-type',
@@ -72,6 +82,9 @@ export default class Contract {
                     as: '_contract_type_ids'
                 }
             })
+
+            if (fields.clinic_id) arAggregate[0].$match.clinic_id = fields.clinic_id
+            if (fields.org_id) arAggregate[0].$match.org_id = fields.org_id
 
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('contract')
@@ -86,11 +99,12 @@ export default class Contract {
 
     static async GetCount ( fields ) {
         try {
+            fields.clinic_id = new DB().ObjectID(fields.clinic_id)
+            fields.org_id = new DB().ObjectID(fields.org_id)
+
             let arAggregate = []
             arAggregate.push({
                 $match: {
-                    org_id: fields.org_id,
-
                     delete: {$ne: true}
                 }
             })
@@ -98,6 +112,9 @@ export default class Contract {
             arAggregate.push({
                 $count: 'count'
             })
+
+            if (fields.clinic_id) arAggregate[0].$match.clinic_id = fields.clinic_id
+            if (fields.org_id) arAggregate[0].$match.org_id = fields.org_id
 
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('clinic')
@@ -129,12 +146,17 @@ export default class Contract {
 
     static async Delete ( id, user_id ) {
         try {
+            //ПРОВЕРКА / нет осмотров в договоре
+
+            /*
             id = new DB().ObjectID(id)
-            user_id = new DB().ObjectID(user_id)
+            fields.delete_clinic_id = new DB().ObjectID(fields.delete_clinic_id)
+            fields.delete_user_id = new DB().ObjectID(fields.delete_user_id)
 
             let arFields = {
                 delete: true,
-                delete_user: user_id,
+                delete_clinic_id: fields.delete_clinic_id,
+                delete_user_id: fields.delete_user_id,
                 delete_date: new Date(),
             }
 
@@ -142,6 +164,8 @@ export default class Contract {
             let collection = mongoClient.collection('contract')
             let result = collection.updateOne({_id: id}, {$set: arFields}, {upsert: true})
             return result
+            */
+
         } catch (err) {
             console.log(err)
             throw ({code: 7001000, msg: 'CContract Delete'})

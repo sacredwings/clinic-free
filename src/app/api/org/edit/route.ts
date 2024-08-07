@@ -14,28 +14,29 @@ export async function POST (request: Request) {
             const schema = Joi.object({
                 id: Joi.string().min(24).max(24).required(),
 
-                name: Joi.string().min(1).max(255).allow(null).empty('').default(null),
-                full_name: Joi.string().min(1).max(255).allow(null).empty('').default(null),
+                name: Joi.string().min(3).max(255).required(),
+                //full_name: Joi.string().min(1).max(255).allow(null).empty('').default(null),
+
+                inn: Joi.number().integer().min(0).max(9223372036854775807).required(),
+                kpp: Joi.number().integer().min(0).max(9223372036854775807).required(),
+                ogrn: Joi.number().integer().min(0).max(9223372036854775807).required(),
 
                 /*
-                inn: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(null),
-                kpp: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(null),
-                ogrn: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(null),
+                                payment_account: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(null),
 
-                payment_account: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(null),
+                                post_code: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(null),
+                                country: Joi.string().min(1).max(255).allow(null).empty('').default(null),
+                                region: Joi.string().min(1).max(255).allow(null).empty('').default(null),
+                                district: Joi.string().min(1).max(255).allow(null).empty('').default(null),
+                                locality: Joi.string().min(1).max(255).allow(null).empty('').default(null),
+                                street: Joi.string().min(1).max(255).allow(null).empty('').default(null),
+                                house: Joi.string().min(1).max(255).allow(null).empty('').default(null),
+                                corps: Joi.string().min(1).max(255).allow(null).empty('').default(null),
+                                structure: Joi.string().min(1).max(255).allow(null).empty('').default(null),
+                                flat: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(null),
 
-                post_code: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(null),
-                country: Joi.string().min(1).max(255).allow(null).empty('').default(null),
-                region: Joi.string().min(1).max(255).allow(null).empty('').default(null),
-                district: Joi.string().min(1).max(255).allow(null).empty('').default(null),
-                locality: Joi.string().min(1).max(255).allow(null).empty('').default(null),
-                street: Joi.string().min(1).max(255).allow(null).empty('').default(null),
-                house: Joi.string().min(1).max(255).allow(null).empty('').default(null),
-                corps: Joi.string().min(1).max(255).allow(null).empty('').default(null),
-                structure: Joi.string().min(1).max(255).allow(null).empty('').default(null),
-                flat: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(null),
+                */
 
-                 */
             })
 
             value = await schema.validateAsync(rsRequest)
@@ -49,7 +50,11 @@ export async function POST (request: Request) {
 
             let arFields = {
                 name: value.name,
-                full_name: value.full_name
+                //full_name: value.full_name
+
+                inn: value.inn,
+                kpp: value.kpp,
+                ogrn: value.ogrn,
             }
             let result = await COrg.Edit ( value.id, arFields )
 

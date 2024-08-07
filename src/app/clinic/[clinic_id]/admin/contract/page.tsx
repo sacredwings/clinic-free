@@ -9,18 +9,18 @@ import {
 } from "@/component/function/url_api";
 import { cookies } from 'next/headers'
 import Link from 'next/link'
-import OrgId from '@/component/org/id'
+//import OrgId from '@/component/org/id'
 
 export default async function ContractGet ({
                                         params,
-                                        //searchParams
+                                        searchParams
                                     }:{
     params: { id: string },
-    //searchParams: { page: number, q: string }
+    searchParams: { org_id: string, page: number, q: string }
 }) {
     let org = await ServerOrgGetById({ids: [params.id]}, {cookies:cookies()})
     let arContract = await ServerContractGet({
-        org_id: params.id,
+        org_id: searchParams.org_id,
         offset: 0,
         count: 100
     }, {cookies:cookies()})
@@ -37,7 +37,7 @@ export default async function ContractGet ({
     const List = (arList) => {
         return <div className="list-group">
             {arList.map((list, i) => {
-                let href = `/contract/${list._id}/worker`
+                let href = `/clinic/${params.clinic_id}/admin/prof-examination?contract_id=${list._id}`
                 return <Link className="list-group-item list-group-item-action" href={href} key={i}>
                     {list.name}
                     <br/>
@@ -56,7 +56,7 @@ export default async function ContractGet ({
     return (
         <>
             <h1>Договора <Link type="button" className="btn btn-outline-success" href={`/org/${params.id}/contract/add`}> + </Link></h1>
-            <OrgId org={org[0]}/>
+            {/*<OrgId org={org[0]}/>*/}
             {(arContract.items.length) ? List(arContract.items) : NoList()}
         </>
     )

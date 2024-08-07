@@ -1,10 +1,16 @@
 // @ts-nocheck
+
+/*
+    Организации общедоступны
+*/
+
 import { DB, Store } from "../../../social-framework/src"
 
 export default class Org {
 
     static async Add ( fields ) {
         try {
+            fields.create_clinic_id = new DB().ObjectID(fields.create_clinic_id)
             fields.create_user_id = new DB().ObjectID(fields.create_user_id)
             fields.create_date = new Date()
 
@@ -26,7 +32,8 @@ export default class Org {
             let arAggregate = []
             arAggregate.push({
                 $match: {
-                    _id: {$in: ids}
+                    _id: {$in: ids},
+                    delete: {$ne: true}
                 }
             })
 
@@ -102,14 +109,19 @@ export default class Org {
         }
     }
 
-    static async Delete ( id, user_id ) {
+    static async Delete ( id, fields ) {
         try {
+            //ПРОВЕРКА / нет договоров в организации
+
+            /*
             id = new DB().ObjectID(id)
-            user_id = new DB().ObjectID(user_id)
+            fields.delete_clinic_id = new DB().ObjectID(fields.delete_clinic_id)
+            fields.delete_user_id = new DB().ObjectID(fields.delete_user_id)
 
             let arFields = {
                 delete: true,
-                delete_user: user_id,
+                delete_clinic_id: fields.delete_clinic_id,
+                delete_user_id: fields.delete_user_id,
                 delete_date: new Date(),
             }
 
@@ -117,6 +129,9 @@ export default class Org {
             let collection = mongoClient.collection('org')
             let result = collection.updateOne({_id: id}, {$set: arFields}, {upsert: true})
             return result
+            */
+
+            return false
         } catch (err) {
             console.log(err)
             throw ({code: 7001000, msg: 'COrg Delete'})

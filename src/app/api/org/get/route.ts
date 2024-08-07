@@ -12,14 +12,17 @@ export async function GET(request: Request) {
         try {
             const { searchParams } = new URL(request.url)
             let url = {
+                offset: searchParams.get('clinic_id'),
                 offset: searchParams.get('offset'),
                 count: searchParams.get('count')
             }
 
             //схема
             const schema = Joi.object({
-                offset: Joi.number().integer().min(0).max(9223372036854775807).empty(null).default(0),
-                count: Joi.number().integer().min(0).max(10000).empty(null).default(20)
+                clinic_id: Joi.string().min(24).max(24).allow(null).empty('').default(null),
+
+                offset: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(0),
+                count: Joi.number().integer().min(0).max(10000).allow(null).empty('').default(20),
             });
 
             value = await schema.validateAsync(url)

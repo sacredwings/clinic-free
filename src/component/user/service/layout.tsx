@@ -8,7 +8,7 @@ export default function RootLayout({
     return (
         <>
             <div>
-                Меню Администратора
+                Меню \ Ппользователь \ Услуги
             </div>
             <main className={'container'}>
                 {children}

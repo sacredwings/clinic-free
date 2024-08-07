@@ -8,7 +8,7 @@ export default async function User ({
                                         params,
                                         //searchParams
                                     }:{
-    params: { clinic_id: string , id: string },
+    params: { id: string },
     //searchParams: { page: number, q: string }
 }) {
     let arOrg = await ServerOrgGet({
@@ -19,7 +19,7 @@ export default async function User ({
     const List = (arList) => {
         return <div className="list-group">
             {arList.map((list, i) => {
-                let href = `/clinic/${params.clinic_id}/admin/contract?org_id=${list._id}`
+                let href = `/org/${list._id}/contract`
                 return <Link className="list-group-item list-group-item-action" href={href} key={i}>
                     {list.name}
                 </Link>

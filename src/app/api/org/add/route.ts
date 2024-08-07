@@ -13,13 +13,16 @@ export async function POST (request: Request) {
             let rsRequest = await request.json()
 
             const schema = Joi.object({
+                clinic_id: Joi.string().min(24).max(24).required(),
+
                 name: Joi.string().min(3).max(255).required(),
-                full_name: Joi.string().min(3).max(255).allow(null).empty('').default(null),
+                //full_name: Joi.string().min(3).max(255).allow(null).empty('').default(null),
 
-                inn: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(null),
-                kpp: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(null),
-                ogrn: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(null),
+                inn: Joi.number().integer().min(0).max(9223372036854775807).required(),
+                kpp: Joi.number().integer().min(0).max(9223372036854775807).required(),
+                ogrn: Joi.number().integer().min(0).max(9223372036854775807).required(),
 
+                /*
                 payment_account: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(null),
 
                 post_code: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(null),
@@ -32,6 +35,7 @@ export async function POST (request: Request) {
                 corps: Joi.string().min(1).max(255).allow(null).empty('').default(null),
                 structure: Joi.string().min(1).max(255).allow(null).empty('').default(null),
                 flat: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(null),
+                */
             })
 
             value = await schema.validateAsync(rsRequest)
@@ -42,6 +46,12 @@ export async function POST (request: Request) {
         }
         try {
             await mongo()
+
+            let userId = await Authentication(request)
+            if (!userId) throw ({code: 30100000, msg: 'Требуется авторизация'})
+
+            //ПРОВЕРКА / у пользователя есть права от этой клиники
+            //ПРОВЕРКА / есть ли такая организация уже в системе
 
             let result = await COrg.Add ( value )
 
