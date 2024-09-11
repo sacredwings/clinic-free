@@ -1037,102 +1037,7 @@ export async function serverWorkerEditVisit ({
     return res.data.response
 }
 
-//---------------------------------------------------------------------------------
-//Role
-export async function ServerRoleGet ({
-    offset=0,
-    count=20
-}: interfaceRoleGet, {
-    cookies=null
-}) {
-    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
-    let arFields = {
-        params: {
-            offset,
-            count
-        } as interfaceRoleGet,
-        headers: {
-            Cookie: cookies
-        }
-    } as AxiosRequestConfig
-
-    let url = `/api/role/get`
-    console.log(url)
-    let res = await axios.get(url, arFields);
-    return res.data.response
-}
-export async function ServerRoleGetById ({ids}: interfaceRoleGetById, {cookies=null}) {
-    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
-
-    let arFields = {
-        params: {
-            ids
-        } as interfaceRoleGetById,
-        headers: {
-            Cookie: cookies
-        }
-    } as AxiosRequestConfig
-
-    let url = `/api/role/getById`
-    console.log(url)
-    let res = await axios.get(url, arFields)
-    return res.data.response
-}
-export async function ServerRoleAdd ({
-     name,
-}: interfaceRoleAdd) {
-    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
-
-    let arFields = {
-        name
-    } as interfaceRoleAdd
-
-    let url = `/api/role/add`
-    console.log(url)
-    let res = await axios.post(url, arFields);
-    await ToastSystemAdd(res.data)
-    return res.data.response
-}
-export async function ServerRoleEdit ({
-                                            id,
-                                            name,
-                                            access
-                                        }: interfaceRoleEdit) {
-    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
-
-    let arFields = {
-        id,
-        name,
-        access
-    } as interfaceRoleEdit
-
-    let url = `/api/role/edit`
-    console.log(url)
-    let res = await axios.post(url, arFields);
-    await ToastSystemAdd(res.data)
-    return res.data.response
-}
-export async function ServerRoleDelete ({
-                                                id,
-                                            }: interfaceRoleDelete) {
-    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
-
-    let arFields = {
-        id
-    } as interfaceRoleDelete
-
-    let url = `/api/role/delete`
-    console.log(url)
-    let res = await axios.post(url, arFields);
-    await ToastSystemAdd(res.data)
-    return res.data.response
-}
-
-//проверка где ввыполняется запрос
-function is_server () {
-    return ! (typeof window != 'undefined' && window.document);
-}
 //--------------------------------------------------------------
 //GigTest
 export async function ServerGigtestUser ({
@@ -1263,4 +1168,113 @@ export async function ServerDoctorGet ({
     console.log(url)
     let res = await axios.get(url, arFields);
     return res.data.response
+}
+
+//---------------------------------------------------------------------------------
+//Role
+export async function ServerRoleGet ({
+                                         clinic_id,
+
+                                         offset=0,
+                                         count=20
+                                     }: interfaceRoleGet, {
+                                         cookies=null
+                                     }) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        params: {
+            clinic_id,
+
+            offset,
+            count
+        } as interfaceRoleGet,
+        headers: {
+            Cookie: cookies
+        }
+    } as AxiosRequestConfig
+
+    let url = `/api/role/get`
+    console.log(url)
+    let res = await axios.get(url, arFields);
+    return res.data.response
+}
+export async function ServerRoleGetById ({ids}: interfaceRoleGetById, {cookies=null}) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        params: {
+            ids
+        } as interfaceRoleGetById,
+        headers: {
+            Cookie: cookies
+        }
+    } as AxiosRequestConfig
+
+    let url = `/api/role/getById`
+    console.log(url)
+    let res = await axios.get(url, arFields)
+    return res.data.response
+}
+export async function ServerRoleAdd ({
+                                         clinic_id,
+
+                                         name,
+                                         access
+                                     }: interfaceRoleAdd) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        clinic_id,
+
+        name,
+        access
+    } as interfaceRoleAdd
+
+    let url = `/api/role/add`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}
+export async function ServerRoleEdit ({
+                                          id,
+
+                                          name,
+                                          access
+                                      }: interfaceRoleEdit) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        id,
+
+        name,
+        access
+    } as interfaceRoleEdit
+
+    let url = `/api/role/edit`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}
+export async function ServerRoleDelete ({
+                                            id,
+                                        }: interfaceRoleDelete) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        id
+    } as interfaceRoleDelete
+
+    let url = `/api/role/delete`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}
+
+//проверка где ввыполняется запрос
+function is_server () {
+    return ! (typeof window != 'undefined' && window.document);
 }
