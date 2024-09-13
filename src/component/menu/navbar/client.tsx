@@ -75,7 +75,7 @@ export default function Navbar ({resAccount}) {
     return (
         <nav className="navbar navbar-expand-lg bg-white shadow p-2">
             <div className="container-fluid">
-                <Link className="navbar-brand" href={'/'}>ООО Пульсар</Link>
+                <Link className="navbar-brand" href={'/'}>Главная</Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
                         aria-label="Toggle navigation">

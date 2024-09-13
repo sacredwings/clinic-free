@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import UserSearchList from '@/component/user/search/list'
+import UserList from '@/component/user/list'
 
 export default async function User ({
                                         params,
@@ -11,7 +11,7 @@ export default async function User ({
 }) {
     return (
         <>
-            <UserSearchList searchParams={searchParams}/>
+            <UserList searchParams={searchParams}/>
         </>
     )
 }

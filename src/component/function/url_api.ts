@@ -457,6 +457,8 @@ export async function ServerResearchDelete ({
 //---------------------------------------------------------------------------------
 //ORG
 export async function ServerOrgGet ({
+    clinic_id,
+    q,
     offset=0,
     count=20
 }: interfaceOrgGet, {
@@ -466,6 +468,8 @@ export async function ServerOrgGet ({
 
     let arFields = {
         params: {
+            clinic_id,
+            q,
             offset,
             count
         } as interfaceOrgGet,
@@ -531,7 +535,10 @@ export async function ServerOrgEdit ({
 //---------------------------------------------------------------------------------
 //CONTRACT
 export async function ServerContractGet ({
+    clinic_id,
+    q,
     org_id,
+
     offset=0,
     count=20
 }: interfaceContractGet, {
@@ -541,7 +548,10 @@ export async function ServerContractGet ({
 
     let arFields = {
         params: {
+            clinic_id,
+            q,
             org_id,
+
             offset,
             count
         } as interfaceContractGet,

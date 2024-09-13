@@ -143,6 +143,9 @@ export interface interfaceOrgEdit {
     name: string
 }
 export interface interfaceOrgGet {
+    clinic_id :string
+    q: string,
+
     offset: number
     count: number
 }
@@ -190,7 +193,10 @@ export interface interfaceContractEdit {
     price_worker_woman: number
 }
 export interface interfaceContractGet {
+    clinic_id :string
+    q: string,
     org_id: string
+
     offset: number
     count: number
 }
