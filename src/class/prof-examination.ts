@@ -33,6 +33,20 @@ export default class Worker {
                     _id: {$in: ids}
                 }
             })
+            arAggregate.push({
+                $lookup: {
+                    from: 'user',
+                    localField: 'user_id',
+                    foreignField: '_id',
+                    as: '_user_id'
+                }
+            })
+            arAggregate.push({
+                $unwind: {
+                    path: '$_user_id',
+                    preserveNullAndEmptyArrays: true
+                }
+            })
 
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('worker')
@@ -51,6 +65,20 @@ export default class Worker {
             arAggregate.push({
                 $match: {
                     delete: {$ne: true}
+                }
+            })
+            arAggregate.push({
+                $lookup: {
+                    from: 'user',
+                    localField: 'user_id',
+                    foreignField: '_id',
+                    as: '_user_id'
+                }
+            })
+            arAggregate.push({
+                $unwind: {
+                    path: '$_user_id',
+                    preserveNullAndEmptyArrays: true
                 }
             })
 

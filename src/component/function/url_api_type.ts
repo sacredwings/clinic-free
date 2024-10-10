@@ -1,6 +1,6 @@
 // @ts-nocheck
-import {ServerGigtestUser, ServerOrgEdit, ServerOrgGet} from "@/component/function/url_api";
-
+//----------------------------------------------------------------------------------------------------------------------
+//АВТОРИЗАЦИЯ
 export interface interfaceAuthLogin {
     login: string
     password: number
@@ -10,6 +10,93 @@ export interface interfaceAuthLogin {
 export interface interfaceAccountSelectClinic {
     clinic_id: string
 }
+//---------------------------------------------------------------------------------
+//ORG
+export interface interfaceOrgAdd {
+    name: string
+}
+export interface interfaceOrgEdit {
+    id: string
+    name: string
+}
+export interface interfaceOrgGet {
+    clinic_id :string
+    q: string,
+
+    offset: number
+    count: number
+}
+export interface interfaceOrgGetById {
+    ids: string[]
+}
+
+//---------------------------------------------------------------------------------
+//CONTRACT
+export interface interfaceContractAdd {
+    org_id: string
+    contract_type_ids: string[]
+
+    name: string
+    date_from: string
+    date_to: string
+
+    price_ultrasound: number
+    price_mammography: number
+    price_xray: number
+
+    price_pcr: number
+    price_hti: number
+    price_brucellosis: number
+
+    price_worker_all: number
+    price_worker_man: number
+    price_worker_woman: number
+}
+export interface interfaceContractEdit {
+    id: string
+    name: string
+    date_from: string
+    date_to: string
+
+    price_ultrasound: number
+    price_mammography: number
+    price_xray: number
+
+    price_pcr: number
+    price_hti: number
+    price_brucellosis: number
+
+    price_worker_all: number
+    price_worker_man: number
+    price_worker_woman: number
+}
+export interface interfaceContractGet {
+    clinic_id :string
+    q: string,
+    org_id: string
+
+    offset: number
+    count: number
+}
+export interface interfaceContractGetById {
+    ids: string[]
+}
+//----------------------------------------------------------------------------------------------------------------------
+//ProfExamination
+export interface interfaceProfExaminationGet {
+    clinic_id: string
+
+    q: string
+    contract_id: string
+
+    offset: number
+    count: number
+}
+export interface interfaceProfExaminationGetById {
+    ids: string[]
+}
+
+
 //----------------------------------------------------------------------------------------------------------------------
 export interface interfaceUserGet {
     q: string | null
@@ -133,76 +220,8 @@ export interface interfaceHfGetById {
     ids: string[]
 }
 
-//---------------------------------------------------------------------------------
-//ORG
-export interface interfaceOrgAdd {
-    name: string
-}
-export interface interfaceOrgEdit {
-    id: string
-    name: string
-}
-export interface interfaceOrgGet {
-    clinic_id :string
-    q: string,
 
-    offset: number
-    count: number
-}
-export interface interfaceOrgGetById {
-    ids: string[]
-}
-//---------------------------------------------------------------------------------
-//CONTRACT
-export interface interfaceContractAdd {
-    org_id: string
-    contract_type_ids: string[]
 
-    name: string
-    date_from: string
-    date_to: string
-
-    price_ultrasound: number
-    price_mammography: number
-    price_xray: number
-
-    price_pcr: number
-    price_hti: number
-    price_brucellosis: number
-
-    price_worker_all: number
-    price_worker_man: number
-    price_worker_woman: number
-}
-export interface interfaceContractEdit {
-    id: string
-    name: string
-    date_from: string
-    date_to: string
-
-    price_ultrasound: number
-    price_mammography: number
-    price_xray: number
-
-    price_pcr: number
-    price_hti: number
-    price_brucellosis: number
-
-    price_worker_all: number
-    price_worker_man: number
-    price_worker_woman: number
-}
-export interface interfaceContractGet {
-    clinic_id :string
-    q: string,
-    org_id: string
-
-    offset: number
-    count: number
-}
-export interface interfaceContractGetById {
-    ids: string[]
-}
 //---------------------------------------------------------------------------------
 //CONTRACT-TYPE
 export interface interfaceContractTypeAdd {

@@ -12,12 +12,16 @@ export async function GET(request: Request) {
         try {
             const { searchParams } = new URL(request.url)
             let url = {
+                org_id: searchParams.get('clinic_id'),
+                org_id: searchParams.get('q'),
                 org_id: searchParams.get('org_id'),
                 offset: searchParams.get('offset'),
                 count: searchParams.get('count')
             }
 
             const schema = Joi.object({
+                clinic_id: Joi.string().min(24).max(24).allow(null).empty('').default(null),
+                q: Joi.string().min(3).max(255).allow(null).empty('').default(null),
                 org_id: Joi.string().min(24).max(24).allow(null).empty('').default(null),
 
                 offset: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(0),
@@ -38,12 +42,14 @@ export async function GET(request: Request) {
                 offset: value.offset,
                 count: value.count
             }
-            let result = await CContract.Get (arFields)
+            let items = await CContract.Get (arFields)
+            let count = await CContract.GetCount (arFields)
 
             return NextResponse.json({
                 code: 0,
                 response: {
-                    items: result
+                    items: items,
+                    count: count,
                 }
             })
         } catch (err) {
