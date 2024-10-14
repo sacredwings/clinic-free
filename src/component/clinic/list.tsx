@@ -36,28 +36,34 @@ export default function List ({list,  account, accessAdd, accessEdit, accessDele
         }))
     }
 
-    return <div className={Style.cardContainer}>
+    return <div>
 
-        {accessAdd ? <Link href={'/clinic/add'} className={'btn btn-primary'}>Добавить</Link> : null}
+        <div className={"publicBlock"}>
+            {accessAdd ? <Link href={'/clinic/add'} className={'btn btn-primary'}>Добавить</Link> : null}
+        </div>
 
-        {clientList.items.map((item, i) => {
-            let accessElementEdit = Access(account, [item])
-            let accessElementDelete = Access(account, [item])
-            //if (accessEdit) accessElementEdit = accessEdit
-            if (accessDelete) accessElementDelete = accessDelete
+        <div className={"publicBlock"}>
+            <div className={"publicContainer"}>
+                {clientList.items.map((item, i) => {
+                    let accessElementEdit = Access(account, [item])
+                    let accessElementDelete = Access(account, [item])
+                    //if (accessEdit) accessElementEdit = accessEdit
+                    if (accessDelete) accessElementDelete = accessDelete
 
-            return (
-                <Element
-                    key={item._id}
-                    element={item}
+                    return (
+                        <Element
+                            key={item._id}
+                            element={item}
 
-                    accessEdit={accessElementEdit}
-                    accessDelete={accessElementDelete}
+                            accessEdit={accessElementEdit}
+                            accessDelete={accessElementDelete}
 
-                    ElementDelete={ElementDelete}
-                />
-            )
-        })}
+                            ElementDelete={ElementDelete}
+                        />
+                    )
+                })}
+            </div>
+        </div>
 
     </div>
 

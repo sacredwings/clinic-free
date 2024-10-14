@@ -1,10 +1,10 @@
 // @ts-nocheck
-
 import {ServerClinicGet} from "@/component/function/url_api";
 import {cookies} from "next/headers";
 import Form from "@/component/menu/form";
 import List from '@/component/clinic/list'
 import Pagination from "@/component/menu/pagination";
+import Style from './style.module.sass'
 
 export default async function Clinic ({
                                        searchParams
@@ -24,7 +24,7 @@ export default async function Clinic ({
     }, {cookies: cookies()})
 
     return (
-        <div>
+        <div className={Style.page}>
 
             <div>
                 <h1>Клиники</h1>

@@ -394,7 +394,7 @@ export async function ServerProfExaminationGetById ({ids}: interfaceWorkerGetByI
         }
     } as AxiosRequestConfig
 
-    let url = `/api/worker/getById`
+    let url = `/api/prof-examination/getById`
     console.log(url)
     let res = await axios.get(url, arFields)
     return res.data.response

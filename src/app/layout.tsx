@@ -7,7 +7,7 @@ import Navbar from '@/component/menu/navbar/server'
 import Sidebar from '@/component/menu/sidebar/server'
 import Toast from '@/component/toast/list'
 import StoreProvider from '@/store/StoreProvider'
-import style from './style.module.sass'
+import Style from './style.module.sass'
 
 export const metadata: Metadata = {
   title: 'Клиника здоровья',
@@ -25,11 +25,11 @@ export default function RootLayout({
         <StoreProvider>
             <Toast/>
             <Navbar/>
-            <div className={style.container}>
-                <div className={style.sideBar}>
+            <div className={Style.container}>
+                <div className={Style.sideBar}>
                     <Sidebar/>
                 </div>
-                <div className={style.content}>
+                <div className={Style.content}>
                     {children}
                 </div>
             </div>

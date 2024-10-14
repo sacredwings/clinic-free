@@ -3,6 +3,7 @@ import Joi from "joi"
 import { NextResponse } from 'next/server'
 import { mongo, minio } from "@/utility/connect"
 import CWorker from "@/class/worker"
+import CProfExamination from "@/class/prof-examination";
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url)
@@ -27,7 +28,7 @@ export async function GET(request: Request) {
         try {
             await mongo()
 
-            let result = await CWorker.GetById ( value.ids )
+            let result = await CProfExamination.GetById ( value.ids )
 
             return NextResponse.json({
                 code: 0,

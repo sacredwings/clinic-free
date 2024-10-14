@@ -13,7 +13,7 @@ export default async function ProfExaminationGet ({
     params: { clinic_id: string },
     searchParams: { contract_id: string, page: number, q: string }
 }) {
-    let contract = await ServerContractGetById({ids: [searchParams.contract_id]}, {cookies:cookies()})
+    //let contract = await ServerContractGetById({ids: [searchParams.contract_id]}, {cookies:cookies()})
     let arProfExamination = await ServerProfExaminationGet({
         clinic_id: params.clinic_id,
 

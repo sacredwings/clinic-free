@@ -6,11 +6,13 @@ import Form from "@/component/menu/form";
 import List from '@/component/clinic/list'
 import Pagination from "@/component/menu/pagination";
 import Link from "next/link";
+import Style from "./style.module.sass";
+import React from "react";
 
 export default async function ClinicId ({
-                                          params,
-                                          searchParams
-                                      }:{
+    params,
+    searchParams
+}:{
     params: { clinic_id: string },
     searchParams: { page: number, q: string }
 }) {
@@ -25,23 +27,70 @@ export default async function ClinicId ({
     clinic = clinic[0]
 
     return (
-        <div>
+        <div className={Style.page}>
 
-            <div>
+            <div className={"publicBlock"}>
                 <p>Клиника</p>
             </div>
 
-            {clinic._id}
-            <h1>{clinic.title}</h1>
+            <div className={"publicBlock"}>
+                {clinic._id}
+                <h1>{clinic.title}</h1>
+            </div>
 
-            <br/>
+            <div className={"publicBlock"}>
+                <div className={"publicContainer"}>
+                    <Link href={`/clinic/${params.clinic_id}/patient`}>
+                        <div className={"publicCard"}>
+                            Пациент
+                        </div>
+                    </Link>
+
+                    <Link href={`/clinic/${params.clinic_id}/doctor`}>
+                        <div className={"publicCard"}>
+                            Врач
+                        </div>
+                    </Link>
+
+                    <Link href={`/clinic/${params.clinic_id}/admin`}>
+                        <div className={"publicCard"}>
+                            Администратор
+                        </div>
+                    </Link>
+
+                    <Link href={`/clinic/${params.clinic_id}/accountant`}>
+                        <div className={"publicCard"}>
+                            Бухралтер
+                        </div>
+                    </Link>
+
+                    <Link href={`/clinic/${params.clinic_id}/cashier`}>
+                        <div className={"publicCard"}>
+                            Кассир
+                        </div>
+                    </Link>
+
+                    <Link href={`/clinic/${params.clinic_id}/reception`}>
+                        <div className={"publicCard"}>
+                            Регистратура
+                        </div>
+                    </Link>
+
+                    <Link href={`/clinic/${params.clinic_id}/edit`}>
+                        <div className={"publicCard"}>
+                            Настройки
+                        </div>
+                    </Link>
+                </div>
+            </div>
+
+            {/*
             <Link href={`/clinic/${params.clinic_id}/patient`}>Пациент</Link>
             <br/>
             <Link href={`/clinic/${params.clinic_id}/doctor`}>Врач</Link>
             <br/>
             <Link href={`/clinic/${params.clinic_id}/admin`}>Администратор</Link>
             <br/>
-
 
 
             <Link href={`/clinic/${params.clinic_id}/accountant`}>Бухралтер</Link>
@@ -51,7 +100,7 @@ export default async function ClinicId ({
             <Link href={`/clinic/${params.clinic_id}/reception`}>Регистратура</Link>
 
             <br/>
-            <Link href={`/clinic/${params.clinic_id}/edit`}>Настройки</Link>
+            <Link href={`/clinic/${params.clinic_id}/edit`}>Настройки</Link>*/}
         </div>
     )
 

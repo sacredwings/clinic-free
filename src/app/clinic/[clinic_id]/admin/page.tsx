@@ -1,32 +1,44 @@
 // @ts-nocheck
 import {cookies} from "next/headers";
 import Link from "next/link";
+import React from "react";
+import Style from "@/app/clinic/[clinic_id]/style.module.sass";
 
 export default async function ClinicId ({
-                                            params,
-                                            searchParams
-                                        }:{
+    params,
+    searchParams
+}:{
     params: { clinic_id: string },
     searchParams: { page: number, q: string }
 }) {
 
-
     return (
-        <div>
-            <div>
-                <p>Клиника панель Админа</p>
+        <div className={Style.page}>
+            <div className={"publicContainer"}>
+                <Link href={`/clinic/${params.clinic_id}/appointment`}>
+                    <div className={"publicCard"}>
+                        Приемы
+                    </div>
+                </Link>
+
+                <Link href={`/clinic/${params.clinic_id}/org`}>
+                    <div className={"publicCard"}>
+                        Организации
+                    </div>
+                </Link>
+
+                <Link href={`/clinic/${params.clinic_id}/contract`}>
+                    <div className={"publicCard"}>
+                        Договора
+                    </div>
+                </Link>
+
+                <Link href={`/clinic/${params.clinic_id}/prof-examination`}>
+                    <div className={"publicCard"}>
+                        Проф. осмотры
+                    </div>
+                </Link>
             </div>
-
-            {params.clinic_id}
-
-            <br/>
-            <Link href={`/clinic/${params.clinic_id}/admin/appointment`}>Приемы</Link>
-            <br/>
-            <Link href={`/clinic/${params.clinic_id}/admin/org`}>Организации</Link>
-            <br/>
-            <Link href={`/clinic/${params.clinic_id}/admin/contract`}>Договора</Link>
-            <br/>
-            <Link href={`/clinic/${params.clinic_id}/admin/prof-examination`}>Проф. осмотры</Link>
         </div>
     )
 
