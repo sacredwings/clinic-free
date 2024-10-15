@@ -64,6 +64,11 @@ export default class Contract {
 
     static async Get ( fields ) {
         try {
+            if (fields.q) {
+                fields.q = fields.q.replace(/ +/g, ' ').trim();
+                fields.q = fields.q.replace("[^\\da-zA-Zа-яёА-ЯЁ ]", ' ').trim();
+            }
+
             fields.clinic_id = new DB().ObjectID(fields.clinic_id)
             fields.org_id = new DB().ObjectID(fields.org_id)
 
@@ -83,8 +88,12 @@ export default class Contract {
                 }
             })
 
-            if (fields.clinic_id) arAggregate[0].$match.clinic_id = fields.clinic_id
-            if (fields.org_id) arAggregate[0].$match.org_id = fields.org_id
+            if (fields.clinic_id)
+                arAggregate[0].$match.clinic_id = fields.clinic_id
+            if (fields.q)
+                arAggregate[0].$match.q = fields.q
+            if (fields.org_id)
+                arAggregate[0].$match.org_id = fields.org_id
 
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('contract')
@@ -99,6 +108,11 @@ export default class Contract {
 
     static async GetCount ( fields ) {
         try {
+            if (fields.q) {
+                fields.q = fields.q.replace(/ +/g, ' ').trim();
+                fields.q = fields.q.replace("[^\\da-zA-Zа-яёА-ЯЁ ]", ' ').trim();
+            }
+
             fields.clinic_id = new DB().ObjectID(fields.clinic_id)
             fields.org_id = new DB().ObjectID(fields.org_id)
 
@@ -113,8 +127,12 @@ export default class Contract {
                 $count: 'count'
             })
 
-            if (fields.clinic_id) arAggregate[0].$match.clinic_id = fields.clinic_id
-            if (fields.org_id) arAggregate[0].$match.org_id = fields.org_id
+            if (fields.clinic_id)
+                arAggregate[0].$match.clinic_id = fields.clinic_id
+            if (fields.q)
+                arAggregate[0].$match.q = fields.q
+            if (fields.org_id)
+                arAggregate[0].$match.org_id = fields.org_id
 
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('clinic')

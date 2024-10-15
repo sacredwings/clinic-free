@@ -11,18 +11,17 @@ export async function GET(request: Request) {
         try {
             const { searchParams } = new URL(request.url)
             let url = {
+                clinic_id: searchParams.get('clinic_id'),
                 q: searchParams.get('q'),
-
                 contract_id: searchParams.get('contract_id'),
-
                 offset: searchParams.get('offset'),
                 count: searchParams.get('count'),
             }
 
             //схема
             const schema = Joi.object({
+                clinic_id: Joi.string().min(24).max(24).allow(null).empty('').default(null),
                 q: Joi.string().min(3).max(255).empty([null, '']).default(null),
-
                 contract_id: Joi.string().min(24).max(24).empty(null).default(null),
 
                 offset: Joi.number().integer().min(0).max(9223372036854775807).empty(null).default(0),
@@ -39,8 +38,8 @@ export async function GET(request: Request) {
             await mongo()
 
             let arFields = {
+                clinic_id: value.clinic_id,
                 q: value.q,
-
                 contract_id: value.contract_id,
 
                 offset: value.offset,

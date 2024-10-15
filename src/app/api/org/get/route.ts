@@ -12,8 +12,8 @@ export async function GET(request: Request) {
         try {
             const { searchParams } = new URL(request.url)
             let url = {
-                offset: searchParams.get('clinic_id'),
-                offset: searchParams.get('q'),
+                clinic_id: searchParams.get('clinic_id'),
+                q: searchParams.get('q'),
                 offset: searchParams.get('offset'),
                 count: searchParams.get('count')
             }
@@ -37,6 +37,8 @@ export async function GET(request: Request) {
             await mongo()
 
             let arFields = {
+                clinic_id: value.clinic_id,
+                q: value.q,
                 offset: value.offset,
                 count: value.count
             }

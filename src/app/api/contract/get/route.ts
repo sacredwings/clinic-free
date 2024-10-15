@@ -12,8 +12,8 @@ export async function GET(request: Request) {
         try {
             const { searchParams } = new URL(request.url)
             let url = {
-                org_id: searchParams.get('clinic_id'),
-                org_id: searchParams.get('q'),
+                clinic_id: searchParams.get('clinic_id'),
+                q: searchParams.get('q'),
                 org_id: searchParams.get('org_id'),
                 offset: searchParams.get('offset'),
                 count: searchParams.get('count')
@@ -38,9 +38,9 @@ export async function GET(request: Request) {
             await mongo()
 
             let arFields = {
+                clinic_id: value.clinic_id,
+                q: value.q,
                 org_id: value.org_id,
-                offset: value.offset,
-                count: value.count
             }
             let items = await CContract.Get (arFields)
             let count = await CContract.GetCount (arFields)
