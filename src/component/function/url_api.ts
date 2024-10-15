@@ -169,7 +169,7 @@ export async function ServerOrgGet ({
 
     let arFields = {
         params: {
-            clinic_id,
+            //clinic_id,
             q,
 
             offset,
@@ -312,7 +312,7 @@ export async function ServerContractGet ({
 
     let arFields = {
         params: {
-            clinic_id,
+            //clinic_id,
             q,
             org_id,
 
@@ -364,7 +364,7 @@ export async function ServerProfExaminationGet ({
 
     let arFields = {
         params: {
-            clinic_id,
+            //clinic_id,
 
             q,
             contract_id,

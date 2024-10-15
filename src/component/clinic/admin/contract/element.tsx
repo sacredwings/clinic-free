@@ -2,7 +2,7 @@
 import Link from 'next/link'
 
 export default function Element ({element, clinic_id}){
-    let href=`/clinic/${clinic_id}/admin/contract?org_id=${element._id}`
+    let href=`/clinic/${clinic_id}/admin/prof-examination?contract_id=${element._id}`
 
     const ContractType = (arList) => {
         if (!arList) return null

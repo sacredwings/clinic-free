@@ -39,6 +39,7 @@ export async function GET(request: Request) {
             let arFields = {
                 clinic_id: value.clinic_id,
                 q: value.q,
+
                 offset: value.offset,
                 count: value.count
             }
