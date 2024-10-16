@@ -42,12 +42,66 @@ export default class Worker {
                 }
             })
             arAggregate.push({
+                $lookup: {
+                    from: 'contract',
+                    localField: 'contract_id',
+                    foreignField: '_id',
+                    as: '_contract_id',
+                    pipeline: [
+                        { $lookup:
+                                {
+                                    from: 'org',
+                                    localField: 'org_id',
+                                    foreignField: '_id',
+                                    as: '_org_id'
+                                }
+                        },
+                        {
+                            $unwind:
+                                {
+                                    path: '$_org_id',
+                                    preserveNullAndEmptyArrays: true
+                                }
+                        }
+                    ]
+                }
+            })
+            arAggregate.push({
+                $lookup: {
+                    from: 'contract-type',
+                    localField: 'contract_type_ids',
+                    foreignField: '_id',
+                    as: '_contract_type_ids'
+                }
+            })
+            arAggregate.push({
+                $lookup: {
+                    from: 'research',
+                    localField: 'research_ids',
+                    foreignField: '_id',
+                    as: '_research_ids'
+                }
+            })
+            arAggregate.push({
+                $lookup: {
+                    from: 'specialist',
+                    localField: 'specialist_ids',
+                    foreignField: '_id',
+                    as: '_specialist_ids'
+                }
+            })
+            arAggregate.push({
                 $unwind: {
                     path: '$_user_id',
                     preserveNullAndEmptyArrays: true
                 }
             })
-
+            arAggregate.push({
+                $unwind: {
+                    path: '$_contract_id',
+                    preserveNullAndEmptyArrays: true
+                }
+            })
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('worker')
             let result = await collection.aggregate(arAggregate).toArray()
@@ -84,8 +138,46 @@ export default class Worker {
                 }
             })
             arAggregate.push({
+                $lookup: {
+                    from: 'contract',
+                    localField: 'contract_id',
+                    foreignField: '_id',
+                    as: '_contract_id'
+                }
+            })
+            arAggregate.push({
+                $lookup: {
+                    from: 'contract-type',
+                    localField: 'contract_type_ids',
+                    foreignField: '_id',
+                    as: '_contract_type_ids'
+                }
+            })
+            arAggregate.push({
+                $lookup: {
+                    from: 'research',
+                    localField: 'research_ids',
+                    foreignField: '_id',
+                    as: '_research_ids'
+                }
+            })
+            arAggregate.push({
+                $lookup: {
+                    from: 'specialist',
+                    localField: 'specialist_ids',
+                    foreignField: '_id',
+                    as: '_specialist_ids'
+                }
+            })
+            arAggregate.push({
                 $unwind: {
                     path: '$_user_id',
+                    preserveNullAndEmptyArrays: true
+                }
+            })
+            arAggregate.push({
+                $unwind: {
+                    path: '$_contract_id',
                     preserveNullAndEmptyArrays: true
                 }
             })

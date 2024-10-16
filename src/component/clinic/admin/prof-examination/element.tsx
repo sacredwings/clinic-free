@@ -22,10 +22,10 @@ export default function Element ({element, clinic_id}){
                 </button>
                 <ul className="dropdown-menu">
                     <li>
-                        <a href={`/worker/${workerId}/pdf/zaklyucheniye-pred`} className="dropdown-item" target="_blank">Закл. предварительного осмотра</a>
-                        <a href={`/worker/${workerId}/pdf/zaklyucheniye`} className="dropdown-item" target="_blank">Закл. периодического осмотра</a>
-                        <a href={`/worker/${workerId}/pdf/card`} className="dropdown-item" target="_blank">Карта</a>
-                        <a href={`/worker/${workerId}/pdf/vypiska`} className="dropdown-item" target="_blank">Выписка</a>
+                        <a href={`/prof-examination/${workerId}/pdf/zaklyucheniye-pred`} className="dropdown-item" target="_blank">Закл. предварительного осмотра</a>
+                        <a href={`/prof-examination/${workerId}/pdf/zaklyucheniye`} className="dropdown-item" target="_blank">Закл. периодического осмотра</a>
+                        <a href={`/prof-examination/${workerId}/pdf/card`} className="dropdown-item" target="_blank">Карта</a>
+                        <a href={`/prof-examination/${workerId}/pdf/vypiska`} className="dropdown-item" target="_blank">Выписка</a>
                     </li>
                 </ul>
             </div>

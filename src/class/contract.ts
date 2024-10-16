@@ -41,13 +41,26 @@ export default class Contract {
                     delete: {$ne: true}
                 }
             })
-            //ПОЛЕ ПОД ВОПРОСОМ
+            arAggregate.push({
+                $lookup: {
+                    from: 'org',
+                    localField: 'org_id',
+                    foreignField: '_id',
+                    as: '_org_id'
+                }
+            })
             arAggregate.push({
                 $lookup: {
                     from: 'contract-type',
                     localField: 'contract_type_ids',
                     foreignField: '_id',
                     as: '_contract_type_ids'
+                }
+            })
+            arAggregate.push({
+                $unwind: {
+                    path: '$_org_id',
+                    preserveNullAndEmptyArrays: true
                 }
             })
 
@@ -78,13 +91,26 @@ export default class Contract {
                     delete: {$ne: true}
                 }
             })
-            //ПОЛЕ ПОД ВОПРОСОМ
+            arAggregate.push({
+                $lookup: {
+                    from: 'org',
+                    localField: 'org_id',
+                    foreignField: '_id',
+                    as: '_org_id'
+                }
+            })
             arAggregate.push({
                 $lookup: {
                     from: 'contract-type',
                     localField: 'contract_type_ids',
                     foreignField: '_id',
                     as: '_contract_type_ids'
+                }
+            })
+            arAggregate.push({
+                $unwind: {
+                    path: '$_org_id',
+                    preserveNullAndEmptyArrays: true
                 }
             })
 

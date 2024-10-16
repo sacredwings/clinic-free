@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react'
 import {componentToPDFBuffer} from '@/component/pdf'
 import axios from "axios"
 import Config from "../../../../../config.json";
-import {ServerWorkerGetById} from "@/component/function/url_api";
+import {ServerProfExaminationGetById} from "@/component/function/url_api";
 
 export default function Pdf () {
     return <></>
@@ -117,7 +117,7 @@ const arVisitResult = (arr) => {
 
 
 const GetById = async (id) => {
-    let result = await ServerWorkerGetById({ids: [id]}, {cookies: null})
+    let result = await ServerProfExaminationGetById({ids: [id]}, {cookies: null})
     return result
 }
 
