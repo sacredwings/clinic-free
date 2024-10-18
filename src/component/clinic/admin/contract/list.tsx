@@ -20,7 +20,7 @@ export default function OrgList ({list, clinic_id, org_id}) {
 
     return (
         <>
-            <h1>Договора <Link type="button" className="btn btn-outline-success" href={`/org/${org_id}/contract/add`}> + </Link></h1>
+            <h1>Договора <Link type="button" className="btn btn-outline-success" href={`/clinic/${clinic_id}/admin/contract/add`}> + </Link></h1>
             {(list.length) ? List() : NoList()}
         </>
     )

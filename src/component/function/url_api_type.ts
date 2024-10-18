@@ -10,6 +10,24 @@ export interface interfaceAuthLogin {
 export interface interfaceAccountSelectClinic {
     clinic_id: string
 }
+//--------------------------------------------------------------
+//CLINIC
+export interface interfaceClinicAdd {
+    title: string
+    description: string
+
+    inn: number
+}
+export interface interfaceClinicGet {
+    q: string
+
+    offset: number
+    count: number
+}
+
+export interface interfaceClinicGetById {
+    ids: string[]
+}
 //---------------------------------------------------------------------------------
 //ORG
 export interface interfaceOrgAdd {
@@ -339,24 +357,7 @@ export interface interfaceGigtestUser {
     worker_id: string
 }
 
-//--------------------------------------------------------------
-//CLINIC
-export interface interfaceClinicAdd {
-    name: string
-    description: string
 
-    inn: number
-}
-export interface interfaceClinicGet {
-    q: string
-
-    offset: number
-    count: number
-}
-
-export interface interfaceClinicGetById {
-    ids: string[]
-}
 //--------------------------------------------------------------
 //Doctor
 export interface interfaceDoctorAdd {

@@ -1,11 +1,7 @@
 // @ts-nocheck
-import ContractAdd from '@/component/contract/add'
+import ContractAdd from '@/component/clinic/admin/contract/add'
 import {
-    ServerContractTypeGet,
-    ServerOrgGet,
-    ServerOrgGetById,
-    ServerSpecialistGet,
-    ServerWorkerGetById
+    ServerContractGet,
 } from "@/component/function/url_api";
 import { cookies } from 'next/headers'
 import Link from 'next/link'
@@ -18,9 +14,9 @@ export default async function ContractAddPage ({
     //searchParams: { page: number, q: string }
 }) {
     let org = await ServerOrgGetById({ids: [params.id]}, {cookies:cookies()})
-    org = org[0]
+    if (org) org = org[0]
 
-    let contractType = await ServerContractTypeGet({
+    let contract = await ServerContractGet({
         offset: 0,
         count: 100
     }, {cookies:cookies()})
@@ -28,7 +24,7 @@ export default async function ContractAddPage ({
     return (
         <>
             <h1>Новый договор</h1>
-            <ContractAdd org={org} contractType={contractType.items}/>
+            <ContractAdd org={org} contract={contract.items}/>
         </>
     )
 }

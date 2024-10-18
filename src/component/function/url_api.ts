@@ -122,6 +122,73 @@ export async function ServerAccountSelectClinic ({
     await ToastSystemAdd(res.data)
     return res.data.response
 }
+//--------------------------------------------------------------
+//CLINIC
+export async function ServerClinicAdd ({
+    title,
+    description,
+
+    inn
+}: interfaceClinicAdd) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        title,
+        description,
+
+        inn
+    } as interfaceClinicAdd
+
+    let url = `/api/clinic/add`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}
+export async function ServerClinicGet ({
+    q=null,
+
+    offset=0,
+    count=20
+}: interfaceClinicGet, {
+    cookies=null
+}) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        params: {
+            q,
+
+            offset,
+            count
+        } as interfaceClinicGet,
+        headers: {
+            Cookie: cookies
+        }
+    } as AxiosRequestConfig
+
+    let url = `/api/clinic/get`
+    console.log(url)
+    let res = await axios.get(url, arFields);
+    return res.data.response
+}
+export async function ServerClinicGetById ({ids}: interfaceClinicGetById, {cookies=null}) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        params: {
+            ids
+        } as interfaceClinicGetById,
+        headers: {
+            Cookie: cookies
+        }
+    } as AxiosRequestConfig
+
+    let url = `/api/clinic/getById`
+    console.log(url)
+    let res = await axios.get(url, arFields)
+    return res.data.response
+}
 //---------------------------------------------------------------------------------
 //ORG
 export async function ServerOrgAdd ({
@@ -1151,73 +1218,7 @@ export async function ServerGigtestUser ({
     return res.data.response
 }
 
-//--------------------------------------------------------------
-//CLINIC
-export async function ServerClinicAdd ({
-    name,
-    description,
 
-    inn
-}: interfaceClinicAdd) {
-    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
-
-    let arFields = {
-        name,
-        description,
-
-        inn
-    } as interfaceClinicAdd
-
-    let url = `/api/clinic/add`
-    console.log(url)
-    let res = await axios.post(url, arFields);
-    await ToastSystemAdd(res.data)
-    return res.data.response
-}
-export async function ServerClinicGet ({
-    q=null,
-
-    offset=0,
-    count=20
-}: interfaceClinicGet, {
-    cookies=null
-}) {
-    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
-
-    let arFields = {
-        params: {
-            q,
-
-            offset,
-            count
-        } as interfaceClinicGet,
-        headers: {
-            Cookie: cookies
-        }
-    } as AxiosRequestConfig
-
-    let url = `/api/clinic/get`
-    console.log(url)
-    let res = await axios.get(url, arFields);
-    return res.data.response
-}
-export async function ServerClinicGetById ({ids}: interfaceClinicGetById, {cookies=null}) {
-    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
-
-    let arFields = {
-        params: {
-            ids
-        } as interfaceClinicGetById,
-        headers: {
-            Cookie: cookies
-        }
-    } as AxiosRequestConfig
-
-    let url = `/api/clinic/getById`
-    console.log(url)
-    let res = await axios.get(url, arFields)
-    return res.data.response
-}
 //--------------------------------------------------------------
 //Doctor
 export async function ServerDoctorAdd ({

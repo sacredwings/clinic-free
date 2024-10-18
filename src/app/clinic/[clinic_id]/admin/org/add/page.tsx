@@ -1,5 +1,5 @@
 // @ts-nocheck
-import OrgAdd from '@/component/org/add'
+import OrgAdd from '@/component/clinic/admin/org/add'
 import {ServerOrgGet, ServerSpecialistGet, ServerWorkerGetById} from "@/component/function/url_api";
 import { cookies } from 'next/headers'
 import Link from 'next/link'

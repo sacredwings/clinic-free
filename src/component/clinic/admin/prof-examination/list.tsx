@@ -26,7 +26,7 @@ export default function ProfExaminationList ({list, clinic_id, org_id, contract_
 
     return (
         <>
-            <h1>Осмотр <Link type="button" className="btn btn-outline-success" href={`/org/${org_id}/contract/add`}> + </Link></h1>
+            <h1>Осмотр <Link type="button" className="btn btn-outline-success" href={`/clinic/${clinic_id}/admin/prof-examination/add`}> + </Link></h1>
             {(list.length) ? List() : NoList()}
         </>
     )
