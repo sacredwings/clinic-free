@@ -24,7 +24,7 @@ export default async function ContractAddPage ({
 
     return (
         <>
-            <h1>Новый договор</h1>
+            <h1>Новый осмотр</h1>
             <ProfExaminationAdd contract={contract} profExamination={profExamination.items}/>
         </>
     )

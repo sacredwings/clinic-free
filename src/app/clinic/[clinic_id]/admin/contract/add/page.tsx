@@ -2,6 +2,7 @@
 import ContractAdd from '@/component/clinic/admin/contract/add'
 import {
     ServerContractGet,
+    ServerOrgGetById
 } from "@/component/function/url_api";
 import { cookies } from 'next/headers'
 import Link from 'next/link'
