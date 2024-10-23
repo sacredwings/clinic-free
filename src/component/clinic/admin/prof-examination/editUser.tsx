@@ -1,26 +1,22 @@
 // @ts-nocheck
 'use client'
 //import { useRouter } from 'next/router' //переход по url
-import  iReact, {useState, useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 import axios from "axios"
 import {
-    ServerUserEditAuth,
-    ServerUserEditVisit,
-    ServerUserEditRole,
-    ServerUserEdit
+    ServerContractTypeGet,
+    ServerUserEdit,
+    ServerUserEditAccess,
+    ServerWorkerEdit
 } from "@/component/function/url_api";
-import React from "react";
+import FormSpecialistRadio from "@/component/worker/formSpecialistRadio";
+import FormResearchRadio from "@/component/worker/formResearchRadio";
 
-export default function UserForm ({user, specialist, research, role}) {
+export default function UserForm ({worker, account, accessEdit}) {
     //const router = useRouter() //для перехода к пользователю
 
-    let [form, setForm] = useState({...user, password: ''})
-
-    useEffect(() => {
-        (async () => {
-            //console.log(form)
-        })()
-    }, [form])
+    let [form, setForm] = useState(worker._user_id)
+    //let [form, setForm] = useState({...worker, hf_code: (worker.hf_code ? worker.hf_code.join(',') : null)})
 
     const onChangeText = (e) => {
         let name = e.target.id
@@ -33,8 +29,6 @@ export default function UserForm ({user, specialist, research, role}) {
 
     const onSave = async (e) => {
         e.preventDefault() // Stop form submit
-
-        let url = '/user/editAccess'
 
         let arFields = {
             id: form._id,
@@ -63,26 +57,24 @@ export default function UserForm ({user, specialist, research, role}) {
 
             <div className="card" style={{marginTop: '20px'}}>
                 <div className="card-body">
-
-                    <div className="mb-0">
-                        <legend>Основное</legend>
-                        <hr/>
-                    </div>
                     <div className="mb-3 row">
                         <div className="col-4">
                             <label htmlFor="last_name" className="col-form-label">Фамилия</label>
                             <input type="text" className="form-control" id="last_name"
-                                   value={form.last_name ? form.last_name : ''} onChange={onChangeText}/>
+                                   value={form.last_name ? form.last_name : ''}
+                                   onChange={onChangeText}/>
                         </div>
                         <div className="col-4">
                             <label htmlFor="first_name" className="col-form-label">Имя</label>
                             <input type="text" className="form-control" id="first_name"
-                                   value={form.first_name ? form.first_name : ''} onChange={onChangeText}/>
+                                   value={form.first_name ? form.first_name : ''}
+                                   onChange={onChangeText}/>
                         </div>
                         <div className="col-4">
                             <label htmlFor="second_name" className="col-form-label">Отчество</label>
                             <input type="text" className="form-control" id="second_name"
-                                   value={form.second_name ? form.second_name : ''} onChange={onChangeText}/>
+                                   value={form.second_name ? form.second_name : ''}
+                                   onChange={onChangeText}/>
                         </div>
                     </div>
                     <div className="mb-3">
@@ -124,20 +116,11 @@ export default function UserForm ({user, specialist, research, role}) {
                 <button type="submit" className="btn btn-success" onClick={onSave}>Сохранить</button>
             </div>
         </>
+
+
     }
 
     return <>
         {Form()}
     </>
-}
-
-function formDate(oldDate) {
-    if (!oldDate) return null
-
-    let date = new Date(oldDate)
-    let month = new Array("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12")
-    let day = `${date.getDate()}`
-    if (date.getDate() < 10)
-        day = `0${date.getDate()}`
-    return (date.getFullYear() + "-" + month[date.getMonth()] + "-" + day)
 }

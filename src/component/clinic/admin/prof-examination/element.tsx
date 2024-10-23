@@ -39,13 +39,13 @@ export default function Element ({element, clinic_id}){
                 className="fw-bold">{element._user_id.last_name} {element._user_id.first_name} {element._user_id.second_name}</div>
             {ListCode(element.hf_code)}
             <br/>
-            <Link href={`/worker/${element._id}`}>
+            <Link href={`/clinic/${clinic_id}/admin/prof-examination/${element._id}`}>
                 Подробно...
             </Link>
             <br/>
             {/*Progress(element)*/}
         </div>
-        <Link href={`/worker/${element._id}/edit`} type="button" className="btn btn-outline-warning btn-sm">
+        <Link href={`/clinic/${clinic_id}/admin/prof-examination/${element._id}/edit`} type="button" className="btn btn-outline-warning btn-sm">
             <i className="fa-solid fa-edit"></i>
         </Link>
 

@@ -1,4 +1,3 @@
-// @ts-nocheck
 export const accessList = [
 
     {name: 'Договор - Чтение', access: 'contractGet'},

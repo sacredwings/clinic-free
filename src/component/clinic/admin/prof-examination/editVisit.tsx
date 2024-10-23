@@ -9,8 +9,8 @@ import {
     ServerUserEditAccess,
     ServerWorkerEdit
 } from "@/component/function/url_api";
-import FormSpecialistRadio from "@/component/worker/formSpecialistRadio";
-import FormResearchRadio from "@/component/worker/formResearchRadio";
+import FormSpecialistRadio from "./formSpecialistRadio";
+import FormResearchRadio from "./formResearchRadio";
 
 export default function UserForm ({worker, account, accessEdit}) {
     //const router = useRouter() //для перехода к пользователю

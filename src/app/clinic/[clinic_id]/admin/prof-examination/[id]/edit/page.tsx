@@ -1,19 +1,17 @@
-//// @ts-nocheck
-import WorkerEdit from '@/component/worker/edit'
-import WorkerEditUser from '@/component/worker/editUser'
-import WorkerEditVisit from '@/component/worker/editVisit'
-import WorkerEditFinale from '@/component/worker/editFinale'
+// @ts-nocheck
+
+import WorkerEdit from '@/component/clinic/admin/prof-examination/edit'
+import WorkerEditUser from '@/component/clinic/admin/prof-examination/editUser'
+import WorkerEditVisit from '@/component/clinic/admin/prof-examination/editVisit'
+import WorkerEditFinale from '@/component/clinic/admin/prof-examination/editFinale'
 
 import {
     ServerAccountGet,
-    ServerResearchGet,
-    ServerSpecialistGet,
-    ServerWorkerGetById
+    ServerProfExaminationGetById,
 } from "@/component/function/url_api";
 import { cookies } from 'next/headers'
-import Link from "next/link";
-import {accessCheck} from "@/component/role/function";
-import React from "react";
+import Link from 'next/link'
+import {accessCheck} from "@/component/clinic/edit/role/function";
 
 export default async function User ({
                                         params,
@@ -22,16 +20,9 @@ export default async function User ({
     params: { id: string },
     searchParams: { form: string }
 }) {
+
     let account = await ServerAccountGet({cookies:cookies()})
-    let worker = await ServerWorkerGetById({ids: [params.id]}, {cookies:cookies()})
-    let specialist = await ServerSpecialistGet({
-        offset: 0,
-        count: 100
-    }, {cookies:cookies()})
-    let research = await ServerResearchGet({
-        offset: 0,
-        count: 100
-    }, {cookies:cookies()})
+    let worker = await ServerProfExaminationGetById({ids: [params.id]}, {cookies:cookies()})
 
     //права доступа
     let accessUserEdit = accessCheck('userEdit', account._role_ids)

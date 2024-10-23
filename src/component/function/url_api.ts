@@ -467,7 +467,81 @@ export async function ServerProfExaminationGetById ({ids}: interfaceWorkerGetByI
     return res.data.response
 }
 
+//---------------------------------------------------------------------------------
+//CONTRACT-TYPE
+export async function ServerContractTypeGet ({
+    offset=0,
+    count=20
+}: interfaceContractTypeGet, {
+    cookies=null
+}) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
+    let arFields = {
+        params: {
+            offset,
+            count
+        } as interfaceContractTypeGet,
+        headers: {
+            Cookie: cookies
+        }
+    } as AxiosRequestConfig
+
+    let url = `/api/contract-type/get`
+    console.log(url)
+    let res = await axios.get(url, arFields);
+    return res.data.response
+}
+export async function ServerContractTypeGetById ({ids}: interfaceContractTypeGetById, {cookies=null}) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        params: {
+            ids
+        } as interfaceContractTypeGetById,
+        headers: {
+            Cookie: cookies
+        }
+    } as AxiosRequestConfig
+
+    let url = `/api/contract-type/getById`
+    console.log(url)
+    let res = await axios.get(url, arFields)
+    return res.data.response
+}
+export async function ServerContractTypeAdd ({
+                                                 name
+                                             }: interfaceContractTypeAdd) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        name
+    } as interfaceContractTypeAdd
+
+    let url = `/api/contract-type/add`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}
+export async function ServerContractTypeEdit ({
+    id,
+    name
+}: interfaceContractTypeEdit) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        id,
+        name
+    } as interfaceContractTypeEdit
+
+    let url = `/api/contract-type/edit`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}
+//---------------------------------------------------------------------------------
 
 
 
@@ -828,81 +902,7 @@ export async function ServerResearchDelete ({
 }
 
 
-//---------------------------------------------------------------------------------
-//CONTRACT-TYPE
-export async function ServerContractTypeGet ({
-    offset=0,
-    count=20
-}: interfaceContractTypeGet, {
-    cookies=null
-}) {
-    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
-    let arFields = {
-        params: {
-            offset,
-            count
-        } as interfaceContractTypeGet,
-        headers: {
-            Cookie: cookies
-        }
-    } as AxiosRequestConfig
-
-    let url = `/api/contract-type/get`
-    console.log(url)
-    let res = await axios.get(url, arFields);
-    return res.data.response
-}
-export async function ServerContractTypeGetById ({ids}: interfaceContractTypeGetById, {cookies=null}) {
-    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
-
-    let arFields = {
-        params: {
-            ids
-        } as interfaceContractTypeGetById,
-        headers: {
-            Cookie: cookies
-        }
-    } as AxiosRequestConfig
-
-    let url = `/api/contract-type/getById`
-    console.log(url)
-    let res = await axios.get(url, arFields)
-    return res.data.response
-}
-export async function ServerContractTypeAdd ({
-    name
-}: interfaceContractTypeAdd) {
-    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
-
-    let arFields = {
-        name
-    } as interfaceContractTypeAdd
-
-    let url = `/api/contract-type/add`
-    console.log(url)
-    let res = await axios.post(url, arFields);
-    await ToastSystemAdd(res.data)
-    return res.data.response
-}
-export async function ServerContractTypeEdit ({
-    id,
-    name
-}: interfaceContractTypeEdit) {
-    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
-
-    let arFields = {
-        id,
-        name
-    } as interfaceContractTypeEdit
-
-    let url = `/api/contract-type/edit`
-    console.log(url)
-    let res = await axios.post(url, arFields);
-    await ToastSystemAdd(res.data)
-    return res.data.response
-}
-//---------------------------------------------------------------------------------
 //HF
 export async function ServerHfGet ({
     offset=0,
