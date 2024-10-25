@@ -5,7 +5,7 @@ import React, {useState, useEffect} from 'react'
 import axios from "axios"
 import {ServerContractEdit, ServerOrgAdd} from "@/component/function/url_api";
 
-export default function ContractAdd ({}) {
+export default function OrgAdd ({}) {
 
     const formDefault = {
         name: ''

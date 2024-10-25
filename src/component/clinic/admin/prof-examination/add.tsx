@@ -5,7 +5,7 @@ import React, {useState, useEffect} from 'react'
 import axios from "axios"
 import {ServerContractTypeGet, ServerOrgAdd, ServerProfExaminationGet} from "@/component/function/url_api";
 
-export default function ContractAdd ({}) {
+export default function WorkerAdd ({}) {
 
     const formDefault = {
         hf_code: '1.1,2.1',
@@ -26,10 +26,31 @@ export default function ContractAdd ({}) {
         check_hti: false,
         check_brucellosis: false,
 
+        //oms_policy_number: null,
+        //snils: null,
+
+        //region: null,
+        //city: null,
+        //street: null,
+        //house: null,
+        //housing: null,
+        //apt: null,
+        //building: null,
+
+        //passport_serial: null,
+        //passport_number: null,
+        //passport_date: null,
+
+        //passport_issued_by: null,
         phone: null,
+        //phone_additional: null,
 
         subdivision: null,
         profession: null,
+        //employment_date: null,
+
+        //work_place: null,
+        //work_experience: null,
     }
 
     let [view, setView] = useState(false)

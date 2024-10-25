@@ -25,6 +25,7 @@ export default function UserForm ({worker, account, accessEdit}) {
     }, [form])
 
     const Visit = (id, arr, arName) => {
+        if (!arr) return null
         for (let item of arr) {
             if (id === item[arName]) return item
         }
@@ -59,6 +60,7 @@ export default function UserForm ({worker, account, accessEdit}) {
     }
 
     const Form = () => {
+        console.log(form)
         return <>
 
             <div className="card" style={{marginTop: '20px', textAlign: 'center'}}>
