@@ -17,7 +17,7 @@ export default async function User ({
                                         params,
                                         searchParams
                                     }:{
-    params: { id: string },
+    params: { clinic_id: string, id: string },
     searchParams: { form: string }
 }) {
 
@@ -51,8 +51,8 @@ export default async function User ({
 
     return (
         <>
-            <h1>Работник</h1>
-            <Link href={`/contract/${worker[0].contract_id}/worker`} type="button" className="btn btn-primary btn-sm">
+            <h1>Проф. осмотр</h1>
+            <Link href={`/clinic/${params.clinic_id}/admin/prof-examination/?contract_id=${worker[0].contract_id}`} type="button" className="btn btn-primary btn-sm">
                 <i className="fa-solid fa-arrow-left"></i>
                 &nbsp;
                 договор
