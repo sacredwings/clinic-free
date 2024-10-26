@@ -15,7 +15,9 @@ export async function POST (request: Request) {
                 title: Joi.string().min(3).max(255).required(),
                 description: Joi.string().min(1).max(10000).allow(null).empty('').default(null),
 
-                inn: Joi.number().integer().min(999999999).max(999999999999).allow(null).empty('').default(null),
+                inn: Joi.number().integer().min(0).max(9223372036854775807).required(),
+                kpp: Joi.number().integer().min(0).max(9223372036854775807).required(),
+                ogrn: Joi.number().integer().min(0).max(9223372036854775807).required(),
             })
 
             value = await schema.validateAsync(rsRequest)

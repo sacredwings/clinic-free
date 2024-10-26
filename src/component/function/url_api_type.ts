@@ -31,11 +31,18 @@ export interface interfaceClinicGetById {
 //---------------------------------------------------------------------------------
 //ORG
 export interface interfaceOrgAdd {
-    name: string
+    title: string
+
+    inn: number
+    kpp: number
+    ogrn: number
 }
 export interface interfaceOrgEdit {
-    id: string
-    name: string
+    title: string
+
+    inn: number
+    kpp: number
+    ogrn: number
 }
 export interface interfaceOrgGet {
     clinic_id :string

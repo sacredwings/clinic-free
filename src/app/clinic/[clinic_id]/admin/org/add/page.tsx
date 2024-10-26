@@ -8,14 +8,14 @@ export default async function User ({
                                         params,
                                         //searchParams
                                     }:{
-    params: { id: string },
+    params: { clinic_id: string },
     //searchParams: { page: number, q: string }
 }) {
 
     return (
         <>
             <h1>Новая организация</h1>
-            <OrgAdd />
+            <OrgAdd clinic_id={params.clinic_id}/>
         </>
     )
 }

@@ -128,7 +128,9 @@ export async function ServerClinicAdd ({
     title,
     description,
 
-    inn
+    inn,
+    kpp,
+    ogrn
 }: interfaceClinicAdd) {
     if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
@@ -136,10 +138,41 @@ export async function ServerClinicAdd ({
         title,
         description,
 
-        inn
+        inn,
+        kpp,
+        ogrn
     } as interfaceClinicAdd
 
     let url = `/api/clinic/add`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}
+export async function ServerClinicEdit ({
+    id,
+
+    title,
+    description,
+
+    inn,
+    kpp,
+    ogrn
+}: interfaceOrgEdit) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        id,
+
+        title,
+        description,
+
+        inn,
+        kpp,
+        ogrn
+    } as interfaceOrgEdit
+
+    let url = `/api/clinic/edit`
     console.log(url)
     let res = await axios.post(url, arFields);
     await ToastSystemAdd(res.data)
@@ -192,12 +225,24 @@ export async function ServerClinicGetById ({ids}: interfaceClinicGetById, {cooki
 //---------------------------------------------------------------------------------
 //ORG
 export async function ServerOrgAdd ({
-    name
+    clinic_id,
+
+    title,
+
+    inn,
+    kpp,
+    ogrn,
 }: interfaceOrgAdd) {
     if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
     let arFields = {
-        name
+        clinic_id,
+
+        title,
+
+        inn,
+        kpp,
+        ogrn,
     } as interfaceOrgAdd
 
     let url = `/api/org/add`
@@ -208,13 +253,15 @@ export async function ServerOrgAdd ({
 }
 export async function ServerOrgEdit ({
     id,
-    name
+
+    title
 }: interfaceOrgEdit) {
     if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
     let arFields = {
         id,
-        name
+
+        title
     } as interfaceOrgEdit
 
     let url = `/api/org/edit`

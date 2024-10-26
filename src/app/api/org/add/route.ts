@@ -5,6 +5,7 @@ import { mongo, minio } from "@/utility/connect"
 import Config from "../../../../../config.json";
 import Joi  from "joi"
 import COrg from "@/class/org"
+import {Authentication} from "@/app/api/function";
 
 export async function POST (request: Request) {
     let value
@@ -15,8 +16,7 @@ export async function POST (request: Request) {
             const schema = Joi.object({
                 clinic_id: Joi.string().min(24).max(24).required(),
 
-                name: Joi.string().min(3).max(255).required(),
-                //full_name: Joi.string().min(3).max(255).allow(null).empty('').default(null),
+                title: Joi.string().min(3).max(255).required(),
 
                 inn: Joi.number().integer().min(0).max(9223372036854775807).required(),
                 kpp: Joi.number().integer().min(0).max(9223372036854775807).required(),
@@ -46,7 +46,6 @@ export async function POST (request: Request) {
         }
         try {
             await mongo()
-
             let userId = await Authentication(request)
             if (!userId) throw ({code: 30100000, msg: 'Требуется авторизация'})
 

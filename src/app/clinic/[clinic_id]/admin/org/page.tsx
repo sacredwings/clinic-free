@@ -22,8 +22,8 @@ export default async function Org ({
     return (
         <article>
             <OrgList
-                list={arOrg.items}
                 clinic_id={params.clinic_id}
+                list={arOrg.items}
             />
         </article>
     )

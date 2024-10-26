@@ -12,9 +12,10 @@ export default function Element ({element, clinic_id}){
             </span>
         })
     }
-
+    
     return <Link className="list-group-item list-group-item-action" href={href}>
         {element.name}
+        {/*element._org_id.name*/}
         <br/>
         {ContractType(element._contract_type_ids)}
     </Link>
