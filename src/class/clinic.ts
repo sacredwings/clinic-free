@@ -30,7 +30,8 @@ export default class Clinic {
             let arAggregate = []
             arAggregate.push({
                 $match: {
-                    _id: {$in: ids}
+                    _id: {$in: ids},
+                    delete: {$ne: true}
                 }
             })
 

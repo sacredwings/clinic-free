@@ -30,7 +30,7 @@ export async function POST (request: Request) {
             let userId = await Authentication(request)
             if (!userId) throw ({code: 30100000, msg: 'Требуется авторизация'})
 
-            let result = await CClinic.Add ( value )
+            let result = await CClinic.Add ({...value, create_user_id: userId})
 
             return NextResponse.json({
                 code: 0,

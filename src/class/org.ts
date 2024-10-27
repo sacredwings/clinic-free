@@ -135,9 +135,9 @@ export default class Org {
 
     static async Delete ( id, fields ) {
         try {
+            //ПРОВЕРКА / права позволяют
             //ПРОВЕРКА / нет договоров в организации
 
-            /*
             id = new DB().ObjectID(id)
             fields.delete_clinic_id = new DB().ObjectID(fields.delete_clinic_id)
             fields.delete_user_id = new DB().ObjectID(fields.delete_user_id)
@@ -153,9 +153,6 @@ export default class Org {
             let collection = mongoClient.collection('org')
             let result = collection.updateOne({_id: id}, {$set: arFields}, {upsert: true})
             return result
-            */
-
-            return false
         } catch (err) {
             console.log(err)
             throw ({code: 7001000, msg: 'COrg Delete'})

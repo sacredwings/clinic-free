@@ -52,7 +52,17 @@ export async function POST (request: Request) {
             //ПРОВЕРКА / у пользователя есть права от этой клиники
             //ПРОВЕРКА / есть ли такая организация уже в системе
 
-            let result = await COrg.Add ( value )
+            let arFields = {
+                title: value.title,
+
+                inn: value.inn,
+                kpp: value.kpp,
+                ogrn: value.ogrn,
+
+                create_user_id: userId,
+                create_clinic_id: value.clinic_id,
+            }
+            let result = await COrg.Add (arFields)
 
             return NextResponse.json({
                 err: 0,
