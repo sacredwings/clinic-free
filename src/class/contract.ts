@@ -190,9 +190,9 @@ export default class Contract {
 
     static async Delete ( id, user_id ) {
         try {
+            //ПРОВЕРКА / права позволяют
             //ПРОВЕРКА / нет осмотров в договоре
 
-            /*
             id = new DB().ObjectID(id)
             fields.delete_clinic_id = new DB().ObjectID(fields.delete_clinic_id)
             fields.delete_user_id = new DB().ObjectID(fields.delete_user_id)
@@ -208,8 +208,6 @@ export default class Contract {
             let collection = mongoClient.collection('contract')
             let result = collection.updateOne({_id: id}, {$set: arFields}, {upsert: true})
             return result
-            */
-
         } catch (err) {
             console.log(err)
             throw ({code: 7001000, msg: 'CContract Delete'})

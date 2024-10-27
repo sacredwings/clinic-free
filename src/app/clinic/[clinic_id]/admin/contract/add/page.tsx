@@ -11,7 +11,7 @@ export default async function ContractAddPage ({
                                         params,
                                         //searchParams
                                     }:{
-    params: { id: string },
+    params: { clinic_id: string },
     //searchParams: { page: number, q: string }
 }) {
     let org = await ServerOrgGetById({ids: [params.id]}, {cookies:cookies()})
@@ -25,7 +25,7 @@ export default async function ContractAddPage ({
     return (
         <>
             <h1>Новый договор</h1>
-            <ContractAdd org={org} contractType={contractType.items}/>
+            <ContractAdd clinic_id={params.clinic_id} org={org} contractType={contractType.items}/>
         </>
     )
 }

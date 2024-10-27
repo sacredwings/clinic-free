@@ -5,10 +5,10 @@ import React, {useState, useEffect} from 'react'
 import axios from "axios"
 import {ServerContractAdd, ServerContractEdit, ServerOrgAdd} from "@/component/function/url_api";
 
-export default function ContractAdd ({org, contractType}) {
+export default function ContractAdd ({clinic_id, org, contractType}) {
 
     const formDefault = {
-        name: '',
+        title: '',
         date_from: '',
         date_to: '',
 
@@ -53,10 +53,11 @@ export default function ContractAdd ({org, contractType}) {
             e.preventDefault() // Stop form submit
 
         let arFields = {
+            clinic_id: clinic_id,
             org_id: org._id,
             contract_type_ids: null,
 
-            name: form.name,
+            title: form.title,
             date_from: form.date_from,
             date_to: form.date_to,
 
@@ -87,7 +88,7 @@ export default function ContractAdd ({org, contractType}) {
     const View = () => {
         return <>
             <div className="alert alert-success" role="alert">
-                <p>Договор <b>{form.name}</b> добавлена</p>
+                <p>Договор <b>{form.title}</b> добавлена</p>
             </div>
 
             <button type="button" className="btn btn-outline-secondary" onClick={()=>{
@@ -120,7 +121,7 @@ export default function ContractAdd ({org, contractType}) {
                 return <div className="form-check" key={i}>
                     <input className="form-check-input" type="checkbox" checked={(item.checked) ? true : false} onChange={()=>{OnChangeCheck(item._id)}}/>
                     <label className="form-check-label" htmlFor="flexCheckDefault">
-                        {item.name}
+                        {item.title}
                     </label>
                 </div>
             })}
@@ -136,9 +137,9 @@ export default function ContractAdd ({org, contractType}) {
 
                         <h2>Общее</h2>
                         <div className="mb-3 row">
-                            <label htmlFor="name" className="col-sm-2 col-form-label">Наименование</label>
-                            <div className="col-sm-10"><input type="text" className="form-control" id="name"
-                                                              value={form.name} onChange={onChangeText}/></div>
+                            <label htmlFor="title" className="col-sm-2 col-form-label">Наименование</label>
+                            <div className="col-sm-10"><input type="text" className="form-control" id="title"
+                                                              value={form.title} onChange={onChangeText}/></div>
                         </div>
 
                         <div className="mb-3 row">

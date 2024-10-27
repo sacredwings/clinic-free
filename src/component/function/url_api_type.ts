@@ -31,6 +31,8 @@ export interface interfaceClinicGetById {
 //---------------------------------------------------------------------------------
 //ORG
 export interface interfaceOrgAdd {
+    clinic_id: string
+
     title: string
 
     inn: number
@@ -38,6 +40,8 @@ export interface interfaceOrgAdd {
     ogrn: number
 }
 export interface interfaceOrgEdit {
+    id: string
+
     title: string
 
     inn: number
@@ -58,10 +62,12 @@ export interface interfaceOrgGetById {
 //---------------------------------------------------------------------------------
 //CONTRACT
 export interface interfaceContractAdd {
+    clinic_id,
+
     org_id: string
     contract_type_ids: string[]
 
-    name: string
+    title: string
     date_from: string
     date_to: string
 
@@ -79,7 +85,8 @@ export interface interfaceContractAdd {
 }
 export interface interfaceContractEdit {
     id: string
-    name: string
+
+    title: string
     date_from: string
     date_to: string
 

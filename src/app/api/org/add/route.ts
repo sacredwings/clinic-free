@@ -66,7 +66,7 @@ export async function POST (request: Request) {
 
             return NextResponse.json({
                 err: 0,
-                response: true
+                response: result
             })
         } catch (err) {
             throw ({...{code: 10000000, msg: 'Ошибка формирования результата'}, ...err})

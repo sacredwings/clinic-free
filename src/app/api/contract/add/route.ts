@@ -11,12 +11,13 @@ export async function POST (request: Request) {
             let rsRequest = await request.json()
 
             const schema = Joi.object({
+                clinic_id: Joi.string().min(24).max(24).required(),
                 org_id: Joi.string().min(24).max(24).required(),
 
                 //ПРОВЕРИТЬ ПОЛЕ
                 contract_type_ids: Joi.array().min(1).max(10).items(Joi.string().min(24).max(24)).allow(null).empty('').default(null),
 
-                name: Joi.string().min(3).max(255).required(),
+                title: Joi.string().min(3).max(255).required(),
 
                 date_from: Joi.date().allow(null).empty('').default(null),
                 date_to: Joi.date().allow(null).empty('').default(null),
@@ -45,13 +46,10 @@ export async function POST (request: Request) {
         }
         try {
             await mongo()
-
             let userId = await Authentication(request)
             if (!userId) throw ({code: 30100000, msg: 'Требуется авторизация'})
 
-            //ЗАПРОС организации по id
-            //вытаскиваем clinic_id
-            let result = await CContract.Add ( value )
+            let result = await CContract.Add ({...value, create_user_id: userId})
 
             return NextResponse.json({
                 code: 0,

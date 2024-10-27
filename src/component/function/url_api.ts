@@ -261,7 +261,11 @@ export async function ServerOrgEdit ({
     let arFields = {
         id,
 
-        title
+        title,
+
+        inn,
+        kpp,
+        ogrn,
     } as interfaceOrgEdit
 
     let url = `/api/org/edit`
@@ -319,10 +323,12 @@ export async function ServerOrgGetById ({ids}: interfaceOrgGetById, {cookies=nul
 //---------------------------------------------------------------------------------
 //CONTRACT
 export async function ServerContractAdd ({
+    clinic_id,
+
     org_id,
     contract_type_ids,
 
-    name,
+    title,
     date_from,
     date_to,
 
@@ -341,10 +347,12 @@ export async function ServerContractAdd ({
     if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
     let arFields = {
+        clinic_id,
+
         org_id,
         contract_type_ids,
 
-        name,
+        title,
         date_from,
         date_to,
 
@@ -369,7 +377,8 @@ export async function ServerContractAdd ({
 }
 export async function ServerContractEdit ({
     id,
-    name,
+
+    title,
     date_from,
     date_to,
 
@@ -389,7 +398,8 @@ export async function ServerContractEdit ({
 
     let arFields = {
         id,
-        name,
+
+        title,
         date_from,
         date_to,
 
