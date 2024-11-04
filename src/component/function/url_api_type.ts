@@ -6,9 +6,23 @@ export interface interfaceAuthLogin {
     password: number
 }
 //----------------------------------------------------------------------------------------------------------------------
-//Аккаунт
+//АККАУНТ
 export interface interfaceAccountSelectClinic {
     clinic_id: string
+}
+//--------------------------------------------------------------
+//USER
+export interface interfaceUserEdit {
+    id: string
+
+    first_name: string
+    last_name: string
+    second_name: string
+
+    man: '1' | '0'
+    date_birth: Date,
+
+    phone: number
 }
 //--------------------------------------------------------------
 //CLINIC
@@ -17,6 +31,18 @@ export interface interfaceClinicAdd {
     description: string
 
     inn: number
+    kpp: number
+    ogrn: number
+}
+export interface interfaceClinicEdit {
+    id: string
+
+    title: string
+    description: string
+
+    inn: number
+    kpp: number
+    ogrn: number
 }
 export interface interfaceClinicGet {
     q: string
@@ -50,6 +76,7 @@ export interface interfaceOrgEdit {
 }
 export interface interfaceOrgGet {
     clinic_id :string
+
     q: string,
 
     offset: number
@@ -103,7 +130,8 @@ export interface interfaceContractEdit {
     price_worker_woman: number
 }
 export interface interfaceContractGet {
-    clinic_id :string
+    clinic_id: string
+
     q: string,
     org_id: string
 
@@ -115,6 +143,66 @@ export interface interfaceContractGetById {
 }
 //----------------------------------------------------------------------------------------------------------------------
 //ProfExamination
+export interface interfaceProfExaminationAdd {
+    clinic_id: string
+
+    contract_id: string | null
+    contract_type_ids: string[] | null
+    hf_code: string[] | null
+
+    first_name: string,
+    last_name: string,
+    second_name: string | null,
+    man: string,
+    date_birth: Date,
+
+    check_ultrasound: boolean,
+    check_mammography: boolean,
+    check_xray: boolean,
+
+    check_pcr: boolean
+    check_hti: boolean
+    check_brucellosis: boolean
+
+    phone: string | null,
+
+    subdivision: string,
+    profession: string,
+}
+export interface interfaceProfExaminationEdit {
+    id: string
+
+    contract_type_ids: string[] | null
+    hf_code: string[] | null
+
+    check_ultrasound: boolean,
+    check_mammography: boolean,
+    check_xray: boolean,
+
+    check_pcr: boolean
+    check_hti: boolean
+    check_brucellosis: boolean
+
+    subdivision: string
+    profession: string
+}
+export interface interfaceProfExaminationEditFinale {
+    id: string
+
+    health_group: string,
+    contraindications: string[],
+    re_hf: number,
+}
+export interface interfaceProfExaminationEditVisit {
+    worker_id: string
+
+    specialist_id: string | null
+    research_id: string | null
+
+    status: string
+    note: string
+    result: string
+}
 export interface interfaceProfExaminationGet {
     clinic_id: string
 
@@ -135,6 +223,7 @@ export interface interfaceContractTypeAdd {
 }
 export interface interfaceContractTypeEdit {
     id: string
+
     name: string
 }
 export interface interfaceContractTypeGet {
@@ -170,19 +259,7 @@ export interface interfaceUserGet {
 export interface interfaceUserGetById {
     ids: string[]
 }
-export interface interfaceUserEdit {
-    id: string
 
-    first_name: string
-    last_name: string
-    second_name: string
-
-    man: '1' | '0'
-
-    date_birth: Date,
-
-    phone: number
-}
 export interface interfaceUserEditVisit {
     id: string
 

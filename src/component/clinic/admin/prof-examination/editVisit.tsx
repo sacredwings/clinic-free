@@ -4,10 +4,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
 import {
-    ServerContractTypeGet,
-    ServerUserEdit,
-    ServerUserEditAccess,
-    ServerWorkerEdit
+    serverProfExaminationEditVisit
 } from "@/component/function/url_api";
 import FormSpecialistRadio from "./formSpecialistRadio";
 import FormResearchRadio from "./formResearchRadio";
@@ -19,7 +16,7 @@ export default function UserForm ({worker, account, accessEdit}) {
 
     useEffect(() => {
         (async () => {
-            console.log(form)
+            //console.log(form)
 
         })()
     }, [form])
@@ -60,7 +57,7 @@ export default function UserForm ({worker, account, accessEdit}) {
     }
 
     const Form = () => {
-        console.log(form)
+
         return <>
 
             <div className="card" style={{marginTop: '20px', textAlign: 'center'}}>

@@ -4,10 +4,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
 import {
-    ServerContractTypeGet,
-    ServerUserEdit,
-    ServerUserEditAccess,
-    ServerWorkerEdit, ServerWorkerEditFinale
+    ServerProfExaminationEditFinale
 } from "@/component/function/url_api";
 import FormSpecialistRadio from "@/component/worker/formSpecialistRadio";
 import FormResearchRadio from "@/component/worker/formResearchRadio";
@@ -71,7 +68,7 @@ export default function UserForm ({worker, account, accessEdit}) {
 
         }
 
-        let result = await ServerWorkerEditFinale(arFields)
+        let result = await ServerProfExaminationEditFinale(arFields)
     }
 
     const HealthGroupList = () => {

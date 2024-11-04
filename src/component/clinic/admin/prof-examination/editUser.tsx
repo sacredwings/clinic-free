@@ -4,10 +4,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
 import {
-    ServerContractTypeGet,
-    ServerUserEdit,
-    ServerUserEditAccess,
-    ServerWorkerEdit
+    ServerUserEdit
 } from "@/component/function/url_api";
 import FormSpecialistRadio from "@/component/worker/formSpecialistRadio";
 import FormResearchRadio from "@/component/worker/formResearchRadio";

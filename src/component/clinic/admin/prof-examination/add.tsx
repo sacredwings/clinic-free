@@ -3,9 +3,9 @@
 
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
-import {ServerContractTypeGet, ServerOrgAdd, ServerProfExaminationGet} from "@/component/function/url_api";
+import {ServerProfExaminationAdd} from "@/component/function/url_api";
 
-export default function WorkerAdd ({}) {
+export default function WorkerAdd ({clinic_id}) {
 
     const formDefault = {
         hf_code: '1.1,2.1',
@@ -87,6 +87,8 @@ export default function WorkerAdd ({}) {
         e.preventDefault() // Stop form submit
 
         let arFields = {
+            clinic_id: clinic_id,
+
             contract_id: contract._id,
             contract_type_ids: null,
             hf_code: form.hf_code,
@@ -113,7 +115,7 @@ export default function WorkerAdd ({}) {
 
         if (contractTypeIds && contractTypeIds.length) arFields.contract_type_ids = contractTypeIds
 
-        let result = await ServerProfExaminationGet(arFields)
+        let result = await ServerProfExaminationAdd(arFields)
 
         //await router.push(`/worker/${result._id}`)
 

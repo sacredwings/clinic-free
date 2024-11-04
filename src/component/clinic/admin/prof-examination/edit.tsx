@@ -7,7 +7,7 @@ import {
     ServerContractTypeGet,
     ServerUserEdit,
     ServerUserEditAccess,
-    ServerWorkerEdit
+    ServerProfExaminationEdit
 } from "@/component/function/url_api";
 import FormSpecialistRadio from "@/component/worker/formSpecialistRadio";
 import FormResearchRadio from "@/component/worker/formResearchRadio";
@@ -103,7 +103,7 @@ export default function UserForm ({worker, account, accessEdit}) {
             profession: form.profession,
         }
 
-        let result = await ServerWorkerEdit(arFields)
+        let result = await ServerProfExaminationEdit(arFields)
     }
 
     const OnChangeCheck = (id) => {
