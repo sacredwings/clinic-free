@@ -29,7 +29,7 @@ export default async function ProfExaminationGet ({
             <ProfExaminationList
                 list={arProfExamination.items}
                 clinic_id={params.clinic_id}
-                org_id={searchParams.org_id}
+                //org_id={searchParams.org_id}
                 contract_id={searchParams.contract_id}
             />
         </article>

@@ -20,13 +20,20 @@ export default function ProfExaminationList ({list, clinic_id, org_id, contract_
 
     const NoList = () => {
         return <div className="alert alert-warning" role="alert">
-            Договоров нет
+            Проф. осмотров нет
         </div>
     }
 
     return (
         <>
-            <h1>Проф. осмотр <Link type="button" className="btn btn-outline-success" href={`/clinic/${clinic_id}/admin/prof-examination/add`}> + </Link></h1>
+            <h1>Проф. осмотр </h1>
+
+            {contract_id ?
+                <Link type="button" className="btn btn-outline-success" href={`/clinic/${clinic_id}/admin/prof-examination/add`}>Добавить проф. осмотр + </Link> :
+                <div className="alert alert-warning" role="alert">
+                    Выберите договор, чтобы <b>добавить</b> проф. осмотр
+                </div>}
+
             {(list.length) ? List() : NoList()}
         </>
     )

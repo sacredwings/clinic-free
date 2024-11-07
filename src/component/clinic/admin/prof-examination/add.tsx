@@ -3,7 +3,7 @@
 
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
-import {ServerProfExaminationAdd} from "@/component/function/url_api";
+import {ServerProfExaminationAdd, ServerContractTypeGet} from "@/component/function/url_api";
 
 export default function WorkerAdd ({clinic_id}) {
 
