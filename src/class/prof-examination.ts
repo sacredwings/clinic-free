@@ -13,13 +13,13 @@ export default class Worker {
             fields.create_date = new Date()
 
             const mongoClient = Store.GetMongoClient()
-            let collection = mongoClient.collection('worker')
+            let collection = mongoClient.collection('prof-examination')
             await collection.insertOne(fields)
             return fields
 
         } catch (err) {
             console.log(err)
-            throw ({...{err: 7001000, msg: 'CWorker Add'}, ...err})
+            throw ({...{err: 7001000, msg: 'CProfExamination Add'}, ...err})
         }
     }
 
@@ -103,13 +103,13 @@ export default class Worker {
                 }
             })
             const mongoClient = Store.GetMongoClient()
-            let collection = mongoClient.collection('worker')
+            let collection = mongoClient.collection('prof-examination')
             let result = await collection.aggregate(arAggregate).toArray()
             return result
 
         } catch (err) {
             console.log(err)
-            throw ({...{err: 7001000, msg: 'CWorker GetById'}, ...err})
+            throw ({...{err: 7001000, msg: 'CProfExamination GetById'}, ...err})
         }
     }
 
@@ -190,13 +190,13 @@ export default class Worker {
                 arAggregate[0].$match.contract_id = fields.contract_id
 
             const mongoClient = Store.GetMongoClient()
-            let collection = mongoClient.collection('worker')
+            let collection = mongoClient.collection('prof-examination')
             let result = await collection.aggregate(arAggregate).skip(fields.offset).limit(fields.count).toArray()
             return result
 
         } catch (err) {
             console.log(err)
-            throw ({...{err: 7001000, msg: 'CWorker Get'}, ...err})
+            throw ({...{err: 7001000, msg: 'CProfExamination Get'}, ...err})
         }
     }
 
@@ -229,7 +229,7 @@ export default class Worker {
                 arAggregate[0].$match.contract_id = fields.contract_id
 
             const mongoClient = Store.GetMongoClient()
-            let collection = mongoClient.collection('worker')
+            let collection = mongoClient.collection('prof-examination')
             let result = await collection.aggregate(arAggregate).toArray()
 
             if (!result.length) return 0
@@ -237,7 +237,7 @@ export default class Worker {
 
         } catch (err) {
             console.log(err)
-            throw ({code: 6004000, msg: 'CWorker GetCount'})
+            throw ({code: 6004000, msg: 'CProfExamination GetCount'})
         }
     }
 
@@ -246,13 +246,13 @@ export default class Worker {
             id = new DB().ObjectID(id)
 
             const mongoClient = Store.GetMongoClient()
-            let collection = mongoClient.collection('worker')
+            let collection = mongoClient.collection('prof-examination')
             let result = collection.updateOne({_id: id}, {$set: fields})
             return result
 
         } catch (err) {
             console.log(err)
-            throw ({...{err: 7001000, msg: 'CWorker Update'}, ...err})
+            throw ({...{err: 7001000, msg: 'CProfExamination Update'}, ...err})
         }
     }
 
@@ -268,12 +268,12 @@ export default class Worker {
             }
 
             const mongoClient = Store.GetMongoClient()
-            let collection = mongoClient.collection('worker')
+            let collection = mongoClient.collection('prof-examination')
             let result = collection.updateOne({_id: id}, {$set: arFields}, {upsert: true})
             return result
         } catch (err) {
             console.log(err)
-            throw ({code: 7001000, msg: 'CWorker Delete'})
+            throw ({code: 7001000, msg: 'CProfExamination Delete'})
         }
     }
 }

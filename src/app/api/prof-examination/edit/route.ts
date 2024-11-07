@@ -1,7 +1,7 @@
 // @ts-nocheck
 import Joi from "joi"
 import CUser from "@/class/user"
-import CWorker from "@/class/worker"
+import CProfExamination from "@/class/prof-examination"
 import CContract from "@/class/contract"
 import CContractType from "@/class/contract-type"
 import CHf from "@/class/hf"
@@ -49,7 +49,7 @@ export async function POST (request: Request) {
         try {
             await mongo()
 
-            let searchWorker = await CWorker.GetById([value.id])
+            let searchWorker = await CProfExamination.GetById([value.id])
             searchWorker = searchWorker[0]
 
             let searchUser = await CUser.GetById([searchWorker.user_id])
@@ -246,7 +246,7 @@ export async function POST (request: Request) {
                 profession: value.profession,
             }
 
-            let result = await CWorker.Edit ( value.id, arFields )
+            let result = await CProfExamination.Edit ( value.id, arFields )
 
             return NextResponse.json({
                 err: 0,
@@ -259,7 +259,7 @@ export async function POST (request: Request) {
             throw ({...{code: 10000000, msg: 'Ошибка формирования результата'}, ...err})
         }
     } catch (err) {
-        return NextResponse.json({...{code: 10000000, msg: 'RWorker Edit'}, ...err})
+        return NextResponse.json({...{code: 10000000, msg: 'RProfExamination Edit'}, ...err})
     }
 }
 
