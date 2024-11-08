@@ -1,12 +1,33 @@
 body
   background-color: #e9ebee !important
 
+  .publicPage
+    margin: 0 auto
+    max-width: 100%
+    @media (min-width: 576px) and (max-width: 767px)
+      max-width: 540px
+    @media (min-width: 768px) and (max-width: 991px)
+      max-width: 720px
+    @media (min-width: 992px) and (max-width: 1199px)
+      max-width: 960px
+    @media (min-width: 1200px)
+      max-width: 1140px
+
   .publicContainer
     display: grid
-    grid-template-columns: 1fr 1fr 1fr
+    grid-template-columns: 1fr
     grid-template-rows: 1fr
     grid-column-gap: 10px
     grid-row-gap: 10px
+    padding: 5px
+    @media (min-width: 576px) and (max-width: 767px)
+      grid-template-columns: 1fr 1fr
+    @media (min-width: 768px) and (max-width: 991px)
+      grid-template-columns: 1fr 1fr 1fr
+    @media (min-width: 992px) and (max-width: 1199px)
+      grid-template-columns: 1fr 1fr 1fr 1fr
+    @media (min-width: 1200px)
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr
 
     a
       text-decoration: none

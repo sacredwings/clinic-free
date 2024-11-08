@@ -26,9 +26,11 @@ export default function RootLayout({
             <Toast/>
             <Navbar/>
             <div className={Style.container}>
+                {/*
                 <div className={Style.sideBar}>
                     <Sidebar/>
                 </div>
+                */}
                 <div className={Style.content}>
                     {children}
                 </div>

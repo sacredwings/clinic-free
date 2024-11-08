@@ -4,7 +4,7 @@ import Style from './style.module.sass'
 
 export default function Home() {
     return (
-        <main className={Style.page}>
+        <main className={"publicPage"}>
             <div className={"publicContainer"}>
                 <Link href={'/clinic'}>
                     <div className={"publicCard"}>
@@ -16,9 +16,14 @@ export default function Home() {
                         Врачи
                     </div>
                 </Link>
-                <Link href={'/user'}>
+                <Link href={'/service'}>
                     <div className={"publicCard"}>
-                        Пользователи
+                        Услуги
+                    </div>
+                </Link>
+                <Link href={'/diagnostic'}>
+                    <div className={"publicCard"}>
+                        Диагностика
                     </div>
                 </Link>
             </div>

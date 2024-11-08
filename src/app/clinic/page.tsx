@@ -24,7 +24,7 @@ export default async function Clinic ({
     }, {cookies: cookies()})
 
     return (
-        <div className={Style.page}>
+        <div className={"publicPage"}>
 
             <div>
                 <h1>Клиники</h1>

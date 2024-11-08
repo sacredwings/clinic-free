@@ -27,14 +27,9 @@ export default async function ClinicId ({
     clinic = clinic[0]
 
     return (
-        <div className={Style.page}>
+        <div className={"publicPage"}>
 
             <div className={"publicBlock"}>
-                <p>Клиника</p>
-            </div>
-
-            <div className={"publicBlock"}>
-                {clinic._id}
                 <h1>{clinic.title}</h1>
             </div>
 
