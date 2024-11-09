@@ -6,7 +6,7 @@ export default function Element ({element, clinic_id}){
 
     return (
         <Link className="list-group-item list-group-item-action" href={href}>
-            {element.name}
+            {element.title}
         </Link>
     )
 }

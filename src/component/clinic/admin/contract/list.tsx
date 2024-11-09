@@ -23,7 +23,7 @@ export default function OrgList ({list, clinic_id, org_id}) {
             <h1>Договора</h1>
             {org_id ?
                 <Link type="button" className="btn btn-outline-success"
-                      href={`/clinic/${clinic_id}/admin/contract/add`}> Новый договор + </Link> :
+                      href={`/clinic/${clinic_id}/admin/contract/add?org_id=${org_id}`}> Новый договор + </Link> :
                 <div className="alert alert-warning" role="alert">
                     Выберите организацию, чтобы <b>добавить</b> договор
                 </div>}

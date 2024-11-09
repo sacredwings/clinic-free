@@ -9,12 +9,12 @@ import Link from 'next/link'
 
 export default async function ContractAddPage ({
                                         params,
-                                        //searchParams
+                                        searchParams
                                     }:{
     params: { clinic_id: string },
-    //searchParams: { page: number, q: string }
+    searchParams: { org_id: string }
 }) {
-    let org = await ServerOrgGetById({ids: [params.id]}, {cookies:cookies()})
+    let org = await ServerOrgGetById({ids: [searchParams.org_id]}, {cookies:cookies()})
     if (org) org = org[0]
 
     let contractType = await ServerContractTypeGet({

@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server'
 import { mongo, minio } from "@/utility/connect"
 import Joi from "joi"
 import CContract from "@/class/contract"
+import {Authentication} from "@/app/api/function";
 
 export async function POST (request: Request) {
     let value
