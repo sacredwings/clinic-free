@@ -5,6 +5,7 @@ import {ServerClinicGetById} from "@/component/function/url_api";
 import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 import Menu from '@/component/clinic/menu/navigation'
 import {cookies} from "next/headers";
+import React from "react";
 export default async function Layout({
     children,
     params,
@@ -21,6 +22,11 @@ export default async function Layout({
     return (
         <>
             <Menu clinic={clinic}/>
+
+            <div className={"publicBlock"}>
+                <h1>{clinic.title}</h1>
+            </div>
+
             {children}
         </>
 

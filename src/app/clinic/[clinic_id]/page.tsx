@@ -30,10 +30,6 @@ export default async function ClinicId ({
         <div className={"publicPage"}>
 
             <div className={"publicBlock"}>
-                <h1>{clinic.title}</h1>
-            </div>
-
-            <div className={"publicBlock"}>
                 <div className={"publicContainer"}>
                     <Link href={`/clinic/${params.clinic_id}/patient`}>
                         <div className={"publicCard"}>
@@ -79,23 +75,6 @@ export default async function ClinicId ({
                 </div>
             </div>
 
-            {/*
-            <Link href={`/clinic/${params.clinic_id}/patient`}>Пациент</Link>
-            <br/>
-            <Link href={`/clinic/${params.clinic_id}/doctor`}>Врач</Link>
-            <br/>
-            <Link href={`/clinic/${params.clinic_id}/admin`}>Администратор</Link>
-            <br/>
-
-
-            <Link href={`/clinic/${params.clinic_id}/accountant`}>Бухралтер</Link>
-            <br/>
-            <Link href={`/clinic/${params.clinic_id}/cashier`}>Кассир</Link>
-            <br/>
-            <Link href={`/clinic/${params.clinic_id}/reception`}>Регистратура</Link>
-
-            <br/>
-            <Link href={`/clinic/${params.clinic_id}/edit`}>Настройки</Link>*/}
         </div>
     )
 

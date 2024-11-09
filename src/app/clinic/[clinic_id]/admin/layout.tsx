@@ -19,9 +19,10 @@ export default async function Layout({
     return (
         <>
             <div>
-                <h1>{clinic.title}</h1>
+                {/*<h1>{clinic.title}</h1>*/}
                 <p>Администратор</p>
 
+                {/*
                 <ul className="nav justify-content-center">
                     <li className="nav-item">
                         <Link className="nav-link" href={`/clinic/${params.clinic_id}/admin/appointment`}>Приемы</Link>
@@ -35,9 +36,9 @@ export default async function Layout({
                     <li className="nav-item">
                         <Link className="nav-link" href={`/clinic/${params.clinic_id}/admin/prof-examination`}>Проф. осмотры</Link>
                     </li>
-                </ul>
+                </ul>*/}
             </div>
-            <main className={'container'}>
+            <main>
                 {children}
             </main>
         </>

@@ -13,7 +13,7 @@ export default async function ClinicId ({
 }) {
 
     return (
-        <div className={Style.page}>
+        <div className={"publicPage"}>
             <div className={"publicContainer"}>
                 <Link href={`/clinic/${params.clinic_id}/admin/appointment`}>
                     <div className={"publicCard"}>

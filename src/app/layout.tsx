@@ -25,16 +25,19 @@ export default function RootLayout({
         <StoreProvider>
             <Toast/>
             <Navbar/>
-            <div className={Style.container}>
-                {/*
+            <div className={"publicPage"}>
+                <div className={Style.container}>
+                    {/*
                 <div className={Style.sideBar}>
                     <Sidebar/>
                 </div>
                 */}
-                <div className={Style.content}>
-                    {children}
+                    <div className={Style.content}>
+                        {children}
+                    </div>
                 </div>
             </div>
+
         </StoreProvider>
         </body>
         </html>
