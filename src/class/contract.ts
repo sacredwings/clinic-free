@@ -121,6 +121,20 @@ export default class Contract {
             if (fields.org_id)
                 arAggregate[0].$match.org_id = fields.org_id
 
+            //сортировка, если поиска нет
+            if (fields.q)
+                arAggregate.push({
+                    $sort: {
+                        $score: {$meta:"textScore"}
+                    }
+                })
+            else
+                arAggregate.push({
+                    $sort: {
+                        _id: -1,
+                    }
+                })
+
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('contract')
             let result = await collection.aggregate(arAggregate).skip(fields.offset).limit(fields.count).toArray()

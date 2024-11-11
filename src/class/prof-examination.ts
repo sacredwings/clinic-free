@@ -434,6 +434,20 @@ export default class ProfExamination {
             if (fields.contract_id)
                 arAggregate[0].$match.contract_id = fields.contract_id
 
+            //сортировка, если поиска нет
+            if (fields.q)
+                arAggregate.push({
+                    $sort: {
+                        $score: {$meta:"textScore"}
+                    }
+                })
+            else
+                arAggregate.push({
+                    $sort: {
+                        "_user_id.last_name": 1,
+                    }
+                })
+
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('prof_examination')
             let result = await collection.aggregate(arAggregate).skip(fields.offset).limit(fields.count).toArray()

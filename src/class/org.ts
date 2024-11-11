@@ -69,6 +69,20 @@ export default class Org {
             if (fields.q)
                 arAggregate[0].$match.q = fields.q
 
+            //сортировка, если поиска нет
+            if (fields.q)
+                arAggregate.push({
+                    $sort: {
+                        $score: {$meta:"textScore"}
+                    }
+                })
+            else
+                arAggregate.push({
+                    $sort: {
+                        _id: -1,
+                    }
+                })
+
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('org')
             let result = await collection.aggregate(arAggregate).skip(fields.offset).limit(fields.count).toArray()
