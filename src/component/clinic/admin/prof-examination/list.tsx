@@ -29,7 +29,7 @@ export default function ProfExaminationList ({list, clinic_id, org_id, contract_
             <h1>Проф. осмотр </h1>
 
             {contract_id ?
-                <Link type="button" className="btn btn-outline-success" href={`/clinic/${clinic_id}/admin/prof-examination/add`}>Добавить проф. осмотр + </Link> :
+                <Link type="button" className="btn btn-outline-success" href={`/clinic/${clinic_id}/admin/prof-examination/add?contract_id=${contract_id}`}>Добавить проф. осмотр + </Link> :
                 <div className="alert alert-warning" role="alert">
                     Выберите договор, чтобы <b>добавить</b> проф. осмотр
                 </div>}

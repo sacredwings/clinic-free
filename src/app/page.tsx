@@ -13,17 +13,17 @@ export default function Home() {
                 </Link>
                 <Link href={'/doctor'}>
                     <div className={"publicCard"}>
-                        Врачи
+                        Врачи (в разработке)
                     </div>
                 </Link>
                 <Link href={'/service'}>
                     <div className={"publicCard"}>
-                        Услуги
+                        Услуги (в разработке)
                     </div>
                 </Link>
                 <Link href={'/diagnostic'}>
                     <div className={"publicCard"}>
-                        Диагностика
+                        Диагностика (в разработке)
                     </div>
                 </Link>
             </div>

@@ -5,7 +5,7 @@ import React, {useState, useEffect} from 'react'
 import axios from "axios"
 import {ServerProfExaminationAdd, ServerContractTypeGet} from "@/component/function/url_api";
 
-export default function WorkerAdd ({clinic_id}) {
+export default function WorkerAdd ({clinic_id, contract}) {
 
     const formDefault = {
         hf_code: '1.1,2.1',

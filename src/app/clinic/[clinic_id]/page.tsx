@@ -33,13 +33,13 @@ export default async function ClinicId ({
                 <div className={"publicContainer"}>
                     <Link href={`/clinic/${params.clinic_id}/patient`}>
                         <div className={"publicCard"}>
-                            Пациент
+                            Пациент (в разработке)
                         </div>
                     </Link>
 
                     <Link href={`/clinic/${params.clinic_id}/doctor`}>
                         <div className={"publicCard"}>
-                            Врач
+                            Врач (в разработке)
                         </div>
                     </Link>
 
@@ -51,25 +51,25 @@ export default async function ClinicId ({
 
                     <Link href={`/clinic/${params.clinic_id}/accountant`}>
                         <div className={"publicCard"}>
-                            Бухралтер
+                            Бухралтер (в разработке)
                         </div>
                     </Link>
 
                     <Link href={`/clinic/${params.clinic_id}/cashier`}>
                         <div className={"publicCard"}>
-                            Кассир
+                            Кассир (в разработке)
                         </div>
                     </Link>
 
                     <Link href={`/clinic/${params.clinic_id}/reception`}>
                         <div className={"publicCard"}>
-                            Регистратура
+                            Регистратура (в разработке)
                         </div>
                     </Link>
 
                     <Link href={`/clinic/${params.clinic_id}/edit`}>
                         <div className={"publicCard"}>
-                            Настройки
+                            Настройки (в разработке)
                         </div>
                     </Link>
                 </div>

@@ -2,14 +2,14 @@
 import { NextResponse } from 'next/server'
 import { mongo, minio } from "@/utility/connect"
 import Joi from "joi"
-import CWorker from "@/class/worker"
+import CProfExamination from "@/class/prof-examination"
 import CContract from "@/class/contract"
 import CContractType from "@/class/contract-type"
 import CHf from "@/class/hf"
 import CResearch from "@/class/research"
 import CSpecialist from "@/class/specialist"
 import {CUser} from "../../../../../../social-framework/src"
-import worker from "@/class/worker";
+import {Authentication} from "@/app/api/function";
 
 export async function POST (request: Request) {
     let value
@@ -22,6 +22,7 @@ export async function POST (request: Request) {
 
             //схема
             const schema = Joi.object({
+                clinic_id: Joi.string().min(24).max(24).required(),
                 contract_id: Joi.string().min(24).max(24).allow(null).empty('').default(null),
                 contract_type_ids: Joi.array().min(1).max(10).items(Joi.string().min(24).max(24)).allow(null).empty(Joi.array().length(0)).default(null),
                 hf_code: Joi.array().min(1).max(100).items(Joi.string().min(1).max(20)).allow(null).empty(Joi.array().length(0)).default(null),
@@ -78,244 +79,10 @@ export async function POST (request: Request) {
         try {
             await mongo()
 
-            //let price = 0
-            let arResearch = []
-            let arSpecialist = []
+            let userId = await Authentication(request)
+            if (!userId) throw ({code: 30100000, msg: 'Требуется авторизация'})
 
-            let arResearchIds = []
-            let arSpecialistIds = []
-
-            let hfContract = null
-
-            //----------------------------------------------------------------------
-            //СБОР СПЕЦИАЛИСТОВ И ИСЛЕДОВНИЙ
-
-            //ВЫБОР ТИПОВ ДОГОВОРОВ ИЗ ДОГОВОРА
-            if (value.contract_id) {
-                //загрузка договора
-                hfContract = await CContract.GetById ([value.contract_id])
-                if (!hfContract.length) throw ({code: 30100000, msg: 'Договор не найден'})
-                hfContract = hfContract[0]
-
-                //ЗДЕСЬ ВЫТАСКИВАЕМ ИЗ ОБЩИХ указанных в контракте
-                //если типы добавлены в контракт
-                if (hfContract.contract_type_ids) {
-
-                    //загрузка типов
-                    let arType = await CContractType.GetById(hfContract.contract_type_ids)
-
-                    //добавляем в общему массиву
-                    for (let contract_type of arType) {
-                        if (contract_type.research_ids) arResearch = [...arResearch, ...contract_type.research_ids]
-                        if (contract_type.specialist_ids) arSpecialist = [...arSpecialist, ...contract_type.specialist_ids]
-                    }
-                }
-            }
-
-            //ВЫБОР ТИПОВ ДОГОВОРОВ ИЗ ПОЛЬЗОВАТЕЛЯ
-            if (value.contract_type_ids) {
-                //Запрос с контрактам
-                let arType = await CContractType.GetById(value.contract_type_ids) //загрузка типов
-                if (value.contract_type_ids.length !== arType.length) throw ({code: 30100000, msg: 'Не все типы договоров найдены'})
-
-                //добавляем в общему массиву
-                for (let contract_type of arType) {
-                    if (contract_type.research_ids) arResearch = [...arResearch, ...contract_type.research_ids]
-                    if (contract_type.specialist_ids) arSpecialist = [...arSpecialist, ...contract_type.specialist_ids]
-                }
-            }
-
-            //ЗДЕСЬ ВЫТАСКИВАЕМ ИЗ ВРЕДНЫХ ФАКТОРОВ
-            //загрузка кодов
-            if (value.hf_code) {
-
-                let arHf = await CHf.GetByCode (value.hf_code)
-
-                //сохраняем каждый из массива вредных факторов
-                for (let hf of arHf) {
-                    if (hf.research_ids)
-                        arResearch = [...arResearch, ...hf.research_ids]
-
-                    if (hf.specialist_ids)
-                        arSpecialist = [...arSpecialist, ...hf.specialist_ids]
-                }
-            }
-
-            //ОБРАБОТКА ПОЛУЧЕННЫХ ИСЛЕДОВАНИЙ И СПЕЦИАЛИСТОВ
-            //Оставляем уникальные
-            arResearch = await CResearch.GetById (arResearch, {price:true})
-            arSpecialist = await CSpecialist.GetById (arSpecialist, {price:true})
-
-            arResearch = Field(arResearch)
-            arSpecialist = Field(arSpecialist)
-
-            arResearchIds = FieldToId (arResearch)
-            arSpecialistIds = FieldToId (arSpecialist)
-
-
-            //----------------------------------------------------------------------
-            //РАСЧЕТ ЦЕНЫ ДОПОЛНИТЕЛЬНОГО
-
-            let arPrice = {
-                price_ultrasound: 0,
-                price_mammography: 0,
-                price_xray: 0,
-
-                price_pcr: 0,
-                price_hti: 0,
-                price_brucellosis: 0,
-
-                price_worker_hf: 0,
-                price_worker_all: 0,
-                price_worker_man: 0,
-                price_worker_woman: 0,
-
-                price: 0
-            }
-
-            //нет фиксированных сумм
-            if (!hfContract.price_worker_all && !hfContract.price_worker_man && !hfContract.price_worker_woman) {
-
-                //ВРЕДНЫЙ ФАКТОР
-                if (arResearch)
-                    for (let item of arResearch)
-                        if (item.price) arPrice.price_worker_hf += item.price
-
-                if (arSpecialist)
-                    for (let item of arSpecialist)
-                        if (item.price) arPrice.price_worker_hf += item.price
-
-                //по умолчанию основной - вредный фактор
-                arPrice.price += arPrice.price_worker_hf
-            }
-
-            if (hfContract) {
-                //основные поля
-                if (hfContract.price_worker_all) {
-                    arPrice.price_worker_all = hfContract.price_worker_all
-                    arPrice.price = arPrice.price_worker_all
-                }
-                if (hfContract.price_worker_man && hfContract.price_worker_woman) {
-                    if (value.man === 1)
-                        arPrice.price_worker_man = hfContract.price_worker_man
-                    else
-                        arPrice.price_worker_woman = hfContract.price_worker_woman
-
-                    arPrice.price += arPrice.price_worker_man
-                    arPrice.price += arPrice.price_worker_woman
-
-                }
-
-                //дополнительные поля
-                if ((hfContract.price_ultrasound) && (value.check_ultrasound)) {
-                    arPrice.price_ultrasound = hfContract.price_ultrasound
-                    arPrice.price += arPrice.price_ultrasound
-                }
-                if ((hfContract.price_mammography) && (value.check_mammography)) {
-                    arPrice.price_mammography = hfContract.price_mammography
-                    arPrice.price += arPrice.price_mammography
-                }
-                if ((hfContract.price_xray) && (value.check_xray)) {
-                    arPrice.price_xray = hfContract.price_xray
-                    arPrice.price += arPrice.price_xray
-                }
-                if ((hfContract.price_pcr) && (value.check_pcr)) {
-                    arPrice.price_pcr = hfContract.price_pcr
-                    arPrice.price += arPrice.price_pcr
-                }
-                if ((hfContract.price_hti) && (value.check_hti)) {
-                    arPrice.price_hti = hfContract.price_hti
-                    arPrice.price += arPrice.price_hti
-                }
-                if ((hfContract.price_brucellosis) && (value.check_brucellosis)) {
-                    arPrice.price_brucellosis = hfContract.price_brucellosis
-                    arPrice.price += arPrice.price_brucellosis
-                }
-            }
-
-            //----------------------------------------------------------------------
-            //поиск пользователя среди существующих
-            let arFieldsSearch = {
-                first_name: value.first_name,
-                last_name: value.last_name,
-                second_name: value.second_name,
-                date_birth: value.date_birth
-            }
-            let arUser = await CUser.GetByField(arFieldsSearch)
-
-            //создание пользователя
-            if (!arUser) {
-                let arFieldsUser = {
-                    first_name: value.first_name,
-                    last_name: value.last_name,
-                    second_name: value.second_name,
-                    man: value.man,
-                    date_birth: value.date_birth,
-
-                    //oms_policy_number: value.oms_policy_number,
-                    //snils: value.snils,
-
-                    //region: value.region,
-                    //city: value.city,
-                    //street: value.street,
-                    //house: value.house,
-                    //housing: value.housing,
-                    //apt: value.apt,
-                    //building: value.building,
-
-                    //passport_serial: value.passport_serial,
-                    //passport_number: value.passport_number,
-                    //passport_date: value.passport_date,
-
-                    //passport_issued_by: value.passport_issued_by,
-                    phone: value.phone,
-                    //phone_additional: value.phone_additional,
-                }
-                arUser = await CUser.Add ( arFieldsUser )
-            }
-
-            //СОЗДАНИЕ РАБОТНИКА
-            let arWorker = {
-                user_id: arUser._id,
-
-                contract_id: value.contract_id,
-                contract_type_ids: value.contract_type_ids,
-                hf_code: value.hf_code,
-
-                check_ultrasound: value.check_ultrasound,
-                check_mammography: value.check_mammography,
-                check_xray: value.check_xray,
-
-                check_pcr: value.check_pcr,
-                check_hti: value.check_hti,
-                check_brucellosis: value.check_brucellosis,
-
-                price_ultrasound: arPrice.price_ultrasound ? arPrice.price_ultrasound : null,
-                price_mammography: arPrice.price_mammography ? arPrice.price_mammography : null,
-                price_xray: arPrice.price_xray ? arPrice.price_xray : null,
-
-                price_pcr: arPrice.price_pcr ? arPrice.price_pcr : null,
-                price_hti: arPrice.price_hti ? arPrice.price_hti : null,
-                price_brucellosis: arPrice.price_brucellosis ? arPrice.price_brucellosis : null,
-
-                price_worker_hf: arPrice.price_worker_hf ? arPrice.price_worker_hf : null,
-                price_worker_all: arPrice.price_worker_all ? arPrice.price_worker_all : null,
-                price_worker_man: arPrice.price_worker_man ? arPrice.price_worker_man : null,
-                price_worker_woman: arPrice.price_worker_woman ? arPrice.price_worker_woman : null,
-
-                price: arPrice.price,
-
-                research_ids: arResearchIds,
-                specialist_ids: arSpecialistIds,
-
-                research: arResearch,
-                specialist: arSpecialist,
-
-                subdivision: value.subdivision,
-                profession: value.profession,
-            }
-
-            let result = await CWorker.Add ( arWorker )
+            let result = await CProfExamination.Add ({...value, create_user_id: userId})
 
             return NextResponse.json({
                 err: 0,
@@ -330,32 +97,4 @@ export async function POST (request: Request) {
     }
 }
 
-function FieldToId (arr) {
-    if (!arr || !arr.length) return null
 
-    let newArr = []
-    for (let item of arr) {
-        newArr.push(item._id)
-    }
-
-    return newArr
-}
-
-function Field (arr) {
-    if (!arr || !arr.length) return null
-
-    let newArr = []
-    for (let item of arr) {
-        let newItem = {
-            _id: item._id,
-            name: item.name,
-            price: null
-        }
-        if ((item._price) && (item._price))
-            newItem.price = item._price.price
-
-        newArr.push(newItem)
-    }
-
-    return newArr
-}
