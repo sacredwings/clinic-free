@@ -38,10 +38,10 @@ export default async function User ({
                 </button>
                 <ul className="dropdown-menu">
                     <li>
-                        <Link href={`/worker/${workerId}/pdf/zaklyucheniye-pred`} className="dropdown-item" target="_blank">Закл. предварительного осмотра</Link>
-                        <Link href={`/worker/${workerId}/pdf/zaklyucheniye`} className="dropdown-item" target="_blank">Закл. периодического осмотра</Link>
-                        <Link href={`/worker/${workerId}/pdf/card`} className="dropdown-item" target="_blank">Карта</Link>
-                        <Link href={`/worker/${workerId}/pdf/vypiska`} className="dropdown-item" target="_blank">Выписка</Link>
+                        <Link href={`/prof-examination/${workerId}/pdf/zaklyucheniye-pred`} className="dropdown-item" target="_blank">Закл. предварительного осмотра</Link>
+                        <Link href={`/prof-examination/${workerId}/pdf/zaklyucheniye`} className="dropdown-item" target="_blank">Закл. периодического осмотра</Link>
+                        <Link href={`/prof-examination/${workerId}/pdf/card`} className="dropdown-item" target="_blank">Карта</Link>
+                        <Link href={`/prof-examination/${workerId}/pdf/vypiska`} className="dropdown-item" target="_blank">Выписка</Link>
                     </li>
                 </ul>
             </div>

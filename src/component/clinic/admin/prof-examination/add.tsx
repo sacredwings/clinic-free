@@ -4,8 +4,11 @@
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
 import {ServerProfExaminationAdd, ServerContractTypeGet} from "@/component/function/url_api";
+import {useRouter} from "next/navigation";
 
 export default function WorkerAdd ({clinic_id, contract}) {
+
+    const router = useRouter()
 
     const formDefault = {
         hf_code: '1.1,2.1',
@@ -117,7 +120,7 @@ export default function WorkerAdd ({clinic_id, contract}) {
 
         let result = await ServerProfExaminationAdd(arFields)
 
-        //await router.push(`/worker/${result._id}`)
+        await router.push(`/clinic/${clinic_id}/admin/prof-examination/${result._id}/edit`)
 
         //setFormResult(true)
 

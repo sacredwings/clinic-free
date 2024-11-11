@@ -260,7 +260,7 @@ export default class ProfExamination {
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('prof_examination')
             await collection.insertOne(arWorker)
-            return fields
+            return arWorker
 
         } catch (err) {
             console.log(err)
