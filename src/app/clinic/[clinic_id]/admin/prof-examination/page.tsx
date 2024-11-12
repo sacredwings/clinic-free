@@ -21,7 +21,7 @@ export default async function ProfExaminationGet ({
         contract_id: searchParams.contract_id,
 
         offset: 0,
-        count: 100
+        count: 1000
     }, {cookies:cookies()})
 
     return (
