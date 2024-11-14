@@ -319,7 +319,10 @@ export async function ServerOrgGet ({
     q,
 
     offset=0,
-    count=20
+    count=20,
+
+    order=-1,
+    order_by='_id'
 }: interfaceOrgGet, {
     cookies=null
 }) {
@@ -327,12 +330,15 @@ export async function ServerOrgGet ({
 
     let arFields = {
         params: {
-            //clinic_id,
+            clinic_id,
 
             q,
 
             offset,
-            count
+            count,
+
+            order,
+            order_by
         } as interfaceOrgGet,
         headers: {
             Cookie: cookies

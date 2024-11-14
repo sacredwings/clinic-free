@@ -14,21 +14,29 @@ export async function GET(request: Request) {
             let url = {
                 clinic_id: searchParams.get('clinic_id'),
                 q: searchParams.get('q'),
+
                 offset: searchParams.get('offset'),
-                count: searchParams.get('count')
+                count: searchParams.get('count'),
+
+                order: searchParams.get('order'),
+                order_by: searchParams.get('order_by'),
             }
 
             //схема
             const schema = Joi.object({
-                clinic_id: Joi.string().min(24).max(24).allow(null).empty('').default(null),
-                q: Joi.string().min(3).max(255).allow(null).empty('').default(null),
+                clinic_id: Joi.string().min(24).max(24).empty([null,'']).default(null),
+                q: Joi.string().min(3).max(255).empty([null,'']).default(null),
 
-                offset: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(0),
-                count: Joi.number().integer().min(0).max(10000).allow(null).empty('').default(20),
+                offset: Joi.number().integer().min(0).max(9223372036854775807).empty([null,'']).default(0),
+                count: Joi.number().integer().min(0).max(10000).empty([null,'']).default(20),
+
+                order: Joi.number().valid(1, -1).empty([null,'']).default(-1),
+                order_by: Joi.valid('_id', 'title').empty([null,'']).default('_id'),
             });
 
             value = await schema.validateAsync(url)
 
+            console.log(value)
         } catch (err) {
             console.log(err)
             throw ({code: 412, msg: 'Неверные параметры'})
@@ -41,7 +49,10 @@ export async function GET(request: Request) {
                 q: value.q,
 
                 offset: value.offset,
-                count: value.count
+                count: value.count,
+
+                order: value.order,
+                order_by: value.order_by,
             }
             let items = await COrg.Get (arFields)
             let count = await COrg.GetCount ( arFields )

@@ -12,17 +12,35 @@ export async function POST(request: Request) {
         let mongoClient = await mongo()
 
         let collectionUser = mongoClient.collection('user')
+        let collectionOrg = mongoClient.collection('org')
 
-        let arIndexes = await collectionUser.indexes()
+
+        console.log('user')
+        let collection = mongoClient.collection('user')
+        let arIndexes = await collection.indexes()
         arIndexes.forEach((item)=>{
             if (item.name !== '_id_')
-                collectionUser.dropIndex(item.name)
+                collection.dropIndex(item.name)
         })
-        let indexUser = await collectionUser.createIndex({
+        let indexUser = await collection.createIndex({
             "first_name":"text",
             "last_name":"text",
             "second_name":"text",
         })
+        console.log(arIndexes)
+
+        console.log('org')
+        collection = mongoClient.collection('org')
+        arIndexes = await collection.indexes()
+        arIndexes.forEach((item)=>{
+            if (item.name !== '_id_')
+                collection.dropIndex(item.name)
+        })
+        indexUser = await collection.createIndex({
+            "title":"text",
+            //"text":"text",
+        })
+        console.log(arIndexes)
 
         return NextResponse.json({
             code: 0,

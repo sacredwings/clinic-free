@@ -64,10 +64,11 @@ export default class Org {
                 }
             })
 
+            if (fields.q) arAggregate[0].$match.$text = {}
+            if (fields.q) arAggregate[0].$match.$text.$search = fields.q
+
             if (fields.clinic_id)
                 arAggregate[0].$match.clinic_id = fields.clinic_id
-            if (fields.q)
-                arAggregate[0].$match.q = fields.q
 
             //сортировка, если поиска нет
             if (fields.q)
@@ -79,7 +80,7 @@ export default class Org {
             else
                 arAggregate.push({
                     $sort: {
-                        _id: -1,
+                        [fields.order_by]: fields.order,
                     }
                 })
 
