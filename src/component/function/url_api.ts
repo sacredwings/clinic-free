@@ -484,7 +484,7 @@ export async function ServerContractGet ({
 
     let arFields = {
         params: {
-            //clinic_id,
+            clinic_id,
 
             q,
             org_id,
@@ -684,11 +684,14 @@ export async function serverProfExaminationEditVisit ({
 export async function ServerProfExaminationGet ({
     clinic_id,
 
-    q,
-    contract_id,
+    q=null,
+    contract_id=null,
 
     offset=0,
-    count=20
+    count=20,
+
+    order=-1,
+    order_by='_id'
 }: interfaceProfExaminationGet, {
     cookies=null
 }) {
@@ -696,13 +699,16 @@ export async function ServerProfExaminationGet ({
 
     let arFields = {
         params: {
-            //clinic_id,
+            clinic_id,
 
             q,
             contract_id,
 
             offset,
-            count
+            count,
+
+            order,
+            order_by
         } as interfaceProfExaminationGet,
         headers: {
             Cookie: cookies

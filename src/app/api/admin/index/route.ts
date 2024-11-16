@@ -42,6 +42,20 @@ export async function POST(request: Request) {
         })
         console.log(arIndexes)
 
+        console.log('prof_examination')
+        collection = mongoClient.collection('prof_examination')
+        arIndexes = await collection.indexes()
+        arIndexes.forEach((item)=>{
+            if (item.name !== '_id_')
+                collection.dropIndex(item.name)
+        })
+        indexUser = await collection.createIndex({
+            "first_name":"text",
+            "last_name":"text",
+            "second_name":"text",
+        })
+        console.log(arIndexes)
+
         return NextResponse.json({
             code: 0,
             response: true

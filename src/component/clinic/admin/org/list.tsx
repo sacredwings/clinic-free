@@ -76,8 +76,6 @@ export default function OrgList ({list, clinic_id}) {
                 </div>
             </div>
 
-
-
             {(list.length) ? List() : NoList()}
         </>
     )

@@ -219,6 +219,10 @@ export default class ProfExamination {
                 contract_type_ids: new DB().ObjectID(fields.contract_type_ids),
                 hf_code: fields.hf_code,
 
+                first_name: fields.first_name,
+                last_name: fields.last_name,
+                second_name: fields.second_name,
+
                 check_ultrasound: fields.check_ultrasound,
                 check_mammography: fields.check_mammography,
                 check_xray: fields.check_xray,
@@ -427,10 +431,11 @@ export default class ProfExamination {
                 }
             })
 
+            if (fields.q) arAggregate[0].$match.$text = {}
+            if (fields.q) arAggregate[0].$match.$text.$search = fields.q
+
             if (fields.clinic_id)
                 arAggregate[0].$match.clinic_id = fields.clinic_id
-            if (fields.q)
-                arAggregate[0].$match.q = fields.q
             if (fields.contract_id)
                 arAggregate[0].$match.contract_id = fields.contract_id
 
@@ -444,7 +449,7 @@ export default class ProfExamination {
             else
                 arAggregate.push({
                     $sort: {
-                        "_user_id.last_name": 1,
+                        [fields.order_by]: fields.order,
                     }
                 })
 
@@ -480,10 +485,11 @@ export default class ProfExamination {
                 $count: 'count'
             })
 
+            if (fields.q) arAggregate[0].$match.$text = {}
+            if (fields.q) arAggregate[0].$match.$text.$search = fields.q
+
             if (fields.clinic_id)
                 arAggregate[0].$match.clinic_id = fields.clinic_id
-            if (fields.q)
-                arAggregate[0].$match.q = fields.q
             if (fields.contract_id)
                 arAggregate[0].$match.contract_id = fields.contract_id
 

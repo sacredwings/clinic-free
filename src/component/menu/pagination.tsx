@@ -14,18 +14,18 @@ export default function Pagination ({searchParams, url, count, step}) {
             <nav aria-label="Page navigation example">
                 <ul className="pagination">
 
-                    <li className="page-item"><a className={(searchParams.page > 1) ? "page-link" : "page-link disabled"} href={`${url}?${new URLSearchParams({...searchParams, page: 1})}`}>&laquo;</a></li>
-                    <li className="page-item"><a className={(searchParams.page > 1) ? "page-link" : "page-link disabled"} href={`${url}?${new URLSearchParams({...searchParams, page: searchParams.page - 1})}`}>&lt;</a></li>
+                    <li className="page-item"><Link className={(searchParams.page > 1) ? "page-link" : "page-link disabled"} href={`${url}?${new URLSearchParams({...searchParams, page: 1})}`}>&laquo;</Link></li>
+                    <li className="page-item"><Link className={(searchParams.page > 1) ? "page-link" : "page-link disabled"} href={`${url}?${new URLSearchParams({...searchParams, page: searchParams.page - 1})}`}>&lt;</Link></li>
 
                     {pageCountAr.map((item, i) => {
                         if (i+1 === searchParams.page)
-                            return <li key={i} className="page-item"><a className={"page-link disabled"} href={`${url}?${new URLSearchParams({...searchParams, page: searchParams.page})}`}>{searchParams.page}</a></li>
+                            return <li key={i} className="page-item"><Link className={"page-link disabled"} href={`${url}?${new URLSearchParams({...searchParams, page: searchParams.page})}`}>{searchParams.page}</Link></li>
                         else
                             return null
                     })}
 
-                    <li className="page-item"><a className={(searchParams.page < pageCount) ? "page-link" : "page-link disabled"} href={`${url}?${new URLSearchParams({...searchParams, page: searchParams.page + 1})}`}>&gt;</a></li>
-                    <li className="page-item"><a className={(searchParams.page < pageCount) ? "page-link" : "page-link disabled"} href={`${url}?${new URLSearchParams({...searchParams, page: pageCount})}`}>&raquo;</a></li>
+                    <li className="page-item"><Link className={(searchParams.page < pageCount) ? "page-link" : "page-link disabled"} href={`${url}?${new URLSearchParams({...searchParams, page: searchParams.page + 1})}`}>&gt;</Link></li>
+                    <li className="page-item"><Link className={(searchParams.page < pageCount) ? "page-link" : "page-link disabled"} href={`${url}?${new URLSearchParams({...searchParams, page: pageCount})}`}>&raquo;</Link></li>
 
                 </ul>
             </nav>
