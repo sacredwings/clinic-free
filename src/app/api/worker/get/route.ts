@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server'
 import Joi from "joi"
 import { mongo, minio } from "@/utility/connect"
-import CWorker from "../../../../class/worker"
+import CProfExamination from "@/class/prof-examination"
 
 export async function GET(request: Request) {
     let value
@@ -45,7 +45,7 @@ export async function GET(request: Request) {
                 offset: value.offset,
                 count: value.count
             }
-            let items = await CWorker.Get (arFields)
+            let items = await CProfExamination.Get (arFields)
 
             return NextResponse.json({
                 code: 0,

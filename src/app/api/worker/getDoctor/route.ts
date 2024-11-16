@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 import Joi from "joi"
 import { mongo, minio } from "@/utility/connect"
 import CUser from "../../../../class/user"
-import CWorker from "../../../../class/worker"
+import CProfExamination from "@/class/prof-examination"
 import {Authentication} from "@/app/api/function";
 
 export async function GET(request: Request) {
@@ -52,7 +52,7 @@ export async function GET(request: Request) {
                 offset: value.offset,
                 count: value.count
             }
-            let items = await CWorker.Get (arFields)
+            let items = await CProfExamination.Get (arFields)
 
             //if (!user[0].specialist_ids) items = []
             //if (!user[0].research_ids) items = []

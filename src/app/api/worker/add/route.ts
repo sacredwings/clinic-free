@@ -2,14 +2,13 @@
 import { NextResponse } from 'next/server'
 import { mongo, minio } from "@/utility/connect"
 import Joi from "joi"
-import CWorker from "@/class/worker"
+import CProfExamination from "@/class/prof-examination"
 import CContract from "@/class/contract"
 import CContractType from "@/class/contract-type"
 import CHf from "@/class/hf"
 import CResearch from "@/class/research"
 import CSpecialist from "@/class/specialist"
 import {CUser} from "../../../../../../social-framework/src"
-import worker from "@/class/worker";
 
 export async function POST (request: Request) {
     let value
@@ -315,7 +314,7 @@ export async function POST (request: Request) {
                 profession: value.profession,
             }
 
-            let result = await CWorker.Add ( arWorker )
+            let result = await CProfExamination.Add ( arWorker )
 
             return NextResponse.json({
                 err: 0,

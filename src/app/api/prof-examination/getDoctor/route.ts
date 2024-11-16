@@ -3,7 +3,6 @@ import { NextResponse } from 'next/server'
 import Joi from "joi"
 import { mongo, minio } from "@/utility/connect"
 import CUser from "../../../../class/user"
-import CWorker from "../../../../class/worker"
 import {Authentication} from "@/app/api/function";
 
 export async function GET(request: Request) {

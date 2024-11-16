@@ -3,7 +3,7 @@
 import {ServerDoctorGet} from "@/component/function/url_api";
 import {cookies} from "next/headers";
 import Form from "@/component/menu/form";
-import List from '@/component/doctor/list'
+//import List from '@/component/doctor/list'
 import Pagination from "@/component/menu/pagination";
 
 export default async function Doctor ({
@@ -35,7 +35,7 @@ export default async function Doctor ({
             </div>
 
             <article>
-                <List list={list} accessAdd={true}/>
+                {/*<List list={list} accessAdd={true}/>*/}
             </article>
 
             <div>

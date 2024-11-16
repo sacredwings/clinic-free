@@ -2,7 +2,7 @@
 import {ServerClinicGet, ServerClinicGetById, ServerRoleGet} from "@/component/function/url_api";
 import {cookies} from "next/headers";
 import Link from "next/link";
-import List from "@/component/role/list";
+//import List from "@/component/role/list";
 
 export default async function Role ({
     params,
@@ -27,7 +27,7 @@ export default async function Role ({
             <div>
                 <p>Список ролей клиники</p>
 
-                <List list={list} accessAdd={true} clinic={{_id: params.clinic_id}}/>
+                {/*<List list={list} accessAdd={true} clinic={{_id: params.clinic_id}}/>*/}
             </div>
 
 

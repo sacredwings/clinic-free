@@ -2,7 +2,7 @@
 import {ServerHfGet, ServerResearchGet, ServerSpecialistGet} from "@/component/function/url_api";
 import { cookies } from 'next/headers'
 import Link from 'next/link'
-import HfConstructor from "@/component/hf/constructor";
+//import HfConstructor from "@/component/hf/constructor";
 
 export default async function Constructor ({
     params
@@ -26,7 +26,7 @@ export default async function Constructor ({
     return (
         <>
             <h1>Вредные факторы</h1>
-            <HfConstructor hf={arHf} specialist={arSpecialist} research={arResearch}/>
+            {/*<HfConstructor hf={arHf} specialist={arSpecialist} research={arResearch}/>*/}
         </>
     )
 }

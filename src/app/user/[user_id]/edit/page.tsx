@@ -1,8 +1,8 @@
 // @ts-nocheck
-import UserEdit from '@/component/user/edit'
-import UserEditAuth from '@/component/user/editAuth'
-import UserEditRole from '@/component/user/editRole'
-import UserEditVisit from '@/component/user/editVisit'
+//import UserEdit from '@/component/user/edit'
+//import UserEditAuth from '@/component/user/editAuth'
+//import UserEditRole from '@/component/user/editRole'
+//import UserEditVisit from '@/component/user/editVisit'
 
 import {
     ServerResearchGet,
@@ -60,6 +60,7 @@ export default async function User ({
                 </li>
             </ul>
 
+            {/*
             {(!searchParams.form || searchParams.form === 'user') ?
                 <UserEdit user={user[0]} specialist={specialist.items} research={research.items}
                           role={role.items}/> : null}
@@ -67,6 +68,7 @@ export default async function User ({
                 <UserEditAuth user={user[0]} specialist={specialist.items} research={research.items} role={role.items}/> : null}
             {(searchParams.form === 'role') ? <UserEditRole user={user[0]} specialist={specialist.items} research={research.items} role={role.items}/> : null}
             {(searchParams.form === 'visit') ? <UserEditVisit user={user[0]} specialist={specialist.items} research={research.items} role={role.items}/> : null}
+            */}
         </>
     )
 }

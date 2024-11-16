@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server'
 import { mongo, minio } from "@/utility/connect"
 import Joi from "joi"
-import CWorker from "@/class/worker"
+import CProfExamination from "@/class/prof-examination"
 import CGigtestUser from "@/class/gigtest/users"
 import CContract from "@/class/contract"
 import CContractType from "@/class/contract-type"
@@ -32,12 +32,10 @@ export async function POST (request: Request) {
         try {
             await mongo()
 
-            let searchWorker = await CWorker.GetById([value.worker_id])
+            let searchWorker = await CProfExamination.GetById([value.worker_id])
             searchWorker = searchWorker[0]
 
             let user = searchWorker._user_id
-
-            console.log(searchWorker)
 
             let arFields = {
                 fio: `${user.last_name} ${user.first_name} ${user.second_name}`,
@@ -52,7 +50,6 @@ export async function POST (request: Request) {
                 last_name: user.last_name,
                 patronymic: user.second_name,
             }
-            console.log(arFields)
             await CGigtestUser.UserAdd(arFields)
 
             return NextResponse.json({

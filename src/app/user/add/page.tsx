@@ -8,7 +8,7 @@ import {
 } from "@/component/function/url_api";
 import { cookies } from 'next/headers'
 import Link from 'next/link'
-import UserAdd from "@/component/user/add";
+//import UserAdd from "@/component/user/add";
 
 export default async function Constructor ({
                                                params
@@ -32,7 +32,7 @@ export default async function Constructor ({
     return (
         <>
             <h1>Новый пользователь</h1>
-            <UserAdd specialist={specialist.items} research={research.items} role={role.items}/>
+            {/*<UserAdd specialist={specialist.items} research={research.items} role={role.items}/>*/}
         </>
     )
 }
