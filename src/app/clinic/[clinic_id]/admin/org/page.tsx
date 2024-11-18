@@ -18,7 +18,7 @@ export default async function Org ({
     const url = `/clinic/${params.clinic_id}/admin/org`
 
     let arOrg = await ServerOrgGet({
-        clinic_id: params.clinic_id,
+        //clinic_id: params.clinic_id,
 
         q: searchParams.q,
 

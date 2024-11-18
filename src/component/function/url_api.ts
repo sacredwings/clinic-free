@@ -314,7 +314,7 @@ export async function ServerOrgEdit ({
     return res.data.response
 }
 export async function ServerOrgGet ({
-    clinic_id,
+    //clinic_id,
 
     q,
 
@@ -330,7 +330,7 @@ export async function ServerOrgGet ({
 
     let arFields = {
         params: {
-            clinic_id,
+            //clinic_id,
 
             q,
 

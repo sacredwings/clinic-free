@@ -12,7 +12,7 @@ export async function GET(request: Request) {
         try {
             const { searchParams } = new URL(request.url)
             let url = {
-                clinic_id: searchParams.get('clinic_id'),
+                //clinic_id: searchParams.get('clinic_id'),
 
                 q: searchParams.get('q'),
 
@@ -25,7 +25,7 @@ export async function GET(request: Request) {
 
             //схема
             const schema = Joi.object({
-                clinic_id: Joi.string().min(24).max(24).empty([null,'']).default(null),
+                //clinic_id: Joi.string().min(24).max(24).empty([null,'']).default(null),
 
                 q: Joi.string().min(3).max(255).empty([null,'']).default(null),
 
@@ -45,7 +45,7 @@ export async function GET(request: Request) {
             await mongo()
 
             let arFields = {
-                clinic_id: value.clinic_id,
+                //clinic_id: value.clinic_id,
 
                 q: value.q,
 

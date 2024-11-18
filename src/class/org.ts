@@ -55,7 +55,7 @@ export default class Org {
                 fields.q = fields.q.replace("[^\\da-zA-Zа-яёА-ЯЁ ]", ' ').trim();
             }
 
-            fields.clinic_id = new DB().ObjectID(fields.clinic_id)
+            //fields.clinic_id = new DB().ObjectID(fields.clinic_id)
 
             let arAggregate = []
             arAggregate.push({
@@ -67,8 +67,8 @@ export default class Org {
             if (fields.q) arAggregate[0].$match.$text = {}
             if (fields.q) arAggregate[0].$match.$text.$search = fields.q
 
-            if (fields.clinic_id)
-                arAggregate[0].$match.clinic_id = fields.clinic_id
+            //if (fields.clinic_id)
+                //arAggregate[0].$match.clinic_id = fields.clinic_id
 
             //сортировка, если поиска нет
             if (fields.q)
@@ -102,7 +102,7 @@ export default class Org {
                 fields.q = fields.q.replace("[^\\da-zA-Zа-яёА-ЯЁ ]", ' ').trim();
             }
 
-            fields.clinic_id = new DB().ObjectID(fields.clinic_id)
+            //fields.clinic_id = new DB().ObjectID(fields.clinic_id)
 
             let arAggregate = []
             arAggregate.push({
@@ -114,8 +114,8 @@ export default class Org {
             if (fields.q) arAggregate[0].$match.$text = {}
             if (fields.q) arAggregate[0].$match.$text.$search = fields.q
 
-            if (fields.clinic_id)
-                arAggregate[0].$match.clinic_id = fields.clinic_id
+            //if (fields.clinic_id)
+                //arAggregate[0].$match.clinic_id = fields.clinic_id
 
             arAggregate.push({
                 $count: 'count'
