@@ -37,8 +37,8 @@ export default function ProfExaminationList ({list, clinic_id, org_id, contract_
 
     useEffect(() => {
         setClientSearchParams('')
-        router.push(`?order=${selectedOrder}&order_by=${selectedOrderBy}`)
-        //router.push(`?${new URLSearchParams({...searchParams, order: selectedOrder, order_by: selectedOrderBy})}`)
+        //router.push(`?order=${selectedOrder}&order_by=${selectedOrderBy}`)
+        router.push(`?${new URLSearchParams({...searchParams, order: selectedOrder, order_by: selectedOrderBy})}`)
     },[selectedOrder, selectedOrderBy])
 
     return (

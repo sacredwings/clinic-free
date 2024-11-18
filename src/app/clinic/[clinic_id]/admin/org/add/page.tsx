@@ -15,6 +15,11 @@ export default async function User ({
     return (
         <>
             <h1>Новая организация</h1>
+            <Link className="btn btn-primary btn-sm" href={`/clinic/${params.clinic_id}/admin/org`}>
+                <i className="fa-solid fa-arrow-left"></i>
+                &nbsp;
+                список организаций
+            </Link>
             <OrgAdd clinic_id={params.clinic_id}/>
         </>
     )
