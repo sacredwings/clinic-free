@@ -160,7 +160,7 @@ const Page = (worker) => {
                     <p style={styleText2}>2. Пол: <b>{worker._user_id.man ? 'Мужской' : 'Женский'}</b> 3. Дата рождения: <b>{new Date(worker._user_id.date_birth).toLocaleDateString()}</b></p>
                     <p style={styleText2}>4. Адрес регистрации по месту жительства _________________________</p>
                     <p style={styleText2}>______________________________________________________________</p>
-                    <p style={styleText2}>5. Наименование работодателя: <b>{worker._contract_id._org_id.name}</b></p>
+                    <p style={styleText2}>5. Наименование работодателя: <b>{worker._contract_id._org_id.title}</b></p>
                     <p style={styleText2}>6. Профессия: <b>{worker.profession}</b></p>
                 </div>
             </div>

@@ -64,7 +64,7 @@ const Page = (worker) => {
             наличии) <b>{worker._user_id.last_name} {worker._user_id.first_name} {worker._user_id.second_name}</b></p>
         <p style={styleText}>3. Дата рождения <b>{new Date(worker._user_id.date_birth).toLocaleDateString()}</b> 4.
             Пол <b>{worker._user_id.man ? 'Мужской' : 'Женский'}</b></p>
-        <p style={styleText}>5. Наименование работодателя <b>{worker._contract_id._org_id.name}</b></p>
+        <p style={styleText}>5. Наименование работодателя <b>{worker._contract_id._org_id.title}</b></p>
         <p style={styleText}>6. Наименование структурного подразделения работодателя (при
             наличии): <b>{worker.subdivision}</b></p>
         <p style={styleText}>7. Должность (профессия) или вид работ: <b>{worker.profession}</b></p>

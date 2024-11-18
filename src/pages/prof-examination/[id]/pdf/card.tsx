@@ -134,7 +134,7 @@ const Page = (worker) => {
                     <p style={styleText3}>Имя: <b>{worker._user_id.first_name}</b></p>
                     <p style={styleText3}>Отчество: <b>{worker._user_id.second_name}</b></p>
                     <p style={styleText3}>Дата рождения: <b>{new Date(worker._user_id.date_birth).toLocaleDateString()}</b></p>
-                    <p style={styleText3}>Место работы: <b>{worker._contract_id._org_id.name}</b></p>
+                    <p style={styleText3}>Место работы: <b>{worker._contract_id._org_id.title}</b></p>
                     <p style={styleText3}>Структурное подразделение: <b>{worker.subdivision}</b></p>
                     <p style={styleText3}>Должность: <b>{worker.profession}</b></p>
                     <p style={styleText3}>Вредные производственные факторы: <b>{worker.hf_code ? worker.hf_code.join(', ') : ''}</b></p>
