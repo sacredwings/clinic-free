@@ -53,7 +53,7 @@ export default function ProfExaminationList ({list, clinic_id, org_id, contract_
                                        aria-label="Recipient's username" aria-describedby="button-search"
                                        onChange={onChangeText} value={clientSearchParams}/>
                                 <Link className="btn btn-outline-secondary" type="button" id="button-search"
-                                      href={`?q=${clientSearchParams}`}>Найти</Link>
+                                      href={`?${new URLSearchParams({...searchParams, q: clientSearchParams})}`}>Найти</Link>
                             </div>
                         </div>
                         <div className=" row">

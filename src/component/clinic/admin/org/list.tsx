@@ -5,7 +5,7 @@ import OrgElement from './element'
 import React, {useState, useEffect} from 'react'
 import {useRouter} from "next/navigation";
 
-export default function OrgList ({clinic_id, list}) {
+export default function OrgList ({clinic_id, list, searchParams}) {
     const router = useRouter()
 
     let [clientSearchParams, setClientSearchParams] = useState('')
@@ -32,10 +32,9 @@ export default function OrgList ({clinic_id, list}) {
     }
 
     useEffect(() => {
-        if (!selectedOrder || !selectedOrderBy) return
-
         setClientSearchParams('')
-        router.push(`?order=${selectedOrder}&order_by=${selectedOrderBy}`)
+        //router.push(`?order=${selectedOrder}&order_by=${selectedOrderBy}`)
+        router.push(`?${new URLSearchParams({...searchParams, order: selectedOrder, order_by: selectedOrderBy})}`)
     },[selectedOrder, selectedOrderBy])
 
     return (

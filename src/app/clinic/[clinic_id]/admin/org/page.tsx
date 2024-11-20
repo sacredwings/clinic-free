@@ -49,6 +49,7 @@ export default async function Org ({
             <OrgList
                 clinic_id={params.clinic_id}
                 list={arOrg.items}
+                searchParams={searchParams}
             />
 
             <br/>
