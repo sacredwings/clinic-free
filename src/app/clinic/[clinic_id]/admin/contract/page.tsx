@@ -51,7 +51,7 @@ export default async function ContractGet ({
 
             <br/>
 
-            <p><b>Договора организации:</b> {
+            <p><b>Организация:</b> {
                 searchParams.org_id ?
                     <>{org.title} / <Link href={`/clinic/${params.clinic_id}/admin/org`}>Изменить</Link></> :
                     <Link href={`/clinic/${params.clinic_id}/admin/org`}>Выбрать</Link>}
