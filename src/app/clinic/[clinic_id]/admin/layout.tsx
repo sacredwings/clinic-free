@@ -20,7 +20,7 @@ export default async function Layout({
         <>
             <div>
                 {/*<h1>{clinic.title}</h1>*/}
-                <p>Администратор</p>
+                <p><span class="badge text-bg-secondary">Администратор</span></p>
 
                 {/*
                 <ul className="nav justify-content-center">

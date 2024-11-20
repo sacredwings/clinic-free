@@ -4,6 +4,7 @@ import { cookies } from 'next/headers'
 import OrgList from '@/component/clinic/admin/org/list'
 import Pagination from "@/component/menu/pagination";
 import React from "react";
+import Link from "next/link";
 
 export default async function Org ({
     params,
@@ -18,8 +19,6 @@ export default async function Org ({
     const url = `/clinic/${params.clinic_id}/admin/org`
 
     let arOrg = await ServerOrgGet({
-        //clinic_id: params.clinic_id,
-
         q: searchParams.q,
 
         count: step,
@@ -31,10 +30,28 @@ export default async function Org ({
 
     return (
         <article>
+            <Link className="btn btn-primary btn-sm" href={`/clinic/${params.clinic_id}/admin`}>
+                <i className="fa-solid fa-arrow-left"></i>
+                &nbsp;
+                администратор
+            </Link>
+
+            <br/>
+
+            <h1>Организации</h1>
+
+            <Link type="button" className="btn btn-outline-success"
+                  href={`/clinic/${params.clinic_id}/admin/org/add`}> + Добавить организацию</Link>
+
+            <br/>
+            <br/>
+
             <OrgList
                 clinic_id={params.clinic_id}
                 list={arOrg.items}
             />
+
+            <br/>
 
             <Pagination searchParams={searchParams} url={url} count={arOrg.count} step={step}/>
         </article>

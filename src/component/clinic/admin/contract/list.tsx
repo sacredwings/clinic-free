@@ -20,8 +20,6 @@ export default function OrgList ({list, clinic_id, org_id}) {
 
     return (
         <>
-
-
             {(list.length) ? List() : NoList()}
         </>
     )

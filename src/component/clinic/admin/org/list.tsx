@@ -2,10 +2,10 @@
 'use client'
 import Link from 'next/link'
 import OrgElement from './element'
-import {useState, useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 import {useRouter} from "next/navigation";
 
-export default function OrgList ({list, clinic_id}) {
+export default function OrgList ({clinic_id, list}) {
     const router = useRouter()
 
     let [clientSearchParams, setClientSearchParams] = useState('')
@@ -32,15 +32,14 @@ export default function OrgList ({list, clinic_id}) {
     }
 
     useEffect(() => {
+        if (!selectedOrder || !selectedOrderBy) return
+
         setClientSearchParams('')
         router.push(`?order=${selectedOrder}&order_by=${selectedOrderBy}`)
     },[selectedOrder, selectedOrderBy])
 
     return (
         <>
-            <h1>Организации <Link type="button" className="btn btn-outline-success"
-                                  href={`/clinic/${clinic_id}/admin/org/add`}> + </Link></h1>
-
             <div className="card">
                 <div className="card-body">
                     <form className="row">
@@ -48,8 +47,10 @@ export default function OrgList ({list, clinic_id}) {
                             <label htmlFor="search" className="form-label">Поиск</label>
                             <div className="input-group mb-3">
                                 <input type="text" className="form-control" placeholder=""
-                                       aria-label="Recipient's username" aria-describedby="button-search" onChange={onChangeText} value={clientSearchParams}/>
-                                <Link className="btn btn-outline-secondary" type="button" id="button-search" href={`?q=${clientSearchParams}`}>Найти</Link>
+                                       aria-label="Recipient's username" aria-describedby="button-search"
+                                       onChange={onChangeText} value={clientSearchParams}/>
+                                <Link className="btn btn-outline-secondary" type="button" id="button-search"
+                                      href={`?q=${clientSearchParams}`}>Найти</Link>
                             </div>
                         </div>
                         <div className=" row">
@@ -75,6 +76,8 @@ export default function OrgList ({list, clinic_id}) {
                     </form>
                 </div>
             </div>
+
+            <br/>
 
             {(list.length) ? List() : NoList()}
         </>
