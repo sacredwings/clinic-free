@@ -1,5 +1,5 @@
 // @ts-nocheck
-import WorkerId from '@/component/worker/id'
+import ProfExaminationId from '@/component/clinic/admin/prof-examination/id'
 import {
     ServerOrgGet,
     ServerProfExaminationGetById,
@@ -24,8 +24,9 @@ export default async function ProfExamination ({
 
     return (
         <>
-            <h1>Человек: </h1>
+            <h1>Проф. осмотр </h1>
 
+            <ProfExaminationId profExamination={arProfExamination[0]}/>
         </>
     )
 }
