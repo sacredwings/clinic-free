@@ -35,8 +35,8 @@ export async function POST (request: Request) {
 
             //меняется имя в любом случае
             let arFields = {
-                title: value.name,
-                description: value.access,
+                title: value.title,
+                description: value.description,
 
                 permissions_ids: value.permissions_ids
             }

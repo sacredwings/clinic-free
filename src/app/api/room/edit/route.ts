@@ -16,10 +16,8 @@ export async function POST (request: Request) {
 
                 id: Joi.string().min(24).max(24).required(),
 
-                title: Joi.string().min(3).max(224).required(),
+                number: Joi.number().integer().min(0).max(9223372036854775807).empty([null, '']).default(99999),
                 description: Joi.string().max(320).empty([null, '']).default(null),
-
-                permissions_ids: Joi.array().min(1).max(50).items(Joi.string().min(24).max(24)).empty([null, '', Joi.array().length(0)]).default(null)
             });
 
             value = await schema.validateAsync(rsRequest)
@@ -35,10 +33,8 @@ export async function POST (request: Request) {
 
             //меняется имя в любом случае
             let arFields = {
-                title: value.name,
-                description: value.access,
-
-                permissions_ids: value.permissions_ids
+                number: value.number,
+                description: value.description,
             }
             let result = await CRole.Edit ( value.clinic_id, userId, value.id, arFields )
 
