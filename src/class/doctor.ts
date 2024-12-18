@@ -5,11 +5,10 @@
 // @ts-nocheck
 import { DB, Store } from "../../../social-framework/src"
 
-export default class Clinic {
+export default class CDoctor {
 
     static async Add ( fields ) {
         try {
-            fields.create_user_id = new DB().ObjectID(fields.create_user_id)
             fields.create_date = new Date()
 
             const mongoClient = Store.GetMongoClient()
@@ -30,7 +29,30 @@ export default class Clinic {
             let arAggregate = []
             arAggregate.push({
                 $match: {
-                    _id: {$in: ids}
+                    _id: {$in: ids},
+                    delete: {$ne: true}
+                }
+            })
+            arAggregate.push({
+                $lookup: {
+                    from: 'user',
+                    localField: 'user_id',
+                    foreignField: '_id',
+                    as: '_user_id'
+                }
+            })
+            arAggregate.push({
+                $lookup: {
+                    from: 'specialization',
+                    localField: 'specialization_ids',
+                    foreignField: '_id',
+                    as: '_specialization_ids'
+                }
+            })
+            arAggregate.push({
+                $unwind: {
+                    path: '$_user_id',
+                    preserveNullAndEmptyArrays: true
                 }
             })
 
@@ -51,6 +73,28 @@ export default class Clinic {
             arAggregate.push({
                 $match: {
                     delete: {$ne: true}
+                }
+            })
+            arAggregate.push({
+                $lookup: {
+                    from: 'user',
+                    localField: 'user_id',
+                    foreignField: '_id',
+                    as: '_user_id'
+                }
+            })
+            arAggregate.push({
+                $lookup: {
+                    from: 'specialization',
+                    localField: 'specialization_ids',
+                    foreignField: '_id',
+                    as: '_specialization_ids'
+                }
+            })
+            arAggregate.push({
+                $unwind: {
+                    path: '$_user_id',
+                    preserveNullAndEmptyArrays: true
                 }
             })
 
@@ -106,14 +150,12 @@ export default class Clinic {
         }
     }
 
-    static async Delete ( id, user_id ) {
+    static async Delete ( id ) {
         try {
             id = new DB().ObjectID(id)
-            user_id = new DB().ObjectID(user_id)
 
             let arFields = {
                 delete: true,
-                delete_user: user_id,
                 delete_date: new Date(),
             }
 
