@@ -32,7 +32,7 @@ export async function GET(request: Request) {
                 offset: value.offset,
                 count: value.count,
             }
-            let items = await CPermission.Get (arFields)
+            let items = await CPermission.Get ( arFields )
             let count = await CPermission.GetCount ( arFields )
 
             return NextResponse.json({

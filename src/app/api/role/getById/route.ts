@@ -2,7 +2,8 @@
 import { NextResponse } from 'next/server'
 import { mongo, minio } from "@/utility/connect"
 import Joi from "joi";
-import CPermission from "@/class/permission"
+import CRole from "@/class/role"
+import {Authentication} from "@/app/api/function";
 
 export async function GET(request: Request) {
     let value
@@ -10,6 +11,8 @@ export async function GET(request: Request) {
         try {
             const { searchParams } = new URL(request.url)
             let url = {
+                clinic_id: Joi.string().min(24).max(24).required(),
+
                 ids: searchParams.get('ids[]')
             }
             if (url.ids) url.ids = url.ids.split(',')
@@ -27,8 +30,10 @@ export async function GET(request: Request) {
         }
         try {
             await mongo()
+            let userId = await Authentication(request)
+            if (!userId) throw ({code: 30100000, msg: 'Требуется авторизация'})
 
-            let result = await CPermission.GetById ( value.ids )
+            let result = await CRole.GetById ( value.clinic_id, value.ids )
 
             return NextResponse.json({
                 code: 0,
@@ -38,7 +43,7 @@ export async function GET(request: Request) {
             throw ({...{code: 10000000, msg: 'Ошибка формирования результата'}, ...err})
         }
     } catch (err) {
-        return NextResponse.json({...{code: 10000000, msg: 'RPermission Add'}, ...err})
+        return NextResponse.json({...{code: 10000000, msg: 'RRole GetById'}, ...err})
     }
 }
 

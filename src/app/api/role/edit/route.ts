@@ -2,8 +2,8 @@
 import { NextResponse } from 'next/server'
 import { mongo, minio } from "@/utility/connect"
 import Joi from "joi"
-import {headers} from "next/headers";
 import CRole from "@/class/role"
+import {Authentication} from "@/app/api/function";
 
 export async function POST (request: Request) {
     let value
@@ -12,9 +12,12 @@ export async function POST (request: Request) {
             let rsRequest = await request.json()
 
             const schema = Joi.object({
-                id: Joi.string().min(24).max(24).required(),
-                name: Joi.string().min(1).max(255).required(),
-                access: Joi.array().min(1).max(50).items(Joi.string().min(1).max(30)).allow(null).empty(Joi.array().length(0)).default(null),
+                clinic_id: Joi.string().min(24).max(24).required(),
+
+                title: Joi.string().min(3).max(224).required(),
+                description: Joi.string().max(320).empty([null, '']).default(null),
+
+                permissions_ids: Joi.array().min(1).max(50).items(Joi.string().min(24).max(24)).empty([null, Joi.array().length(0)]).default(null)
             });
 
             value = await schema.validateAsync(rsRequest)
@@ -25,13 +28,17 @@ export async function POST (request: Request) {
         }
         try {
             await mongo()
+            let userId = await Authentication(request)
+            if (!userId) throw ({code: 30100000, msg: 'Требуется авторизация'})
 
             //меняется имя в любом случае
             let arFields = {
-                name: value.name,
-                access: value.access,
+                title: value.name,
+                description: value.access,
+
+                permissions_ids: value.permissions_ids
             }
-            let result = await CRole.Edit ( value.id, arFields )
+            let result = await CRole.Edit ( value.clinic_id, userId, value.id, arFields )
 
             return NextResponse.json({
                 err: 0,

@@ -2,9 +2,8 @@
 import { NextResponse } from 'next/server'
 import { mongo, minio } from "@/utility/connect"
 import Joi from "joi"
-import {headers} from "next/headers";
 import CRole from "@/class/role"
-
+import {Authentication} from "@/app/api/function";
 
 export async function POST (request: Request) {
     let value
@@ -13,7 +12,10 @@ export async function POST (request: Request) {
             let rsRequest = await request.json()
 
             const schema = Joi.object({
-                name: Joi.string().min(3).max(255).required(),
+                clinic_id: Joi.string().min(24).max(24).required(),
+
+                title: Joi.string().min(3).max(224).required(),
+                description: Joi.string().max(320).empty([null, '']).default(null)
             })
 
             value = await schema.validateAsync(rsRequest)
@@ -24,12 +26,16 @@ export async function POST (request: Request) {
         }
         try {
             await mongo()
+            let userId = await Authentication(request)
+            if (!userId) throw ({code: 30100000, msg: 'Требуется авторизация'})
 
-            let result = await CRole.Add ( value )
+            //ПРОВЕРКА / право доступа на создание
+
+            let result = await CRole.Add ( value.clinic_id, userId, value )
 
             return NextResponse.json({
                 err: 0,
-                response: true
+                response: result
             })
         } catch (err) {
             throw ({...{code: 10000000, msg: 'Ошибка формирования результата'}, ...err})
