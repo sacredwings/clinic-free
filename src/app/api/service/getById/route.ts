@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server'
 import { mongo, minio } from "@/utility/connect"
 import Joi from "joi";
-import CService from "@/class/service"
+import CPermission from "@/class/permission"
 
 export async function GET(request: Request) {
     let value
@@ -28,7 +28,7 @@ export async function GET(request: Request) {
         try {
             await mongo()
 
-            let result = await CService.GetById ( value.ids )
+            let result = await CPermission.GetById ( value.ids )
 
             return NextResponse.json({
                 code: 0,
@@ -38,7 +38,7 @@ export async function GET(request: Request) {
             throw ({...{code: 10000000, msg: 'Ошибка формирования результата'}, ...err})
         }
     } catch (err) {
-        return NextResponse.json({...{code: 10000000, msg: 'RService GetById'}, ...err})
+        return NextResponse.json({...{code: 10000000, msg: 'RPermission GetById'}, ...err})
     }
 }
 

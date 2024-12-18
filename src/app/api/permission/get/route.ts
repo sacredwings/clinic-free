@@ -46,7 +46,7 @@ export async function GET(request: Request) {
             throw ({...{code: 10000000, msg: 'Ошибка формирования результата'}, ...err})
         }
     } catch (err) {
-        return NextResponse.json({...{code: 10000000, msg: 'RPermission Add'}, ...err})
+        return NextResponse.json({...{code: 10000000, msg: 'RPermission Get'}, ...err})
     }
 }
 
