@@ -14,7 +14,7 @@ export async function GET(request: Request) {
         try {
             const { searchParams } = new URL(request.url)
             let url = {
-                offset: searchParams.get('clinic_id'),
+                clinic_id: searchParams.get('clinic_id'),
 
                 offset: searchParams.get('offset'),
                 count: searchParams.get('count')
@@ -41,14 +41,8 @@ export async function GET(request: Request) {
             //НУЖНО /проверка /доступ к клинике
 
             let arFields = {
-                clinic_id: value.clinic_id,
-
                 count: value.count,
                 offset: value.offset
-            }
-            let arFields = {
-                offset: value.offset,
-                count: value.count,
             }
             let items = await CPermission.Get ( value.clinic_id, arFields )
             let count = await CPermission.GetCount ( value.clinic_id, arFields )

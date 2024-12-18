@@ -12,12 +12,7 @@ export async function POST (request: Request) {
             let rsRequest = await request.json()
 
             const schema = Joi.object({
-                clinic_id: Joi.string().min(24).max(24).required(),
-
                 id: Joi.string().min(24).max(24).required(),
-
-                title: Joi.string().min(3).max(224).required(),
-                description: Joi.string().max(320).empty([null, '']).default(null),
 
                 permissions_ids: Joi.array().min(1).max(50).items(Joi.string().min(24).max(24)).empty([null, '', Joi.array().length(0)]).default(null)
             });
@@ -35,12 +30,9 @@ export async function POST (request: Request) {
 
             //меняется имя в любом случае
             let arFields = {
-                title: value.name,
-                description: value.access,
-
                 permissions_ids: value.permissions_ids
             }
-            let result = await CRole.Edit ( value.clinic_id, userId, value.id, arFields )
+            let result = await CRole.Edit ( value.id, arFields )
 
             return NextResponse.json({
                 err: 0,
