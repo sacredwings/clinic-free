@@ -8,10 +8,10 @@ import { DB, Store } from "../../../social-framework/src"
 
 export default class Org {
 
-    static async Add ( fields ) {
+    static async Add ( clinic_id, user_id, fields ) {
         try {
-            fields.create_clinic_id = new DB().ObjectID(fields.create_clinic_id)
-            fields.create_user_id = new DB().ObjectID(fields.create_user_id)
+            fields.create_clinic_id = new DB().ObjectID(clinic_id) //клиника которая добавила
+            fields.create_user_id = new DB().ObjectID(user_id)
             fields.create_date = new Date()
 
             const mongoClient = Store.GetMongoClient()
@@ -55,8 +55,6 @@ export default class Org {
                 fields.q = fields.q.replace("[^\\da-zA-Zа-яёА-ЯЁ ]", ' ').trim();
             }
 
-            //fields.clinic_id = new DB().ObjectID(fields.clinic_id)
-
             let arAggregate = []
             arAggregate.push({
                 $match: {
@@ -66,9 +64,6 @@ export default class Org {
 
             if (fields.q) arAggregate[0].$match.$text = {}
             if (fields.q) arAggregate[0].$match.$text.$search = fields.q
-
-            //if (fields.clinic_id)
-                //arAggregate[0].$match.clinic_id = fields.clinic_id
 
             //сортировка, если поиска нет
             if (fields.q)
@@ -102,8 +97,6 @@ export default class Org {
                 fields.q = fields.q.replace("[^\\da-zA-Zа-яёА-ЯЁ ]", ' ').trim();
             }
 
-            //fields.clinic_id = new DB().ObjectID(fields.clinic_id)
-
             let arAggregate = []
             arAggregate.push({
                 $match: {
@@ -113,9 +106,6 @@ export default class Org {
 
             if (fields.q) arAggregate[0].$match.$text = {}
             if (fields.q) arAggregate[0].$match.$text.$search = fields.q
-
-            //if (fields.clinic_id)
-                //arAggregate[0].$match.clinic_id = fields.clinic_id
 
             arAggregate.push({
                 $count: 'count'
@@ -134,13 +124,20 @@ export default class Org {
         }
     }
 
-    static async Edit ( id, fields ) {
+    static async Edit ( clinic_id, user_id, id , fields ) {
         try {
             id = new DB().ObjectID(id)
+            clinic_id = new DB().ObjectID(clinic_id)
+            user_id = new DB().ObjectID(user_id)
+
+            let arFields = {
+                edit_user_id: user_id,
+                edit_date: new Date(),
+            }
 
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('org')
-            let result = collection.updateOne({_id: id}, {$set: fields})
+            let result = collection.updateOne({clinic_id: clinic_id, _id: id}, {$set: {...fields, ...arFields}})
             return result
 
         } catch (err) {
@@ -149,25 +146,24 @@ export default class Org {
         }
     }
 
-    static async Delete ( id, fields ) {
+    static async Delete ( clinic_id, user_id, id ) {
         try {
-            //ПРОВЕРКА / права позволяют
             //ПРОВЕРКА / нет договоров в организации
 
             id = new DB().ObjectID(id)
-            fields.delete_clinic_id = new DB().ObjectID(fields.delete_clinic_id)
-            fields.delete_user_id = new DB().ObjectID(fields.delete_user_id)
+            clinic_id = new DB().ObjectID(clinic_id)
+            user_id = new DB().ObjectID(user_id)
 
             let arFields = {
                 delete: true,
-                delete_clinic_id: fields.delete_clinic_id,
-                delete_user_id: fields.delete_user_id,
+                delete_clinic_id: clinic_id,
+                delete_user_id: user_id,
                 delete_date: new Date(),
             }
 
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('org')
-            let result = collection.updateOne({_id: id}, {$set: arFields}, {upsert: true})
+            let result = collection.updateOne({clinic_id: clinic_id, _id: id}, {$set: arFields}, {upsert: true})
             return result
         } catch (err) {
             console.log(err)

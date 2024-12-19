@@ -119,6 +119,8 @@ export default class Role {
     static async Edit ( clinic_id, user_id, id , fields ) {
         try {
             id = new DB().ObjectID(id)
+            clinic_id = new DB().ObjectID(clinic_id)
+            user_id = new DB().ObjectID(user_id)
 
             let arFields = {
                 edit_user_id: user_id,
@@ -138,7 +140,10 @@ export default class Role {
 
     static async Delete ( clinic_id, user_id, id ) {
         try {
+            //ПРОВЕРКА / где роли уже используются
+
             id = new DB().ObjectID(id)
+            clinic_id = new DB().ObjectID(clinic_id)
             user_id = new DB().ObjectID(user_id)
 
             let arFields = {
@@ -149,7 +154,7 @@ export default class Role {
 
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('role')
-            let result = collection.updateOne({_id: id}, {$set: arFields}, {upsert: true})
+            let result = collection.updateOne({clinic_id: clinic_id, _id: id}, {$set: arFields}, {upsert: true})
             return result
         } catch (err) {
             console.log(err)
