@@ -45,10 +45,10 @@ export default class CDoctor {
             })
             arAggregate.push({
                 $lookup: {
-                    from: 'specialization',
-                    localField: 'specialization_ids',
+                    from: 'specialty',
+                    localField: 'specialty_ids',
                     foreignField: '_id',
-                    as: '_specialization_ids'
+                    as: '_specialty_ids'
                 }
             })
             arAggregate.push({
@@ -87,10 +87,10 @@ export default class CDoctor {
             })
             arAggregate.push({
                 $lookup: {
-                    from: 'specialization',
-                    localField: 'specialization_ids',
+                    from: 'specialty',
+                    localField: 'specialty_ids',
                     foreignField: '_id',
-                    as: '_specialization_ids'
+                    as: '_specialty_ids'
                 }
             })
             arAggregate.push({

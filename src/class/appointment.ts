@@ -16,7 +16,7 @@ export default class Appointment {
             fields.doctor_user_id = new DB().ObjectID(fields.doctor_user_id)
             fields.patient_user_id = new DB().ObjectID(fields.patient_user_id)
 
-            fields.specialist_ids = new DB().ObjectID(fields.specialist_ids)
+            fields.specialty_ids = new DB().ObjectID(fields.specialty_ids)
             fields.service_ids = new DB().ObjectID(fields.service_ids)
 
             //проверка существования врача
@@ -88,10 +88,10 @@ export default class Appointment {
             })
             arAggregate.push({
                 $lookup: {
-                    from: 'specialist',
-                    localField: 'specialist_ids',
+                    from: 'specialty',
+                    localField: 'specialty_ids',
                     foreignField: '_id',
-                    as: '_specialist_ids'
+                    as: '_specialty_ids'
                 }
             })
             arAggregate.push({
@@ -180,10 +180,10 @@ export default class Appointment {
             })
             arAggregate.push({
                 $lookup: {
-                    from: 'specialist',
-                    localField: 'specialist_ids',
+                    from: 'specialty',
+                    localField: 'specialty_ids',
                     foreignField: '_id',
-                    as: '_specialist_ids'
+                    as: '_specialty_ids'
                 }
             })
             arAggregate.push({
@@ -260,6 +260,14 @@ export default class Appointment {
     static async Edit ( clinic_id, user_id, id , fields ) {
         try {
             id = new DB().ObjectID(id)
+
+            fields.room_id = new DB().ObjectID(fields.room_id)
+            fields.doctor_id = new DB().ObjectID(fields.doctor_id)
+            fields.doctor_user_id = new DB().ObjectID(fields.doctor_user_id)
+            fields.patient_user_id = new DB().ObjectID(fields.patient_user_id)
+
+            fields.specialty_ids = new DB().ObjectID(fields.specialty_ids)
+            fields.service_ids = new DB().ObjectID(fields.service_ids)
 
             let arFields = {
                 edit_user_id: user_id,

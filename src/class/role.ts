@@ -10,6 +10,9 @@ export default class Role {
     static async Add ( clinic_id, user_id, fields ) {
         try {
             fields.clinic_id = new DB().ObjectID(fields.clinic_id)
+
+            fields.permission_ids = new DB().ObjectID(fields.permission_ids)
+
             fields.create_user_id = new DB().ObjectID(user_id)
             fields.create_date = new Date()
 
@@ -38,10 +41,10 @@ export default class Role {
             })
             arAggregate.push({
                 $lookup: {
-                    from: 'permissions',
-                    localField: 'permissions_ids',
+                    from: 'permission',
+                    localField: 'permission_ids',
                     foreignField: '_id',
-                    as: '_permissions_ids'
+                    as: '_permission_ids'
                 }
             })
 
@@ -68,10 +71,10 @@ export default class Role {
             })
             arAggregate.push({
                 $lookup: {
-                    from: 'permissions',
-                    localField: 'permissions_ids',
+                    from: 'permission',
+                    localField: 'permission_ids',
                     foreignField: '_id',
-                    as: '_permissions_ids'
+                    as: '_permission_ids'
                 }
             })
 

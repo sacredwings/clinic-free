@@ -10,17 +10,17 @@ export async function GET(request: Request) {
         try {
             const { searchParams } = new URL(request.url)
             let url = {
-                offset: searchParams.get('offset'),
-                count: searchParams.get('count')
+                ids: searchParams.get('ids[]')
             }
+            if (url.ids) url.ids = url.ids.split(',')
 
             //схема
             const schema = Joi.object({
-                offset: Joi.number().integer().min(0).max(9223372036854775807).empty([null,'']).default(0),
-                count: Joi.number().integer().min(0).max(100).empty([null,'']).default(20),
-            });
+                ids: Joi.array().min(1).max(50).items(Joi.string().min(24).max(24)).required()
+            })
 
             value = await schema.validateAsync(url)
+
         } catch (err) {
             console.log(err)
             throw ({code: 412, msg: 'Неверные параметры'})
@@ -28,25 +28,17 @@ export async function GET(request: Request) {
         try {
             await mongo()
 
-            let arFields = {
-                offset: value.offset,
-                count: value.count,
-            }
-            let items = await CResearch.Get ( arFields )
-            let count = await CResearch.GetCount ( arFields )
+            let result = await CResearch.GetById ( value.ids )
 
             return NextResponse.json({
                 code: 0,
-                response: {
-                    items: items,
-                    count: count,
-                }
+                response: result
             })
         } catch (err) {
             throw ({...{code: 10000000, msg: 'Ошибка формирования результата'}, ...err})
         }
     } catch (err) {
-        return NextResponse.json({...{code: 10000000, msg: 'RResearch Get'}, ...err})
+        return NextResponse.json({...{code: 10000000, msg: 'RResearch GetById'}, ...err})
     }
 }
 

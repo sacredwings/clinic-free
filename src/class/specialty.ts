@@ -20,13 +20,13 @@ export default class Service {
             })
 
             const mongoClient = Store.GetMongoClient()
-            let collection = mongoClient.collection('research')
+            let collection = mongoClient.collection('specialty')
             let result = await collection.aggregate(arAggregate).toArray()
             return result
 
         } catch (err) {
             console.log(err)
-            throw ({...{err: 7001000, msg: 'CResearch GetById'}, ...err})
+            throw ({...{err: 7001000, msg: 'CSpecialty GetById'}, ...err})
         }
     }
 
@@ -40,13 +40,13 @@ export default class Service {
             })
 
             const mongoClient = Store.GetMongoClient()
-            let collection = mongoClient.collection('research')
+            let collection = mongoClient.collection('specialty')
             let result = await collection.aggregate(arAggregate).skip(fields.offset).limit(fields.count).toArray()
             return result
 
         } catch (err) {
             console.log(err)
-            throw ({...{err: 7001000, msg: 'CResearch Get'}, ...err})
+            throw ({...{err: 7001000, msg: 'CSpecialty Get'}, ...err})
         }
     }
 
@@ -64,7 +64,7 @@ export default class Service {
             })
 
             const mongoClient = Store.GetMongoClient()
-            let collection = mongoClient.collection('research')
+            let collection = mongoClient.collection('specialty')
             let result = await collection.aggregate(arAggregate).toArray()
 
             if (!result.length) return 0
@@ -72,7 +72,7 @@ export default class Service {
 
         } catch (err) {
             console.log(err)
-            throw ({code: 6004000, msg: 'CResearch GetCount'})
+            throw ({code: 6004000, msg: 'CSpecialty GetCount'})
         }
     }
 
