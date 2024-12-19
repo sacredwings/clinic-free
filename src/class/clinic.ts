@@ -7,9 +7,9 @@ import { DB, Store } from "../../../social-framework/src"
 
 export default class Clinic {
 
-    static async Add ( fields ) {
+    static async Add ( user_id, fields ) {
         try {
-            fields.create_user_id = new DB().ObjectID(fields.create_user_id)
+            fields.create_user_id = new DB().ObjectID(user_id)
             fields.create_date = new Date()
 
             const mongoClient = Store.GetMongoClient()
@@ -92,13 +92,20 @@ export default class Clinic {
         }
     }
 
-    static async Edit ( id, fields ) {
+    static async Edit ( user_id, id , fields ) {
         try {
+            //ПРОВЕРКА / на первое время редактировать может только создатель
+            user_id = new DB().ObjectID(user_id) //есть разрешение радактировать
             id = new DB().ObjectID(id)
+
+            let arFields = {
+                edit_user_id: user_id,
+                edit_date: new Date(),
+            }
 
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('clinic')
-            let result = collection.updateOne({_id: id}, {$set: fields})
+            let result = collection.updateOne({_id: id}, {$set: {...fields, ...arFields}})
             return result
 
         } catch (err) {
@@ -107,10 +114,12 @@ export default class Clinic {
         }
     }
 
-    static async Delete ( id, user_id ) {
+    static async Delete ( user_id, id ) {
         try {
-            id = new DB().ObjectID(id)
+            //ПРОВЕРКА / проверка записей принадлежащих клинике по всем таблицам
+
             user_id = new DB().ObjectID(user_id)
+            id = new DB().ObjectID(id)
 
             let arFields = {
                 delete: true,

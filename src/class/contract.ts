@@ -8,15 +8,13 @@ import { DB, Store } from "../../../social-framework/src"
 
 export default class Contract {
 
-    static async Add ( fields ) {
+    static async Add ( clinic_id, user_id, fields ) {
         try {
-            fields.clinic_id = new DB().ObjectID(fields.clinic_id)
+            fields.clinic_id = new DB().ObjectID(clinic_id)
+
             fields.org_id = new DB().ObjectID(fields.org_id)
 
-            //ПОЛЕ ПОД ВОПРОСОМ
-            fields.contract_type_ids = new DB().ObjectID(fields.contract_type_ids)
-
-            fields.create_user_id = new DB().ObjectID(fields.create_user_id)
+            fields.create_user_id = new DB().ObjectID(user_id)
             fields.create_date = new Date()
 
             const mongoClient = Store.GetMongoClient()
@@ -30,13 +28,15 @@ export default class Contract {
         }
     }
 
-    static async GetById ( ids ) {
+    static async GetById ( clinic_id, ids ) {
         try {
+            clinic_id = new DB().ObjectID(clinic_id)
             ids = new DB().ObjectID(ids)
 
             let arAggregate = []
             arAggregate.push({
                 $match: {
+                    clinic_id: clinic_id,
                     _id: {$in: ids},
                     delete: {$ne: true}
                 }
@@ -47,14 +47,6 @@ export default class Contract {
                     localField: 'org_id',
                     foreignField: '_id',
                     as: '_org_id'
-                }
-            })
-            arAggregate.push({
-                $lookup: {
-                    from: 'contract-type',
-                    localField: 'contract_type_ids',
-                    foreignField: '_id',
-                    as: '_contract_type_ids'
                 }
             })
             arAggregate.push({
@@ -75,19 +67,15 @@ export default class Contract {
         }
     }
 
-    static async Get ( fields ) {
+    static async Get ( clinic_id, fields ) {
         try {
-            if (fields.q) {
-                fields.q = fields.q.replace(/ +/g, ' ').trim();
-                fields.q = fields.q.replace("[^\\da-zA-Zа-яёА-ЯЁ ]", ' ').trim();
-            }
-
-            fields.clinic_id = new DB().ObjectID(fields.clinic_id)
+            clinic_id = new DB().ObjectID(clinic_id)
             fields.org_id = new DB().ObjectID(fields.org_id)
 
             let arAggregate = []
             arAggregate.push({
                 $match: {
+                    clinic_id: clinic_id,
                     delete: {$ne: true}
                 }
             })
@@ -100,40 +88,20 @@ export default class Contract {
                 }
             })
             arAggregate.push({
-                $lookup: {
-                    from: 'contract-type',
-                    localField: 'contract_type_ids',
-                    foreignField: '_id',
-                    as: '_contract_type_ids'
-                }
-            })
-            arAggregate.push({
                 $unwind: {
                     path: '$_org_id',
                     preserveNullAndEmptyArrays: true
                 }
             })
 
-            if (fields.clinic_id)
-                arAggregate[0].$match.clinic_id = fields.clinic_id
-            if (fields.q)
-                arAggregate[0].$match.q = fields.q
             if (fields.org_id)
                 arAggregate[0].$match.org_id = fields.org_id
 
-            //сортировка, если поиска нет
-            if (fields.q)
-                arAggregate.push({
-                    $sort: {
-                        $score: {$meta:"textScore"}
-                    }
-                })
-            else
-                arAggregate.push({
-                    $sort: {
-                        _id: -1,
-                    }
-                })
+            arAggregate.push({
+                $sort: {
+                    _id: -1,
+                }
+            })
 
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('contract')
@@ -146,19 +114,15 @@ export default class Contract {
         }
     }
 
-    static async GetCount ( fields ) {
+    static async GetCount ( clinic_id, fields ) {
         try {
-            if (fields.q) {
-                fields.q = fields.q.replace(/ +/g, ' ').trim();
-                fields.q = fields.q.replace("[^\\da-zA-Zа-яёА-ЯЁ ]", ' ').trim();
-            }
-
-            fields.clinic_id = new DB().ObjectID(fields.clinic_id)
+            clinic_id = new DB().ObjectID(clinic_id)
             fields.org_id = new DB().ObjectID(fields.org_id)
 
             let arAggregate = []
             arAggregate.push({
                 $match: {
+                    clinic_id: clinic_id,
                     delete: {$ne: true}
                 }
             })
@@ -167,10 +131,6 @@ export default class Contract {
                 $count: 'count'
             })
 
-            if (fields.clinic_id)
-                arAggregate[0].$match.clinic_id = fields.clinic_id
-            if (fields.q)
-                arAggregate[0].$match.q = fields.q
             if (fields.org_id)
                 arAggregate[0].$match.org_id = fields.org_id
 
@@ -187,13 +147,20 @@ export default class Contract {
         }
     }
 
-    static async Edit ( id, fields ) {
+    static async Edit ( clinic_id, user_id, id , fields ) {
         try {
+            clinic_id = new DB().ObjectID(clinic_id)
+            user_id = new DB().ObjectID(user_id)
             id = new DB().ObjectID(id)
+
+            let arFields = {
+                edit_user_id: user_id,
+                edit_date: new Date(),
+            }
 
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('contract')
-            let result = collection.updateOne({_id: id}, {$set: fields})
+            let result = collection.updateOne({clinic_id: clinic_id, _id: id}, {$set: {...fields, ...arFields}})
             return result
 
         } catch (err) {
@@ -202,25 +169,24 @@ export default class Contract {
         }
     }
 
-    static async Delete ( id, user_id ) {
+    static async Delete ( clinic_id, user_id, id , fields ) {
         try {
             //ПРОВЕРКА / права позволяют
             //ПРОВЕРКА / нет осмотров в договоре
 
+            clinic_id = new DB().ObjectID(clinic_id)
+            user_id = new DB().ObjectID(user_id)
             id = new DB().ObjectID(id)
-            fields.delete_clinic_id = new DB().ObjectID(fields.delete_clinic_id)
-            fields.delete_user_id = new DB().ObjectID(fields.delete_user_id)
 
             let arFields = {
                 delete: true,
-                delete_clinic_id: fields.delete_clinic_id,
-                delete_user_id: fields.delete_user_id,
+                delete_user_id: user_id,
                 delete_date: new Date(),
             }
 
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('contract')
-            let result = collection.updateOne({_id: id}, {$set: arFields}, {upsert: true})
+            let result = collection.updateOne({clinic_id: clinic_id, _id: id}, {$set: arFields}, {upsert: true})
             return result
         } catch (err) {
             console.log(err)

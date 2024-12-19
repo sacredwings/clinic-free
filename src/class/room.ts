@@ -9,7 +9,7 @@ export default class Room {
 
     static async Add ( clinic_id, user_id, fields ) {
         try {
-            fields.clinic_id = new DB().ObjectID(fields.clinic_id)
+            fields.clinic_id = new DB().ObjectID(clinic_id)
             fields.create_user_id = new DB().ObjectID(user_id)
             fields.create_date = new Date()
 
@@ -28,6 +28,7 @@ export default class Room {
 
     static async GetById ( clinic_id, ids ) {
         try {
+            clinic_id = new DB().ObjectID(clinic_id)
             ids = new DB().ObjectID(ids)
 
             let arAggregate = []
@@ -52,6 +53,7 @@ export default class Room {
 
     static async Get ( clinic_id, fields ) {
         try {
+            clinic_id = new DB().ObjectID(clinic_id)
 
             let arAggregate = []
             arAggregate.push({
@@ -74,6 +76,8 @@ export default class Room {
 
     static async GetCount ( clinic_id, fields ) {
         try {
+            clinic_id = new DB().ObjectID(clinic_id)
+
             let arAggregate = []
             arAggregate.push({
                 $match: {
@@ -101,6 +105,8 @@ export default class Room {
 
     static async Edit ( clinic_id, user_id, id , fields ) {
         try {
+            clinic_id = new DB().ObjectID(clinic_id)
+            user_id = new DB().ObjectID(user_id)
             id = new DB().ObjectID(id)
 
             let arFields = {
@@ -121,16 +127,19 @@ export default class Room {
 
     static async Delete ( clinic_id, user_id, id ) {
         try {
+            clinic_id = new DB().ObjectID(clinic_id)
+            user_id = new DB().ObjectID(user_id)
             id = new DB().ObjectID(id)
 
             let arFields = {
-                edit_user_id: user_id,
-                edit_date: new Date(),
+                delete: true,
+                delete_user_id: user_id,
+                delete_date: new Date(),
             }
 
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('room')
-            let result = collection.updateOne({_id: id}, {$set: arFields}, {upsert: true})
+            let result = collection.updateOne({clinic_id: clinic_id, _id: id}, {$set: arFields}, {upsert: true})
             return result
 
         } catch (err) {

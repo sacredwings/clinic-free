@@ -9,7 +9,7 @@ export default class Appointment {
 
     static async Add ( clinic_id, user_id, fields ) {
         try {
-            fields.clinic_id = new DB().ObjectID(fields.clinic_id)
+            fields.clinic_id = new DB().ObjectID(clinic_id)
 
             fields.room_id = new DB().ObjectID(fields.room_id)
             fields.doctor_id = new DB().ObjectID(fields.doctor_id)
@@ -28,7 +28,7 @@ export default class Appointment {
 
             //проверка работает ли врач во время записи
 
-            fields.create_user_id = new DB().ObjectID(fields.create_user_id)
+            fields.create_user_id = new DB().ObjectID(user_id)
             fields.create_date = new Date()
 
             const mongoClient = Store.GetMongoClient()
@@ -44,6 +44,7 @@ export default class Appointment {
 
     static async GetById ( clinic_id, ids ) {
         try {
+            clinic_id = new DB().ObjectID(clinic_id)
             ids = new DB().ObjectID(ids)
 
             let arAggregate = []
@@ -139,6 +140,8 @@ export default class Appointment {
 
     static async Get ( clinic_id, fields ) {
         try {
+            clinic_id = new DB().ObjectID(clinic_id)
+
             let arAggregate = []
             arAggregate.push({
                 $match: {
@@ -232,6 +235,8 @@ export default class Appointment {
 
     static async GetCount ( clinic_id, fields ) {
         try {
+            clinic_id = new DB().ObjectID(clinic_id)
+
             let arAggregate = []
             arAggregate.push({
                 $match: {
@@ -259,6 +264,8 @@ export default class Appointment {
 
     static async Edit ( clinic_id, user_id, id , fields ) {
         try {
+            clinic_id = new DB().ObjectID(clinic_id)
+            user_id = new DB().ObjectID(user_id)
             id = new DB().ObjectID(id)
 
             fields.room_id = new DB().ObjectID(fields.room_id)
@@ -287,8 +294,11 @@ export default class Appointment {
 
     static async Delete ( clinic_id, user_id, id ) {
         try {
-            id = new DB().ObjectID(id)
+            //ПРОВЕРКА / удалить нельзя если прием был завершен
+
+            clinic_id = new DB().ObjectID(clinic_id)
             user_id = new DB().ObjectID(user_id)
+            id = new DB().ObjectID(id)
 
             let arFields = {
                 delete: true,
@@ -298,7 +308,7 @@ export default class Appointment {
 
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('appointment')
-            let result = collection.updateOne({_id: id}, {$set: arFields}, {upsert: true})
+            let result = collection.updateOne({clinic_id: clinic_id, _id: id}, {$set: arFields}, {upsert: true})
             return result
         } catch (err) {
             console.log(err)

@@ -126,9 +126,9 @@ export default class Org {
 
     static async Edit ( clinic_id, user_id, id , fields ) {
         try {
-            id = new DB().ObjectID(id)
             clinic_id = new DB().ObjectID(clinic_id)
             user_id = new DB().ObjectID(user_id)
+            id = new DB().ObjectID(id)
 
             let arFields = {
                 edit_user_id: user_id,
@@ -156,7 +156,7 @@ export default class Org {
 
             let arFields = {
                 delete: true,
-                delete_clinic_id: clinic_id,
+                delete_clinic_id: clinic_id, //какая клиника удалила
                 delete_user_id: user_id,
                 delete_date: new Date(),
             }

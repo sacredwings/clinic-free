@@ -9,7 +9,7 @@ export default class Role {
 
     static async Add ( clinic_id, user_id, fields ) {
         try {
-            fields.clinic_id = new DB().ObjectID(fields.clinic_id)
+            fields.clinic_id = new DB().ObjectID(clinic_id)
 
             fields.permission_ids = new DB().ObjectID(fields.permission_ids)
 
@@ -29,6 +29,7 @@ export default class Role {
 
     static async GetById ( clinic_id, ids ) {
         try {
+            clinic_id = new DB().ObjectID(clinic_id)
             ids = new DB().ObjectID(ids)
 
             let arAggregate = []
@@ -61,6 +62,7 @@ export default class Role {
 
     static async Get ( clinic_id, fields ) {
         try {
+            clinic_id = new DB().ObjectID(clinic_id)
 
             let arAggregate = []
             arAggregate.push({
@@ -91,6 +93,8 @@ export default class Role {
 
     static async GetCount ( clinic_id, fields ) {
         try {
+            clinic_id = new DB().ObjectID(clinic_id)
+
             let arAggregate = []
             arAggregate.push({
                 $match: {
@@ -118,9 +122,9 @@ export default class Role {
 
     static async Edit ( clinic_id, user_id, id , fields ) {
         try {
-            id = new DB().ObjectID(id)
             clinic_id = new DB().ObjectID(clinic_id)
             user_id = new DB().ObjectID(user_id)
+            id = new DB().ObjectID(id)
 
             let arFields = {
                 edit_user_id: user_id,
@@ -142,9 +146,9 @@ export default class Role {
         try {
             //ПРОВЕРКА / где роли уже используются
 
-            id = new DB().ObjectID(id)
             clinic_id = new DB().ObjectID(clinic_id)
             user_id = new DB().ObjectID(user_id)
+            id = new DB().ObjectID(id)
 
             let arFields = {
                 delete: true,

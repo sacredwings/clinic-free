@@ -7,9 +7,9 @@ import { DB, Store } from "../../../social-framework/src"
 
 export default class CDoctor {
 
-    static async Add ( fields ) {
+    static async Add ( user_id, fields ) {
         try {
-            fields.user_id = new DB().ObjectID(fields.user_id)
+            fields.user_id = new DB().ObjectID(user_id)
             fields.specialist_ids = new DB().ObjectID(fields.specialist_ids)
             fields.create_date = new Date()
 
@@ -137,13 +137,15 @@ export default class CDoctor {
         }
     }
 
-    static async Edit ( id, fields ) {
+    static async Edit ( user_id, id , fields ) {
         try {
+            //ПРОВЕРКА / что доктор и есть пользователь который редактирует
+            user_id = new DB().ObjectID(user_id)
             id = new DB().ObjectID(id)
 
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('doctor')
-            let result = collection.updateOne({_id: id}, {$set: fields})
+            let result = collection.updateOne({user_id: user_id, _id: id}, {$set: fields})
             return result
 
         } catch (err) {
@@ -152,8 +154,9 @@ export default class CDoctor {
         }
     }
 
-    static async Delete ( id ) {
+    static async Delete ( user_id, id ) {
         try {
+            user_id = new DB().ObjectID(user_id)
             id = new DB().ObjectID(id)
 
             let arFields = {
@@ -163,7 +166,7 @@ export default class CDoctor {
 
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('doctor')
-            let result = collection.updateOne({_id: id}, {$set: arFields}, {upsert: true})
+            let result = collection.updateOne({user_id: user_id, _id: id}, {$set: arFields}, {upsert: true})
             return result
         } catch (err) {
             console.log(err)
