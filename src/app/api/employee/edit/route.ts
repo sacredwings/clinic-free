@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server'
 import { mongo, minio } from "@/utility/connect"
 import Joi from "joi"
-import CRole from "@/class/role"
+import CEmployee from "@/class/employee"
 import {Authentication} from "@/app/api/function";
 
 export async function POST (request: Request) {
@@ -19,7 +19,13 @@ export async function POST (request: Request) {
                 title: Joi.string().min(3).max(224).required(),
                 description: Joi.string().max(320).empty([null, '']).default(null),
 
-                permission_ids: Joi.array().min(1).max(50).items(Joi.string().min(24).max(24)).empty(null, Joi.array().length(0)).default(null),
+                user_ids: Joi.array().min(1).max(50).items(Joi.string().min(24).max(24)).required(),
+
+                role_ids: Joi.array().min(1).max(50).items(Joi.string().min(24).max(24)).empty([null, Joi.array().length(0)]).default(null),
+                specialty_ids: Joi.array().min(1).max(50).items(Joi.string().min(24).max(24)).empty([null, Joi.array().length(0)]).default(null),
+
+                date_start: Joi.date().empty([null, '']).default(null),
+                date_end: Joi.date().empty([null, '']).default(null),
             });
 
             value = await schema.validateAsync(rsRequest)
@@ -40,7 +46,7 @@ export async function POST (request: Request) {
 
                 permissions_ids: value.permissions_ids
             }
-            let result = await CRole.Edit ( value.clinic_id, userId, value.id, arFields )
+            let result = await CEmployee.Edit ( value.clinic_id, userId, value.id, arFields )
 
             return NextResponse.json({
                 err: 0,
@@ -50,6 +56,6 @@ export async function POST (request: Request) {
             throw ({...{err: 10000000, msg: 'Ошибка формирования результата'}, ...err})
         }
     } catch (err) {
-        return NextResponse.json({...{code: 10000000, msg: 'RRole Edit'}, ...err})
+        return NextResponse.json({...{code: 10000000, msg: 'REmployee Edit'}, ...err})
     }
 }

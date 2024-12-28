@@ -1,26 +1,28 @@
 // @ts-nocheck
 import { NextResponse } from 'next/server'
 import { mongo, minio } from "@/utility/connect"
-import Joi from "joi"
-import CRole from "@/class/role"
+import Joi from "joi";
+import CEmployee from "@/class/employee"
 import {Authentication} from "@/app/api/function";
 
-export async function POST (request: Request) {
+export async function GET(request: Request) {
     let value
     try {
         try {
-            let rsRequest = await request.json()
-
-            const schema = Joi.object({
+            const { searchParams } = new URL(request.url)
+            let url = {
                 clinic_id: Joi.string().min(24).max(24).required(),
 
-                title: Joi.string().min(3).max(224).required(),
-                description: Joi.string().max(320).empty([null, '']).default(null),
+                ids: searchParams.get('ids[]')
+            }
+            if (url.ids) url.ids = url.ids.split(',')
 
-                permission_ids: Joi.array().min(1).max(50).items(Joi.string().min(24).max(24)).empty(null, Joi.array().length(0)).default(null),
+            //схема
+            const schema = Joi.object({
+                ids: Joi.array().min(1).max(50).items(Joi.string().min(24).max(24)).required()
             })
 
-            value = await schema.validateAsync(rsRequest)
+            value = await schema.validateAsync(url)
 
         } catch (err) {
             console.log(err)
@@ -31,18 +33,18 @@ export async function POST (request: Request) {
             let userId = await Authentication(request)
             if (!userId) throw ({code: 30100000, msg: 'Требуется авторизация'})
 
-            //ПРОВЕРКА / право доступа на создание
-
-            let result = await CRole.Add ( value.clinic_id, userId, value )
+            let result = await CEmployee.GetById ( value.clinic_id, value.ids )
 
             return NextResponse.json({
-                err: 0,
+                code: 0,
                 response: result
             })
         } catch (err) {
             throw ({...{code: 10000000, msg: 'Ошибка формирования результата'}, ...err})
         }
     } catch (err) {
-        return NextResponse.json({...{code: 10000000, msg: 'RRole Add'}, ...err})
+        return NextResponse.json({...{code: 10000000, msg: 'REmployee GetById'}, ...err})
     }
 }
+
+export const dynamic = 'force-dynamic';
