@@ -11,7 +11,7 @@ export async function GET(request: Request) {
         try {
             const { searchParams } = new URL(request.url)
             let url = {
-                clinic_id: Joi.string().min(24).max(24).required(),
+                clinic_id: searchParams.get('clinic_id'),
 
                 ids: searchParams.get('ids[]')
             }
@@ -19,6 +19,8 @@ export async function GET(request: Request) {
 
             //схема
             const schema = Joi.object({
+                clinic_id: Joi.string().min(24).max(24).required(),
+
                 ids: Joi.array().min(1).max(50).items(Joi.string().min(24).max(24)).required()
             })
 

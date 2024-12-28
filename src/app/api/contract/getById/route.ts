@@ -29,7 +29,7 @@ export async function GET(request: Request) {
         try {
             await mongo()
 
-            let result = await CContract.GetById (value.ids)
+            let result = await CContract.GetById (value.clinic_id, value.ids)
 
             return NextResponse.json({
                 code: 0,

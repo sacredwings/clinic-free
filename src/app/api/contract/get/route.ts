@@ -45,8 +45,8 @@ export async function GET(request: Request) {
                 offset: value.offset,
                 count: value.count
             }
-            let items = await CContract.Get (arFields)
-            let count = await CContract.GetCount (arFields)
+            let items = await CContract.Get (value.clinic_id, arFields)
+            let count = await CContract.GetCount (value.clinic_id, arFields)
 
             return NextResponse.json({
                 code: 0,

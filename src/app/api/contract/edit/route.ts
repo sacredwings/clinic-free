@@ -12,24 +12,26 @@ export async function POST (request: Request) {
             let rsRequest = await request.json()
 
             const schema = Joi.object({
+                clinic_id: Joi.string().min(24).max(24).required(),
+
                 id: Joi.string().min(24).max(24).required(),
 
-                name: Joi.string().min(3).max(255).required(),
+                title: Joi.string().min(3).max(255).required(),
 
-                date_from: Joi.date().allow(null).empty('').default(null),
-                date_to: Joi.date().allow(null).empty('').default(null),
+                date_start: Joi.date().empty([null, '']).default(null),
+                date_end: Joi.date().empty([null, '']).default(null),
 
-                price_ultrasound: Joi.number().integer().min(0).max(999999).allow(null).empty('').default(null),
-                price_mammography: Joi.number().integer().min(0).max(999999).allow(null).empty('').default(null),
-                price_xray: Joi.number().integer().min(0).max(999999).allow(null).empty('').default(null),
+                price_ultrasound: Joi.number().integer().min(0).max(999999).empty([null, '']).default(null),
+                price_mammography: Joi.number().integer().min(0).max(999999).empty([null, '']).default(null),
+                price_xray: Joi.number().integer().min(0).max(999999).empty([null, '']).default(null),
 
-                price_pcr: Joi.number().integer().min(0).max(999999).allow(null).empty('').default(null),
-                price_hti: Joi.number().integer().min(0).max(999999).allow(null).empty('').default(null),
-                price_brucellosis: Joi.number().integer().min(0).max(999999).allow(null).empty('').default(null),
+                price_pcr: Joi.number().integer().min(0).max(999999).empty([null, '']).default(null),
+                price_hti: Joi.number().integer().min(0).max(999999).empty([null, '']).default(null),
+                price_brucellosis: Joi.number().integer().min(0).max(999999).empty([null, '']).default(null),
 
-                price_worker_all: Joi.number().integer().min(0).max(999999).allow(null).empty('').default(null),
-                price_worker_man: Joi.number().integer().min(0).max(999999).allow(null).empty('').default(null),
-                price_worker_woman: Joi.number().integer().min(0).max(999999).allow(null).empty('').default(null),
+                price_worker_all: Joi.number().integer().min(0).max(999999).empty([null, '']).default(null),
+                price_worker_man: Joi.number().integer().min(0).max(999999).empty([null, '']).default(null),
+                price_worker_woman: Joi.number().integer().min(0).max(999999).empty([null, '']).default(null),
             })
 
             value = await schema.validateAsync(rsRequest)
@@ -45,10 +47,7 @@ export async function POST (request: Request) {
             await mongo()
 
             let arFields = {
-                name: value.name,
-                //org_id: value.org_id,
-
-                //contract_type_ids: value.contract_type_ids,
+                title: value.title,
 
                 price_ultrasound: value.price_ultrasound,
                 price_mammography: value.price_mammography,
@@ -62,10 +61,10 @@ export async function POST (request: Request) {
                 price_worker_man: value.price_worker_man,
                 price_worker_woman: value.price_worker_woman,
 
-                date_from: value.date_from,
-                date_to: value.date_to,
+                date_start: value.date_start,
+                date_end: value.date_end,
             }
-            let result = await CContract.Edit ( value.id, arFields )
+            let result = await CContract.Edit ( value.clinic_id, userId, value.id, arFields )
 
             return NextResponse.json({
                 err: 0,
@@ -76,6 +75,6 @@ export async function POST (request: Request) {
             throw ({...{code: 10000000, msg: 'Ошибка формирования результата'}, ...err})
         }
     } catch (err) {
-        return NextResponse.json({...{code: 10000000, msg: 'ROrg Add'}, ...err})
+        return NextResponse.json({...{code: 10000000, msg: 'RContract Add'}, ...err})
     }
 }
