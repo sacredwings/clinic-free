@@ -12,7 +12,8 @@ export async function GET(request: Request) {
         try {
             const { searchParams } = new URL(request.url)
             let url = {
-                offset: searchParams.get('q'),
+                q: searchParams.get('q'),
+
                 offset: searchParams.get('offset'),
                 count: searchParams.get('count')
             }

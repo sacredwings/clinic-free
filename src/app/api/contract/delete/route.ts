@@ -30,7 +30,7 @@ export async function POST (request: Request) {
 
             //ПРОВЕРКА / право доступа на удаление
 
-            await CContract.Delete ( value.clinic_id, userId, value.id )
+            await CContract.Delete (value.clinic_id, userId, value.id)
 
             return NextResponse.json({
                 err: 0,

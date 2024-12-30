@@ -95,11 +95,12 @@ export interface interfaceContractAdd {
     clinic_id,
 
     org_id: string
-    contract_type_ids: string[]
 
     title: string
-    date_from: string
-    date_to: string
+    description: string
+
+    date_start: string
+    date_end: string
 
     price_ultrasound: number
     price_mammography: number
@@ -117,8 +118,10 @@ export interface interfaceContractEdit {
     id: string
 
     title: string
-    date_from: string
-    date_to: string
+    description: string
+
+    date_start: string
+    date_end: string
 
     price_ultrasound: number
     price_mammography: number

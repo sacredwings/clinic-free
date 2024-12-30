@@ -4,6 +4,7 @@ import { mongo, minio } from "@/utility/connect"
 import Joi from "joi"
 import {headers} from "next/headers";
 import CContract from "@/class/contract"
+import {Authentication} from "@/app/api/function";
 
 export async function POST (request: Request) {
     let value
@@ -17,6 +18,7 @@ export async function POST (request: Request) {
                 id: Joi.string().min(24).max(24).required(),
 
                 title: Joi.string().min(3).max(255).required(),
+                description: Joi.string().max(320).empty([null, '']).default(null),
 
                 date_start: Joi.date().empty([null, '']).default(null),
                 date_end: Joi.date().empty([null, '']).default(null),
@@ -45,9 +47,12 @@ export async function POST (request: Request) {
         }
         try {
             await mongo()
+            let userId = await Authentication(request)
+            if (!userId) throw ({code: 30100000, msg: 'Требуется авторизация'})
 
             let arFields = {
                 title: value.title,
+                description: value.description,
 
                 price_ultrasound: value.price_ultrasound,
                 price_mammography: value.price_mammography,

@@ -13,19 +13,22 @@ export async function GET(request: Request) {
             const { searchParams } = new URL(request.url)
             let url = {
                 clinic_id: searchParams.get('clinic_id'),
+
                 q: searchParams.get('q'),
                 org_id: searchParams.get('org_id'),
+
                 offset: searchParams.get('offset'),
                 count: searchParams.get('count')
             }
 
             const schema = Joi.object({
-                clinic_id: Joi.string().min(24).max(24).allow(null).empty('').default(null),
-                q: Joi.string().min(3).max(255).allow(null).empty('').default(null),
-                org_id: Joi.string().min(24).max(24).allow(null).empty('').default(null),
+                clinic_id: Joi.string().min(24).max(24).required(),
 
-                offset: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(0),
-                count: Joi.number().integer().min(0).max(10000).allow(null).empty('').default(20)
+                q: Joi.string().min(3).max(255).empty([null, '']).default(null),
+                org_id: Joi.string().min(24).max(24).empty([null, '']).default(null),
+
+                offset: Joi.number().integer().min(0).max(9223372036854775807).empty([null, '']).default(0),
+                count: Joi.number().integer().min(0).max(200).empty([null, '']).default(20)
             });
 
             value = await schema.validateAsync(url)
@@ -39,6 +42,7 @@ export async function GET(request: Request) {
 
             let arFields = {
                 clinic_id: value.clinic_id,
+
                 q: value.q,
                 org_id: value.org_id,
 
