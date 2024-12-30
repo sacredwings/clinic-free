@@ -2,7 +2,6 @@
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import { mongo, minio } from "@/utility/connect"
-import Config from "../../../../../config.json";
 import Joi  from "joi"
 import COrg from "@/class/org"
 import {Authentication} from "@/app/api/function";
@@ -58,11 +57,8 @@ export async function POST (request: Request) {
                 inn: value.inn,
                 kpp: value.kpp,
                 ogrn: value.ogrn,
-
-                create_user_id: userId,
-                create_clinic_id: value.clinic_id,
             }
-            let result = await COrg.Add (arFields)
+            let result = await COrg.Add (value.clinic_id, userId, arFields)
 
             return NextResponse.json({
                 err: 0,

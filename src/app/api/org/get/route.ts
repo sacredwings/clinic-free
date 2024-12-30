@@ -12,8 +12,6 @@ export async function GET(request: Request) {
         try {
             const { searchParams } = new URL(request.url)
             let url = {
-                //clinic_id: searchParams.get('clinic_id'),
-
                 q: searchParams.get('q'),
 
                 offset: searchParams.get('offset'),
@@ -25,8 +23,6 @@ export async function GET(request: Request) {
 
             //схема
             const schema = Joi.object({
-                //clinic_id: Joi.string().min(24).max(24).empty([null,'']).default(null),
-
                 q: Joi.string().min(3).max(255).empty([null,'']).default(null),
 
                 offset: Joi.number().integer().min(0).max(9223372036854775807).empty([null,'']).default(0),

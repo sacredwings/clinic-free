@@ -124,9 +124,9 @@ export default class Org {
         }
     }
 
-    static async Edit ( clinic_id, user_id, id , fields ) {
+    static async Edit (id , fields) {
         try {
-            clinic_id = new DB().ObjectID(clinic_id)
+            //clinic_id = new DB().ObjectID(clinic_id)
             user_id = new DB().ObjectID(user_id)
             id = new DB().ObjectID(id)
 
@@ -137,7 +137,7 @@ export default class Org {
 
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('org')
-            let result = collection.updateOne({clinic_id: clinic_id, _id: id}, {$set: {...fields, ...arFields}})
+            let result = collection.updateOne({_id: id}, {$set: {...fields, ...arFields}})
             return result
 
         } catch (err) {
@@ -146,24 +146,24 @@ export default class Org {
         }
     }
 
-    static async Delete ( clinic_id, user_id, id ) {
+    static async Delete (user_id, id) {
         try {
             //ПРОВЕРКА / нет договоров в организации
 
             id = new DB().ObjectID(id)
-            clinic_id = new DB().ObjectID(clinic_id)
+            //clinic_id = new DB().ObjectID(clinic_id)
             user_id = new DB().ObjectID(user_id)
 
             let arFields = {
                 delete: true,
-                delete_clinic_id: clinic_id, //какая клиника удалила
+                //delete_clinic_id: clinic_id, //какая клиника удалила
                 delete_user_id: user_id,
                 delete_date: new Date(),
             }
 
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('org')
-            let result = collection.updateOne({clinic_id: clinic_id, _id: id}, {$set: arFields}, {upsert: true})
+            let result = collection.updateOne({_id: id}, {$set: arFields}, {upsert: true})
             return result
         } catch (err) {
             console.log(err)

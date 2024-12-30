@@ -4,6 +4,7 @@ import { mongo, minio } from "@/utility/connect"
 import Joi from "joi"
 import {headers} from "next/headers";
 import COrg from "@//class/org"
+import {Authentication} from "@/app/api/function";
 
 export async function POST (request: Request) {
     let value
@@ -14,29 +15,11 @@ export async function POST (request: Request) {
             const schema = Joi.object({
                 id: Joi.string().min(24).max(24).required(),
 
-                name: Joi.string().min(3).max(255).required(),
-                //full_name: Joi.string().min(1).max(255).allow(null).empty('').default(null),
+                title: Joi.string().min(3).max(255).required(),
 
                 inn: Joi.number().integer().min(0).max(9223372036854775807).required(),
                 kpp: Joi.number().integer().min(0).max(9223372036854775807).required(),
                 ogrn: Joi.number().integer().min(0).max(9223372036854775807).required(),
-
-                /*
-                                payment_account: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(null),
-
-                                post_code: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(null),
-                                country: Joi.string().min(1).max(255).allow(null).empty('').default(null),
-                                region: Joi.string().min(1).max(255).allow(null).empty('').default(null),
-                                district: Joi.string().min(1).max(255).allow(null).empty('').default(null),
-                                locality: Joi.string().min(1).max(255).allow(null).empty('').default(null),
-                                street: Joi.string().min(1).max(255).allow(null).empty('').default(null),
-                                house: Joi.string().min(1).max(255).allow(null).empty('').default(null),
-                                corps: Joi.string().min(1).max(255).allow(null).empty('').default(null),
-                                structure: Joi.string().min(1).max(255).allow(null).empty('').default(null),
-                                flat: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(null),
-
-                */
-
             })
 
             value = await schema.validateAsync(rsRequest)
@@ -47,16 +30,17 @@ export async function POST (request: Request) {
         }
         try {
             await mongo()
+            let userId = await Authentication(request)
+            if (!userId) throw ({code: 30100000, msg: 'Требуется авторизация'})
 
             let arFields = {
-                name: value.name,
-                //full_name: value.full_name
+                title: value.title,
 
                 inn: value.inn,
                 kpp: value.kpp,
                 ogrn: value.ogrn,
             }
-            let result = await COrg.Edit ( value.id, arFields )
+            let result = await COrg.Edit (userId, arFields)
 
             return NextResponse.json({
                 err: 0,

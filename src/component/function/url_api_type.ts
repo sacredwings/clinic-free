@@ -77,10 +77,13 @@ export interface interfaceOrgEdit {
 export interface interfaceOrgGet {
     clinic_id :string
 
-    q: string,
+    q: string
 
     offset: number
     count: number
+
+    order: string
+    order_by: string
 }
 export interface interfaceOrgGetById {
     ids: string[]
