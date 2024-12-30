@@ -147,6 +147,37 @@ export interface interfaceContractGet {
 export interface interfaceContractGetById {
     ids: string[]
 }
+//---------------------------------------------------------------------------------
+//ROLE
+export interface interfaceRoleAdd {
+    clinic_id: string
+
+    title: string
+    description: string
+
+    permission_ids: string[] | null
+}
+export interface interfaceRoleEdit {
+    clinic_id: string
+
+    id: string
+
+    title: string
+    description: string
+
+    permission_ids: string[] | null
+}
+export interface interfaceRoleGet {
+    clinic_id: string
+
+    offset: number
+    count: number
+}
+export interface interfaceRoleGetById {
+    clinic_id: string
+
+    ids: string[]
+}
 //----------------------------------------------------------------------------------------------------------------------
 //ProfExamination
 export interface interfaceProfExaminationAdd {

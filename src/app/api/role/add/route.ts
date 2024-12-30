@@ -33,7 +33,13 @@ export async function POST (request: Request) {
 
             //ПРОВЕРКА / право доступа на создание
 
-            let result = await CRole.Add ( value.clinic_id, userId, value )
+            let arFields = {
+                title: value.title,
+                description: value.description,
+
+                permission_ids: value.permission_ids
+            }
+            let result = await CRole.Add (value.clinic_id, userId, arFields)
 
             return NextResponse.json({
                 err: 0,
