@@ -57,7 +57,15 @@ import {
     interfaceProfExaminationGetById,
     interfaceClinicEdit,
     interfaceProfExaminationAdd,
-    interfaceProfExaminationEdit, interfaceProfExaminationEditFinale, interfaceProfExaminationEditVisit
+    interfaceProfExaminationEdit,
+    interfaceProfExaminationEditFinale,
+    interfaceProfExaminationEditVisit,
+    interfaceRoleDelete,
+    interfaceEmployeeAdd,
+    interfaceEmployeeEdit,
+    interfaceEmployeeGet,
+    interfaceEmployeeGetById,
+    interfaceEmployeeDelete, interfaceDoctorEdit, interfaceDoctorGetById
 } from './url_api_type'
 import axios, {AxiosRequestConfig} from "axios"
 import {ToastSystemAdd} from "@/component/toast/function";
@@ -314,8 +322,6 @@ export async function ServerOrgEdit ({
     return res.data.response
 }
 export async function ServerOrgGet ({
-    //clinic_id,
-
     q,
 
     offset=0,
@@ -330,8 +336,6 @@ export async function ServerOrgGet ({
 
     let arFields = {
         params: {
-            //clinic_id,
-
             q,
 
             offset,
@@ -373,11 +377,12 @@ export async function ServerContractAdd ({
     clinic_id,
 
     org_id,
-    contract_type_ids,
 
     title,
-    date_from,
-    date_to,
+    description,
+
+    date_start,
+    date_end,
 
     price_ultrasound,
     price_mammography,
@@ -400,8 +405,10 @@ export async function ServerContractAdd ({
         contract_type_ids,
 
         title,
-        date_from,
-        date_to,
+        description,
+
+        date_start,
+        date_end,
 
         price_ultrasound,
         price_mammography,
@@ -423,11 +430,15 @@ export async function ServerContractAdd ({
     return res.data.response
 }
 export async function ServerContractEdit ({
+    clinic_id,
+
     id,
 
     title,
-    date_from,
-    date_to,
+    description,
+
+    date_start,
+    date_end,
 
     price_ultrasound,
     price_mammography,
@@ -444,11 +455,15 @@ export async function ServerContractEdit ({
     if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
     let arFields = {
+        clinic_id,
+
         id,
 
         title,
-        date_from,
-        date_to,
+        description,
+
+        date_start,
+        date_end,
 
         price_ultrasound,
         price_mammography,
@@ -502,11 +517,13 @@ export async function ServerContractGet ({
     let res = await axios.get(url, arFields);
     return res.data.response
 }
-export async function ServerContractGetById ({ids}: interfaceContractGetById, {cookies=null}) {
+export async function ServerContractGetById ({clinic_id, ids}: interfaceContractGetById, {cookies=null}) {
     if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
     let arFields = {
         params: {
+            clinic_id,
+
             ids
         } as interfaceContractGetById,
         headers: {
@@ -519,20 +536,382 @@ export async function ServerContractGetById ({ids}: interfaceContractGetById, {c
     let res = await axios.get(url, arFields)
     return res.data.response
 }
+//---------------------------------------------------------------------------------
+//ROLE
+export async function ServerContractAdd ({
+    clinic_id,
 
+    title,
+    description,
+
+    permission_ids
+}: interfaceRoleAdd) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        clinic_id,
+
+        title,
+        description,
+
+        permission_ids
+    } as interfaceRoleAdd
+
+    let url = `/api/role/add`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}
+export async function ServerRoleEdit ({
+    clinic_id,
+
+    id,
+
+    title,
+    description,
+
+    permission_ids
+}: interfaceRoleEdit) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        clinic_id,
+
+        id,
+
+        title,
+        description,
+
+        permission_ids
+    } as interfaceRoleEdit
+
+    let url = `/api/role/edit`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}
+export async function ServerRoleGet ({
+    clinic_id,
+
+    offset=0,
+    count=20
+}: interfaceRoleGet, {
+    cookies=null
+}) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        params: {
+            clinic_id,
+
+            offset,
+            count
+        } as interfaceRoleGet,
+        headers: {
+            Cookie: cookies
+        }
+    } as AxiosRequestConfig
+
+    let url = `/api/role/get`
+    console.log(url)
+    let res = await axios.get(url, arFields);
+    return res.data.response
+}
+export async function ServerRoleGetById ({clinic_id, ids}: interfaceRoleGetById, {cookies=null}) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        params: {
+            clinic_id,
+
+            ids
+        } as interfaceRoleGetById,
+        headers: {
+            Cookie: cookies
+        }
+    } as AxiosRequestConfig
+
+    let url = `/api/role/getById`
+    console.log(url)
+    let res = await axios.get(url, arFields)
+    return res.data.response
+}
+export async function ServerRoleDelete ({
+    clinic_id,
+
+    id,
+}: interfaceRoleDelete) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        clinic_id,
+
+        id
+    } as interfaceRoleDelete
+
+    let url = `/api/role/delete`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}
+//---------------------------------------------------------------------------------
+//Employee
+export async function ServerEmployeeAdd ({
+    clinic_id,
+
+    title,
+    description,
+
+    user_ids,
+
+    role_ids,
+    specialty_ids,
+
+    date_start,
+    date_end
+}: interfaceEmployeeAdd) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        clinic_id,
+
+        title,
+        description,
+
+        user_ids,
+
+        role_ids,
+        specialty_ids,
+
+        date_start,
+        date_end
+    } as interfaceEmployeeAdd
+
+    let url = `/api/employee/add`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}
+export async function ServerEmployeeEdit ({
+    clinic_id,
+
+    id,
+
+    title,
+    description,
+
+    user_ids,
+
+    role_ids,
+    specialty_ids,
+
+    date_start,
+    date_end
+}: interfaceEmployeeEdit) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        clinic_id,
+
+        id,
+
+        title,
+        description,
+
+        user_ids,
+
+        role_ids,
+        specialty_ids,
+
+        date_start,
+        date_end
+    } as interfaceEmployeeEdit
+
+    let url = `/api/employee/edit`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}
+export async function ServerEmployeeGet ({
+    clinic_id,
+
+    offset=0,
+    count=20
+}: interfaceEmployeeGet, {
+    cookies=null
+}) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        params: {
+            clinic_id,
+
+            offset,
+            count
+        } as interfaceEmployeeGet,
+        headers: {
+            Cookie: cookies
+        }
+    } as AxiosRequestConfig
+
+    let url = `/api/employee/get`
+    console.log(url)
+    let res = await axios.get(url, arFields);
+    return res.data.response
+}
+export async function ServerEmployeeGetById ({clinic_id, ids}: interfaceEmployeeGetById, {cookies=null}) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        params: {
+            clinic_id,
+
+            ids
+        } as interfaceEmployeeGetById,
+        headers: {
+            Cookie: cookies
+        }
+    } as AxiosRequestConfig
+
+    let url = `/api/employee/getById`
+    console.log(url)
+    let res = await axios.get(url, arFields)
+    return res.data.response
+}
+export async function ServerEmployeeDelete ({
+    clinic_id,
+
+    id,
+}: interfaceEmployeeDelete) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        clinic_id,
+
+        id
+    } as interfaceEmployeeDelete
+
+    let url = `/api/employee/delete`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}
+//---------------------------------------------------------------------------------
+//DOCTOR
+export async function ServerDoctorAdd ({
+    user_id,
+
+    specialty_ids,
+}: interfaceDoctorAdd) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        user_id,
+
+        specialty_ids,
+    } as interfaceDoctorAdd
+
+    let url = `/api/doctor/add`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}
+export async function ServerDoctorEdit ({
+    id,
+
+    specialty_ids,
+}: interfaceDoctorEdit) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        id,
+
+        specialty_ids,
+    } as interfaceDoctorEdit
+
+    let url = `/api/doctor/edit`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}
+export async function ServerDoctorGet ({
+    offset=0,
+    count=20
+}: interfaceDoctorGet, {
+    cookies=null
+}) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        params: {
+            offset,
+            count
+        } as interfaceDoctorGet,
+        headers: {
+            Cookie: cookies
+        }
+    } as AxiosRequestConfig
+
+    let url = `/api/doctor/get`
+    console.log(url)
+    let res = await axios.get(url, arFields);
+    return res.data.response
+}
+export async function ServerDoctorGetById ({clinic_id, ids}: interfaceDoctorGetById, {cookies=null}) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        params: {
+            ids
+        } as interfaceDoctorGetById,
+        headers: {
+            Cookie: cookies
+        }
+    } as AxiosRequestConfig
+
+    let url = `/api/doctor/getById`
+    console.log(url)
+    let res = await axios.get(url, arFields)
+    return res.data.response
+}
+export async function ServerDoctorDelete ({
+    id,
+}: interfaceEmployeeDelete) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        id
+    } as interfaceEmployeeDelete
+
+    let url = `/api/doctor/delete`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}
 //---------------------------------------------------------------------------------
 //ProfExamination
 export async function ServerProfExaminationAdd ({
     clinic_id,
 
     contract_id=null,
-    contract_type_ids=null,
+    patient_user_id=null,
+
     hf_code=null,
 
     first_name,
     last_name,
     second_name=null,
-    man,
+
+    gender,
     date_birth,
 
     check_ultrasound,
@@ -553,14 +932,16 @@ export async function ServerProfExaminationAdd ({
     let arFields = {
         clinic_id,
 
-        contract_id,
-        contract_type_ids,
-        hf_code,
+        contract_id=null,
+        patient_user_id=null,
+
+        hf_code=null,
 
         first_name,
         last_name,
-        second_name,
-        man,
+        second_name=null,
+
+        gender,
         date_birth,
 
         check_ultrasound,
@@ -571,7 +952,7 @@ export async function ServerProfExaminationAdd ({
         check_hti,
         check_brucellosis,
 
-        phone,
+        phone=null,
 
         subdivision,
         profession,
@@ -586,7 +967,6 @@ export async function ServerProfExaminationAdd ({
 export async function ServerProfExaminationEdit ({
     id,
 
-    contract_type_ids,
     hf_code,
 
     check_ultrasound,
@@ -605,7 +985,6 @@ export async function ServerProfExaminationEdit ({
     let arFields = {
         id,
 
-        contract_type_ids,
         hf_code,
 
         check_ultrasound,
@@ -1461,157 +1840,6 @@ export async function ServerGigtestUser ({
     return res.data.response
 }
 
-
-//--------------------------------------------------------------
-//Doctor
-export async function ServerDoctorAdd ({
-                                           user_id,
-                                           specialist_id,
-                                       }: interfaceDoctorAdd) {
-    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
-
-    let arFields = {
-        user_id,
-        specialist_id
-    } as interfaceDoctorAdd
-
-    let url = `/api/doctor/add`
-    console.log(url)
-    let res = await axios.post(url, arFields);
-    await ToastSystemAdd(res.data)
-    return res.data.response
-}
-export async function ServerDoctorGet ({
-                                           q=null,
-
-                                           offset=0,
-                                           count=20
-                                       }: interfaceDoctorGet, {
-                                           cookies=null
-                                       }) {
-    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
-
-    let arFields = {
-        params: {
-            q,
-
-            offset,
-            count
-        } as interfaceDoctorGet,
-        headers: {
-            Cookie: cookies
-        }
-    } as AxiosRequestConfig
-
-    let url = `/api/doctor/get`
-    console.log(url)
-    let res = await axios.get(url, arFields);
-    return res.data.response
-}
-
-//---------------------------------------------------------------------------------
-//Role
-export async function ServerRoleGet ({
-                                         clinic_id,
-
-                                         offset=0,
-                                         count=20
-                                     }: interfaceRoleGet, {
-                                         cookies=null
-                                     }) {
-    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
-
-    let arFields = {
-        params: {
-            clinic_id,
-
-            offset,
-            count
-        } as interfaceRoleGet,
-        headers: {
-            Cookie: cookies
-        }
-    } as AxiosRequestConfig
-
-    let url = `/api/role/get`
-    console.log(url)
-    let res = await axios.get(url, arFields);
-    return res.data.response
-}
-export async function ServerRoleGetById ({ids}: interfaceRoleGetById, {cookies=null}) {
-    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
-
-    let arFields = {
-        params: {
-            ids
-        } as interfaceRoleGetById,
-        headers: {
-            Cookie: cookies
-        }
-    } as AxiosRequestConfig
-
-    let url = `/api/role/getById`
-    console.log(url)
-    let res = await axios.get(url, arFields)
-    return res.data.response
-}
-export async function ServerRoleAdd ({
-                                         clinic_id,
-
-                                         name,
-                                         access
-                                     }: interfaceRoleAdd) {
-    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
-
-    let arFields = {
-        clinic_id,
-
-        name,
-        access
-    } as interfaceRoleAdd
-
-    let url = `/api/role/add`
-    console.log(url)
-    let res = await axios.post(url, arFields);
-    await ToastSystemAdd(res.data)
-    return res.data.response
-}
-export async function ServerRoleEdit ({
-                                          id,
-
-                                          name,
-                                          access
-                                      }: interfaceRoleEdit) {
-    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
-
-    let arFields = {
-        id,
-
-        name,
-        access
-    } as interfaceRoleEdit
-
-    let url = `/api/role/edit`
-    console.log(url)
-    let res = await axios.post(url, arFields);
-    await ToastSystemAdd(res.data)
-    return res.data.response
-}
-export async function ServerRoleDelete ({
-                                            id,
-                                        }: interfaceRoleDelete) {
-    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
-
-    let arFields = {
-        id
-    } as interfaceRoleDelete
-
-    let url = `/api/role/delete`
-    console.log(url)
-    let res = await axios.post(url, arFields);
-    await ToastSystemAdd(res.data)
-    return res.data.response
-}
 
 //проверка где ввыполняется запрос
 function is_server () {

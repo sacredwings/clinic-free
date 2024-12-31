@@ -19,8 +19,8 @@ export interface interfaceUserEdit {
     last_name: string
     second_name: string
 
-    man: '1' | '0'
-    date_birth: Date,
+    gender: 0 | 1
+    date_birth: Date
 
     phone: number
 }
@@ -75,8 +75,6 @@ export interface interfaceOrgEdit {
     ogrn: number
 }
 export interface interfaceOrgGet {
-    clinic_id :string
-
     q: string
 
     offset: number
@@ -115,6 +113,8 @@ export interface interfaceContractAdd {
     price_worker_woman: number
 }
 export interface interfaceContractEdit {
+    clinic_id: string
+
     id: string
 
     title: string
@@ -145,6 +145,8 @@ export interface interfaceContractGet {
     count: number
 }
 export interface interfaceContractGetById {
+    clinic_id: string
+
     ids: string[]
 }
 //---------------------------------------------------------------------------------
@@ -178,8 +180,13 @@ export interface interfaceRoleGetById {
 
     ids: string[]
 }
+export interface interfaceRoleDelete {
+    clinic_id: string
+
+    id: string
+}
 //---------------------------------------------------------------------------------
-//ROLE
+//Employee
 export interface interfaceEmployeeAdd {
     clinic_id: string
 
@@ -221,6 +228,11 @@ export interface interfaceEmployeeGetById {
 
     ids: string[]
 }
+export interface interfaceEmployeeDelete {
+    clinic_id: string
+
+    id: string
+}
 //---------------------------------------------------------------------------------
 //DOCTOR
 export interface interfaceDoctorAdd {
@@ -239,13 +251,16 @@ export interface interfaceDoctorGet {
 export interface interfaceDoctorGetById {
     ids: string[]
 }
+export interface interfaceEmployeeDelete {
+    id: string
+}
 //----------------------------------------------------------------------------------------------------------------------
 //ProfExamination
 export interface interfaceProfExaminationAdd {
     clinic_id: string
 
     contract_id: string | null
-    patient_user: string | null
+    patient_user_id: string | null
 
     hf_code: string[] | null
 
@@ -253,7 +268,7 @@ export interface interfaceProfExaminationAdd {
     last_name: string,
     second_name: string | null,
 
-    gender: number,
+    gender: 0 | 1,
     date_birth: Date,
 
     check_ultrasound: boolean,
@@ -272,7 +287,6 @@ export interface interfaceProfExaminationAdd {
 export interface interfaceProfExaminationEdit {
     id: string
 
-    contract_type_ids: string[] | null
     hf_code: string[] | null
 
     check_ultrasound: boolean,
