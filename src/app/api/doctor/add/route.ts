@@ -13,7 +13,8 @@ export async function POST (request: Request) {
 
             const schema = Joi.object({
                 user_id: Joi.string().min(24).max(24).required(),
-                permissions_ids: Joi.array().min(1).max(50).items(Joi.string().min(24).max(24)).empty([null, '', Joi.array().length(0)]).default(null)
+
+                specialty_ids: Joi.array().min(1).max(50).items(Joi.string().min(24).max(24)).empty([null, '', Joi.array().length(0)]).default(null)
             })
 
             value = await schema.validateAsync(rsRequest)

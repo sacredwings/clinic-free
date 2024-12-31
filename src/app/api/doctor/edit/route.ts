@@ -14,7 +14,7 @@ export async function POST (request: Request) {
             const schema = Joi.object({
                 id: Joi.string().min(24).max(24).required(),
 
-                permissions_ids: Joi.array().min(1).max(50).items(Joi.string().min(24).max(24)).empty([null, '', Joi.array().length(0)]).default(null)
+                specialty_ids: Joi.array().min(1).max(50).items(Joi.string().min(24).max(24)).empty([null, '', Joi.array().length(0)]).default(null)
             });
 
             value = await schema.validateAsync(rsRequest)
@@ -30,9 +30,9 @@ export async function POST (request: Request) {
 
             //меняется имя в любом случае
             let arFields = {
-                permissions_ids: value.permissions_ids
+                specialty_ids: value.specialty_ids
             }
-            let result = await CRole.Edit ( value.id, arFields )
+            let result = await CDoctor.Edit ( value.id, arFields )
 
             return NextResponse.json({
                 err: 0,
