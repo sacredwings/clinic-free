@@ -23,19 +23,18 @@ export async function POST (request: Request) {
             const schema = Joi.object({
                 id: Joi.string().min(24).max(24).allow(null).empty('').default(null),
 
-                contract_type_ids: Joi.array().min(1).max(10).items(Joi.string().min(24).max(24)).allow(null).empty(Joi.array().length(0)).default(null),
-                hf_code: Joi.array().min(1).max(100).items(Joi.string().min(1).max(20)).allow(null).empty('').default(null),
+                hf_code: Joi.array().min(1).max(100).items(Joi.string().min(1).max(20)).allow(null).empty([null, '', Joi.array().length(0)]).default(null),
 
-                check_ultrasound: Joi.boolean().allow(null).empty('').default(null),
-                check_mammography: Joi.boolean().allow(null).empty('').default(null),
-                check_xray: Joi.boolean().allow(null).empty('').default(null),
+                check_ultrasound: Joi.boolean().empty([null, '']).default(null),
+                check_mammography: Joi.boolean().empty([null, '']).default(null),
+                check_xray: Joi.boolean().empty([null, '']).default(null),
 
-                check_pcr: Joi.boolean().allow(null).empty('').default(null),
-                check_hti: Joi.boolean().allow(null).empty('').default(null),
-                check_brucellosis: Joi.boolean().allow(null).empty('').default(null),
+                check_pcr: Joi.boolean().empty([null, '']).default(null),
+                check_hti: Joi.boolean().empty([null, '']).default(null),
+                check_brucellosis: Joi.boolean().empty([null, '']).default(null),
 
-                subdivision: Joi.string().min(0).max(255).allow(null).empty('').default(null),
-                profession: Joi.string().min(0).max(255).allow(null).empty('').default(null),
+                subdivision: Joi.string().min(1).max(255).empty([null, '']).default(null),
+                profession: Joi.string().min(1).max(255).empty([null, '']).default(null),
             })
 
             value = await schema.validateAsync(rsRequest)

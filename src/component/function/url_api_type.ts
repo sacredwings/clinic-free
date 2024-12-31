@@ -178,19 +178,82 @@ export interface interfaceRoleGetById {
 
     ids: string[]
 }
+//---------------------------------------------------------------------------------
+//ROLE
+export interface interfaceEmployeeAdd {
+    clinic_id: string
+
+    title: string
+    description: string
+
+    user_ids: string[]
+
+    role_ids: string[] | null
+    specialty_ids: string[] | null
+
+    date_start: string
+    date_end: string
+}
+export interface interfaceEmployeeEdit {
+    clinic_id: string
+
+    id: string
+
+    title: string
+    description: string
+
+    user_ids: string[]
+
+    role_ids: string[] | null
+    specialty_ids: string[] | null
+
+    date_start: string
+    date_end: string
+}
+export interface interfaceEmployeeGet {
+    clinic_id: string
+
+    offset: number
+    count: number
+}
+export interface interfaceEmployeeGetById {
+    clinic_id: string
+
+    ids: string[]
+}
+//---------------------------------------------------------------------------------
+//DOCTOR
+export interface interfaceDoctorAdd {
+    user_id: string
+    specialty_ids: string[] | null
+}
+export interface interfaceDoctorEdit {
+    id: string
+
+    specialty_ids: string[] | null
+}
+export interface interfaceDoctorGet {
+    offset: number
+    count: number
+}
+export interface interfaceDoctorGetById {
+    ids: string[]
+}
 //----------------------------------------------------------------------------------------------------------------------
 //ProfExamination
 export interface interfaceProfExaminationAdd {
     clinic_id: string
 
     contract_id: string | null
-    contract_type_ids: string[] | null
+    patient_user: string | null
+
     hf_code: string[] | null
 
     first_name: string,
     last_name: string,
     second_name: string | null,
-    man: string,
+
+    gender: number,
     date_birth: Date,
 
     check_ultrasound: boolean,
@@ -252,26 +315,6 @@ export interface interfaceProfExaminationGet {
 export interface interfaceProfExaminationGetById {
     ids: string[]
 }
-
-//---------------------------------------------------------------------------------
-//CONTRACT-TYPE
-export interface interfaceContractTypeAdd {
-    name: string
-}
-export interface interfaceContractTypeEdit {
-    id: string
-
-    name: string
-}
-export interface interfaceContractTypeGet {
-    offset: number
-    count: number
-}
-export interface interfaceContractTypeGetById {
-    ids: string[]
-}
-
-
 
 
 

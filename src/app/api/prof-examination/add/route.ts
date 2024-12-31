@@ -23,24 +23,26 @@ export async function POST (request: Request) {
             //схема
             const schema = Joi.object({
                 clinic_id: Joi.string().min(24).max(24).required(),
-                contract_id: Joi.string().min(24).max(24).allow(null).empty('').default(null),
-                contract_type_ids: Joi.array().min(1).max(10).items(Joi.string().min(24).max(24)).allow(null).empty(Joi.array().length(0)).default(null),
-                hf_code: Joi.array().min(1).max(100).items(Joi.string().min(1).max(20)).allow(null).empty(Joi.array().length(0)).default(null),
+
+                contract_id: Joi.string().min(24).max(24).empty([null, '']).default(null),
+                patient_user: Joi.string().min(24).max(24).empty([null, '']).default(null),
+
+                hf_code: Joi.array().min(1).max(100).items(Joi.string().min(1).max(20)).allow(null).empty([null, '', Joi.array().length(0)]).default(null),
 
                 first_name: Joi.string().min(1).max(255).required(),
                 last_name: Joi.string().min(1).max(255).required(),
-                second_name: Joi.string().min(1).max(255).allow(null).empty('').default(null),
+                second_name: Joi.string().min(1).max(255).empty([null, '']).default(null),
 
                 man: Joi.number().integer().min(0).max(1).required(),
                 date_birth: Joi.date().min('1-1-1900').max('1-1-2030').required(),
 
-                check_ultrasound: Joi.boolean().allow(null).empty('').default(null),
-                check_mammography: Joi.boolean().allow(null).empty('').default(null),
-                check_xray: Joi.boolean().allow(null).empty('').default(null),
+                check_ultrasound: Joi.boolean().empty([null, '']).default(null),
+                check_mammography: Joi.boolean().empty([null, '']).default(null),
+                check_xray: Joi.boolean().empty([null, '']).default(null),
 
-                check_pcr: Joi.boolean().allow(null).empty('').default(null),
-                check_hti: Joi.boolean().allow(null).empty('').default(null),
-                check_brucellosis: Joi.boolean().allow(null).empty('').default(null),
+                check_pcr: Joi.boolean().empty([null, '']).default(null),
+                check_hti: Joi.boolean().empty([null, '']).default(null),
+                check_brucellosis: Joi.boolean().empty([null, '']).default(null),
 
                 //oms_policy_number: Joi.number().integer().min(999999999999999).max(9999999999999999).allow(null).empty('').default(null),
                 //snils: Joi.number().integer().min(9999999999).max(99999999999).allow(null).empty('').default(null),
@@ -59,11 +61,11 @@ export async function POST (request: Request) {
                 //passport_date: Joi.date().min('1-1-1900').max('1-1-2030').allow(null).empty('').default(null),
 
                 //passport_issued_by: Joi.string().min(0).max(255).allow(null).empty('').default(null),
-                phone: Joi.number().min(1000000000).max(9999999999).allow(null).empty('').default(null),
+                phone: Joi.number().min(1000000000).max(9999999999).empty([null, '']).default(null),
                 //phone_additional: Joi.number().integer().min(70000000000).max(79999999999).allow(null).empty('').default(null),
 
-                subdivision: Joi.string().min(1).max(255).allow(null).empty('').default(null),
-                profession: Joi.string().min(1).max(255).allow(null).empty('').default(null),
+                subdivision: Joi.string().min(1).max(255).empty([null, '']).default(null),
+                profession: Joi.string().min(1).max(255).empty([null, '']).default(null),
                 //employment_date: Joi.date().min('1-1-1900').max('1-1-2030').allow(null).empty('').default(null),
 
                 //work_place: Joi.string().min(0).max(255).allow(null).empty('').default(null),
