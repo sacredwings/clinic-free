@@ -1,12 +1,11 @@
 // @ts-nocheck
 'use client'
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react"
 import Style from "./style.module.sass";
-import RoleElement from "@/component/role/element";
-//import TopicAdd from "@/component/topic/add";
+import RoleElement from "@/component/clinic/edit/role/element";
 import Link from "next/link";
 
-export default function RoleList ({list, account, clinic, accessView, accessAdd, accessEdit, accessDelete}) {
+export default function RoleList ({clinic, list, account, accessView, accessAdd, accessEdit, accessDelete}) {
     let [clientList, setClientList] = useState(list)
 
     useEffect(() => {

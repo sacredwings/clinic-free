@@ -16,7 +16,7 @@ export default async function ClinicId ({
         <div className={"publicPage"}>
             <div className={"publicContainer"}>
                 <Link href={`/clinic/${params.clinic_id}/admin/appointment`}>
-                    <div className={"publicCard"}>
+                    <div className={"publicCard publicCardDisable"}>
                         Приемы (в разработке)
                     </div>
                 </Link>

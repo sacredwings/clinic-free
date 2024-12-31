@@ -1,6 +1,7 @@
 // @ts-nocheck
 import {cookies} from "next/headers";
 import Link from "next/link";
+import React from "react";
 
 export default async function ClinicId ({
                                             params,
@@ -12,12 +13,14 @@ export default async function ClinicId ({
 
 
     return (
-        <div>
-            <div>
-                <p>Клиника панель Бухгалтера</p>
+        <div className={"publicPage"}>
+            <div className={"publicContainer"}>
+                <Link href={`/clinic/${params.clinic_id}/accountant/employee`}>
+                    <div className={"publicCard"}>
+                        Сотрудники
+                    </div>
+                </Link>
             </div>
-
-            {clinic._id}
         </div>
     )
 

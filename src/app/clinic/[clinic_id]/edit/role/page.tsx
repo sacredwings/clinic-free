@@ -1,8 +1,8 @@
 // @ts-nocheck
-import {ServerClinicGet, ServerClinicGetById, ServerRoleGet} from "@/component/function/url_api";
+import {ServerAccountGet, ServerRoleGet} from "@/component/function/url_api";
 import {cookies} from "next/headers";
 import Link from "next/link";
-//import List from "@/component/role/list";
+import List from "@/component/clinic/edit/role/list";
 
 export default async function Role ({
     params,
@@ -25,9 +25,12 @@ export default async function Role ({
         <div>
 
             <div>
-                <p>Список ролей клиники</p>
+                <p>Список ролей</p>
 
-                {/*<List list={list} accessAdd={true} clinic={{_id: params.clinic_id}}/>*/}
+                {!list.code ? <List list={list.response} accessAdd={true} clinic={{_id: params.clinic_id}}/> :
+                    <div className="alert alert-warning" role="alert">
+                        <b>{list.code}</b> {list.msg}
+                    </div>}
             </div>
 
 

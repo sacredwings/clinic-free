@@ -4,9 +4,8 @@ import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import { mongo, minio } from "@/utility/connect"
 import Config from "../../../../../config.json";
-import CRole from "@/class/role"
 import {Authentication} from "@/app/api/function";
-import CPermission from "@/class/permission";
+import CRole from "@/class/role";
 
 export async function GET(request: Request) {
     let value
@@ -29,6 +28,7 @@ export async function GET(request: Request) {
 
             value = await schema.validateAsync(url)
 
+
         } catch (err) {
             console.log(err)
             throw ({code: 412, msg: 'Неверные параметры'})
@@ -44,8 +44,9 @@ export async function GET(request: Request) {
                 count: value.count,
                 offset: value.offset
             }
-            let items = await CPermission.Get ( value.clinic_id, arFields )
-            let count = await CPermission.GetCount ( value.clinic_id, arFields )
+
+            let items = await CRole.Get ( value.clinic_id, arFields )
+            let count = await CRole.GetCount ( value.clinic_id, arFields )
 
             return NextResponse.json({
                 code: 0,
@@ -58,6 +59,7 @@ export async function GET(request: Request) {
             throw ({...{err: 10000000, msg: 'Ошибка формирования результата'}, ...err})
         }
     } catch (err) {
+        console.log(err)
         return NextResponse.json({...{code: 10000000, msg: 'RRole Get'}, ...err})
     }
 }

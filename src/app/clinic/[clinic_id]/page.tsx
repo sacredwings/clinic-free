@@ -32,13 +32,13 @@ export default async function ClinicId ({
             <div className={"publicBlock"}>
                 <div className={"publicContainer"}>
                     <Link href={`/clinic/${params.clinic_id}/patient`}>
-                        <div className={"publicCard"}>
+                        <div className={"publicCard publicCardDisable"}>
                             Пациент (в разработке)
                         </div>
                     </Link>
 
                     <Link href={`/clinic/${params.clinic_id}/doctor`}>
-                        <div className={"publicCard"}>
+                        <div className={"publicCard publicCardDisable"}>
                             Врач (в разработке)
                         </div>
                     </Link>
@@ -51,25 +51,25 @@ export default async function ClinicId ({
 
                     <Link href={`/clinic/${params.clinic_id}/accountant`}>
                         <div className={"publicCard"}>
-                            Бухралтер (в разработке)
+                            Бухгалтер
                         </div>
                     </Link>
 
                     <Link href={`/clinic/${params.clinic_id}/cashier`}>
-                        <div className={"publicCard"}>
+                        <div className={"publicCard publicCardDisable"}>
                             Кассир (в разработке)
                         </div>
                     </Link>
 
                     <Link href={`/clinic/${params.clinic_id}/reception`}>
                         <div className={"publicCard"}>
-                            Регистратура (в разработке)
+                            Регистратура
                         </div>
                     </Link>
 
                     <Link href={`/clinic/${params.clinic_id}/edit`}>
                         <div className={"publicCard"}>
-                            Настройки (в разработке)
+                            Настройки
                         </div>
                     </Link>
                 </div>

@@ -8,12 +8,11 @@ export default function RootLayout({
     return (
         <>
             <div>
-                Меню Бухгалтера
+                <p><span class="badge text-bg-secondary">Бухгалтер</span></p>
             </div>
-            <main className={'container'}>
+            <main>
                 {children}
             </main>
         </>
-
     )
 }

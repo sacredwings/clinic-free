@@ -1,26 +1,25 @@
 // @ts-nocheck
 import {cookies} from "next/headers";
 import Link from "next/link";
+import React from "react";
 
 export default async function ClinicId ({
-                                            params,
-                                            searchParams
-                                        }:{
+    params,
+    searchParams
+}:{
     params: { clinic_id: string },
     searchParams: { page: number, q: string }
 }) {
 
-
     return (
-        <div>
-            <div>
-                <p>Клиника панель Настроек</p>
+        <div className={"publicPage"}>
+            <div className={"publicContainer"}>
+                <Link href={`/clinic/${params.clinic_id}/edit/role`}>
+                    <div className={"publicCard"}>
+                        Роли
+                    </div>
+                </Link>
             </div>
-
-            {params.clinic_id}
-
-            <br/>
-            <Link href={`/clinic/${params.clinic_id}/edit/role`}>Роли</Link>
         </div>
     )
 

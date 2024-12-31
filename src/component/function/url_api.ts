@@ -538,7 +538,7 @@ export async function ServerContractGetById ({clinic_id, ids}: interfaceContract
 }
 //---------------------------------------------------------------------------------
 //ROLE
-export async function ServerContractAdd ({
+export async function ServerRoleAdd ({
     clinic_id,
 
     title,
@@ -617,7 +617,7 @@ export async function ServerRoleGet ({
     let url = `/api/role/get`
     console.log(url)
     let res = await axios.get(url, arFields);
-    return res.data.response
+    return res.data
 }
 export async function ServerRoleGetById ({clinic_id, ids}: interfaceRoleGetById, {cookies=null}) {
     if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
@@ -932,14 +932,14 @@ export async function ServerProfExaminationAdd ({
     let arFields = {
         clinic_id,
 
-        contract_id=null,
-        patient_user_id=null,
+        contract_id,
+        patient_user_id,
 
-        hf_code=null,
+        hf_code,
 
         first_name,
         last_name,
-        second_name=null,
+        second_name,
 
         gender,
         date_birth,
@@ -952,10 +952,10 @@ export async function ServerProfExaminationAdd ({
         check_hti,
         check_brucellosis,
 
-        phone=null,
+        phone,
 
         subdivision,
-        profession,
+        profession
     } as interfaceProfExaminationAdd
 
     let url = `/api/prof-examination/add`
