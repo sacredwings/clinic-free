@@ -5,15 +5,15 @@ export default function RootLayout({
                                    }: {
     children: React.ReactNode
 }) {
+
     return (
         <>
             <div>
-                Меню Врача
+                <p><span class="badge text-bg-secondary">Врач</span></p>
             </div>
-            <main className={'container'}>
+            <main>
                 {children}
             </main>
         </>
-
     )
 }

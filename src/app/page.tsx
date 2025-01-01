@@ -12,17 +12,17 @@ export default function Home() {
                     </div>
                 </Link>
                 <Link href={'/doctor'}>
-                    <div className={"publicCard"}>
+                    <div className={"publicCard publicCardDisable"}>
                         Врачи (в разработке)
                     </div>
                 </Link>
                 <Link href={'/service'}>
-                    <div className={"publicCard"}>
+                    <div className={"publicCard publicCardDisable"}>
                         Услуги (в разработке)
                     </div>
                 </Link>
                 <Link href={'/diagnostic'}>
-                    <div className={"publicCard"}>
+                    <div className={"publicCard publicCardDisable"}>
                         Диагностика (в разработке)
                     </div>
                 </Link>

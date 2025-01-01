@@ -86,23 +86,13 @@ export default function Navbar ({resAccount}) {
                         <li className="nav-item dropdown">
                             <Link className="nav-link dropdown-toggle" href={'#'} role="button" data-bs-toggle="dropdown"
                                aria-expanded="false">
-                                Мед. комиссии
+                                Поиск
                             </Link>
                             <ul className="dropdown-menu">
-                                <li><Link className="dropdown-item" href={'/org'}>Организации</Link></li>
-                                <li><Link className="dropdown-item" href={'/hf/constructor'}>Вредные факторы</Link></li>
-                                <li><Link className="dropdown-item" href={'/contract-type/constructor'}>Типы договоров</Link></li>
-                                <li><Link className="dropdown-item" href={'/doctor'}>Врач</Link></li>
-                            </ul>
-                        </li>
-                        <li className="nav-item dropdown">
-                        <Link className="nav-link dropdown-toggle" href={'#'} role="button" data-bs-toggle="dropdown"
-                                  aria-expanded="false">
-                                Пользователи
-                            </Link>
-                            <ul className="dropdown-menu">
-                                <li><Link className="dropdown-item" href={'/user'}>Пользователи</Link></li>
-                                <li><Link className="dropdown-item" href={'/role'}>Роли</Link></li>
+                                <li><Link className="dropdown-item" href={'/clinic'}>Клиники</Link></li>
+                                <li><Link className="dropdown-item" href={'/doctor'}>Врачи</Link></li>
+                                <li><Link className="dropdown-item" href={'/service'}>Услуги</Link></li>
+                                <li><Link className="dropdown-item" href={'/diagnostic'}>Диагностика</Link></li>
                             </ul>
                         </li>
                     </ul>

@@ -31,15 +31,16 @@ export default async function ClinicId ({
 
             <div className={"publicBlock"}>
                 <div className={"publicContainer"}>
-                    <Link href={`/clinic/${params.clinic_id}/patient`}>
-                        <div className={"publicCard publicCardDisable"}>
-                            Пациент (в разработке)
+
+                    <Link href={`/clinic/${params.clinic_id}/reception`}>
+                        <div className={"publicCard"}>
+                            Регистратура
                         </div>
                     </Link>
 
                     <Link href={`/clinic/${params.clinic_id}/doctor`}>
-                        <div className={"publicCard publicCardDisable"}>
-                            Врач (в разработке)
+                        <div className={"publicCard"}>
+                            Врач
                         </div>
                     </Link>
 
@@ -55,21 +56,21 @@ export default async function ClinicId ({
                         </div>
                     </Link>
 
-                    <Link href={`/clinic/${params.clinic_id}/cashier`}>
-                        <div className={"publicCard publicCardDisable"}>
-                            Кассир (в разработке)
-                        </div>
-                    </Link>
-
-                    <Link href={`/clinic/${params.clinic_id}/reception`}>
-                        <div className={"publicCard"}>
-                            Регистратура
-                        </div>
-                    </Link>
-
                     <Link href={`/clinic/${params.clinic_id}/edit`}>
                         <div className={"publicCard"}>
                             Настройки
+                        </div>
+                    </Link>
+
+                    <Link href={`/clinic/${params.clinic_id}/patient`}>
+                        <div className={"publicCard publicCardDisable"}>
+                            Пациент (в разработке)
+                        </div>
+                    </Link>
+
+                    <Link href={`/clinic/${params.clinic_id}/cashier`}>
+                        <div className={"publicCard publicCardDisable"}>
+                            Кассир (в разработке)
                         </div>
                     </Link>
                 </div>

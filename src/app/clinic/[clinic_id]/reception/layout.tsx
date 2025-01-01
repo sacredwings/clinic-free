@@ -8,12 +8,11 @@ export default function RootLayout({
     return (
         <>
             <div>
-                Меню Регистратуры
+                <p><span class="badge text-bg-secondary">Регистратура</span></p>
             </div>
-            <main className={'container'}>
+            <main>
                 {children}
             </main>
         </>
-
     )
 }
