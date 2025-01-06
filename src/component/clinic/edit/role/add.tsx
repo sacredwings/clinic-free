@@ -4,12 +4,15 @@
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
 import {ServerRoleAdd} from "@/component/function/url_api";
+import RadioButtonGroup from "@/component/element/RadioButtonGroup";
 
-export default function Add ({}) {
+export default function Add ({clinic_id, listPermission}) {
 
     const formDefault = {
         title: '',
-        access: [],
+        description: '',
+
+        permission_ids: []
     }
     let [form, setForm] = useState(formDefault)
 
@@ -26,10 +29,7 @@ export default function Add ({}) {
         if (e)
             e.preventDefault() // Stop form submit
 
-        let arFields = {
-            title: form.title,
-            access: form.access
-        }
+        let arFields = {...formDefault, clinic_id: clinic_id}
 
         let result = await ServerRoleAdd(arFields)
     }
@@ -48,11 +48,20 @@ export default function Add ({}) {
                                                               value={form.title} onChange={onChangeText}/></div>
                         </div>
 
+                        <div className="mb-3 row">
+                            <label htmlFor="description" className="form-label">Описание</label>
+                            <textarea className="form-control" id="description" rows="3" value={form.description}
+                                      onChange={onChangeText}></textarea>
+                        </div>
+
+                        <RadioButtonGroup list={listPermission.items}/>
+
                         <div className="mb-3">
                             <button type="submit" className="btn btn-primary btn-sm">
                                 Добавить
                             </button>
                         </div>
+
                     </div>
                 </div>
             </form>

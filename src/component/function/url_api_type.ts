@@ -150,6 +150,15 @@ export interface interfaceContractGetById {
     ids: string[]
 }
 //---------------------------------------------------------------------------------
+//Permission
+export interface interfacePermissionGet {
+    offset: number
+    count: number
+}
+export interface interfacePermissionGetById {
+    ids: string[]
+}
+//---------------------------------------------------------------------------------
 //ROLE
 export interface interfaceRoleAdd {
     clinic_id: string

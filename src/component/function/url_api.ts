@@ -65,7 +65,11 @@ import {
     interfaceEmployeeEdit,
     interfaceEmployeeGet,
     interfaceEmployeeGetById,
-    interfaceEmployeeDelete, interfaceDoctorEdit, interfaceDoctorGetById
+    interfaceEmployeeDelete,
+    interfaceDoctorEdit,
+    interfaceDoctorGetById,
+    interfacePermissionGet,
+    interfacePermissionGetById
 } from './url_api_type'
 import axios, {AxiosRequestConfig} from "axios"
 import {ToastSystemAdd} from "@/component/toast/function";
@@ -532,6 +536,48 @@ export async function ServerContractGetById ({clinic_id, ids}: interfaceContract
     } as AxiosRequestConfig
 
     let url = `/api/contract/getById`
+    console.log(url)
+    let res = await axios.get(url, arFields)
+    return res.data.response
+}
+//---------------------------------------------------------------------------------
+//Permission
+export async function ServerPermissionGet ({
+    offset=0,
+    count=20
+}: interfacePermissionGet, {
+    cookies=null
+}) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        params: {
+            offset,
+            count
+        } as interfacePermissionGet,
+        headers: {
+            Cookie: cookies
+        }
+    } as AxiosRequestConfig
+
+    let url = `/api/permission/get`
+    console.log(url)
+    let res = await axios.get(url, arFields);
+    return res.data
+}
+export async function ServerPermissionGetById ({clinic_id, ids}: interfacePermissionGetById, {cookies=null}) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        params: {
+            ids
+        } as interfacePermissionGetById,
+        headers: {
+            Cookie: cookies
+        }
+    } as AxiosRequestConfig
+
+    let url = `/api/permission/getById`
     console.log(url)
     let res = await axios.get(url, arFields)
     return res.data.response

@@ -2,12 +2,12 @@
 import {ServerAccountGet, ServerRoleGet, ServerPermissionGet} from "@/component/function/url_api";
 import {cookies} from "next/headers";
 import Link from "next/link";
-import List from "@/component/clinic/edit/role/list";
+import Add from "@/component/clinic/edit/role/add";
 
 export default async function Role ({
-    params,
-    searchParams
-}:{
+                                        params,
+                                        searchParams
+                                    }:{
     params: { clinic_id: string },
     searchParams: { page: number, q: string }
 }) {
@@ -37,12 +37,12 @@ export default async function Role ({
 
     const ListContent = () => {
         if (!error)
-            return <List listPermission={listPermission.response} listRole={listRole.response} accessAdd={true} clinic={{_id: params.clinic_id}}/>
+            return <Add listPermission={listPermission.response} listRole={listRole.response} accessAdd={true} clinic={{_id: params.clinic_id}}/>
     }
 
     return (
         <div>
-            <p>Список ролей</p>
+            <p>Создание роли</p>
 
             {ListError([account, listRole, listPermission])}
 
