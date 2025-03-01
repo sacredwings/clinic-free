@@ -146,17 +146,17 @@ export default class Org {
         }
     }
 
-    static async Delete (clinic_id, user_id, id) {
+    static async Delete (user_id, id) {
         try {
             //ПРОВЕРКА / нет договоров в организации
 
             id = new DB().ObjectID(id)
-            clinic_id = new DB().ObjectID(clinic_id)
+            //clinic_id = new DB().ObjectID(clinic_id)
             user_id = new DB().ObjectID(user_id)
 
             let arFields = {
                 delete: true,
-                delete_clinic_id: clinic_id, //какая клиника удалила
+                //delete_clinic_id: clinic_id, //какая клиника удалила
                 delete_user_id: user_id,
                 delete_date: new Date(),
             }

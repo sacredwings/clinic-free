@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server'
 import { mongo, minio } from "@/utility/connect"
 import Joi from "joi"
-import CProfExamination from "@/class/prof-examination"
+import CProfExamination from "@/class/medical-examination"
 import CContract from "@/class/contract"
 import CContractType from "@/class/contract-type"
 import CHf from "@/class/hf"

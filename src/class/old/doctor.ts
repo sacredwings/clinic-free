@@ -10,7 +10,7 @@ export default class CDoctor {
     static async Add ( user_id, fields ) {
         try {
             fields.user_id = new DB().ObjectID(user_id)
-            fields.specialty_ids = new DB().ObjectID(fields.specialty_ids)
+            fields.specialist_ids = new DB().ObjectID(fields.specialist_ids)
             fields.create_date = new Date()
 
             const mongoClient = Store.GetMongoClient()

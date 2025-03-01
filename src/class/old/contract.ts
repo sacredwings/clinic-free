@@ -1,32 +1,30 @@
+// @ts-nocheck
+
 /*
-    Роли
+    Договора привязанны к конкретной клинике
 */
 
-// @ts-nocheck
 import { DB, Store } from "../../../social-framework/src"
 
-export default class ExaminationResearch {
+export default class Contract {
 
     static async Add ( clinic_id, user_id, fields ) {
         try {
             fields.clinic_id = new DB().ObjectID(clinic_id)
 
-            fields.medical_examinations_id = new DB().ObjectID(fields.medical_examinations_id)
-            fields.patient_user_id = new DB().ObjectID(fields.patient_user_id)
-            fields.research_id = new DB().ObjectID(fields.research_id)
-            fields.doctor_id = new DB().ObjectID(fields.doctor_id)
+            fields.org_id = new DB().ObjectID(fields.org_id)
 
             fields.create_user_id = new DB().ObjectID(user_id)
             fields.create_date = new Date()
 
             const mongoClient = Store.GetMongoClient()
-            let collection = mongoClient.collection('role')
+            let collection = mongoClient.collection('contract')
             await collection.insertOne(fields)
             return fields
 
         } catch (err) {
             console.log(err)
-            throw ({...{err: 7001000, msg: 'CRole Add'}, ...err})
+            throw ({...{err: 7001000, msg: 'CContract Add'}, ...err})
         }
     }
 
@@ -45,51 +43,34 @@ export default class ExaminationResearch {
             })
             arAggregate.push({
                 $lookup: {
-                    from: 'medical_examinations',
-                    localField: 'medical_examinations_id',
+                    from: 'org',
+                    localField: 'org_id',
                     foreignField: '_id',
-                    as: '_medical_examinations_id'
+                    as: '_org_id'
                 }
             })
             arAggregate.push({
-                $lookup: {
-                    from: 'user',
-                    localField: 'patient_user_id',
-                    foreignField: '_id',
-                    as: '_patient_user_id'
-                }
-            })
-            arAggregate.push({
-                $lookup: {
-                    from: 'research',
-                    localField: 'research_id',
-                    foreignField: '_id',
-                    as: '_research_id'
-                }
-            })
-            arAggregate.push({
-                $lookup: {
-                    from: 'doctor',
-                    localField: 'doctor_id',
-                    foreignField: '_id',
-                    as: '_doctor_id'
+                $unwind: {
+                    path: '$_org_id',
+                    preserveNullAndEmptyArrays: true
                 }
             })
 
             const mongoClient = Store.GetMongoClient()
-            let collection = mongoClient.collection('role')
+            let collection = mongoClient.collection('contract')
             let result = await collection.aggregate(arAggregate).toArray()
             return result
 
         } catch (err) {
             console.log(err)
-            throw ({...{err: 7001000, msg: 'CRole GetById'}, ...err})
+            throw ({...{err: 7001000, msg: 'CContract GetById'}, ...err})
         }
     }
 
     static async Get ( clinic_id, fields ) {
         try {
             clinic_id = new DB().ObjectID(clinic_id)
+            fields.org_id = new DB().ObjectID(fields.org_id)
 
             let arAggregate = []
             arAggregate.push({
@@ -100,51 +81,43 @@ export default class ExaminationResearch {
             })
             arAggregate.push({
                 $lookup: {
-                    from: 'medical_examinations',
-                    localField: 'medical_examinations_id',
+                    from: 'org',
+                    localField: 'org_id',
                     foreignField: '_id',
-                    as: '_medical_examinations_id'
+                    as: '_org_id'
                 }
             })
             arAggregate.push({
-                $lookup: {
-                    from: 'user',
-                    localField: 'patient_user_id',
-                    foreignField: '_id',
-                    as: '_patient_user_id'
+                $unwind: {
+                    path: '$_org_id',
+                    preserveNullAndEmptyArrays: true
                 }
             })
+
+            if (fields.org_id)
+                arAggregate[0].$match.org_id = fields.org_id
+
             arAggregate.push({
-                $lookup: {
-                    from: 'research',
-                    localField: 'research_id',
-                    foreignField: '_id',
-                    as: '_research_id'
-                }
-            })
-            arAggregate.push({
-                $lookup: {
-                    from: 'doctor',
-                    localField: 'doctor_id',
-                    foreignField: '_id',
-                    as: '_doctor_id'
+                $sort: {
+                    _id: -1,
                 }
             })
 
             const mongoClient = Store.GetMongoClient()
-            let collection = mongoClient.collection('role')
+            let collection = mongoClient.collection('contract')
             let result = await collection.aggregate(arAggregate).skip(fields.offset).limit(fields.count).toArray()
             return result
 
         } catch (err) {
             console.log(err)
-            throw ({...{err: 7001000, msg: 'CRole Get'}, ...err})
+            throw ({...{err: 7001000, msg: 'CContract Get'}, ...err})
         }
     }
 
     static async GetCount ( clinic_id, fields ) {
         try {
             clinic_id = new DB().ObjectID(clinic_id)
+            fields.org_id = new DB().ObjectID(fields.org_id)
 
             let arAggregate = []
             arAggregate.push({
@@ -158,8 +131,11 @@ export default class ExaminationResearch {
                 $count: 'count'
             })
 
+            if (fields.org_id)
+                arAggregate[0].$match.org_id = fields.org_id
+
             const mongoClient = Store.GetMongoClient()
-            let collection = mongoClient.collection('role')
+            let collection = mongoClient.collection('clinic')
             let result = await collection.aggregate(arAggregate).toArray()
 
             if (!result.length) return 0
@@ -167,7 +143,7 @@ export default class ExaminationResearch {
 
         } catch (err) {
             console.log(err)
-            throw ({code: 6004000, msg: 'CRole GetCount'})
+            throw ({code: 6004000, msg: 'CClinic GetCount'})
         }
     }
 
@@ -177,35 +153,26 @@ export default class ExaminationResearch {
             user_id = new DB().ObjectID(user_id)
             id = new DB().ObjectID(id)
 
-            fields.medical_examination_id = new DB().ObjectID(fields.medical_examination_id)
-            fields.patient_user_id = new DB().ObjectID(fields.patient_user_id)
-            fields.research_id = new DB().ObjectID(fields.research_id)
-            fields.doctor_id = new DB().ObjectID(fields.doctor_id)
-
             let arFields = {
-                medical_examination_id: field.medical_examination_id,
-                patient_user_id: fields.patient_user_id,
-                research_id: fields.research_id,
-                doctor_id: fields.doctor_id,
-
                 edit_user_id: user_id,
                 edit_date: new Date(),
             }
 
             const mongoClient = Store.GetMongoClient()
-            let collection = mongoClient.collection('role')
+            let collection = mongoClient.collection('contract')
             let result = collection.updateOne({clinic_id: clinic_id, _id: id}, {$set: {...fields, ...arFields}})
             return result
 
         } catch (err) {
             console.log(err)
-            throw ({...{err: 7001000, msg: 'CRole Edit'}, ...err})
+            throw ({...{err: 7001000, msg: 'CContract Edit'}, ...err})
         }
     }
 
-    static async Delete ( clinic_id, user_id, id ) {
+    static async Delete ( clinic_id, user_id, id , fields ) {
         try {
-            //ПРОВЕРКА / где роли уже используются
+            //ПРОВЕРКА / права позволяют
+            //ПРОВЕРКА / нет осмотров в договоре
 
             clinic_id = new DB().ObjectID(clinic_id)
             user_id = new DB().ObjectID(user_id)
@@ -218,12 +185,12 @@ export default class ExaminationResearch {
             }
 
             const mongoClient = Store.GetMongoClient()
-            let collection = mongoClient.collection('role')
+            let collection = mongoClient.collection('contract')
             let result = collection.updateOne({clinic_id: clinic_id, _id: id}, {$set: arFields}, {upsert: true})
             return result
         } catch (err) {
             console.log(err)
-            throw ({code: 7001000, msg: 'CRole Delete'})
+            throw ({code: 7001000, msg: 'CContract Delete'})
         }
     }
 }

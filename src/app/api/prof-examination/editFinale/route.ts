@@ -1,7 +1,7 @@
 // @ts-nocheck
 import Joi from "joi"
 import CUser from "@/class/user"
-import CProfExamination from "@/class/prof-examination"
+import CProfExamination from "@/class/medical-examination"
 import CContract from "@/class/contract"
 import CContractType from "@/class/contract-type"
 import CHf from "@/class/hf"

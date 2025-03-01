@@ -11,7 +11,7 @@ export default class ExaminationResearch {
         try {
             fields.clinic_id = new DB().ObjectID(clinic_id)
 
-            fields.medical_examinations_id = new DB().ObjectID(fields.medical_examinations_id)
+            fields.prof_examination_id = new DB().ObjectID(fields.prof_examination_id)
             fields.patient_user_id = new DB().ObjectID(fields.patient_user_id)
             fields.research_id = new DB().ObjectID(fields.research_id)
             fields.doctor_id = new DB().ObjectID(fields.doctor_id)
@@ -45,10 +45,10 @@ export default class ExaminationResearch {
             })
             arAggregate.push({
                 $lookup: {
-                    from: 'medical_examinations',
-                    localField: 'medical_examinations_id',
+                    from: 'prof_examination',
+                    localField: 'prof_examination_id',
                     foreignField: '_id',
-                    as: '_medical_examinations_id'
+                    as: '_prof_examination_id'
                 }
             })
             arAggregate.push({
@@ -100,10 +100,10 @@ export default class ExaminationResearch {
             })
             arAggregate.push({
                 $lookup: {
-                    from: 'medical_examinations',
-                    localField: 'medical_examinations_id',
+                    from: 'prof_examination',
+                    localField: 'prof_examination_id',
                     foreignField: '_id',
-                    as: '_medical_examinations_id'
+                    as: '_prof_examination_id'
                 }
             })
             arAggregate.push({
@@ -177,13 +177,13 @@ export default class ExaminationResearch {
             user_id = new DB().ObjectID(user_id)
             id = new DB().ObjectID(id)
 
-            fields.medical_examination_id = new DB().ObjectID(fields.medical_examination_id)
+            fields.prof_examination_id = new DB().ObjectID(fields.prof_examination_id)
             fields.patient_user_id = new DB().ObjectID(fields.patient_user_id)
             fields.research_id = new DB().ObjectID(fields.research_id)
             fields.doctor_id = new DB().ObjectID(fields.doctor_id)
 
             let arFields = {
-                medical_examination_id: field.medical_examination_id,
+                prof_examination_id: prof_examination_id,
                 patient_user_id: fields.patient_user_id,
                 research_id: fields.research_id,
                 doctor_id: fields.doctor_id,

@@ -11,10 +11,11 @@ export default class ExaminationConclusion {
         try {
             fields.clinic_id = new DB().ObjectID(clinic_id)
 
-            fields.prof_examination_id = new DB().ObjectID(fields.prof_examination_id)
+            fields.medical_examinations_id = new DB().ObjectID(fields.medical_examinations_id)
             fields.patient_user_id = new DB().ObjectID(fields.patient_user_id)
             fields.specialty_id = new DB().ObjectID(fields.specialty_id)
             fields.doctor_id = new DB().ObjectID(fields.doctor_id)
+            fields.doctor_user_id = new DB().ObjectID(fields.doctor_user_id)
 
             fields.create_user_id = new DB().ObjectID(user_id)
             fields.create_date = new Date()
@@ -45,10 +46,10 @@ export default class ExaminationConclusion {
             })
             arAggregate.push({
                 $lookup: {
-                    from: 'prof_examination',
-                    localField: 'prof_examination_id',
+                    from: 'medical_examinations',
+                    localField: 'medical_examinations_id',
                     foreignField: '_id',
-                    as: '_prof_examination_id'
+                    as: '_medical_examinations_id'
                 }
             })
             arAggregate.push({
@@ -100,10 +101,10 @@ export default class ExaminationConclusion {
             })
             arAggregate.push({
                 $lookup: {
-                    from: 'prof_examination',
-                    localField: 'prof_examination_id',
+                    from: 'medical_examinations',
+                    localField: 'medical_examinations_id',
                     foreignField: '_id',
-                    as: '_prof_examination_id'
+                    as: '_medical_examinations_id'
                 }
             })
             arAggregate.push({
@@ -177,13 +178,13 @@ export default class ExaminationConclusion {
             user_id = new DB().ObjectID(user_id)
             id = new DB().ObjectID(id)
 
-            fields.prof_examination_id = new DB().ObjectID(fields.prof_examination_id)
+            fields.medical_examinations_id = new DB().ObjectID(fields.medical_examinations_id)
             fields.patient_user_id = new DB().ObjectID(fields.patient_user_id)
             fields.specialty_id = new DB().ObjectID(fields.specialty_id)
             fields.doctor_id = new DB().ObjectID(fields.doctor_id)
 
             let arFields = {
-                prof_examination_id: prof_examination_id,
+                medical_examinations_id: fields.medical_examinations_id,
                 patient_user_id: fields.patient_user_id,
                 specialty_id: fields.specialty_id,
                 doctor_id: fields.doctor_id,
