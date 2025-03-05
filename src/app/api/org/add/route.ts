@@ -18,8 +18,8 @@ export async function POST (request: Request) {
                 title: Joi.string().min(3).max(255).required(),
 
                 inn: Joi.number().integer().min(0).max(9223372036854775807).required(),
-                kpp: Joi.number().integer().min(0).max(9223372036854775807).required(),
-                ogrn: Joi.number().integer().min(0).max(9223372036854775807).required(),
+                kpp: Joi.number().integer().min(0).max(9223372036854775807).empty([null, '']).default(null),
+                ogrn: Joi.number().integer().min(0).max(9223372036854775807).empty([null, '']).default(null),
 
                 /*
                 payment_account: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(null),
