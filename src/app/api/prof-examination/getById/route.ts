@@ -8,6 +8,8 @@ import CProfExamination from "@/class/prof-examination";
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url)
     let url = {
+        clinic_id: searchParams.get('clinic_id'),
+
         ids: searchParams.get('ids[]')
     }
     if (url.ids) url.ids = url.ids.split(',')
@@ -17,6 +19,8 @@ export async function GET(request: Request) {
         try {
             //схема
             const schema = Joi.object({
+                clinic_id: Joi.string().min(24).max(24).required(),
+
                 ids: Joi.array().min(1).max(50).items(Joi.string().min(24).max(24)).required()
             })
             value = await schema.validateAsync(url)
@@ -28,7 +32,7 @@ export async function GET(request: Request) {
         try {
             await mongo()
 
-            let result = await CProfExamination.GetById ( value.ids )
+            let result = await CProfExamination.GetById (value.clinic_id, value.ids)
 
             return NextResponse.json({
                 code: 0,

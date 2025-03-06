@@ -381,6 +381,7 @@ export async function ServerContractAdd ({
     clinic_id,
 
     org_id,
+    contract_type_ids,
 
     title,
     description,

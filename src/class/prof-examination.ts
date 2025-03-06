@@ -20,13 +20,13 @@ export default class ProfExamination {
             //проверка номера кабинета на существование
 
             const mongoClient = Store.GetMongoClient()
-            let collection = mongoClient.collection('employee')
+            let collection = mongoClient.collection('prof-examination')
             await collection.insertOne(fields)
             return fields
 
         } catch (err) {
             console.log(err)
-            throw ({...{err: 7001000, msg: 'CEmployee Add'}, ...err})
+            throw ({...{err: 7001000, msg: 'CProfExamination Add'}, ...err})
         }
     }
 
@@ -92,13 +92,13 @@ export default class ProfExamination {
                 }
             })
             const mongoClient = Store.GetMongoClient()
-            let collection = mongoClient.collection('employee')
+            let collection = mongoClient.collection('prof-examination')
             let result = await collection.aggregate(arAggregate).toArray()
             return result
 
         } catch (err) {
             console.log(err)
-            throw ({...{err: 7001000, msg: 'CEmployee GetById'}, ...err})
+            throw ({...{err: 7001000, msg: 'CProfExamination GetById'}, ...err})
         }
     }
 
@@ -163,13 +163,13 @@ export default class ProfExamination {
             })
 
             const mongoClient = Store.GetMongoClient()
-            let collection = mongoClient.collection('employee')
+            let collection = mongoClient.collection('prof-examination')
             let result = await collection.aggregate(arAggregate).skip(fields.offset).limit(fields.count).toArray()
             return result
 
         } catch (err) {
             console.log(err)
-            throw ({...{err: 7001000, msg: 'CEmployee Get'}, ...err})
+            throw ({...{err: 7001000, msg: 'CProfExamination Get'}, ...err})
         }
     }
 
@@ -190,7 +190,7 @@ export default class ProfExamination {
             })
 
             const mongoClient = Store.GetMongoClient()
-            let collection = mongoClient.collection('employee')
+            let collection = mongoClient.collection('prof-examination')
             let result = await collection.aggregate(arAggregate).toArray()
 
             if (!result.length) return 0
@@ -198,7 +198,7 @@ export default class ProfExamination {
 
         } catch (err) {
             console.log(err)
-            throw ({code: 6004000, msg: 'CEmployee GetCount'})
+            throw ({code: 6004000, msg: 'CProfExamination GetCount'})
         }
     }
 
@@ -214,13 +214,13 @@ export default class ProfExamination {
             }
 
             const mongoClient = Store.GetMongoClient()
-            let collection = mongoClient.collection('employee')
+            let collection = mongoClient.collection('prof-examination')
             let result = collection.updateOne({clinic_id: clinic_id, _id: id}, {$set: {...fields, ...arFields}})
             return result
 
         } catch (err) {
             console.log(err)
-            throw ({...{err: 7001000, msg: 'CEmployee Edit'}, ...err})
+            throw ({...{err: 7001000, msg: 'CProfExamination Edit'}, ...err})
         }
     }
 
@@ -237,13 +237,13 @@ export default class ProfExamination {
             }
 
             const mongoClient = Store.GetMongoClient()
-            let collection = mongoClient.collection('employee')
+            let collection = mongoClient.collection('prof-examination')
             let result = collection.updateOne({clinic_id: clinic_id, _id: id}, {$set: arFields}, {upsert: true})
             return result
 
         } catch (err) {
             console.log(err)
-            throw ({...{err: 7001000, msg: 'CEmployee Delete'}, ...err})
+            throw ({...{err: 7001000, msg: 'CProfExamination Delete'}, ...err})
         }
     }
 }

@@ -47,8 +47,6 @@ export async function GET(request: Request) {
             await mongo()
 
             let arFields = {
-                clinic_id: value.clinic_id,
-
                 q: value.q,
                 contract_id: value.contract_id,
 
@@ -58,8 +56,8 @@ export async function GET(request: Request) {
                 order: value.order,
                 order_by: value.order_by,
             }
-            let items = await CProfExamination.Get (arFields)
-            let count = await CProfExamination.GetCount (arFields)
+            let items = await CProfExamination.Get (value.clinic_id, arFields)
+            let count = await CProfExamination.GetCount (value.clinic_id, arFields)
             return NextResponse.json({
                 code: 0,
                 response: {

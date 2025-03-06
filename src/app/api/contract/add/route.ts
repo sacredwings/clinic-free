@@ -15,12 +15,10 @@ export async function POST (request: Request) {
                 clinic_id: Joi.string().min(24).max(24).required(),
 
                 org_id: Joi.string().min(24).max(24).required(),
+                contract_type_ids: Joi.array().min(1).max(10).items(Joi.string().min(24).max(24)).empty([null, '', Joi.array().length(0)]).default(null),
 
                 title: Joi.string().min(3).max(255).required(),
                 description: Joi.string().max(320).empty([null, '']).default(null),
-
-                date_start: Joi.date().empty([null, '']).default(null),
-                date_end: Joi.date().empty([null, '']).default(null),
 
                 price_ultrasound: Joi.number().integer().min(0).max(999999).empty([null, '']).default(null),
                 price_mammography: Joi.number().integer().min(0).max(999999).empty([null, '']).default(null),
@@ -33,6 +31,9 @@ export async function POST (request: Request) {
                 price_worker_all: Joi.number().integer().min(0).max(999999).empty([null, '']).default(null),
                 price_worker_man: Joi.number().integer().min(0).max(999999).empty([null, '']).default(null),
                 price_worker_woman: Joi.number().integer().min(0).max(999999).empty([null, '']).default(null),
+
+                date_start: Joi.date().empty([null, '']).default(null),
+                date_end: Joi.date().empty([null, '']).default(null),
             })
 
             value = await schema.validateAsync(rsRequest)
@@ -50,6 +51,9 @@ export async function POST (request: Request) {
             if (!userId) throw ({code: 30100000, msg: 'Требуется авторизация'})
 
             let arFields = {
+                org_id: value.org_id,
+                contract_type_ids: value.contract_type_ids,
+
                 title: value.title,
                 description: value.description,
 

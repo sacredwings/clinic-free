@@ -24,7 +24,7 @@ export default async function ProfExaminationGet ({
     let org
     let contract
     if (searchParams.contract_id) {
-        contract = await ServerContractGetById({ids: [searchParams.contract_id]}, {cookies: cookies()})
+        contract = await ServerContractGetById({clinic_id: params.clinic_id, ids: [searchParams.contract_id]}, {cookies: cookies()})
         contract = contract[0]
 
         org = await ServerOrgGetById({ids: [contract.org_id]}, {cookies: cookies()})
