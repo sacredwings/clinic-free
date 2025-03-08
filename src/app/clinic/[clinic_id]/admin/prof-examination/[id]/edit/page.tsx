@@ -22,7 +22,7 @@ export default async function User ({
 }) {
 
     let account = await ServerAccountGet({cookies:cookies()})
-    let worker = await ServerProfExaminationGetById({ids: [params.id]}, {cookies:cookies()})
+    let worker = await ServerProfExaminationGetById({clinic_id: params.clinic_id, ids: [params.id]}, {cookies:cookies()})
 
     //права доступа
     let accessUserEdit = accessCheck('userEdit', account._role_ids)
@@ -84,11 +84,11 @@ export default async function User ({
             </ul>
 
             {(!searchParams.form || searchParams.form === 'user') ?
-                <WorkerEditUser worker={worker[0]} account={account} accessEdit={accessUserEdit}/> : null}
+                <WorkerEditUser patient={worker[0]._patient_user_id} account={account} accessEdit={accessUserEdit}/> : null}
             {(searchParams.form === 'worker') ?
-                <WorkerEdit worker={worker[0]} account={account} accessEdit={accessWorkerEdit}/> : null}
-            {(searchParams.form === 'visit') ? <WorkerEditVisit worker={worker[0]} account={account} accessEdit={accessWorkerEditVisit}/> : null}
-            {(searchParams.form === 'finale') ? <WorkerEditFinale worker={worker[0]} account={account} accessEdit={accessWorkerEditFinale}/> : null}
+                <WorkerEdit patient={worker[0]} account={account} accessEdit={accessWorkerEdit}/> : null}
+            {(searchParams.form === 'visit') ? <WorkerEditVisit patient={worker[0]} account={account} accessEdit={accessWorkerEditVisit}/> : null}
+            {(searchParams.form === 'finale') ? <WorkerEditFinale patient={worker[0]} account={account} accessEdit={accessWorkerEditFinale}/> : null}
         </>
     )
 }

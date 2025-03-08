@@ -14,7 +14,7 @@ export default async function ContractAddPage ({
     params: { clinic_id: string },
     searchParams: { contract_id: string }
 }) {
-    let contract = await ServerContractGetById({ids: [searchParams.contract_id]}, {cookies:cookies()})
+    let contract = await ServerContractGetById({clinic_id: params.clinic_id, ids: [searchParams.contract_id]}, {cookies:cookies()})
     if (contract) contract = contract[0]
 
     return (

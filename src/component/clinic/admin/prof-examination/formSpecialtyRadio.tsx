@@ -5,7 +5,7 @@ import React, {useState, useEffect} from 'react'
 import axios from "axios"
 import {serverProfExaminationEditVisit} from "@/component/function/url_api";
 
-export default function FormSpecialistRadio ({workerId, access=false, specialist, visit}) {
+export default function FormSpecialtyRadio ({workerId, access=false, speciality, visit}) {
 
     const [checked, setChecked] = useState(visit ? visit.status : null)
     const [result, setResult] = useState(visit && visit.result ? visit.result : '')
@@ -24,7 +24,7 @@ export default function FormSpecialistRadio ({workerId, access=false, specialist
         let arFields = {
             worker_id: workerId,
 
-            specialist_id: specialist._id,
+            speciality_id: speciality._id,
             research_id: null,
 
             status: checked,
@@ -42,31 +42,31 @@ export default function FormSpecialistRadio ({workerId, access=false, specialist
 
         return <div className="card" style={styles}>
             <div className="card-body">
-                <h5 className="card-title">{specialist.name}</h5>
+                <h5 className="card-title">{speciality.name}</h5>
                 <form onSubmit={onSave}>
                     <div className={"row"}>
                         <div className={"col-12"}>
                             <div className="form-check">
-                                <input className="form-check-input" type="radio" name={`radio_${specialist._id}`} id={`radio_${specialist._id}_0`}
+                                <input className="form-check-input" type="radio" name={`radio_${speciality._id}`} id={`radio_${speciality._id}_0`}
                                        checked={checked === null ? true : false}
                                        onChange={onChange} disabled={true}/>
-                                <label className="form-check-label" htmlFor={`radio_${specialist._id}_0`}>
+                                <label className="form-check-label" htmlFor={`radio_${speciality._id}_0`}>
                                     Не был
                                 </label>
                             </div>
                             <div className="form-check">
-                                <input className="form-check-input" type="radio" name={`radio_${specialist._id}`} id={`radio_${specialist._id}_1`} value={0}
+                                <input className="form-check-input" type="radio" name={`radio_${speciality._id}`} id={`radio_${speciality._id}_1`} value={0}
                                        checked={checked == false ? true : false}
                                        onChange={onChange} disabled={!access}/>
-                                <label className="form-check-label" htmlFor={`radio_${specialist._id}_1`}>
+                                <label className="form-check-label" htmlFor={`radio_${speciality._id}_1`}>
                                     Дообследование
                                 </label>
                             </div>
                             <div className="form-check">
-                                <input className="form-check-input" type="radio" name={`radio_${specialist._id}`} id={`radio_${specialist._id}_2`} value={1}
+                                <input className="form-check-input" type="radio" name={`radio_${speciality._id}`} id={`radio_${speciality._id}_2`} value={1}
                                        checked={checked == true ? true : false}
                                        onChange={onChange} disabled={!access}/>
-                                <label className="form-check-label" htmlFor={`radio_${specialist._id}_2`}>
+                                <label className="form-check-label" htmlFor={`radio_${speciality._id}_2`}>
                                     <b>Годен</b>
                                 </label>
                             </div>

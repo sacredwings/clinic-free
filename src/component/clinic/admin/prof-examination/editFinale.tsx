@@ -9,11 +9,11 @@ import {
 import FormSpecialistRadio from "@/component/worker/formSpecialistRadio";
 import FormResearchRadio from "@/component/worker/formResearchRadio";
 
-export default function UserForm ({worker, account, accessEdit}) {
+export default function UserForm ({patient, account, accessEdit}) {
 
-    let [form, setForm] = useState(worker)
+    let [form, setForm] = useState(patient)
 
-    const [healthGroup, setHealthGroup] = useState(worker.health_group);
+    const [healthGroup, setHealthGroup] = useState(patient.health_group);
     const [healthGroupList, setHealthGroupList] = useState([
         'Ⅰ',
         'Ⅱ',
@@ -21,7 +21,7 @@ export default function UserForm ({worker, account, accessEdit}) {
         'Ⅲб',
         'Ⅳ',
     ]);
-    const [contraindications, setContraindications] = useState(worker.contraindications ? worker.contraindications : []);
+    const [contraindications, setContraindications] = useState(patient.contraindications ? patient.contraindications : []);
 
     useEffect(() => {
         (async () => {

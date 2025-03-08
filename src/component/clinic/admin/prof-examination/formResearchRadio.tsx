@@ -23,7 +23,7 @@ export default function FormSpecialistRadio ({workerId, access=false, research, 
         let arFields = {
             worker_id: workerId,
 
-            specialist_id: null,
+            speciality_id: null,
             research_id: research._id,
 
             status: checked,

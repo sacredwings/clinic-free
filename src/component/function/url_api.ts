@@ -958,7 +958,7 @@ export async function ServerProfExaminationAdd ({
     last_name,
     second_name=null,
 
-    gender,
+    man,
     date_birth,
 
     check_ultrasound,
@@ -988,7 +988,7 @@ export async function ServerProfExaminationAdd ({
         last_name,
         second_name,
 
-        gender,
+        man,
         date_birth,
 
         check_ultrasound,
@@ -1146,11 +1146,13 @@ export async function ServerProfExaminationGet ({
     let res = await axios.get(url, arFields);
     return res.data.response
 }
-export async function ServerProfExaminationGetById ({ids}: interfaceWorkerGetById, {cookies=null}) {
+export async function ServerProfExaminationGetById ({clinic_id, ids}: interfaceWorkerGetById, {cookies=null}) {
     if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
     let arFields = {
         params: {
+            clinic_id,
+
             ids
         } as interfaceProfExaminationGetById,
         headers: {

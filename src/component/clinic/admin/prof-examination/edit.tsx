@@ -12,11 +12,11 @@ import {
 import FormSpecialistRadio from "@/component/worker/formSpecialistRadio";
 import FormResearchRadio from "@/component/worker/formResearchRadio";
 
-export default function UserForm ({worker, account, accessEdit}) {
+export default function UserForm ({patient, account, accessEdit}) {
     //const router = useRouter() //для перехода к пользователю
 
-    let [formUser, setFormUser] = useState(worker._user_id)
-    let [form, setForm] = useState({...worker, hf_code: (worker.hf_code ? worker.hf_code.join(',') : null)})
+    let [formUser, setFormUser] = useState(patient._patient_user_id)
+    let [form, setForm] = useState({...patient, hf_code: (patient.hf_code ? patient.hf_code.join(',') : null)})
     let [contractTypeIds, setContractTypeIds] = useState([]) //для формы
     let [contractTypeList, setContractTypeList] = useState([])
 

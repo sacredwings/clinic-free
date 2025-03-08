@@ -2,13 +2,13 @@
 import { NextResponse } from 'next/server'
 import { mongo, minio } from "@/utility/connect"
 import Joi from "joi"
-import CProfExamination from "@/class/medical-examination"
+import CProfExamination from "@/class/prof-examination"
 import CContract from "@/class/contract"
 import CContractType from "@/class/contract-type"
 import CHf from "@/class/hf"
 import CResearch from "@/class/research"
 import CSpecialist from "@/class/specialist"
-import {CUser} from "../../../../../../social-framework/src"
+import CUser from "@/class/user"
 import {Authentication} from "@/app/api/function";
 
 export async function POST (request: Request) {
@@ -25,7 +25,7 @@ export async function POST (request: Request) {
                 clinic_id: Joi.string().min(24).max(24).required(),
 
                 contract_id: Joi.string().min(24).max(24).empty([null, '']).default(null),
-                patient_user: Joi.string().min(24).max(24).empty([null, '']).default(null),
+                patient_user_id: Joi.string().min(24).max(24).empty([null, '']).default(null),
 
                 hf_code: Joi.array().min(1).max(100).items(Joi.string().min(1).max(20)).allow(null).empty([null, '', Joi.array().length(0)]).default(null),
 
@@ -84,7 +84,53 @@ export async function POST (request: Request) {
             let userId = await Authentication(request)
             if (!userId) throw ({code: 30100000, msg: 'Требуется авторизация'})
 
-            let result = await CProfExamination.Add ({...value, create_user_id: userId})
+            let arUser = await CUser.GetByField({
+                first_name: value.first_name,
+                last_name: value.last_name,
+                second_name: value.second_name,
+                man: value.man,
+                date_birth: value.date_birth
+            })
+
+            if (!arUser) {
+                let arFieldsUser = {
+                    first_name: value.first_name,
+                    last_name: value.last_name,
+                    second_name: value.second_name,
+
+                    man: value.man,
+                    date_birth: value.date_birth,
+
+                    phone: value.phone,
+
+                    create_clinic_id: value.clinic_id,
+                    create_user_id: userId
+                }
+                arUser = await CUser.Add ( arFieldsUser )
+            }
+
+            let arFieldsProfExamination = {
+                contract_id: value.contract_id,
+                patient_user_id: arUser._id,
+
+                hf_code: value.hf_code,
+
+                first_name: arUser.first_name,
+                last_name: arUser.last_name,
+                second_name: arUser.second_name,
+
+                check_ultrasound: value.check_ultrasound,
+                check_mammography: value.check_mammography,
+                check_xray: value.check_xray,
+
+                check_pcr: value.check_pcr,
+                check_hti: value.check_hti,
+                check_brucellosis: value.check_brucellosis,
+
+                subdivision: value.subdivision,
+                profession: value.profession,
+            }
+            let result = await CProfExamination.Add (value.clinic_id, userId, arFieldsProfExamination)
 
             return NextResponse.json({
                 err: 0,

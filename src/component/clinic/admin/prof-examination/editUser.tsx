@@ -9,10 +9,11 @@ import {
 import FormSpecialistRadio from "@/component/worker/formSpecialistRadio";
 import FormResearchRadio from "@/component/worker/formResearchRadio";
 
-export default function UserForm ({worker, account, accessEdit}) {
+export default function UserForm ({patient, account, accessEdit}) {
     //const router = useRouter() //для перехода к пользователю
 
-    let [form, setForm] = useState(worker._user_id)
+    console.log(patient)
+    let [form, setForm] = useState(patient)
     //let [form, setForm] = useState({...worker, hf_code: (worker.hf_code ? worker.hf_code.join(',') : null)})
 
     const onChangeText = (e) => {

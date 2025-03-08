@@ -28,7 +28,7 @@ export default async function ClinicId ({
                 </Link>
 
                 <Link href={`/clinic/${params.clinic_id}/admin/prof-examination`}>
-                    <div className={"publicCard publicCardDisable"}>
+                    <div className={"publicCard"}>
                         Проф. осмотры
                     </div>
                 </Link>
