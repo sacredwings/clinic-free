@@ -86,7 +86,7 @@ export default async function User ({
             {(!searchParams.form || searchParams.form === 'user') ?
                 <WorkerEditUser patient={worker[0]._patient_user_id} account={account} accessEdit={accessUserEdit}/> : null}
             {(searchParams.form === 'worker') ?
-                <WorkerEdit patient={worker[0]} account={account} accessEdit={accessWorkerEdit}/> : null}
+                <WorkerEdit clinic_id={params.clinic_id} patient={worker[0]} account={account} accessEdit={accessWorkerEdit}/> : null}
             {(searchParams.form === 'visit') ? <WorkerEditVisit patient={worker[0]} account={account} accessEdit={accessWorkerEditVisit}/> : null}
             {(searchParams.form === 'finale') ? <WorkerEditFinale patient={worker[0]} account={account} accessEdit={accessWorkerEditFinale}/> : null}
         </>

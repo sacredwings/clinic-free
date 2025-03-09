@@ -12,7 +12,7 @@ import {
 import FormSpecialistRadio from "@/component/worker/formSpecialistRadio";
 import FormResearchRadio from "@/component/worker/formResearchRadio";
 
-export default function UserForm ({patient, account, accessEdit}) {
+export default function UserForm ({clinic_id, patient, account, accessEdit}) {
     //const router = useRouter() //для перехода к пользователю
 
     let [formUser, setFormUser] = useState(patient._patient_user_id)
@@ -86,6 +86,8 @@ export default function UserForm ({patient, account, accessEdit}) {
         e.preventDefault() // Stop form submit
 
         let arFields = {
+            clinic_id: clinic_id,
+
             id: form._id,
 
             contract_type_ids: contractTypeIds,

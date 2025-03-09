@@ -1,8 +1,7 @@
 // @ts-nocheck
 import { NextResponse } from 'next/server'
 import Joi from "joi"
-import Config from "../../../../../config.json"
-import { Store, DB, CUser }  from "../../../../../../social-framework/src"
+import CUser  from "@/class/user"
 import {Authentication} from "@/app/api/function";
 import {mongo} from "@/utility/connect";
 
@@ -38,8 +37,8 @@ export async function POST(request: Request) {
         try {
             await mongo()
 
-            //let userId = await Authentication(request)
-            //if (!userId) throw ({code: 30100000, msg: 'Требуется авторизация'})
+            let userId = await Authentication(request)
+            if (!userId) throw ({code: 30100000, msg: 'Требуется авторизация'})
 
             //проверка прав на редактирование
 

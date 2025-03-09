@@ -1012,6 +1012,8 @@ export async function ServerProfExaminationAdd ({
     return res.data.response
 }
 export async function ServerProfExaminationEdit ({
+    clinic_id,
+
     id,
 
     hf_code,
@@ -1030,6 +1032,8 @@ export async function ServerProfExaminationEdit ({
     if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
     let arFields = {
+        clinic_id,
+
         id,
 
         hf_code,

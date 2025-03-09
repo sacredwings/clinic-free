@@ -12,7 +12,6 @@ import FormResearchRadio from "@/component/worker/formResearchRadio";
 export default function UserForm ({patient, account, accessEdit}) {
     //const router = useRouter() //для перехода к пользователю
 
-    console.log(patient)
     let [form, setForm] = useState(patient)
     //let [form, setForm] = useState({...worker, hf_code: (worker.hf_code ? worker.hf_code.join(',') : null)})
 
