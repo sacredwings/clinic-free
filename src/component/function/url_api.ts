@@ -69,7 +69,7 @@ import {
     interfaceDoctorEdit,
     interfaceDoctorGetById,
     interfacePermissionGet,
-    interfacePermissionGetById
+    interfacePermissionGetById, interfaceProfExaminationEgisz
 } from './url_api_type'
 import axios, {AxiosRequestConfig} from "axios"
 import {ToastSystemAdd} from "@/component/toast/function";
@@ -303,6 +303,8 @@ export async function ServerOrgAdd ({
     return res.data.response
 }
 export async function ServerOrgEdit ({
+    clinic_id,
+
     id,
 
     title
@@ -310,6 +312,8 @@ export async function ServerOrgEdit ({
     if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
     let arFields = {
+        clinic_id,
+
         id,
 
         title,
@@ -439,6 +443,8 @@ export async function ServerContractEdit ({
 
     id,
 
+    contract_type_ids,
+
     title,
     description,
 
@@ -463,6 +469,8 @@ export async function ServerContractEdit ({
         clinic_id,
 
         id,
+
+        contract_type_ids,
 
         title,
         description,
@@ -712,7 +720,7 @@ export async function ServerEmployeeAdd ({
     title,
     description,
 
-    user_ids,
+    user_id,
 
     role_ids,
     specialty_ids,
@@ -728,7 +736,7 @@ export async function ServerEmployeeAdd ({
         title,
         description,
 
-        user_ids,
+        user_id,
 
         role_ids,
         specialty_ids,
@@ -751,7 +759,7 @@ export async function ServerEmployeeEdit ({
     title,
     description,
 
-    user_ids,
+    user_id,
 
     role_ids,
     specialty_ids,
@@ -1057,6 +1065,8 @@ export async function ServerProfExaminationEdit ({
     return res.data.response
 }
 export async function ServerProfExaminationEditFinale ({
+    clinic_id,
+
     id,
 
     health_group,
@@ -1067,6 +1077,8 @@ export async function ServerProfExaminationEditFinale ({
     if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
     let arFields = {
+        clinic_id,
+
         id,
 
         health_group,
@@ -1083,7 +1095,9 @@ export async function ServerProfExaminationEditFinale ({
 }
 
 export async function serverProfExaminationEditVisit ({
-    worker_id,
+    clinic_id,
+
+    patient_user_id,
 
     specialist_id=null,
     research_id=null,
@@ -1095,7 +1109,9 @@ export async function serverProfExaminationEditVisit ({
     if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
 
     let arFields = {
-        worker_id,
+        clinic_id,
+
+        patient_user_id,
 
         specialist_id,
         research_id,
@@ -1169,7 +1185,25 @@ export async function ServerProfExaminationGetById ({clinic_id, ids}: interfaceW
     let res = await axios.get(url, arFields)
     return res.data.response
 }
+export async function ServerProfExaminationEgisz ({
+    clinic_id,
 
+    id,
+}: interfaceProfExaminationEgisz) {
+    if (is_server()) axios.defaults.baseURL = `http://127.0.0.1:3000`
+
+    let arFields = {
+        clinic_id,
+
+        id,
+    } as interfaceProfExaminationEgisz
+
+    let url = `/api/prof-examination/egisz`
+    console.log(url)
+    let res = await axios.post(url, arFields);
+    await ToastSystemAdd(res.data)
+    return res.data.response
+}
 //---------------------------------------------------------------------------------
 //CONTRACT-TYPE
 export async function ServerContractTypeAdd ({

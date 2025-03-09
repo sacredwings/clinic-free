@@ -4,6 +4,7 @@ import WorkerEdit from '@/component/clinic/admin/prof-examination/edit'
 import WorkerEditUser from '@/component/clinic/admin/prof-examination/editUser'
 import WorkerEditVisit from '@/component/clinic/admin/prof-examination/editVisit'
 import WorkerEditFinale from '@/component/clinic/admin/prof-examination/editFinale'
+import WorkerEgisz from '@/component/clinic/admin/prof-examination/egisz'
 
 import {
     ServerAccountGet,
@@ -29,6 +30,7 @@ export default async function User ({
     let accessWorkerEdit = accessCheck('workerEdit', account._role_ids)
     let accessWorkerEditVisit = accessCheck('workerEditVisit', account._role_ids)
     let accessWorkerEditFinale = accessCheck('workerEditFinale', account._role_ids)
+    let accessWorkerEgisz = accessCheck('workerEgisz', account._role_ids)
 
     const ListPrint = (workerId) => {
         return <div className="btn-group-vertical" role="group" aria-label="Vertical button group" style={{paddingLeft: '5px'}}>
@@ -81,14 +83,19 @@ export default async function User ({
                     <Link className={(searchParams.form === 'finale') ? `nav-link active` : `nav-link`}
                           aria-current="page" href="?form=finale">Заключение</Link>
                 </li>
+                <li className="nav-item">
+                    <Link className={(searchParams.form === 'egisz') ? `nav-link active` : `nav-link`}
+                          aria-current="page" href="?form=egisz">ЕГИСЗ</Link>
+                </li>
             </ul>
 
             {(!searchParams.form || searchParams.form === 'user') ?
                 <WorkerEditUser patient={worker[0]._patient_user_id} account={account} accessEdit={accessUserEdit}/> : null}
             {(searchParams.form === 'worker') ?
-                <WorkerEdit clinic_id={params.clinic_id} patient={worker[0]} account={account} accessEdit={accessWorkerEdit}/> : null}
+                <WorkerEdit clinicId={params.clinic_id} patient={worker[0]} account={account} accessEdit={accessWorkerEdit}/> : null}
             {(searchParams.form === 'visit') ? <WorkerEditVisit patient={worker[0]} account={account} accessEdit={accessWorkerEditVisit}/> : null}
             {(searchParams.form === 'finale') ? <WorkerEditFinale patient={worker[0]} account={account} accessEdit={accessWorkerEditFinale}/> : null}
+            {(searchParams.form === 'egisz') ? <WorkerEgisz clinicId={params.clinic_id} profExamination={worker[0]} account={account} accessEdit={accessWorkerEgisz}/> : null}
         </>
     )
 }

@@ -117,6 +117,8 @@ export default class CUser {
             const mongoClient = Store.GetMongoClient()
             let collection = mongoClient.collection('user')
 
+            id = new DB().ObjectID(id)
+
             if (fields.login)
                 fields.login = fields.login.toLowerCase()
 

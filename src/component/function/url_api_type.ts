@@ -1,6 +1,8 @@
 // @ts-nocheck
 //----------------------------------------------------------------------------------------------------------------------
 //АВТОРИЗАЦИЯ
+import {ServerProfExaminationEgisz} from "@/component/function/url_api";
+
 export interface interfaceAuthLogin {
     login: string
     password: number
@@ -66,6 +68,8 @@ export interface interfaceOrgAdd {
     ogrn: number
 }
 export interface interfaceOrgEdit {
+    clinic_id: string
+
     id: string
 
     title: string
@@ -93,6 +97,7 @@ export interface interfaceContractAdd {
     clinic_id,
 
     org_id: string
+    contract_type_ids: string[]
 
     title: string
     description: string
@@ -116,6 +121,8 @@ export interface interfaceContractEdit {
     clinic_id: string
 
     id: string
+
+    contract_type_ids: string[]
 
     title: string
     description: string
@@ -202,7 +209,7 @@ export interface interfaceEmployeeAdd {
     title: string
     description: string
 
-    user_ids: string[]
+    user_id: string
 
     role_ids: string[] | null
     specialty_ids: string[] | null
@@ -218,7 +225,7 @@ export interface interfaceEmployeeEdit {
     title: string
     description: string
 
-    user_ids: string[]
+    user_id: string
 
     role_ids: string[] | null
     specialty_ids: string[] | null
@@ -294,6 +301,8 @@ export interface interfaceProfExaminationAdd {
     profession: string,
 }
 export interface interfaceProfExaminationEdit {
+    clinic_id: string,
+
     id: string
 
     hf_code: string[] | null
@@ -310,6 +319,8 @@ export interface interfaceProfExaminationEdit {
     profession: string
 }
 export interface interfaceProfExaminationEditFinale {
+    clinic_id: string,
+
     id: string
 
     health_group: string,
@@ -317,7 +328,9 @@ export interface interfaceProfExaminationEditFinale {
     re_hf: number,
 }
 export interface interfaceProfExaminationEditVisit {
-    worker_id: string
+    clinic_id: string,
+
+    patient_user_id: string
 
     specialist_id: string | null
     research_id: string | null
@@ -334,11 +347,20 @@ export interface interfaceProfExaminationGet {
 
     offset: number
     count: number
+
+    order: -1 | 1
+    order_by: string
 }
 export interface interfaceProfExaminationGetById {
+    clinic_id: string,
+
     ids: string[]
 }
+export interface interfaceProfExaminationEgisz {
+    clinic_id: string
 
+    id: string
+}
 
 
 
